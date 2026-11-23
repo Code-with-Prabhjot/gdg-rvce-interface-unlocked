@@ -2,13 +2,13 @@
 
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, X, LayoutGrid, List, RotateCcw } from 'lucide-react';
+import { Search, X, LayoutGrid, List, CalendarDays, RotateCcw } from 'lucide-react';
 import { EventCategory, DeliveryMode, EventStatus } from '@/data/gdgData';
 
 export type StatusFilter = 'All' | EventStatus;
 export type TrackFilter = 'All' | EventCategory;
 export type ModeFilter = 'All' | DeliveryMode;
-export type ViewMode = 'grid' | 'list';
+export type ViewMode = 'grid' | 'list' | 'calendar';
 
 interface EventsFilterBarProps {
   searchQuery: string;
@@ -149,19 +149,26 @@ export function EventsFilterBar({
           </div>
         </div>
 
-        {/* View Mode Toggle: Grid vs Schedule List */}
+        {/* View Mode Toggle: Grid vs Schedule List vs Calendar Matrix */}
         <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] self-end sm:self-auto shrink-0">
           <button
             type="button"
             onClick={() => onViewModeChange('grid')}
             aria-label="Switch to grid view"
             title="Grid View"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
+            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
               viewMode === 'grid'
-                ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] shadow-xs border border-[var(--border-hairline)]'
+                ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
             }`}
           >
+            {viewMode === 'grid' && (
+              <motion.div
+                layoutId="events-viewmode-pill"
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs z-[-1]"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
             <LayoutGrid className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Grid</span>
           </button>
@@ -171,14 +178,43 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('list')}
             aria-label="Switch to schedule list view"
             title="Schedule List View"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
+            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
               viewMode === 'list'
-                ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] shadow-xs border border-[var(--border-hairline)]'
+                ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
             }`}
           >
+            {viewMode === 'list' && (
+              <motion.div
+                layoutId="events-viewmode-pill"
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs z-[-1]"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
             <List className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Schedule</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onViewModeChange('calendar')}
+            aria-label="Calendar Matrix View"
+            title="Calendar Matrix View"
+            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
+              viewMode === 'calendar'
+                ? 'text-[var(--text-primary)] font-semibold'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+            }`}
+          >
+            {viewMode === 'calendar' && (
+              <motion.div
+                layoutId="events-viewmode-pill"
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs z-[-1]"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <CalendarDays className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Calendar</span>
           </button>
         </div>
       </div>

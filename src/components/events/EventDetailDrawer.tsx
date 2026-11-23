@@ -23,6 +23,7 @@ import {
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
 import { downloadEventIcs } from '@/utils/calendarExport';
+import { downloadSamplePassPng } from '@/utils/passExport';
 
 interface EventDetailDrawerProps {
   event: GDGEvent | null;
@@ -105,15 +106,19 @@ export function EventDetailDrawer({
   // Local interactive state
   const [copiedLink, setCopiedLink] = useState(false);
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
+  const [passDownloaded, setPassDownloaded] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [checkedPrereqs, setCheckedPrereqs] = useState<Set<number>>(new Set());
+  const [artworkMode, setArtworkMode] = useState<'schematic' | 'scene'>('schematic');
 
   // Reset transient state when event changes
   useEffect(() => {
     setCopiedLink(false);
     setCalendarDownloaded(false);
+    setPassDownloaded(false);
     setIsRegistered(false);
     setCheckedPrereqs(new Set());
+    setArtworkMode('schematic');
   }, [event?.id]);
 
   // Stepper calculations
@@ -234,6 +239,14 @@ export function EventDetailDrawer({
     downloadEventIcs(event);
     setCalendarDownloaded(true);
     setTimeout(() => setCalendarDownloaded(false), 3000);
+  }, [event]);
+
+  // Handle client-side PNG sample pass download
+  const handleDownloadPass = useCallback(() => {
+    if (!event) return;
+    downloadSamplePassPng(event);
+    setPassDownloaded(true);
+    setTimeout(() => setPassDownloaded(false), 3000);
   }, [event]);
 
   // Handle sample registration flow
@@ -361,15 +374,34 @@ export function EventDetailDrawer({
             {/* 2. DRAWER SCROLLABLE CONTENT BODY                         */}
             {/* ========================================================= */}
             <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-7 custom-scrollbar">
-              {/* Cover Artwork Container (16:9) with Corner Crosshairs */}
+              {/* Cover Artwork Container (16:9) with Corner Crosshairs & Scene Switcher */}
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--border-hairline)] bg-[var(--bg-subtle)] shadow-xs select-none">
-                <Image
-                  src={event.coverImage}
-                  alt={event.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={artworkMode === 'scene' && event.sceneImage ? 'scene' : 'schematic'}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={
+                        artworkMode === 'scene' && event.sceneImage
+                          ? event.sceneImage
+                          : event.coverImage
+                      }
+                      alt={
+                        artworkMode === 'scene'
+                          ? `${event.title} build scene`
+                          : event.title
+                      }
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
 
                 {/* Corner Crosshairs */}
@@ -402,6 +434,34 @@ export function EventDetailDrawer({
                     {event.mode}
                   </span>
                 </div>
+
+                {/* Interactive Schematic / Build Scene Switcher */}
+                {event.sceneImage && (
+                  <div className="absolute top-3.5 right-3.5 z-20 flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-md">
+                    <button
+                      type="button"
+                      onClick={() => setArtworkMode('schematic')}
+                      className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
+                        artworkMode === 'schematic'
+                          ? 'bg-white text-black font-bold shadow-xs'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      Schematic
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setArtworkMode('scene')}
+                      className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
+                        artworkMode === 'scene'
+                          ? 'bg-white text-black font-bold shadow-xs'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      Build Scene
+                    </button>
+                  </div>
+                )}
 
                 {/* Status Indicator */}
                 <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-2 text-white">
@@ -599,7 +659,7 @@ export function EventDetailDrawer({
                         </div>
 
                         {/* Barcode / Token Section */}
-                        <div className="p-3 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div className="p-3.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] flex flex-col md:flex-row md:items-center justify-between gap-3">
                           <div>
                             <span className="text-[10px] font-mono text-[var(--text-muted)] block">
                               AUTHENTICATION TOKEN
@@ -609,7 +669,30 @@ export function EventDetailDrawer({
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            {/* Download High-DPI PNG Sample Pass */}
+                            <button
+                              type="button"
+                              onClick={handleDownloadPass}
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer border ${
+                                passDownloaded
+                                  ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/50 shadow-xs'
+                                  : 'bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
+                              }`}
+                            >
+                              {passDownloaded ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-[#34A853]" />
+                                  <span className="text-[#34A853] font-bold">Pass Saved ✓</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Download className="w-3.5 h-3.5 text-[#4285F4]" />
+                                  <span>Download Pass (.png)</span>
+                                </>
+                              )}
+                            </button>
+
                             <button
                               type="button"
                               onClick={handleDownloadCalendar}

@@ -19,6 +19,8 @@ import {
   ViewMode,
 } from './EventsFilterBar';
 import { EventDirectoryCard } from './EventDirectoryCard';
+import { EventsCalendarView } from './EventsCalendarView';
+import { EventsSceneStrip } from './EventsSceneStrip';
 import { EventDetailDrawer } from './EventDetailDrawer';
 
 export function EventsDirectoryClient() {
@@ -213,7 +215,7 @@ export function EventsDirectoryClient() {
         totalResultsCount={filteredEvents.length}
       />
 
-      {/* 3. EVENTS DIRECTORY GRID / LIST OR EMPTY STATE */}
+      {/* 3. EVENTS DIRECTORY GRID / LIST / CALENDAR OR EMPTY STATE */}
       <AnimatePresence mode="popLayout">
         {filteredEvents.length > 0 ? (
           viewMode === 'grid' ? (
@@ -234,7 +236,7 @@ export function EventsDirectoryClient() {
                 />
               ))}
             </motion.div>
-          ) : (
+          ) : viewMode === 'list' ? (
             <motion.div
               key="events-list"
               initial={{ opacity: 0 }}
@@ -251,6 +253,18 @@ export function EventsDirectoryClient() {
                   index={idx}
                 />
               ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="events-calendar"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <EventsCalendarView
+                events={filteredEvents}
+                onSelectEvent={handleSelectEvent}
+              />
             </motion.div>
           )
         ) : (
@@ -299,7 +313,12 @@ export function EventsDirectoryClient() {
       </AnimatePresence>
 
       {/* ============================================================= */}
-      {/* 4. FLAGSHIP EVENT DETAIL DRAWER (Phase 5)                     */}
+      {/* 4. EDITORIAL CAMPUS BUILD ROOM STRIP (Phase 11)              */}
+      {/* ============================================================= */}
+      <EventsSceneStrip />
+
+      {/* ============================================================= */}
+      {/* 5. FLAGSHIP EVENT DETAIL DRAWER (Phase 5)                     */}
       {/* ============================================================= */}
       <EventDetailDrawer
         event={selectedEvent}
