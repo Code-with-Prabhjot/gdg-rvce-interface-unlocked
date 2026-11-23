@@ -3,6 +3,7 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { CampusTelemetryBar } from '@/components/home/CampusTelemetryBar';
 import { BentoPillarsSection } from '@/components/home/BentoPillarsSection';
 import { FeaturedEventsSection } from '@/components/home/FeaturedEventsSection';
+import { CommunityScenesSection } from '@/components/home/CommunityScenesSection';
 import { RecapAndCommunitySection } from '@/components/home/RecapAndCommunitySection';
 
 export default function HomePage() {
@@ -29,7 +30,12 @@ export default function HomePage() {
       <FeaturedEventsSection />
 
       {/* ============================================================= */}
-      {/* ACT V: Interactive Event Recap Spotlight & Community Portal   */}
+      {/* ACT V: In the Build Room (Community Scenes & Lightbox)        */}
+      {/* ============================================================= */}
+      <CommunityScenesSection />
+
+      {/* ============================================================= */}
+      {/* ACT VI: Interactive Event Recap Spotlight & Community Portal  */}
       {/* ============================================================= */}
       <RecapAndCommunitySection />
     </div>

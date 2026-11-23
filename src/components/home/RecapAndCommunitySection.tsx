@@ -14,9 +14,19 @@ const CHECK_COLORS = ['#4285F4', '#EA4335', '#34A853'];
 // Community Developer Emotes for Act V Part B
 const COMMUNITY_EMOTES = [
   {
+    src: '/assets/emotes/rvce-crest.svg',
+    label: 'RVCE Chapter Crest',
+    tag: 'OFFICIAL HQ',
+  },
+  {
+    src: '/assets/emotes/lgtm-stamp.svg',
+    label: 'LGTM Approved',
+    tag: 'CODE REVIEW',
+  },
+  {
     src: '/assets/emotes/rvce-bengaluru.svg',
     label: 'RVCE Bengaluru',
-    tag: 'CAMPUS HQ',
+    tag: 'CAMPUS COORDS',
   },
   {
     src: '/assets/emotes/coffee-compile.svg',
@@ -38,6 +48,7 @@ const COMMUNITY_EMOTES = [
 export function RecapAndCommunitySection() {
   const prefersReducedMotion = useReducedMotion();
   const [activeTabId, setActiveTabId] = useState<'keynotes' | 'labs' | 'artifacts'>('keynotes');
+  const [recapVisualMode, setRecapVisualMode] = useState<'schematic' | 'scene'>('schematic');
 
   const currentTab: RecapTabItem =
     RECAP_DATA.tabs.find((t) => t.id === activeTabId) || RECAP_DATA.tabs[0];
@@ -61,7 +72,7 @@ export function RecapAndCommunitySection() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
             <span className="font-mono text-xs font-semibold text-[#4285F4] tracking-wider">
-              [ 03 // LATEST RECAP ]
+              [ 04 // LATEST RECAP ]
             </span>
           </div>
 
@@ -110,11 +121,37 @@ export function RecapAndCommunitySection() {
                 +
               </div>
 
-              {/* Mono Header Bar */}
+              {/* Mono Header Bar with Schematic / Scene Toggle */}
               <div className="flex items-center justify-between px-3 py-2 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/70 rounded-t-xl mb-2 text-xs font-mono">
-                <span className="font-semibold text-[var(--text-secondary)]">
-                  RECAP ARCHIVE // 2026
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-[var(--text-secondary)] hidden sm:inline">
+                    RECAP ARCHIVE
+                  </span>
+                  <div className="inline-flex items-center p-0.5 rounded-lg bg-[var(--bg-canvas)] border border-[var(--border-hairline)] shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={() => setRecapVisualMode('schematic')}
+                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all ${
+                        recapVisualMode === 'schematic'
+                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                      }`}
+                    >
+                      Schematic
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRecapVisualMode('scene')}
+                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all ${
+                        recapVisualMode === 'scene'
+                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                      }`}
+                    >
+                      Scene
+                    </button>
+                  </div>
+                </div>
                 <span className="inline-flex items-center gap-1.5 text-[10px] text-[#34A853]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
                   VERIFIED DEPLOY
@@ -124,7 +161,11 @@ export function RecapAndCommunitySection() {
               {/* Cover Banner with Blueprint Frame */}
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
                 <Image
-                  src={RECAP_DATA.coverImage}
+                  src={
+                    recapVisualMode === 'scene'
+                      ? '/assets/scenes/auditorium-keynote.svg'
+                      : RECAP_DATA.coverImage
+                  }
                   alt={RECAP_DATA.title}
                   fill
                   className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
@@ -198,6 +239,24 @@ export function RecapAndCommunitySection() {
               />
               <span className="font-mono text-[11px] font-bold text-[#34A853]">
                 #BUG-FREE
+              </span>
+            </motion.div>
+
+            {/* Floating Developer Emote 3: lgtm-stamp.svg */}
+            <motion.div
+              animate={prefersReducedMotion ? {} : { y: [-2, 2, -2] }}
+              transition={{ repeat: Infinity, duration: 3.8, ease: 'easeInOut', delay: 1 }}
+              className="absolute top-1/2 -right-4 sm:-right-7 -translate-y-1/2 z-30 p-2.5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xl hidden lg:flex items-center gap-2 select-none"
+            >
+              <Image
+                src="/assets/emotes/lgtm-stamp.svg"
+                alt="LGTM Stamp Emote"
+                width={28}
+                height={28}
+                className="w-7 h-7 object-contain"
+              />
+              <span className="font-mono text-[11px] font-bold text-[#34A853]">
+                #LGTM
               </span>
             </motion.div>
           </motion.div>
@@ -359,7 +418,7 @@ export function RecapAndCommunitySection() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-hairline)] shadow-xs">
             <span className="font-mono text-xs font-semibold text-[#34A853] tracking-wider">
-              [ 04 // PLUG IN ]
+              [ 05 // PLUG IN ]
             </span>
           </div>
 
@@ -373,8 +432,8 @@ export function RecapAndCommunitySection() {
             </p>
           </div>
 
-          {/* Horizontal Row of 4 Local Developer Emotes */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-2xl py-2">
+          {/* Horizontal Row of Expressive Local Developer Emotes */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 w-full max-w-4xl py-2">
             {COMMUNITY_EMOTES.map((emote, idx) => (
               <div
                 key={idx}

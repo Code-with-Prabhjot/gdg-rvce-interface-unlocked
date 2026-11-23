@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="demoBg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#080C14"/>
+        <stop offset="50%" stop-color="#111726"/>
+        <stop offset="100%" stop-color="#1A2238"/>
+      </linearGradient>
+      <linearGradient id="phoneScreenGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0F172A"/>
+        <stop offset="100%" stop-color="#0A0D14"/>
+      </linearGradient>
+      <filter id="demoGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="18" result="glow"/>
+        <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#demoBg)"/>
+
+    <!-- Stage Spotlight Wash (Yellow & Red Ambient Stage Glow) -->
+    <circle cx="950" cy="350" r="340" fill="#FBBC04" fill-opacity="0.08" filter="url(#demoGlow)"/>
+    <circle cx="600" cy="380" r="280" fill="#EA4335" fill-opacity="0.06" filter="url(#demoGlow)"/>
+
+    <!-- ======================================================== -->
+    <!-- Giant Vertical Interactive Mobile/Tablet UI Frame        -->
+    <!-- ======================================================== -->
+    <g transform="translate(740, 80)" filter="url(#demoGlow)">
+      <!-- Outer Device Bezel -->
+      <rect x="0" y="0" width="460" height="570" rx="36" fill="#050811" stroke="#475569" stroke-width="4"/>
+      <!-- Inner Screen -->
+      <rect x="14" y="14" width="432" height="542" rx="28" fill="url(#phoneScreenGrad)"/>
+
+      <!-- Device Status Bar -->
+      <circle cx="216" cy="30" r="5" fill="#000000"/>
+      <text x="45" y="34" font-family="sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">09:41</text>
+      <g fill="#FFFFFF" transform="translate(370, 24)">
+        <rect x="0" y="0" width="18" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+        <rect x="2" y="2" width="10" height="6" fill="#FFFFFF"/>
+      </g>
+
+      <!-- App Header -->
+      <g transform="translate(35, 60)">
+        <text x="0" y="18" font-family="sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">RVCE CAMPUS HUB</text>
+        <text x="0" y="34" font-family="monospace" font-size="10" fill="#4285F4">AUTONOMOUS STUDENT ASSISTANT</text>
+      </g>
+
+      <!-- Interactive Multimodal Search Pill -->
+      <g transform="translate(35, 110)">
+        <rect x="0" y="0" width="362" height="42" rx="21" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+        <circle cx="22" cy="21" r="7" fill="#FBBC04"/>
+        <text x="40" y="26" font-family="sans-serif" font-size="11" fill="#94A3B8">Ask Gemini 1.5 Pro anything...</text>
+      </g>
+
+      <!-- App Cards inside Demo Screen -->
+      <g transform="translate(35, 175)">
+        <rect x="0" y="0" width="362" height="100" rx="14" fill="#1E293B" stroke="#4285F4" stroke-width="1.5"/>
+        <rect x="15" y="15" width="40" height="40" rx="10" fill="#4285F4" fill-opacity="0.2"/>
+        <path d="M30 30L35 38L45 28" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/>
+        <text x="70" y="32" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">Lecture Schedule Optimizer</text>
+        <text x="70" y="48" font-family="sans-serif" font-size="11" fill="#94A3B8">Resolved 14 timetable conflicts</text>
+        <rect x="70" y="60" width="80" height="20" rx="4" fill="#34A853"/>
+        <text x="110" y="74" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">VERIFIED</text>
+      </g>
+
+      <g transform="translate(35, 295)">
+        <rect x="0" y="0" width="362" height="100" rx="14" fill="#1E293B" stroke="#FBBC04" stroke-width="1.5"/>
+        <rect x="15" y="15" width="40" height="40" rx="10" fill="#FBBC04" fill-opacity="0.2"/>
+        <circle cx="35" cy="35" r="8" fill="#FBBC04"/>
+        <text x="70" y="32" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">Exam Hall Navigation &amp; Path</text>
+        <text x="70" y="48" font-family="sans-serif" font-size="11" fill="#94A3B8">Augmented Reality Compass Live</text>
+      </g>
+
+      <!-- Metrics Telemetry Bar at Screen Base -->
+      <g transform="translate(35, 420)">
+        <rect x="0" y="0" width="362" height="50" rx="10" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+        <text x="20" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="#34A853">INP: 24MS</text>
+        <text x="140" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="#4285F4">ZERO-CLS</text>
+        <text x="260" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="#FBBC04">WCAG AAA</text>
+        <text x="20" y="40" font-family="monospace" font-size="9" fill="#64748B">LATENCY 12MS // CLIENTSIDE STREAMING</text>
+      </g>
+    </g>
+
+    <!-- Floating Holographic Metric Badges Beside Phone -->
+    <g transform="translate(1120, 240)">
+      <rect x="0" y="0" width="220" height="50" rx="10" fill="#0A0F1D" stroke="#34A853" stroke-width="2"/>
+      <circle cx="20" cy="25" r="5" fill="#34A853"/>
+      <text x="35" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF">LIGHTHOUSE 100</text>
+      <text x="35" y="40" font-family="monospace" font-size="9" fill="#94A3B8">PERFECT CORE VITALS</text>
+    </g>
+    <g transform="translate(1120, 360)">
+      <rect x="0" y="0" width="220" height="50" rx="10" fill="#0A0F1D" stroke="#FBBC04" stroke-width="2"/>
+      <circle cx="20" cy="25" r="5" fill="#FBBC04"/>
+      <text x="35" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF">TOOL-CALLING AI</text>
+      <text x="35" y="40" font-family="monospace" font-size="9" fill="#94A3B8">STRUCTURED JSON SCHEMA</text>
+    </g>
+
+    <!-- Confident Presenter on Stage Gesturing at the Big Screen -->
+    <g transform="translate(560, 320)">
+      <!-- Shadow -->
+      <ellipse cx="25" cy="180" rx="40" ry="12" fill="#000000" fill-opacity="0.4"/>
+      <!-- Torso & Blue Hoodie -->
+      <path d="M5 180L12 90C12 60 45 60 45 90L52 180Z" fill="#4285F4"/>
+      <!-- Outstretched Right Arm pointing at phone -->
+      <path d="M42 90L90 70L145 60" stroke="#4285F4" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="150" cy="60" r="7" fill="#FDBA74"/>
+      <!-- Left Arm in Pocket -->
+      <path d="M12 90L5 130" stroke="#4285F4" stroke-width="12" stroke-linecap="round"/>
+      <!-- Head with Hair -->
+      <circle cx="28" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M10 42C10 20 28 15 48 18C52 28 50 40 50 40Z" fill="#1E293B"/>
+    </g>
+
+    <!-- Semicircular Tiered Amphitheater Audience & Jury (Left side) -->
+    <!-- Tier 1 (Jury Front Row, y=440-540) -->
+    <g transform="translate(60, 440)">
+      <path d="M0 60 Q 240 60 460 120" stroke="#334155" stroke-width="18" fill="none"/>
+      <!-- 3 Industry Judges with Evaluation Tablets -->
+      
+        <g transform="translate(60, 0)">
+          <circle cx="25" cy="15" r="16" fill="#FED7AA"/>
+          <path d="M10 12C10 -2 25 -4 40 0Z" fill="#0F172A"/>
+          <path d="M6 70C6 35 44 35 44 70Z" fill="#1E293B"/>
+          <!-- Tablet in hands -->
+          <rect x="15" y="35" width="26" height="34" rx="2" fill="#0A0E1A" stroke="#4285F4" stroke-width="1.5"/>
+        </g>
+      
+        <g transform="translate(190, 0)">
+          <circle cx="25" cy="15" r="16" fill="#FED7AA"/>
+          <path d="M10 12C10 -2 25 -4 40 0Z" fill="#0F172A"/>
+          <path d="M6 70C6 35 44 35 44 70Z" fill="#1E293B"/>
+          <!-- Tablet in hands -->
+          <rect x="15" y="35" width="26" height="34" rx="2" fill="#0A0E1A" stroke="#FBBC04" stroke-width="1.5"/>
+        </g>
+      
+        <g transform="translate(320, 0)">
+          <circle cx="25" cy="15" r="16" fill="#FED7AA"/>
+          <path d="M10 12C10 -2 25 -4 40 0Z" fill="#0F172A"/>
+          <path d="M6 70C6 35 44 35 44 70Z" fill="#1E293B"/>
+          <!-- Tablet in hands -->
+          <rect x="15" y="35" width="26" height="34" rx="2" fill="#0A0E1A" stroke="#4285F4" stroke-width="1.5"/>
+        </g>
+      
+    </g>
+
+    <!-- Tier 2 (Peer Students, y=560-680) -->
+    <g transform="translate(40, 560)">
+      <path d="M0 60 Q 280 60 520 120" stroke="#1E293B" stroke-width="18" fill="none"/>
+      <!-- 5 Engaged Students Taking Notes -->
+      
+        <g transform="translate(40, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="#34A853"/>
+        </g>
+      
+        <g transform="translate(140, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="#EA4335"/>
+        </g>
+      
+        <g transform="translate(240, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="#34A853"/>
+        </g>
+      
+        <g transform="translate(340, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="#EA4335"/>
+        </g>
+      
+        <g transform="translate(440, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="#34A853"/>
+        </g>
+      
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="#FBBC04"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 05 // PROTOTYPE DEMO DAY SHOWCASE</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">EXHIBITION STAGE · PEER JURY REVIEW</text>
+    </g>
+  </svg>

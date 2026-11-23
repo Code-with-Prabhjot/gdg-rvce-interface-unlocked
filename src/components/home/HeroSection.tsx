@@ -213,6 +213,39 @@ export function HeroSection() {
                   );
                 })}
               </div>
+
+              {/* Compact Tactile "Latest Scene Preview" Pill Card */}
+              <div className="pt-1.5">
+                <a
+                  href="#community-scenes"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('community-scenes')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group/scene-pill inline-flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 max-w-fit cursor-pointer"
+                >
+                  <div className="relative w-12 h-8 rounded-lg overflow-hidden border border-white/20 shrink-0 bg-black">
+                    <Image
+                      src="/assets/scenes/auditorium-keynote.svg"
+                      alt="Auditorium Keynote Preview"
+                      fill
+                      className="object-cover group-hover/scene-pill:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC04] animate-pulse" />
+                      <span className="text-[10px] font-mono font-semibold text-[var(--text-muted)] tracking-wider uppercase">
+                        IN THE BUILD ROOM
+                      </span>
+                    </div>
+                    <span className="text-xs font-display font-bold text-[var(--text-primary)] group-hover/scene-pill:text-[#4285F4] transition-colors flex items-center gap-1">
+                      <span>Auditorium Keynote · SCENE // 01</span>
+                      <ArrowRight className="w-3 h-3 group-hover/scene-pill:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </a>
+              </div>
             </motion.div>
           </div>
 

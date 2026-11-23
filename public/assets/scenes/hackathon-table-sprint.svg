@@ -1,0 +1,426 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="hackBg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#080C15"/>
+        <stop offset="50%" stop-color="#0E1524"/>
+        <stop offset="100%" stop-color="#141E34"/>
+      </linearGradient>
+      <linearGradient id="tableTop" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#1E293B"/>
+        <stop offset="50%" stop-color="#334155"/>
+        <stop offset="100%" stop-color="#1E293B"/>
+      </linearGradient>
+      <radialGradient id="lampCone1" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#FBBC04" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#FBBC04" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#FBBC04" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="lampCone2" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#4285F4" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#4285F4" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#4285F4" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="lampCone3" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#34A853" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#34A853" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#34A853" stop-opacity="0"/>
+      </radialGradient>
+      <pattern id="hackFloorGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <!-- Canvas -->
+    <rect width="1400" height="800" fill="url(#hackBg)"/>
+    <rect width="1400" height="800" fill="url(#hackFloorGrid)"/>
+
+    <!-- Exposed Industrial Ceiling Structure -->
+    <line x1="0" y1="50" x2="1400" y2="50" stroke="#334155" stroke-width="6"/>
+    <line x1="0" y1="80" x2="1400" y2="80" stroke="#1E293B" stroke-width="3"/>
+    
+      <line x1="100" y1="50" x2="160" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="300" y1="50" x2="360" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="500" y1="50" x2="560" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="700" y1="50" x2="760" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="900" y1="50" x2="960" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="1100" y1="50" x2="1160" y2="80" stroke="#334155" stroke-width="2"/>
+    
+      <line x1="1300" y1="50" x2="1360" y2="80" stroke="#334155" stroke-width="2"/>
+    
+
+    <!-- 3 Hanging Pendant Industrial Lamps -->
+    <g>
+      <!-- Lamp 1 (Left, Yellow) -->
+      <line x1="380" y1="50" x2="380" y2="180" stroke="#64748B" stroke-width="2"/>
+      <polygon points="350,200 410,200 395,180 365,180" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="380" cy="202" r="6" fill="#FBBC04"/>
+      <polygon points="260,600 500,600 400,205 360,205" fill="url(#lampCone1)"/>
+
+      <!-- Lamp 2 (Center, Blue) -->
+      <line x1="700" y1="50" x2="700" y2="160" stroke="#64748B" stroke-width="2"/>
+      <polygon points="670,180 730,180 715,160 685,160" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="700" cy="182" r="6" fill="#4285F4"/>
+      <polygon points="560,600 840,600 720,185 680,185" fill="url(#lampCone2)"/>
+
+      <!-- Lamp 3 (Right, Green) -->
+      <line x1="1020" y1="50" x2="1020" y2="180" stroke="#64748B" stroke-width="2"/>
+      <polygon points="990,200 1050,200 1035,180 1005,180" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="1020" cy="202" r="6" fill="#34A853"/>
+      <polygon points="900,600 1140,600 1040,205 1000,205" fill="url(#lampCone3)"/>
+    </g>
+
+    <!-- Background Sticky-Note Kanban Board on Easel Stand -->
+    <g transform="translate(140, 150)">
+      <!-- Stand legs -->
+      <line x1="60" y1="200" x2="30" y2="280" stroke="#475569" stroke-width="3"/>
+      <line x1="260" y1="200" x2="290" y2="280" stroke="#475569" stroke-width="3"/>
+      <!-- Board -->
+      <rect x="0" y="0" width="320" height="200" rx="10" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <text x="15" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8">SPRINT KANBAN // RVCE-HACK</text>
+      <line x1="10" y1="34" x2="310" y2="34" stroke="#1E293B" stroke-width="1.5"/>
+      <!-- 3 Columns -->
+      <line x1="110" y1="34" x2="110" y2="190" stroke="#1E293B" stroke-width="1"/>
+      <line x1="210" y1="34" x2="210" y2="190" stroke="#1E293B" stroke-width="1"/>
+      <text x="60" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="#64748B" text-anchor="middle">TODO</text>
+      <text x="160" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="#64748B" text-anchor="middle">IN DEV</text>
+      <text x="260" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="#34A853" text-anchor="middle">SHIPPED</text>
+      <!-- Sticky notes -->
+      <rect x="25" y="60" width="60" height="30" rx="3" fill="#FBBC04"/>
+      <text x="55" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#111827" text-anchor="middle">Auth API</text>
+      <rect x="25" y="100" width="60" height="30" rx="3" fill="#4285F4"/>
+      <text x="55" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Gemini SDK</text>
+
+      <rect x="125" y="60" width="60" height="30" rx="3" fill="#EA4335"/>
+      <text x="155" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Agent Loop</text>
+      <rect x="125" y="100" width="60" height="30" rx="3" fill="#FBBC04"/>
+      <text x="155" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#111827" text-anchor="middle">UI Polish</text>
+
+      <rect x="225" y="60" width="60" height="30" rx="3" fill="#34A853"/>
+      <text x="255" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CI Tests ✔</text>
+      <rect x="225" y="100" width="60" height="30" rx="3" fill="#34A853"/>
+      <text x="255" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Deploy V1 ✔</text>
+    </g>
+
+    <!-- Massive Central Collaborative Engineering Table -->
+    <g transform="translate(180, 420)">
+      <!-- Heavy Steel Table Legs -->
+      <rect x="40" y="80" width="24" height="280" fill="#0A0E1A" stroke="#1E293B" stroke-width="2"/>
+      <rect x="980" y="80" width="24" height="280" fill="#0A0E1A" stroke="#1E293B" stroke-width="2"/>
+      <line x1="52" y1="260" x2="992" y2="260" stroke="#1E293B" stroke-width="4"/>
+      <!-- Main Tabletop Slabs -->
+      <polygon points="0,70 1040,70 1020,0 20,0" fill="url(#tableTop)" stroke="#475569" stroke-width="2"/>
+      <rect x="0" y="70" width="1040" height="24" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Front Google 4-Color Accent Strip on Table Lip -->
+      <rect x="0" y="90" width="260" height="4" fill="#4285F4"/>
+      <rect x="260" y="90" width="260" height="4" fill="#EA4335"/>
+      <rect x="520" y="90" width="260" height="4" fill="#FBBC04"/>
+      <rect x="780" y="90" width="260" height="4" fill="#34A853"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- Table Hardware: Dual External Monitors & Terminal Windows -->
+    <!-- ======================================================== -->
+    <!-- Center-Left 27" Monitor (VS Code IDE) -->
+    <g transform="translate(460, 240)">
+      <!-- Stand -->
+      <rect x="135" y="180" width="20" height="60" fill="#1E293B"/>
+      <polygon points="100,240 190,240 180,230 110,230" fill="#0F172A"/>
+      <!-- Screen Bezel -->
+      <rect x="0" y="0" width="290" height="180" rx="8" fill="#0A0D14" stroke="#475569" stroke-width="3"/>
+      <!-- Code Window Inside -->
+      <rect x="10" y="10" width="270" height="160" rx="4" fill="#0F172A"/>
+      <!-- Window header -->
+      <circle cx="22" cy="22" r="3" fill="#EA4335"/>
+      <circle cx="32" cy="22" r="3" fill="#FBBC04"/>
+      <circle cx="42" cy="22" r="3" fill="#34A853"/>
+      <text x="55" y="25" font-family="monospace" font-size="8" fill="#94A3B8">agent-orchestrator.ts</text>
+      <!-- Syntax code lines -->
+      <g transform="translate(20, 45)">
+        <text x="0" y="0" font-family="monospace" font-size="9" fill="#4285F4">export async function</text>
+        <text x="125" y="0" font-family="monospace" font-size="9" fill="#FBBC04">shipAgent() {</text>
+        <text x="12" y="16" font-family="monospace" font-size="9" fill="#94A3B8">const model = getGemini();</text>
+        <text x="12" y="32" font-family="monospace" font-size="9" fill="#34A853">const res = await model.run();</text>
+        <text x="12" y="48" font-family="monospace" font-size="9" fill="#EA4335">return evaluate(res);</text>
+        <text x="0" y="64" font-family="monospace" font-size="9" fill="#FBBC04">}</text>
+        <!-- Mini cursor -->
+        <rect x="15" y="72" width="6" height="10" fill="#34A853"/>
+      </g>
+    </g>
+
+    <!-- Center-Right 27" Monitor (Live Terminal Output) -->
+    <g transform="translate(760, 240)">
+      <!-- Stand -->
+      <rect x="135" y="180" width="20" height="60" fill="#1E293B"/>
+      <polygon points="100,240 190,240 180,230 110,230" fill="#0F172A"/>
+      <!-- Screen Bezel -->
+      <rect x="0" y="0" width="290" height="180" rx="8" fill="#0A0D14" stroke="#475569" stroke-width="3"/>
+      <!-- Terminal Interior -->
+      <rect x="10" y="10" width="270" height="160" rx="4" fill="#0A0E17"/>
+      <circle cx="22" cy="22" r="3" fill="#EA4335"/>
+      <circle cx="32" cy="22" r="3" fill="#FBBC04"/>
+      <circle cx="42" cy="22" r="3" fill="#34A853"/>
+      <text x="55" y="25" font-family="monospace" font-size="8" fill="#94A3B8">bash // rvce-hack-runner</text>
+      <!-- Terminal Output -->
+      <g transform="translate(20, 48)">
+        <text x="0" y="0" font-family="monospace" font-size="9" fill="#FBBC04">&gt; gdg test --coverage</text>
+        <text x="0" y="18" font-family="monospace" font-size="9" fill="#34A853">✔ 48 specs passing (1.8s)</text>
+        <text x="0" y="34" font-family="monospace" font-size="9" fill="#94A3B8">Memory: 42MB · INP: 24ms</text>
+        <text x="0" y="52" font-family="monospace" font-size="9" fill="#4285F4">✔ Build target: PROD READY</text>
+        <rect x="0" y="65" width="8" height="11" fill="#FBBC04"/>
+      </g>
+    </g>
+
+    <!-- Mechanical Keyboards, Cables, Coffee Mugs on Workbench -->
+    <g transform="translate(480, 440)">
+      <!-- Coiled Aviator Cable (Blue) -->
+      <path d="M 80 0 Q 75 10 70 5 Q 65 -5 60 5 Q 55 10 50 5" stroke="#4285F4" stroke-width="2" fill="none"/>
+      <!-- Keyboard 1 (Center-Left) -->
+      <rect x="20" y="10" width="160" height="42" rx="4" fill="#0A0D14" stroke="#334155" stroke-width="2"/>
+      
+        <rect x="26" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="23" width="14" height="7" rx="1.5" fill="#4285F4"/>
+      
+        <rect x="98" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="32" width="14" height="7" rx="1.5" fill="#34A853"/>
+      
+        <rect x="116" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+      <!-- Mouse -->
+      <ellipse cx="205" cy="30" rx="12" ry="18" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+    </g>
+
+    <g transform="translate(780, 440)">
+      <!-- Keyboard 2 (Center-Right) -->
+      <rect x="20" y="10" width="160" height="42" rx="4" fill="#0A0D14" stroke="#334155" stroke-width="2"/>
+      
+        <rect x="26" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="14" width="14" height="7" rx="1.5" fill="#FBBC04"/>
+      
+        <rect x="80" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="14" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="23" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="134" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="32" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="26" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="44" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="62" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="80" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="98" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="116" y="41" width="14" height="7" rx="1.5" fill="#EA4335"/>
+      
+        <rect x="134" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+        <rect x="152" y="41" width="14" height="7" rx="1.5" fill="#1E293B"/>
+      
+      <!-- Mouse -->
+      <ellipse cx="205" cy="30" rx="12" ry="18" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+    </g>
+
+    <!-- Coffee Mugs & Cans -->
+    <g transform="translate(400, 445)">
+      <!-- Mug with Steam -->
+      <rect x="0" y="0" width="22" height="26" rx="4" fill="#1E293B" stroke="#64748B" stroke-width="1.5"/>
+      <path d="M22 6C27 6 29 12 29 16C29 20 27 22 22 22" stroke="#64748B" stroke-width="2" fill="none"/>
+      <!-- Steam -->
+      <path d="M6 -4Q4 -10 8 -14" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M14 -6Q12 -12 16 -16" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+    <g transform="translate(1000, 450)">
+      <!-- Drink Can in Red -->
+      <rect x="0" y="0" width="18" height="30" rx="3" fill="#EA4335" stroke="#991B1B" stroke-width="1.5"/>
+      <circle cx="9" cy="0" r="9" fill="#E2E8F0"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- 4 Collaborating Developers Around the Workbench            -->
+    <!-- ======================================================== -->
+    <!-- Dev 1: Left Seated Developer (Typing on laptop) -->
+    <g transform="translate(240, 360)">
+      <!-- Chair Backrest -->
+      <rect x="0" y="40" width="18" height="90" rx="8" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Torso & Blue Hoodie -->
+      <path d="M18 120C18 70 60 70 70 120Z" fill="#4285F4"/>
+      <!-- Arm extending to desk -->
+      <path d="M45 80L85 100L110 95" stroke="#4285F4" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Head with Hair -->
+      <circle cx="45" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M25 45C25 25 40 18 55 20C65 22 65 35 65 45C65 45 55 28 40 28C25 28 25 45 25 45Z" fill="#0F172A"/>
+      <!-- Laptop on Table Angle -->
+      <g transform="translate(90, 85)">
+        <polygon points="0,20 35,20 40,28 -5,28" fill="#475569"/>
+        <rect x="0" y="0" width="34" height="20" rx="2" fill="#60A5FA"/>
+        <polygon points="0,0 34,0 42,-20 -8,-20" fill="#FFFFFF" fill-opacity="0.1"/>
+      </g>
+    </g>
+
+    <!-- Dev 2: Center-Left Standing Developer (Pointing at screen, active discussion) -->
+    <g transform="translate(420, 280)">
+      <!-- Torso / Dark Hoodie -->
+      <path d="M10 170L16 90C16 65 54 65 54 90L60 170Z" fill="#1E293B"/>
+      <!-- Red Lanyard -->
+      <path d="M26 80L35 115L44 80" stroke="#EA4335" stroke-width="3" fill="none"/>
+      <!-- Pointing Right Arm -->
+      <path d="M48 85L80 70L125 55" stroke="#1E293B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Hand pointing finger -->
+      <circle cx="128" cy="54" r="6" fill="#FED7AA"/>
+      <!-- Left Hand on Table edge -->
+      <path d="M16 90L5 130L2 145" stroke="#1E293B" stroke-width="10" stroke-linecap="round"/>
+      <!-- Head & Beanie -->
+      <circle cx="35" cy="50" r="18" fill="#FED7AA"/>
+      <path d="M18 48C18 30 30 24 48 24C58 24 58 35 58 48Z" fill="#334155"/>
+    </g>
+
+    <!-- Dev 3: Center-Right Seated Developer (Typing on mechanical keyboard, glasses) -->
+    <g transform="translate(710, 370)">
+      <!-- Torso / Green Hoodie -->
+      <path d="M10 130C10 70 65 70 65 130Z" fill="#34A853"/>
+      <!-- Arms bent forward to keyboard -->
+      <path d="M20 85L45 105L75 90" stroke="#34A853" stroke-width="12" stroke-linecap="round"/>
+      <!-- Head -->
+      <circle cx="38" cy="42" r="19" fill="#FDE047"/>
+      <path d="M18 40C18 20 35 15 52 18C58 20 58 32 58 40Z" fill="#172554"/>
+      <!-- Round Glasses -->
+      <circle cx="32" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+      <circle cx="46" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+      <line x1="38" y1="40" x2="40" y2="40" stroke="#0F172A" stroke-width="2"/>
+    </g>
+
+    <!-- Dev 4: Far Right Seated Developer (Yellow hoodie, headphones, second laptop) -->
+    <g transform="translate(980, 360)">
+      <!-- Chair Backrest -->
+      <rect x="70" y="40" width="18" height="90" rx="8" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Torso / Yellow Hoodie with Dark Ink Contrast -->
+      <path d="M10 120C10 70 55 70 55 120Z" fill="#FBBC04"/>
+      <!-- Arm to desk -->
+      <path d="M25 80L-10 100L-30 95" stroke="#FBBC04" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Head & Hair -->
+      <circle cx="32" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M15 42C15 22 28 16 48 18C52 30 50 42 50 42Z" fill="#312E81"/>
+      <!-- Over-ear Headphones in Dark Ink #111827 -->
+      <path d="M18 42C18 20 48 20 48 42" stroke="#111827" stroke-width="5" fill="none"/>
+      <rect x="14" y="38" width="8" height="14" rx="3" fill="#111827"/>
+      <rect x="44" y="38" width="8" height="14" rx="3" fill="#111827"/>
+      <!-- Secondary Laptop on right -->
+      <g transform="translate(-40, 85)">
+        <polygon points="0,20 35,20 40,28 -5,28" fill="#475569"/>
+        <rect x="0" y="0" width="34" height="20" rx="2" fill="#34A853"/>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Overlays -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="#EA4335"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 02 // 24-HOUR HACKATHON BUILD TABLE</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CSE SYSTEMS LAB · ACTIVE CODE CRUCIBLE</text>
+    </g>
+  </svg>

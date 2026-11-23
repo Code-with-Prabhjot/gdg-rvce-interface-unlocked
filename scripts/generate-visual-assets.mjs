@@ -10,8 +10,9 @@ const BRAND_DIR = path.join(rootDir, 'public', 'assets', 'brand');
 const EMOTES_DIR = path.join(rootDir, 'public', 'assets', 'emotes');
 const COVERS_DIR = path.join(rootDir, 'public', 'assets', 'covers');
 const AVATARS_DIR = path.join(rootDir, 'public', 'assets', 'avatars');
+const SCENES_DIR = path.join(rootDir, 'public', 'assets', 'scenes');
 
-[BRAND_DIR, EMOTES_DIR, COVERS_DIR, AVATARS_DIR].forEach((dir) => {
+[BRAND_DIR, EMOTES_DIR, COVERS_DIR, AVATARS_DIR, SCENES_DIR].forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -52,9 +53,10 @@ const gdgRvceMarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120
 fs.writeFileSync(path.join(BRAND_DIR, 'gdg-rvce-mark.svg'), gdgRvceMarkSvg.trim());
 
 // ==========================================
-// 2. DEVELOPER EMOTES (12 items, 128x128)
+// 2. DEVELOPER EMOTES (20 items: 12 v1 + 8 v2, 128x128)
 // ==========================================
 const emotes = {
+  // --- EXISTING 12 EMOTES (V1) ---
   'ship-it.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
     <defs>
       <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
@@ -287,6 +289,188 @@ const emotes = {
     <rect x="42" y="92" width="44" height="12" rx="3" fill="${GOOGLE_COLORS.blue}" stroke="#1E40AF" stroke-width="2"/>
     <!-- Winner Label -->
     <text x="64" y="101" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">RVCE #1</text>
+  </svg>`,
+
+  // --- NEW 8 DEVELOPER EMOTES (V2) ---
+  'mind-blown.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0F172A" stroke="#1E293B" stroke-width="2"/>
+    <!-- Radiating Energy Rays -->
+    <path d="M64 16V24M38 22L44 28M90 22L84 28M24 38L32 42M104 38L96 42" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Head Base Silhouette -->
+    <path d="M42 98C42 82 52 74 64 74C76 74 86 82 86 98H42Z" fill="#334155"/>
+    <ellipse cx="64" cy="62" rx="22" ry="24" fill="#334155"/>
+    <!-- Exploding Mind Starburst Top (4 Google Colours) -->
+    <path d="M38 52C32 40 40 28 50 32C56 22 72 22 78 32C88 28 96 40 90 52C94 60 86 68 76 66C70 70 58 70 52 66C42 68 34 60 38 52Z" fill="${GOOGLE_COLORS.red}"/>
+    <circle cx="50" cy="40" r="7" fill="${GOOGLE_COLORS.blue}"/>
+    <circle cx="78" cy="40" r="7" fill="${GOOGLE_COLORS.yellow}"/>
+    <circle cx="64" cy="34" r="9" fill="${GOOGLE_COLORS.green}"/>
+    <circle cx="64" cy="46" r="6" fill="#FFFFFF"/>
+    <!-- Sparkles -->
+    <polygon points="64,18 66,24 72,24 67,28 69,34 64,30 59,34 61,28 56,24 62,24" fill="${GOOGLE_COLORS.yellow}"/>
+    <!-- Glasses on face -->
+    <rect x="50" y="58" width="11" height="8" rx="2" fill="#0F172A" stroke="#94A3B8" stroke-width="1.5"/>
+    <rect x="67" y="58" width="11" height="8" rx="2" fill="#0F172A" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="61" y1="62" x2="67" y2="62" stroke="#94A3B8" stroke-width="1.5"/>
+  </svg>`,
+
+  'pair-program.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0B132B" stroke="#1C2541" stroke-width="2"/>
+    <!-- Left Bracket < (Blue) -->
+    <path d="M46 36L26 64L46 92" stroke="${GOOGLE_COLORS.blue}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right Bracket > (Red) -->
+    <path d="M82 36L102 64L82 92" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Central High-Five Spark & Starburst -->
+    <circle cx="64" cy="64" r="12" fill="${GOOGLE_COLORS.green}" fill-opacity="0.3"/>
+    <polygon points="64,48 67,59 78,59 69,66 72,77 64,71 56,77 59,66 50,59 61,59" fill="${GOOGLE_COLORS.green}"/>
+    <circle cx="64" cy="64" r="4" fill="#FFFFFF"/>
+    <!-- Kinetic Motion / Spark Lines -->
+    <line x1="64" y1="36" x2="64" y2="42" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="64" y1="86" x2="64" y2="92" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="44" y1="52" x2="49" y2="55" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="84" y1="52" x2="79" y2="55" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Mono Subtitle -->
+    <text x="64" y="110" font-family="monospace" font-size="9" font-weight="bold" fill="#94A3B8" text-anchor="middle">PAIR // DEV</text>
+  </svg>`,
+
+  'lgtm-stamp.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#022C22" stroke="#065F46" stroke-width="2"/>
+    <!-- Tilted Stamp Container -->
+    <g transform="rotate(-10 64 64)">
+      <!-- Outer Double Border -->
+      <rect x="20" y="32" width="88" height="58" rx="8" fill="none" stroke="${GOOGLE_COLORS.green}" stroke-width="3"/>
+      <rect x="24" y="36" width="80" height="50" rx="5" fill="#064E3B" fill-opacity="0.6" stroke="${GOOGLE_COLORS.green}" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <!-- Main Text LGTM -->
+      <text x="56" y="68" font-family="monospace" font-size="20" font-weight="900" fill="#34D399" letter-spacing="2" text-anchor="middle">LGTM</text>
+      <!-- Big Checkmark -->
+      <path d="M80 54L87 62L98 48" stroke="${GOOGLE_COLORS.green}" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Sub-label: APPROVED -->
+      <text x="64" y="80" font-family="monospace" font-size="7" font-weight="bold" fill="#A7F3D0" letter-spacing="3" text-anchor="middle">APPROVED</text>
+    </g>
+    <!-- Stamp Ink Dots -->
+    <circle cx="28" cy="28" r="2" fill="${GOOGLE_COLORS.green}" fill-opacity="0.4"/>
+    <circle cx="102" cy="100" r="2.5" fill="${GOOGLE_COLORS.green}" fill-opacity="0.4"/>
+  </svg>`,
+
+  'hotfix-fire.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#1C1917" stroke="#44403C" stroke-width="2"/>
+    <!-- Outer Red Flame -->
+    <path d="M64 20C64 20 78 38 78 52C78 44 86 42 90 48C98 58 98 74 92 86C84 100 68 104 56 102C40 99 30 84 32 68C33 54 44 42 48 38C50 48 56 50 56 42C56 32 64 20 64 20Z" fill="${GOOGLE_COLORS.red}"/>
+    <!-- Inner Yellow Flame -->
+    <path d="M64 42C64 42 72 54 72 64C72 58 78 58 80 62C84 70 82 80 76 88C70 96 58 98 50 94C42 90 38 80 40 70C41 62 48 54 50 52C52 58 56 58 56 52C56 46 64 42 64 42Z" fill="${GOOGLE_COLORS.yellow}"/>
+    <!-- White Hot Core -->
+    <path d="M64 66C68 66 72 72 72 78C72 84 68 90 64 90C60 90 56 84 56 78C56 72 60 66 64 66Z" fill="#FFFFFF"/>
+    <!-- Terminal Prompt in Fire Core -->
+    <rect x="46" y="94" width="36" height="16" rx="4" fill="#0C0A09" stroke="#78716C" stroke-width="1"/>
+    <text x="50" y="105" font-family="monospace" font-size="9" font-weight="bold" fill="${GOOGLE_COLORS.yellow}">&gt;_</text>
+    <rect x="64" y="99" width="4" height="7" fill="${GOOGLE_COLORS.red}"/>
+  </svg>`,
+
+  'keyboard-clack.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0A0F1D" stroke="#1E293B" stroke-width="2"/>
+    <!-- Isometric Mechanical Keycap -->
+    <!-- Base Skirt -->
+    <polygon points="64,96 24,72 64,48 104,72" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+    <!-- Front Face -->
+    <polygon points="24,72 64,96 64,106 24,82" fill="#0F172A" stroke="#334155" stroke-width="1.5"/>
+    <!-- Right Face -->
+    <polygon points="64,96 104,72 104,82 64,106" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+    <!-- Elevated Top Cap (Google Blue) -->
+    <polygon points="64,42 32,60 64,78 96,60" fill="${GOOGLE_COLORS.blue}" stroke="#60A5FA" stroke-width="2"/>
+    <!-- Top Cap Bevel Highlight -->
+    <polygon points="64,45 36,60 64,75 92,60" fill="#2563EB"/>
+    <!-- Key Legend: < > -->
+    <text x="64" y="64" font-family="monospace" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">&lt; &gt;</text>
+    <!-- Kinetic Click Lines & Shockwaves -->
+    <path d="M22 52L14 46M106 52L114 46M64 26V18" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M38 34L32 26M90 34L96 26" stroke="${GOOGLE_COLORS.green}" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tiny Clack Mono Badge -->
+    <text x="64" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#94A3B8" text-anchor="middle">CLACK // MX</text>
+  </svg>`,
+
+  'pixel-dino.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#064E3B" stroke="#047857" stroke-width="2"/>
+    <!-- Ground Line -->
+    <line x1="20" y1="96" x2="108" y2="96" stroke="#059669" stroke-width="2" stroke-dasharray="4 4"/>
+    <!-- Jumping Pixel Dino (Google Green #34A853) in Mid-Air -->
+    <g fill="${GOOGLE_COLORS.green}">
+      <!-- Head and Snout -->
+      <rect x="64" y="28" width="28" height="20"/>
+      <rect x="92" y="32" width="8" height="12"/>
+      <!-- Eye (White cutout) -->
+      <rect x="70" y="32" width="4" height="4" fill="#FFFFFF"/>
+      <!-- Body & Neck -->
+      <rect x="60" y="44" width="20" height="26"/>
+      <rect x="48" y="52" width="16" height="22"/>
+      <!-- Tail -->
+      <rect x="36" y="56" width="12" height="12"/>
+      <rect x="28" y="52" width="8" height="8"/>
+      <!-- Arms -->
+      <rect x="80" y="52" width="8" height="4"/>
+      <!-- Bent Jumping Legs -->
+      <rect x="48" y="74" width="6" height="12"/>
+      <rect x="42" y="82" width="10" height="4"/>
+      <rect x="66" y="74" width="6" height="10"/>
+      <rect x="70" y="80" width="8" height="4"/>
+    </g>
+    <!-- Pixel Cactus Obstacle -->
+    <g fill="#047857">
+      <rect x="96" y="76" width="6" height="20"/>
+      <rect x="90" y="80" width="6" height="10"/>
+      <rect x="90" y="80" width="12" height="4"/>
+      <rect x="102" y="82" width="6" height="8"/>
+      <rect x="98" y="82" width="10" height="4"/>
+    </g>
+    <!-- Floating Pixel Cloud / Stars -->
+    <rect x="32" y="30" width="12" height="4" fill="${GOOGLE_COLORS.yellow}"/>
+    <rect x="36" y="26" width="8" height="4" fill="${GOOGLE_COLORS.yellow}"/>
+  </svg>`,
+
+  'clean-architecture.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0B132B" stroke="#1E293B" stroke-width="2"/>
+    <!-- Stacked Isometric Blueprint Slabs -->
+    <!-- Bottom Layer: Infrastructure (Google Green) -->
+    <g transform="translate(0, 26)">
+      <polygon points="64,68 28,50 64,32 100,50" fill="${GOOGLE_COLORS.green}" stroke="#10B981" stroke-width="1.5"/>
+      <polygon points="28,50 64,68 64,74 28,56" fill="#047857"/>
+      <polygon points="64,68 100,50 100,56 64,74" fill="#065F46"/>
+    </g>
+    <!-- Middle Layer: Use Cases / Domain (Google Yellow #FBBC04) -->
+    <g transform="translate(0, 10)">
+      <polygon points="64,56 32,40 64,24 96,40" fill="${GOOGLE_COLORS.yellow}" stroke="#EAB308" stroke-width="1.5"/>
+      <polygon points="32,40 64,56 64,62 32,46" fill="#CA8A04"/>
+      <polygon points="64,56 96,40 96,46 64,62" fill="#A16207"/>
+    </g>
+    <!-- Top Layer: UI / Presentation (Google Blue) -->
+    <g transform="translate(0, -6)">
+      <polygon points="64,44 36,30 64,16 92,30" fill="${GOOGLE_COLORS.blue}" stroke="#60A5FA" stroke-width="1.5"/>
+      <polygon points="36,30 64,44 64,50 36,36" fill="#2563EB"/>
+      <polygon points="64,44 92,30 92,36 64,50" fill="#1D4ED8"/>
+    </g>
+    <!-- Connecting Vertical Data Bus -->
+    <line x1="64" y1="20" x2="64" y2="102" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="3 3"/>
+    <circle cx="64" cy="20" r="3" fill="#FFFFFF"/>
+    <circle cx="64" cy="102" r="3" fill="${GOOGLE_COLORS.green}"/>
+    <!-- Label -->
+    <text x="64" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#94A3B8" text-anchor="middle">CLEAN ARCH</text>
+  </svg>`,
+
+  'rvce-crest.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#18181B" stroke="#3F3F46" stroke-width="2"/>
+    <!-- Outer Gear / Technical Cog Ring -->
+    <circle cx="64" cy="64" r="44" stroke="#52525B" stroke-width="2" stroke-dasharray="6 4"/>
+    <circle cx="64" cy="64" r="36" fill="#111827" stroke="#71717A" stroke-width="1.5"/>
+    <!-- 4 Google Colour Quadrant Dots -->
+    <circle cx="64" cy="20" r="4" fill="${GOOGLE_COLORS.blue}"/>
+    <circle cx="108" cy="64" r="4" fill="${GOOGLE_COLORS.red}"/>
+    <circle cx="64" cy="108" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+    <circle cx="20" cy="64" r="4" fill="${GOOGLE_COLORS.green}"/>
+    <!-- Center Compass / Chevron Star -->
+    <path d="M64 38L69 58L89 64L69 70L64 90L59 70L39 64L59 58Z" fill="#27272A" stroke="#94A3B8" stroke-width="1.5"/>
+    <!-- Center RVCE Mono Typography -->
+    <rect x="42" y="56" width="44" height="16" rx="4" fill="#090D16" stroke="${GOOGLE_COLORS.blue}" stroke-width="1.5"/>
+    <text x="64" y="68" font-family="monospace" font-size="10" font-weight="900" fill="#FFFFFF" letter-spacing="1" text-anchor="middle">RVCE</text>
+    <!-- Subtitle: GDG CHAPTER -->
+    <text x="64" y="80" font-family="monospace" font-size="6" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" letter-spacing="1" text-anchor="middle">GDG CHAPTER</text>
   </svg>`
 };
 
@@ -613,8 +797,1272 @@ members.forEach((m, idx) => {
   fs.writeFileSync(path.join(AVATARS_DIR, `${m.id}.svg`), avatarSvg.trim());
 });
 
-console.log('✓ Successfully generated all 31 bespoke SVG assets:');
+// ==========================================
+// 5. COMMUNITY SCENES (6 items, 1400x800 16:9)
+// ==========================================
+const scenes = {
+  // 1. Auditorium Keynote Broadcast
+  'auditorium-keynote.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="audBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050811"/>
+        <stop offset="50%" stop-color="#0A1020"/>
+        <stop offset="100%" stop-color="#111827"/>
+      </linearGradient>
+      <linearGradient id="stageGlow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1E293B"/>
+        <stop offset="100%" stop-color="#0F172A"/>
+      </linearGradient>
+      <linearGradient id="mainScreenGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0B132B"/>
+        <stop offset="50%" stop-color="#1C2541"/>
+        <stop offset="100%" stop-color="#0B132B"/>
+      </linearGradient>
+      <linearGradient id="spotLeft" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+        <stop offset="70%" stop-color="#4285F4" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#4285F4" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="spotRight" x1="1" y1="0" x2="0.4" y2="1">
+        <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
+        <stop offset="70%" stop-color="#FBBC04" stop-opacity="0.07"/>
+        <stop offset="100%" stop-color="#FBBC04" stop-opacity="0"/>
+      </linearGradient>
+      <pattern id="audGrid" width="50" height="50" patternUnits="userSpaceOnUse">
+        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      </pattern>
+      <filter id="screenBloom" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="20" result="bloom"/>
+        <feComposite in="SourceGraphic" in2="bloom" operator="over"/>
+      </filter>
+    </defs>
+
+    <!-- Deep Auditorium Canvas -->
+    <rect width="1400" height="800" fill="url(#audBg)"/>
+    <rect width="1400" height="460" fill="url(#audGrid)"/>
+
+    <!-- Ceiling Acoustic Baffles & Perspective Lines -->
+    <g stroke="rgba(255,255,255,0.07)" stroke-width="1.5">
+      <line x1="0" y1="30" x2="1400" y2="30"/>
+      <line x1="100" y1="70" x2="1300" y2="70"/>
+      <line x1="200" y1="100" x2="1200" y2="100"/>
+      <line x1="300" y1="0" x2="480" y2="110"/>
+      <line x1="1100" y1="0" x2="920" y2="110"/>
+    </g>
+
+    <!-- Ceiling Spot Downlights -->
+    <g fill="#FFFFFF" opacity="0.8">
+      <circle cx="280" cy="30" r="3"/><circle cx="500" cy="30" r="3"/>
+      <circle cx="700" cy="30" r="4"/><circle cx="900" cy="30" r="3"/><circle cx="1120" cy="30" r="3"/>
+    </g>
+
+    <!-- Stage Backdrop Acoustic Wall Slats -->
+    <g stroke="#1E293B" stroke-width="2" opacity="0.6">
+      <line x1="80" y1="90" x2="80" y2="450"/>
+      <line x1="100" y1="90" x2="100" y2="450"/>
+      <line x1="1300" y1="90" x2="1300" y2="450"/>
+      <line x1="1320" y1="90" x2="1320" y2="450"/>
+    </g>
+
+    <!-- Dual Side Vertical LED Towers -->
+    <!-- Left Tower (Google Blue & Red) -->
+    <rect x="110" y="90" width="130" height="340" rx="14" fill="#0A0F1D" stroke="#334155" stroke-width="2"/>
+    <rect x="120" y="105" width="110" height="310" rx="10" fill="#0F172A"/>
+    <g fill="${GOOGLE_COLORS.blue}">
+      <rect x="130" y="125" width="90" height="18" rx="4"/>
+      <rect x="130" y="155" width="70" height="14" rx="4"/>
+      <rect x="130" y="180" width="80" height="14" rx="4"/>
+      <rect x="130" y="205" width="60" height="14" rx="4"/>
+    </g>
+    <g fill="${GOOGLE_COLORS.red}">
+      <rect x="130" y="240" width="90" height="18" rx="4"/>
+      <rect x="130" y="270" width="75" height="14" rx="4"/>
+      <rect x="130" y="295" width="85" height="14" rx="4"/>
+      <rect x="130" y="320" width="50" height="14" rx="4"/>
+    </g>
+    <text x="175" y="380" font-family="monospace" font-size="10" font-weight="bold" fill="#94A3B8" text-anchor="middle">STREAM A</text>
+
+    <!-- Right Tower (Google Yellow & Green) -->
+    <rect x="1160" y="90" width="130" height="340" rx="14" fill="#0A0F1D" stroke="#334155" stroke-width="2"/>
+    <rect x="1170" y="105" width="110" height="310" rx="10" fill="#0F172A"/>
+    <g fill="${GOOGLE_COLORS.yellow}">
+      <rect x="1180" y="125" width="90" height="18" rx="4"/>
+      <rect x="1180" y="155" width="65" height="14" rx="4"/>
+      <rect x="1180" y="180" width="85" height="14" rx="4"/>
+      <rect x="1180" y="205" width="55" height="14" rx="4"/>
+    </g>
+    <g fill="${GOOGLE_COLORS.green}">
+      <rect x="1180" y="240" width="90" height="18" rx="4"/>
+      <rect x="1180" y="270" width="80" height="14" rx="4"/>
+      <rect x="1180" y="295" width="60" height="14" rx="4"/>
+      <rect x="1180" y="320" width="75" height="14" rx="4"/>
+    </g>
+    <text x="1225" y="380" font-family="monospace" font-size="10" font-weight="bold" fill="#94A3B8" text-anchor="middle">TELEMETRY B</text>
+
+    <!-- Main Stage Center LED Screen -->
+    <g filter="url(#screenBloom)">
+      <rect x="290" y="70" width="820" height="360" rx="20" fill="url(#mainScreenGrad)" stroke="#475569" stroke-width="3"/>
+      <!-- Internal Screen Display -->
+      <rect x="306" y="86" width="788" height="328" rx="14" fill="#0A0E1A"/>
+      
+      <!-- Slide Telemetry Header -->
+      <text x="330" y="122" font-family="monospace" font-size="12" font-weight="bold" fill="#64748B" letter-spacing="2">GDG ON CAMPUS RVCE // KEYNOTE 2026</text>
+      <text x="1070" y="122" font-family="monospace" font-size="12" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="end">● LIVE BROADCAST</text>
+      <line x1="330" y1="135" x2="1070" y2="135" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- Large GDG Emblem on Stage Screen -->
+      <g transform="translate(400, 200)">
+        <path d="M40 0L10 35L40 70" stroke="${GOOGLE_COLORS.red}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 35L40 70" stroke="${GOOGLE_COLORS.blue}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M90 0L120 35L90 70" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M120 35L90 70" stroke="${GOOGLE_COLORS.yellow}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- Keynote Title & Architecture Diagram on Screen -->
+      <g transform="translate(560, 185)">
+        <text x="0" y="24" font-family="sans-serif" font-size="28" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">MULTI-AGENT ARCHITECTURE</text>
+        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="500" fill="#94A3B8">Engineering Resilient Open Systems with Gemini 1.5 &amp; Cloud</text>
+        <!-- Mini Topology Diagram on Slide -->
+        <g transform="translate(0, 75)">
+          <rect x="0" y="0" width="130" height="42" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="1.5"/>
+          <text x="65" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle">PROMPT MESH</text>
+          
+          <line x1="130" y1="21" x2="170" y2="21" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 3"/>
+          
+          <rect x="170" y="0" width="140" height="42" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1.5"/>
+          <text x="240" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">TOOL RUNTIME</text>
+
+          <line x1="310" y1="21" x2="350" y2="21" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 3"/>
+
+          <rect x="350" y="0" width="120" height="42" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.green}" stroke-width="1.5"/>
+          <text x="410" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">CLOUD EDGE</text>
+        </g>
+      </g>
+      <!-- Slide Lower Telemetry Strip -->
+      <rect x="330" y="375" width="740" height="24" rx="6" fill="#111827"/>
+      <text x="345" y="391" font-family="monospace" font-size="10" fill="#64748B">SESSION // 01 · KEYNOTE SPEAKER: DR. ANANYA RAO · RVCE CAMPUS IEM HALL</text>
+    </g>
+
+    <!-- Angled Stage Spotlight Cones -->
+    <polygon points="170,0 250,0 660,460 480,460" fill="url(#spotLeft)"/>
+    <polygon points="1230,0 1150,0 840,460 1020,460" fill="url(#spotRight)"/>
+
+    <!-- Architectural Raised Stage Floor with Screen Reflection -->
+    <polygon points="60,440 1340,440 1400,480 0,480" fill="url(#stageGlow)"/>
+    <line x1="0" y1="480" x2="1400" y2="480" stroke="#334155" stroke-width="2"/>
+    <!-- Stage Front Lip Google Accent Stripe -->
+    <rect x="0" y="478" width="350" height="4" fill="${GOOGLE_COLORS.blue}"/>
+    <rect x="350" y="478" width="350" height="4" fill="${GOOGLE_COLORS.red}"/>
+    <rect x="700" y="478" width="350" height="4" fill="${GOOGLE_COLORS.yellow}"/>
+    <rect x="1050" y="478" width="350" height="4" fill="${GOOGLE_COLORS.green}"/>
+
+    <!-- Presenter on Stage (Stylized Geometric Human Silhouette) -->
+    <g transform="translate(460, 310)">
+      <!-- Stage Shadow -->
+      <ellipse cx="25" cy="130" rx="35" ry="10" fill="#000000" fill-opacity="0.4"/>
+      <!-- Body & Hoodie -->
+      <path d="M5 130L12 70C12 55 38 55 38 70L45 130Z" fill="#1E293B"/>
+      <!-- Shoulder Seam Accent (Red) -->
+      <path d="M12 70C20 62 30 62 38 70" stroke="${GOOGLE_COLORS.red}" stroke-width="3" stroke-linecap="round"/>
+      <!-- Raised Right Arm with Clicker -->
+      <path d="M36 72L58 50L68 54" stroke="#1E293B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="66" y="50" width="8" height="5" rx="2" fill="${GOOGLE_COLORS.blue}"/>
+      <!-- Left Arm resting -->
+      <path d="M14 74L4 98" stroke="#1E293B" stroke-width="8" stroke-linecap="round"/>
+      <!-- Head with Hair -->
+      <circle cx="25" cy="40" r="16" fill="#FDBA74"/>
+      <path d="M10 38C10 24 20 18 32 18C42 18 42 26 42 38C42 38 34 26 24 26C14 26 10 38 10 38Z" fill="#0F172A"/>
+      <!-- Glasses -->
+      <rect x="22" y="36" width="10" height="6" rx="2" fill="none" stroke="#0F172A" stroke-width="2"/>
+    </g>
+
+    <!-- Acrylic Speaker Lectern -->
+    <g transform="translate(560, 360)">
+      <polygon points="10,80 30,80 25,10 5,10" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+      <rect x="0" y="8" width="40" height="6" rx="2" fill="#334155"/>
+      <!-- Goose-neck Mic -->
+      <path d="M8 8C8 -4 14 -8 20 -10" stroke="#94A3B8" stroke-width="2" fill="none"/>
+      <circle cx="20" cy="-10" r="3" fill="#64748B"/>
+      <!-- Glowing Laptop on Lectern -->
+      <rect x="18" y="-4" width="22" height="12" rx="2" fill="#4285F4" stroke="#93C5FD" stroke-width="1"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- Terraced Seating Audience (3 Rows of Student Developers)  -->
+    <!-- ======================================================== -->
+    <!-- ROW 1 (Farthest, y=510-560) -->
+    <g transform="translate(0, 500)">
+      <!-- Tier 1 Step -->
+      <rect x="0" y="0" width="1400" height="70" fill="#0D1322"/>
+      <line x1="0" y1="0" x2="1400" y2="0" stroke="#1E293B" stroke-width="2"/>
+      <!-- 8 Seated Developer Silhouettes with Laptops -->
+      ${[160, 300, 440, 580, 740, 880, 1020, 1160].map((x, i) => `
+        <g transform="translate(${x}, 10)">
+          <!-- Head -->
+          <circle cx="20" cy="12" r="11" fill="#1E293B"/>
+          <!-- Hoodie / Torso -->
+          <path d="M4 46C4 28 36 28 36 46Z" fill="#151F32"/>
+          <!-- Open Glowing Laptop -->
+          <polygon points="12,38 28,38 32,46 8,46" fill="#334155"/>
+          <rect x="13" y="27" width="14" height="11" rx="2" fill="${i % 2 === 0 ? GOOGLE_COLORS.blue : GOOGLE_COLORS.green}" fill-opacity="0.8"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- ROW 2 (Mid-distance, y=580-660) -->
+    <g transform="translate(0, 580)">
+      <!-- Tier 2 Step -->
+      <rect x="0" y="0" width="1400" height="85" fill="#0A0E1A"/>
+      <line x1="0" y1="0" x2="1400" y2="0" stroke="#334155" stroke-width="2"/>
+      <!-- 9 Seated Developers with Glowing Screens -->
+      ${[100, 230, 360, 490, 630, 770, 910, 1040, 1180].map((x, i) => `
+        <g transform="translate(${x}, 12)">
+          <!-- Head -->
+          <circle cx="24" cy="14" r="14" fill="#334155"/>
+          <!-- Hoodie -->
+          <path d="M4 56C4 32 44 32 44 56Z" fill="#1E293B"/>
+          <!-- Laptop Base & Screen Glow -->
+          <polygon points="14,44 34,44 40,54 8,54" fill="#475569"/>
+          <rect x="15" y="30" width="18" height="14" rx="2" fill="${i % 3 === 0 ? GOOGLE_COLORS.yellow : i % 3 === 1 ? '#60A5FA' : GOOGLE_COLORS.red}" fill-opacity="0.85"/>
+          <!-- Screen light reflection upward -->
+          <polygon points="14,30 35,30 42,10 7,10" fill="#FFFFFF" fill-opacity="0.06"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- ROW 3 (Foreground Detailed Silhouettes, y=680-800) -->
+    <g transform="translate(0, 680)">
+      <!-- Tier 3 Step -->
+      <rect x="0" y="0" width="1400" height="120" fill="#070A12"/>
+      <line x1="0" y1="0" x2="1400" y2="0" stroke="#475569" stroke-width="2"/>
+      <!-- 7 Large Foreground Developer Silhouettes -->
+      ${[80, 260, 450, 640, 830, 1020, 1200].map((x, i) => {
+        const colors = [GOOGLE_COLORS.blue, GOOGLE_COLORS.red, GOOGLE_COLORS.yellow, GOOGLE_COLORS.green, GOOGLE_COLORS.blue, GOOGLE_COLORS.green, GOOGLE_COLORS.red];
+        const accent = colors[i % colors.length];
+        return `
+        <g transform="translate(${x}, 10)">
+          <!-- Head & Hair Details -->
+          <circle cx="34" cy="18" r="18" fill="#FDBA74"/>
+          <path d="M16 16C16 0 32 -4 52 0C54 18 52 24 50 26C40 10 26 12 16 16Z" fill="#0F172A"/>
+          <!-- Hoodie with Colour Accent Collar -->
+          <path d="M4 90C4 44 64 44 64 90Z" fill="#1E293B"/>
+          <path d="M24 52C28 48 40 48 44 52" stroke="${accent}" stroke-width="4" stroke-linecap="round"/>
+          <!-- Foreground Laptop with GDG Sticker on Lid / Screen -->
+          <polygon points="20,64 48,64 56,84 12,84" fill="#334155"/>
+          <rect x="22" y="44" width="24" height="20" rx="3" fill="#F8FAFC" fill-opacity="0.9"/>
+          <!-- Sticker Accent on Laptop -->
+          <circle cx="34" cy="54" r="5" fill="${accent}"/>
+          <!-- Upward Face Illumination -->
+          <polygon points="20,44 48,44 56,10 12,10" fill="${accent}" fill-opacity="0.1"/>
+        </g>`;
+      }).join('')}
+    </g>
+
+    <!-- Top Left & Right Architectural Telemetry Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.blue}"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 01 // AUDITORIUM KEYNOTE BROADCAST</text>
+    </g>
+    <g transform="translate(1000, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="325" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">IEM AUDITORIUM · RVCE BENGALURU</text>
+    </g>
+  </svg>`,
+
+  // 2. 24-Hour Hackathon Build Table
+  'hackathon-table-sprint.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="hackBg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#080C15"/>
+        <stop offset="50%" stop-color="#0E1524"/>
+        <stop offset="100%" stop-color="#141E34"/>
+      </linearGradient>
+      <linearGradient id="tableTop" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#1E293B"/>
+        <stop offset="50%" stop-color="#334155"/>
+        <stop offset="100%" stop-color="#1E293B"/>
+      </linearGradient>
+      <radialGradient id="lampCone1" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#FBBC04" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#FBBC04" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#FBBC04" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="lampCone2" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#4285F4" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#4285F4" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#4285F4" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="lampCone3" cx="0.5" cy="0" r="0.8">
+        <stop offset="0%" stop-color="#34A853" stop-opacity="0.3"/>
+        <stop offset="60%" stop-color="#34A853" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#34A853" stop-opacity="0"/>
+      </radialGradient>
+      <pattern id="hackFloorGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <!-- Canvas -->
+    <rect width="1400" height="800" fill="url(#hackBg)"/>
+    <rect width="1400" height="800" fill="url(#hackFloorGrid)"/>
+
+    <!-- Exposed Industrial Ceiling Structure -->
+    <line x1="0" y1="50" x2="1400" y2="50" stroke="#334155" stroke-width="6"/>
+    <line x1="0" y1="80" x2="1400" y2="80" stroke="#1E293B" stroke-width="3"/>
+    ${[100, 300, 500, 700, 900, 1100, 1300].map(x => `
+      <line x1="${x}" y1="50" x2="${x + 60}" y2="80" stroke="#334155" stroke-width="2"/>
+    `).join('')}
+
+    <!-- 3 Hanging Pendant Industrial Lamps -->
+    <g>
+      <!-- Lamp 1 (Left, Yellow) -->
+      <line x1="380" y1="50" x2="380" y2="180" stroke="#64748B" stroke-width="2"/>
+      <polygon points="350,200 410,200 395,180 365,180" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="380" cy="202" r="6" fill="${GOOGLE_COLORS.yellow}"/>
+      <polygon points="260,600 500,600 400,205 360,205" fill="url(#lampCone1)"/>
+
+      <!-- Lamp 2 (Center, Blue) -->
+      <line x1="700" y1="50" x2="700" y2="160" stroke="#64748B" stroke-width="2"/>
+      <polygon points="670,180 730,180 715,160 685,160" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="700" cy="182" r="6" fill="${GOOGLE_COLORS.blue}"/>
+      <polygon points="560,600 840,600 720,185 680,185" fill="url(#lampCone2)"/>
+
+      <!-- Lamp 3 (Right, Green) -->
+      <line x1="1020" y1="50" x2="1020" y2="180" stroke="#64748B" stroke-width="2"/>
+      <polygon points="990,200 1050,200 1035,180 1005,180" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+      <circle cx="1020" cy="202" r="6" fill="${GOOGLE_COLORS.green}"/>
+      <polygon points="900,600 1140,600 1040,205 1000,205" fill="url(#lampCone3)"/>
+    </g>
+
+    <!-- Background Sticky-Note Kanban Board on Easel Stand -->
+    <g transform="translate(140, 150)">
+      <!-- Stand legs -->
+      <line x1="60" y1="200" x2="30" y2="280" stroke="#475569" stroke-width="3"/>
+      <line x1="260" y1="200" x2="290" y2="280" stroke="#475569" stroke-width="3"/>
+      <!-- Board -->
+      <rect x="0" y="0" width="320" height="200" rx="10" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <text x="15" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8">SPRINT KANBAN // RVCE-HACK</text>
+      <line x1="10" y1="34" x2="310" y2="34" stroke="#1E293B" stroke-width="1.5"/>
+      <!-- 3 Columns -->
+      <line x1="110" y1="34" x2="110" y2="190" stroke="#1E293B" stroke-width="1"/>
+      <line x1="210" y1="34" x2="210" y2="190" stroke="#1E293B" stroke-width="1"/>
+      <text x="60" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="#64748B" text-anchor="middle">TODO</text>
+      <text x="160" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="#64748B" text-anchor="middle">IN DEV</text>
+      <text x="260" y="48" font-family="monospace" font-size="8" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">SHIPPED</text>
+      <!-- Sticky notes -->
+      <rect x="25" y="60" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="55" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#111827" text-anchor="middle">Auth API</text>
+      <rect x="25" y="100" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.blue}"/>
+      <text x="55" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Gemini SDK</text>
+
+      <rect x="125" y="60" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.red}"/>
+      <text x="155" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Agent Loop</text>
+      <rect x="125" y="100" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="155" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#111827" text-anchor="middle">UI Polish</text>
+
+      <rect x="225" y="60" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.green}"/>
+      <text x="255" y="78" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">CI Tests ✔</text>
+      <rect x="225" y="100" width="60" height="30" rx="3" fill="${GOOGLE_COLORS.green}"/>
+      <text x="255" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Deploy V1 ✔</text>
+    </g>
+
+    <!-- Massive Central Collaborative Engineering Table -->
+    <g transform="translate(180, 420)">
+      <!-- Heavy Steel Table Legs -->
+      <rect x="40" y="80" width="24" height="280" fill="#0A0E1A" stroke="#1E293B" stroke-width="2"/>
+      <rect x="980" y="80" width="24" height="280" fill="#0A0E1A" stroke="#1E293B" stroke-width="2"/>
+      <line x1="52" y1="260" x2="992" y2="260" stroke="#1E293B" stroke-width="4"/>
+      <!-- Main Tabletop Slabs -->
+      <polygon points="0,70 1040,70 1020,0 20,0" fill="url(#tableTop)" stroke="#475569" stroke-width="2"/>
+      <rect x="0" y="70" width="1040" height="24" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Front Google 4-Color Accent Strip on Table Lip -->
+      <rect x="0" y="90" width="260" height="4" fill="${GOOGLE_COLORS.blue}"/>
+      <rect x="260" y="90" width="260" height="4" fill="${GOOGLE_COLORS.red}"/>
+      <rect x="520" y="90" width="260" height="4" fill="${GOOGLE_COLORS.yellow}"/>
+      <rect x="780" y="90" width="260" height="4" fill="${GOOGLE_COLORS.green}"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- Table Hardware: Dual External Monitors & Terminal Windows -->
+    <!-- ======================================================== -->
+    <!-- Center-Left 27" Monitor (VS Code IDE) -->
+    <g transform="translate(460, 240)">
+      <!-- Stand -->
+      <rect x="135" y="180" width="20" height="60" fill="#1E293B"/>
+      <polygon points="100,240 190,240 180,230 110,230" fill="#0F172A"/>
+      <!-- Screen Bezel -->
+      <rect x="0" y="0" width="290" height="180" rx="8" fill="#0A0D14" stroke="#475569" stroke-width="3"/>
+      <!-- Code Window Inside -->
+      <rect x="10" y="10" width="270" height="160" rx="4" fill="#0F172A"/>
+      <!-- Window header -->
+      <circle cx="22" cy="22" r="3" fill="${GOOGLE_COLORS.red}"/>
+      <circle cx="32" cy="22" r="3" fill="${GOOGLE_COLORS.yellow}"/>
+      <circle cx="42" cy="22" r="3" fill="${GOOGLE_COLORS.green}"/>
+      <text x="55" y="25" font-family="monospace" font-size="8" fill="#94A3B8">agent-orchestrator.ts</text>
+      <!-- Syntax code lines -->
+      <g transform="translate(20, 45)">
+        <text x="0" y="0" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.blue}">export async function</text>
+        <text x="125" y="0" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.yellow}">shipAgent() {</text>
+        <text x="12" y="16" font-family="monospace" font-size="9" fill="#94A3B8">const model = getGemini();</text>
+        <text x="12" y="32" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.green}">const res = await model.run();</text>
+        <text x="12" y="48" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.red}">return evaluate(res);</text>
+        <text x="0" y="64" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.yellow}">}</text>
+        <!-- Mini cursor -->
+        <rect x="15" y="72" width="6" height="10" fill="${GOOGLE_COLORS.green}"/>
+      </g>
+    </g>
+
+    <!-- Center-Right 27" Monitor (Live Terminal Output) -->
+    <g transform="translate(760, 240)">
+      <!-- Stand -->
+      <rect x="135" y="180" width="20" height="60" fill="#1E293B"/>
+      <polygon points="100,240 190,240 180,230 110,230" fill="#0F172A"/>
+      <!-- Screen Bezel -->
+      <rect x="0" y="0" width="290" height="180" rx="8" fill="#0A0D14" stroke="#475569" stroke-width="3"/>
+      <!-- Terminal Interior -->
+      <rect x="10" y="10" width="270" height="160" rx="4" fill="#0A0E17"/>
+      <circle cx="22" cy="22" r="3" fill="${GOOGLE_COLORS.red}"/>
+      <circle cx="32" cy="22" r="3" fill="${GOOGLE_COLORS.yellow}"/>
+      <circle cx="42" cy="22" r="3" fill="${GOOGLE_COLORS.green}"/>
+      <text x="55" y="25" font-family="monospace" font-size="8" fill="#94A3B8">bash // rvce-hack-runner</text>
+      <!-- Terminal Output -->
+      <g transform="translate(20, 48)">
+        <text x="0" y="0" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.yellow}">&gt; gdg test --coverage</text>
+        <text x="0" y="18" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.green}">✔ 48 specs passing (1.8s)</text>
+        <text x="0" y="34" font-family="monospace" font-size="9" fill="#94A3B8">Memory: 42MB · INP: 24ms</text>
+        <text x="0" y="52" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.blue}">✔ Build target: PROD READY</text>
+        <rect x="0" y="65" width="8" height="11" fill="${GOOGLE_COLORS.yellow}"/>
+      </g>
+    </g>
+
+    <!-- Mechanical Keyboards, Cables, Coffee Mugs on Workbench -->
+    <g transform="translate(480, 440)">
+      <!-- Coiled Aviator Cable (Blue) -->
+      <path d="M 80 0 Q 75 10 70 5 Q 65 -5 60 5 Q 55 10 50 5" stroke="${GOOGLE_COLORS.blue}" stroke-width="2" fill="none"/>
+      <!-- Keyboard 1 (Center-Left) -->
+      <rect x="20" y="10" width="160" height="42" rx="4" fill="#0A0D14" stroke="#334155" stroke-width="2"/>
+      ${[0, 1, 2, 3].map(row => [0, 1, 2, 3, 4, 5, 6, 7].map(col => `
+        <rect x="${26 + col * 18}" y="${14 + row * 9}" width="14" height="7" rx="1.5" fill="${row === 1 && col === 3 ? GOOGLE_COLORS.blue : row === 2 && col === 4 ? GOOGLE_COLORS.green : '#1E293B'}"/>
+      `).join('')).join('')}
+      <!-- Mouse -->
+      <ellipse cx="205" cy="30" rx="12" ry="18" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+    </g>
+
+    <g transform="translate(780, 440)">
+      <!-- Keyboard 2 (Center-Right) -->
+      <rect x="20" y="10" width="160" height="42" rx="4" fill="#0A0D14" stroke="#334155" stroke-width="2"/>
+      ${[0, 1, 2, 3].map(row => [0, 1, 2, 3, 4, 5, 6, 7].map(col => `
+        <rect x="${26 + col * 18}" y="${14 + row * 9}" width="14" height="7" rx="1.5" fill="${row === 0 && col === 2 ? GOOGLE_COLORS.yellow : row === 3 && col === 5 ? GOOGLE_COLORS.red : '#1E293B'}"/>
+      `).join('')).join('')}
+      <!-- Mouse -->
+      <ellipse cx="205" cy="30" rx="12" ry="18" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+    </g>
+
+    <!-- Coffee Mugs & Cans -->
+    <g transform="translate(400, 445)">
+      <!-- Mug with Steam -->
+      <rect x="0" y="0" width="22" height="26" rx="4" fill="#1E293B" stroke="#64748B" stroke-width="1.5"/>
+      <path d="M22 6C27 6 29 12 29 16C29 20 27 22 22 22" stroke="#64748B" stroke-width="2" fill="none"/>
+      <!-- Steam -->
+      <path d="M6 -4Q4 -10 8 -14" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M14 -6Q12 -12 16 -16" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+    <g transform="translate(1000, 450)">
+      <!-- Drink Can in Red -->
+      <rect x="0" y="0" width="18" height="30" rx="3" fill="${GOOGLE_COLORS.red}" stroke="#991B1B" stroke-width="1.5"/>
+      <circle cx="9" cy="0" r="9" fill="#E2E8F0"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- 4 Collaborating Developers Around the Workbench            -->
+    <!-- ======================================================== -->
+    <!-- Dev 1: Left Seated Developer (Typing on laptop) -->
+    <g transform="translate(240, 360)">
+      <!-- Chair Backrest -->
+      <rect x="0" y="40" width="18" height="90" rx="8" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Torso & Blue Hoodie -->
+      <path d="M18 120C18 70 60 70 70 120Z" fill="${GOOGLE_COLORS.blue}"/>
+      <!-- Arm extending to desk -->
+      <path d="M45 80L85 100L110 95" stroke="${GOOGLE_COLORS.blue}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Head with Hair -->
+      <circle cx="45" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M25 45C25 25 40 18 55 20C65 22 65 35 65 45C65 45 55 28 40 28C25 28 25 45 25 45Z" fill="#0F172A"/>
+      <!-- Laptop on Table Angle -->
+      <g transform="translate(90, 85)">
+        <polygon points="0,20 35,20 40,28 -5,28" fill="#475569"/>
+        <rect x="0" y="0" width="34" height="20" rx="2" fill="#60A5FA"/>
+        <polygon points="0,0 34,0 42,-20 -8,-20" fill="#FFFFFF" fill-opacity="0.1"/>
+      </g>
+    </g>
+
+    <!-- Dev 2: Center-Left Standing Developer (Pointing at screen, active discussion) -->
+    <g transform="translate(420, 280)">
+      <!-- Torso / Dark Hoodie -->
+      <path d="M10 170L16 90C16 65 54 65 54 90L60 170Z" fill="#1E293B"/>
+      <!-- Red Lanyard -->
+      <path d="M26 80L35 115L44 80" stroke="${GOOGLE_COLORS.red}" stroke-width="3" fill="none"/>
+      <!-- Pointing Right Arm -->
+      <path d="M48 85L80 70L125 55" stroke="#1E293B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Hand pointing finger -->
+      <circle cx="128" cy="54" r="6" fill="#FED7AA"/>
+      <!-- Left Hand on Table edge -->
+      <path d="M16 90L5 130L2 145" stroke="#1E293B" stroke-width="10" stroke-linecap="round"/>
+      <!-- Head & Beanie -->
+      <circle cx="35" cy="50" r="18" fill="#FED7AA"/>
+      <path d="M18 48C18 30 30 24 48 24C58 24 58 35 58 48Z" fill="#334155"/>
+    </g>
+
+    <!-- Dev 3: Center-Right Seated Developer (Typing on mechanical keyboard, glasses) -->
+    <g transform="translate(710, 370)">
+      <!-- Torso / Green Hoodie -->
+      <path d="M10 130C10 70 65 70 65 130Z" fill="${GOOGLE_COLORS.green}"/>
+      <!-- Arms bent forward to keyboard -->
+      <path d="M20 85L45 105L75 90" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round"/>
+      <!-- Head -->
+      <circle cx="38" cy="42" r="19" fill="#FDE047"/>
+      <path d="M18 40C18 20 35 15 52 18C58 20 58 32 58 40Z" fill="#172554"/>
+      <!-- Round Glasses -->
+      <circle cx="32" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+      <circle cx="46" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+      <line x1="38" y1="40" x2="40" y2="40" stroke="#0F172A" stroke-width="2"/>
+    </g>
+
+    <!-- Dev 4: Far Right Seated Developer (Yellow hoodie, headphones, second laptop) -->
+    <g transform="translate(980, 360)">
+      <!-- Chair Backrest -->
+      <rect x="70" y="40" width="18" height="90" rx="8" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Torso / Yellow Hoodie with Dark Ink Contrast -->
+      <path d="M10 120C10 70 55 70 55 120Z" fill="${GOOGLE_COLORS.yellow}"/>
+      <!-- Arm to desk -->
+      <path d="M25 80L-10 100L-30 95" stroke="${GOOGLE_COLORS.yellow}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Head & Hair -->
+      <circle cx="32" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M15 42C15 22 28 16 48 18C52 30 50 42 50 42Z" fill="#312E81"/>
+      <!-- Over-ear Headphones in Dark Ink #111827 -->
+      <path d="M18 42C18 20 48 20 48 42" stroke="#111827" stroke-width="5" fill="none"/>
+      <rect x="14" y="38" width="8" height="14" rx="3" fill="#111827"/>
+      <rect x="44" y="38" width="8" height="14" rx="3" fill="#111827"/>
+      <!-- Secondary Laptop on right -->
+      <g transform="translate(-40, 85)">
+        <polygon points="0,20 35,20 40,28 -5,28" fill="#475569"/>
+        <rect x="0" y="0" width="34" height="20" rx="2" fill="${GOOGLE_COLORS.green}"/>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Overlays -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.red}"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 02 // 24-HOUR HACKATHON BUILD TABLE</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CSE SYSTEMS LAB · ACTIVE CODE CRUCIBLE</text>
+    </g>
+  </svg>`,
+
+  // 3. Hybrid Tech Broadcast & Livestream Studio
+  'broadcast-livestream-studio.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="studioBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#060912"/>
+        <stop offset="60%" stop-color="#0B1120"/>
+        <stop offset="100%" stop-color="#111827"/>
+      </linearGradient>
+      <linearGradient id="ledWall" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#0B132B"/>
+        <stop offset="50%" stop-color="#172554"/>
+        <stop offset="100%" stop-color="#0B132B"/>
+      </linearGradient>
+      <linearGradient id="studioDeskGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#1E293B"/>
+        <stop offset="50%" stop-color="#0F172A"/>
+        <stop offset="100%" stop-color="#1E293B"/>
+      </linearGradient>
+      <filter id="bloomStudio" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="15" result="glow"/>
+        <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+      </filter>
+    </defs>
+
+    <!-- Studio Dark Backdrop -->
+    <rect width="1400" height="800" fill="url(#studioBg)"/>
+
+    <!-- Acoustic Slat Soundproofing Wall Textures -->
+    <g stroke="rgba(255,255,255,0.05)" stroke-width="2">
+      ${[40, 70, 100, 130, 160, 1240, 1270, 1300, 1330, 1360].map(x => `
+        <line x1="${x}" y1="0" x2="${x}" y2="500"/>
+      `).join('')}
+    </g>
+
+    <!-- Overhead Studio Lighting Grid Truss with Softboxes -->
+    <line x1="200" y1="40" x2="1200" y2="40" stroke="#475569" stroke-width="6"/>
+    <!-- 4 Angled Softbox Fixtures -->
+    <g>
+      <rect x="280" y="42" width="90" height="35" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="1.5" transform="rotate(15 280 42)"/>
+      <rect x="520" y="42" width="90" height="35" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="1.5" transform="rotate(5 520 42)"/>
+      <rect x="790" y="42" width="90" height="35" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="1.5" transform="rotate(-5 790 42)"/>
+      <rect x="1030" y="42" width="90" height="35" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="1.5" transform="rotate(-15 1030 42)"/>
+    </g>
+
+    <!-- Massive Curved LED Video Backdrop Wall -->
+    <g filter="url(#bloomStudio)">
+      <rect x="180" y="70" width="1040" height="380" rx="24" fill="url(#ledWall)" stroke="#334155" stroke-width="3"/>
+      <!-- Inner High-Tech Display -->
+      <rect x="196" y="86" width="1008" height="348" rx="18" fill="#0A0E1A"/>
+
+      <!-- Left Segment: Dynamic Multichannel Audio Waveform Bars -->
+      <g transform="translate(230, 180)">
+        <text x="0" y="-30" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8">AUDIO INPUT SPECTRUM</text>
+        ${[18, 45, 80, 120, 95, 60, 110, 140, 130, 85, 40, 75, 105, 65, 30].map((h, idx) => `
+          <rect x="${idx * 16}" y="${140 - h}" width="10" height="${h}" rx="3" fill="${idx % 4 === 0 ? GOOGLE_COLORS.blue : idx % 4 === 1 ? GOOGLE_COLORS.green : idx % 4 === 2 ? GOOGLE_COLORS.yellow : GOOGLE_COLORS.red}"/>
+        `).join('')}
+      </g>
+
+      <!-- Center Segment: GDG RVCE LIVE Emblem & Broadcast Graphics -->
+      <g transform="translate(580, 140)">
+        <circle cx="120" cy="80" r="70" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2" stroke-dasharray="6 4"/>
+        <!-- GDG Chevron Emblem -->
+        <path d="M85 55L65 80L85 105" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M65 80L85 105" stroke="${GOOGLE_COLORS.blue}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M155 55L175 80L155 105" stroke="${GOOGLE_COLORS.green}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M175 80L155 105" stroke="${GOOGLE_COLORS.yellow}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <text x="120" y="180" font-family="sans-serif" font-size="22" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">GDG RVCE LIVE</text>
+        <text x="120" y="202" font-family="monospace" font-size="11" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">HYBRID TECH BROADCAST · CH 01</text>
+      </g>
+
+      <!-- Right Segment: Stream Telemetry & Chat Feed -->
+      <g transform="translate(900, 130)">
+        <text x="0" y="20" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8">STREAM TELEMETRY</text>
+        <rect x="0" y="32" width="260" height="34" rx="6" fill="#1E293B"/>
+        <circle cx="16" cy="49" r="4" fill="${GOOGLE_COLORS.green}"/>
+        <text x="28" y="53" font-family="monospace" font-size="10" fill="#FFFFFF">1080p60 · 14.8 Mbps · 0% Drop</text>
+
+        <rect x="0" y="74" width="260" height="34" rx="6" fill="#1E293B"/>
+        <circle cx="16" cy="91" r="4" fill="${GOOGLE_COLORS.blue}"/>
+        <text x="28" y="95" font-family="monospace" font-size="10" fill="#FFFFFF">Live Nodes: GKE + Cloud Run</text>
+
+        <rect x="0" y="116" width="260" height="34" rx="6" fill="#1E293B"/>
+        <circle cx="16" cy="133" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+        <text x="28" y="137" font-family="monospace" font-size="10" fill="#FFFFFF">Interactive Q&amp;A Queue: Active</text>
+      </g>
+    </g>
+
+    <!-- Studio Floor with Reflective Shading -->
+    <rect x="0" y="520" width="1400" height="280" fill="#0A0E1A"/>
+    <line x1="0" y1="520" x2="1400" y2="520" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Modern Curved Studio Anchor Desk -->
+    <g transform="translate(260, 440)">
+      <!-- Main Desk Base Slab -->
+      <polygon points="40,160 840,160 880,40 0,40" fill="url(#studioDeskGrad)" stroke="#475569" stroke-width="2.5"/>
+      <!-- Desk Front Facing Bevel -->
+      <polygon points="40,160 840,160 840,180 40,180" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <!-- Google 4-Color Ambient Rim Light on Desk -->
+      <line x1="40" y1="160" x2="240" y2="160" stroke="${GOOGLE_COLORS.blue}" stroke-width="3"/>
+      <line x1="240" y1="160" x2="440" y2="160" stroke="${GOOGLE_COLORS.red}" stroke-width="3"/>
+      <line x1="440" y1="160" x2="640" y2="160" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3"/>
+      <line x1="640" y1="160" x2="840" y2="160" stroke="${GOOGLE_COLORS.green}" stroke-width="3"/>
+
+      <!-- Desk Broadcast Microphones with Pop Filters -->
+      <g transform="translate(220, -10)">
+        <line x1="0" y1="70" x2="30" y2="20" stroke="#64748B" stroke-width="4"/>
+        <line x1="30" y1="20" x2="60" y2="35" stroke="#64748B" stroke-width="4"/>
+        <rect x="58" y="28" width="16" height="14" rx="4" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+        <circle cx="78" cy="35" r="8" fill="none" stroke="${GOOGLE_COLORS.red}" stroke-width="2"/>
+      </g>
+      <g transform="translate(560, -10)">
+        <line x1="0" y1="70" x2="-30" y2="20" stroke="#64748B" stroke-width="4"/>
+        <line x1="-30" y1="20" x2="-60" y2="35" stroke="#64748B" stroke-width="4"/>
+        <rect x="-74" y="28" width="16" height="14" rx="4" fill="#334155" stroke="#94A3B8" stroke-width="1.5"/>
+        <circle cx="-78" cy="35" r="8" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+      </g>
+
+      <!-- Host 1 (Left Host, Seated Behind Desk) -->
+      <g transform="translate(180, -90)">
+        <!-- Torso in dark navy suit blazer -->
+        <path d="M10 130C10 70 70 70 70 130Z" fill="#1E293B"/>
+        <!-- White shirt collar & red tie -->
+        <polygon points="35,70 45,70 40,90" fill="#FFFFFF"/>
+        <polygon points="38,75 42,75 40,110" fill="${GOOGLE_COLORS.red}"/>
+        <!-- Head -->
+        <circle cx="40" cy="40" r="20" fill="#FDBA74"/>
+        <path d="M20 38C20 18 35 15 55 18C60 25 58 38 58 38Z" fill="#0F172A"/>
+      </g>
+
+      <!-- Host 2 (Right Host, Seated Behind Desk, Laptop Open) -->
+      <g transform="translate(600, -90)">
+        <!-- Torso in green hoodie -->
+        <path d="M10 130C10 70 70 70 70 130Z" fill="#065F46"/>
+        <circle cx="40" cy="40" r="20" fill="#FED7AA"/>
+        <path d="M20 38C20 18 35 14 56 16C60 22 58 38 58 38Z" fill="#312E81"/>
+        <!-- Glasses -->
+        <circle cx="34" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+        <circle cx="48" cy="40" r="6" fill="none" stroke="#0F172A" stroke-width="2"/>
+        <line x1="40" y1="40" x2="42" y2="40" stroke="#0F172A" stroke-width="2"/>
+        <!-- Open Laptop on Desk -->
+        <polygon points="10,120 70,120 80,135 0,135" fill="#475569"/>
+        <rect x="15" y="85" width="50" height="35" rx="3" fill="#60A5FA"/>
+      </g>
+    </g>
+
+    <!-- Studio Camera Viewfinder HUD Overlay (Brackets, REC indicator, lower third) -->
+    <!-- Viewfinder Corner Brackets -->
+    <path d="M40 70V40H70" stroke="#94A3B8" stroke-width="3" fill="none"/>
+    <path d="M1360 70V40H1330" stroke="#94A3B8" stroke-width="3" fill="none"/>
+    <path d="M40 730V760H70" stroke="#94A3B8" stroke-width="3" fill="none"/>
+    <path d="M1360 730V760H1330" stroke="#94A3B8" stroke-width="3" fill="none"/>
+
+    <!-- REC Indicator (Top Left) -->
+    <g transform="translate(85, 45)">
+      <rect x="0" y="0" width="150" height="30" rx="6" fill="#1C1917" stroke="#44403C" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="5" fill="${GOOGLE_COLORS.red}"/>
+      <text x="28" y="19" font-family="monospace" font-size="11" font-weight="900" fill="#FFFFFF">● REC 01:42:18</text>
+    </g>
+
+    <!-- Lower-Third Broadcast Graphic Banner (Bottom) -->
+    <g transform="translate(140, 690)">
+      <rect x="0" y="0" width="1120" height="55" rx="12" fill="#0A0F1D" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="0" width="8" height="55" rx="4" fill="${GOOGLE_COLORS.blue}"/>
+      <text x="25" y="24" font-family="sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" letter-spacing="1">HOSTS: AARAV KULKARNI &amp; SNEHA MUKHERJEE</text>
+      <text x="25" y="44" font-family="monospace" font-size="11" fill="${GOOGLE_COLORS.yellow}">GDG ON CAMPUS RVCE // LIVE STREAM DESK · BENGALURU, IN</text>
+      <!-- Lower Third GDG Chevron -->
+      <path d="M1070 20L1080 28L1070 36" stroke="${GOOGLE_COLORS.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1060 20L1050 28L1060 36" stroke="${GOOGLE_COLORS.red}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </svg>`,
+
+  // 4. Hands-On Cloud & AI Lab
+  'cloud-workshop-lab.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="labBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#060913"/>
+        <stop offset="60%" stop-color="#0E1626"/>
+        <stop offset="100%" stop-color="#141E34"/>
+      </linearGradient>
+      <linearGradient id="projGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0B132B"/>
+        <stop offset="100%" stop-color="#1C2541"/>
+      </linearGradient>
+      <pattern id="labGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      </pattern>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#labBg)"/>
+    <rect width="1400" height="800" fill="url(#labGrid)"/>
+
+    <!-- Lab Perspective Ceiling Strip Lights -->
+    <g stroke="#93C5FD" stroke-width="4" opacity="0.4">
+      <line x1="200" y1="0" x2="480" y2="160"/>
+      <line x1="1200" y1="0" x2="920" y2="160"/>
+      <line x1="450" y1="0" x2="600" y2="160"/>
+      <line x1="950" y1="0" x2="800" y2="160"/>
+    </g>
+
+    <!-- Front Classroom Wall Projection (Kubernetes & Gemini Mesh) -->
+    <g transform="translate(350, 70)">
+      <rect x="0" y="0" width="700" height="280" rx="16" fill="url(#projGrad)" stroke="#475569" stroke-width="2.5"/>
+      <rect x="14" y="14" width="672" height="252" rx="10" fill="#0A0E1A"/>
+
+      <text x="30" y="44" font-family="monospace" font-size="12" font-weight="bold" fill="${GOOGLE_COLORS.blue}">KUBERNETES AUTOPILOT // CLUSTER TOPOLOGY</text>
+      <text x="640" y="44" font-family="monospace" font-size="11" fill="${GOOGLE_COLORS.green}" text-anchor="end">READY // 16 NODES</text>
+      <line x1="30" y1="54" x2="640" y2="54" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- Hexagonal Pod Containers & Gemini Link -->
+      <g transform="translate(60, 80)">
+        <!-- Ingress Hexagon -->
+        <polygon points="40,20 60,32 60,56 40,68 20,56 20,32" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.2" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <text x="40" y="48" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">INGRESS</text>
+
+        <line x1="60" y1="44" x2="130" y2="44" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 2"/>
+
+        <!-- Service Hexagons -->
+        <polygon points="150,20 170,32 170,56 150,68 130,56 130,32" fill="${GOOGLE_COLORS.green}" fill-opacity="0.2" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <text x="150" y="48" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">AUTH</text>
+
+        <polygon points="240,20 260,32 260,56 240,68 220,56 220,32" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.2" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2"/>
+        <text x="240" y="48" font-family="monospace" font-size="9" font-weight="bold" fill="#111827" text-anchor="middle">API</text>
+
+        <polygon points="330,20 350,32 350,56 330,68 310,56 310,32" fill="${GOOGLE_COLORS.red}" fill-opacity="0.2" stroke="${GOOGLE_COLORS.red}" stroke-width="2"/>
+        <text x="330" y="48" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">TASK</text>
+
+        <line x1="350" y1="44" x2="420" y2="44" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 2"/>
+
+        <!-- Gemini API Node -->
+        <rect x="420" y="16" width="130" height="56" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <text x="485" y="40" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">GEMINI 1.5</text>
+        <text x="485" y="58" font-family="monospace" font-size="8" fill="#94A3B8" text-anchor="middle">FUNCTION MESH</text>
+      </g>
+
+      <!-- Terminal logs bar at bottom -->
+      <g transform="translate(30, 200)">
+        <rect x="0" y="0" width="610" height="40" rx="6" fill="#070A12"/>
+        <text x="15" y="24" font-family="monospace" font-size="10" fill="${GOOGLE_COLORS.green}">$ kubectl apply -f cloud-run-mesh.yaml &gt;&gt; pods initialized in 410ms</text>
+      </g>
+    </g>
+
+    <!-- Instructor Standing at Podium -->
+    <g transform="translate(230, 240)">
+      <!-- Instructor Podium -->
+      <polygon points="10,120 40,120 35,40 5,40" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+      <rect x="0" y="36" width="50" height="8" rx="2" fill="#334155"/>
+      <!-- Instructor Silhouette with Stylus -->
+      <circle cx="25" cy="14" r="14" fill="#FED7AA"/>
+      <path d="M10 14C10 0 25 -4 38 0C40 10 38 18 38 18Z" fill="#0F172A"/>
+      <path d="M6 80C6 40 44 40 44 80Z" fill="#1E293B"/>
+      <!-- Arm pointing with laser stylus at projection -->
+      <path d="M35 45L60 30L95 20" stroke="#1E293B" stroke-width="8" stroke-linecap="round"/>
+      <line x1="95" y1="20" x2="160" y2="10" stroke="${GOOGLE_COLORS.red}" stroke-width="2" stroke-dasharray="3 3"/>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- Two Long Lab Benches of Pair-Programming Developers       -->
+    <!-- ======================================================== -->
+    <!-- Bench 1 (Midground, y=390-480) -->
+    <g transform="translate(140, 390)">
+      <!-- Benchtop -->
+      <rect x="0" y="40" width="1120" height="30" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+      <!-- 3 Pairs of Workstations (6 Developers) -->
+      ${[60, 240, 440, 620, 820, 1000].map((x, i) => `
+        <g transform="translate(${x}, 0)">
+          <!-- Developer Silhouette -->
+          <circle cx="20" cy="8" r="14" fill="#334155"/>
+          <path d="M2 45C2 24 38 24 38 45Z" fill="#151F32"/>
+          <!-- Workstation Monitor -->
+          <rect x="25" y="10" width="32" height="24" rx="2" fill="#0A0E1A" stroke="#475569" stroke-width="1.5"/>
+          <rect x="27" y="12" width="28" height="20" rx="1" fill="${i % 2 === 0 ? GOOGLE_COLORS.blue : GOOGLE_COLORS.green}" fill-opacity="0.8"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- Bench 2 (Foreground, y=520-720) -->
+    <g transform="translate(80, 520)">
+      <!-- Heavy Foreground Benchtop -->
+      <polygon points="0,50 1240,50 1200,0 40,0" fill="#1E293B" stroke="#475569" stroke-width="2"/>
+      <rect x="0" y="50" width="1240" height="24" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="70" width="310" height="4" fill="${GOOGLE_COLORS.blue}"/>
+      <rect x="310" y="70" width="310" height="4" fill="${GOOGLE_COLORS.red}"/>
+      <rect x="620" y="70" width="310" height="4" fill="${GOOGLE_COLORS.yellow}"/>
+      <rect x="930" y="70" width="310" height="4" fill="${GOOGLE_COLORS.green}"/>
+
+      <!-- 4 Pairs of Pair-Programmers (8 Students Total) in High Detail -->
+      <!-- Pair 1 (Left, Collab Debugging) -->
+      <g transform="translate(60, 40)">
+        <!-- Dev A (Typing) -->
+        <circle cx="30" cy="15" r="18" fill="#FDBA74"/>
+        <path d="M12 12C12 -4 30 -6 45 -2C48 10 46 18 46 18Z" fill="#0F172A"/>
+        <path d="M8 90C8 45 52 45 52 90Z" fill="${GOOGLE_COLORS.blue}"/>
+        <!-- Dev B (Leaning In, Pair Partner) -->
+        <circle cx="85" cy="22" r="18" fill="#FED7AA"/>
+        <path d="M68 20C68 4 82 2 98 6Z" fill="#312E81"/>
+        <path d="M65 90C65 50 105 50 105 90Z" fill="#1E293B"/>
+        <!-- Dual Monitors -->
+        <rect x="110" y="-10" width="55" height="45" rx="3" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="114" y="-6" width="47" height="37" rx="2" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.8"/>
+      </g>
+
+      <!-- Pair 2 (Center-Left, High-Five / Victory) -->
+      <g transform="translate(380, 40)">
+        <circle cx="30" cy="15" r="18" fill="#FDE047"/>
+        <path d="M8 90C8 45 52 45 52 90Z" fill="${GOOGLE_COLORS.green}"/>
+        <circle cx="85" cy="15" r="18" fill="#FDBA74"/>
+        <path d="M65 90C65 45 105 45 105 90Z" fill="${GOOGLE_COLORS.yellow}"/>
+        <!-- High Five Hands Collision with Sparkle -->
+        <path d="M42 45L58 10" stroke="#FDE047" stroke-width="8" stroke-linecap="round"/>
+        <path d="M72 45L58 10" stroke="#FDBA74" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="58" cy="10" r="5" fill="#FFFFFF"/>
+        <!-- Monitor -->
+        <rect x="110" y="-10" width="55" height="45" rx="3" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="114" y="-6" width="47" height="37" rx="2" fill="${GOOGLE_COLORS.green}" fill-opacity="0.8"/>
+      </g>
+
+      <!-- Pair 3 (Center-Right, Code Inspection) -->
+      <g transform="translate(700, 40)">
+        <circle cx="30" cy="15" r="18" fill="#FED7AA"/>
+        <path d="M8 90C8 45 52 45 52 90Z" fill="${GOOGLE_COLORS.red}"/>
+        <circle cx="85" cy="15" r="18" fill="#FDE047"/>
+        <path d="M65 90C65 45 105 45 105 90Z" fill="#1E293B"/>
+        <!-- Monitor -->
+        <rect x="110" y="-10" width="55" height="45" rx="3" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="114" y="-6" width="47" height="37" rx="2" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.8"/>
+      </g>
+
+      <!-- Pair 4 (Right, Container Deployment) -->
+      <g transform="translate(1000, 40)">
+        <circle cx="30" cy="15" r="18" fill="#FDBA74"/>
+        <path d="M8 90C8 45 52 45 52 90Z" fill="#065F46"/>
+        <circle cx="85" cy="15" r="18" fill="#FED7AA"/>
+        <path d="M65 90C65 45 105 45 105 90Z" fill="${GOOGLE_COLORS.blue}"/>
+        <!-- Monitor -->
+        <rect x="110" y="-10" width="55" height="45" rx="3" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="114" y="-6" width="47" height="37" rx="2" fill="${GOOGLE_COLORS.red}" fill-opacity="0.8"/>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.green}"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 04 // HANDS-ON CLOUD &amp; AI SYSTEMS LAB</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">ROOM 304 · KOTLIN &amp; CLOUD SYSTEMS LAB</text>
+    </g>
+  </svg>`,
+
+  // 5. Prototype Demo Day Stage
+  'demo-day-showcase.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="demoBg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#080C14"/>
+        <stop offset="50%" stop-color="#111726"/>
+        <stop offset="100%" stop-color="#1A2238"/>
+      </linearGradient>
+      <linearGradient id="phoneScreenGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0F172A"/>
+        <stop offset="100%" stop-color="#0A0D14"/>
+      </linearGradient>
+      <filter id="demoGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="18" result="glow"/>
+        <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#demoBg)"/>
+
+    <!-- Stage Spotlight Wash (Yellow & Red Ambient Stage Glow) -->
+    <circle cx="950" cy="350" r="340" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.08" filter="url(#demoGlow)"/>
+    <circle cx="600" cy="380" r="280" fill="${GOOGLE_COLORS.red}" fill-opacity="0.06" filter="url(#demoGlow)"/>
+
+    <!-- ======================================================== -->
+    <!-- Giant Vertical Interactive Mobile/Tablet UI Frame        -->
+    <!-- ======================================================== -->
+    <g transform="translate(740, 80)" filter="url(#demoGlow)">
+      <!-- Outer Device Bezel -->
+      <rect x="0" y="0" width="460" height="570" rx="36" fill="#050811" stroke="#475569" stroke-width="4"/>
+      <!-- Inner Screen -->
+      <rect x="14" y="14" width="432" height="542" rx="28" fill="url(#phoneScreenGrad)"/>
+
+      <!-- Device Status Bar -->
+      <circle cx="216" cy="30" r="5" fill="#000000"/>
+      <text x="45" y="34" font-family="sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">09:41</text>
+      <g fill="#FFFFFF" transform="translate(370, 24)">
+        <rect x="0" y="0" width="18" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+        <rect x="2" y="2" width="10" height="6" fill="#FFFFFF"/>
+      </g>
+
+      <!-- App Header -->
+      <g transform="translate(35, 60)">
+        <text x="0" y="18" font-family="sans-serif" font-size="18" font-weight="900" fill="#FFFFFF">RVCE CAMPUS HUB</text>
+        <text x="0" y="34" font-family="monospace" font-size="10" fill="${GOOGLE_COLORS.blue}">AUTONOMOUS STUDENT ASSISTANT</text>
+      </g>
+
+      <!-- Interactive Multimodal Search Pill -->
+      <g transform="translate(35, 110)">
+        <rect x="0" y="0" width="362" height="42" rx="21" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+        <circle cx="22" cy="21" r="7" fill="${GOOGLE_COLORS.yellow}"/>
+        <text x="40" y="26" font-family="sans-serif" font-size="11" fill="#94A3B8">Ask Gemini 1.5 Pro anything...</text>
+      </g>
+
+      <!-- App Cards inside Demo Screen -->
+      <g transform="translate(35, 175)">
+        <rect x="0" y="0" width="362" height="100" rx="14" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="1.5"/>
+        <rect x="15" y="15" width="40" height="40" rx="10" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.2"/>
+        <path d="M30 30L35 38L45 28" stroke="${GOOGLE_COLORS.blue}" stroke-width="3" stroke-linecap="round"/>
+        <text x="70" y="32" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">Lecture Schedule Optimizer</text>
+        <text x="70" y="48" font-family="sans-serif" font-size="11" fill="#94A3B8">Resolved 14 timetable conflicts</text>
+        <rect x="70" y="60" width="80" height="20" rx="4" fill="${GOOGLE_COLORS.green}"/>
+        <text x="110" y="74" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">VERIFIED</text>
+      </g>
+
+      <g transform="translate(35, 295)">
+        <rect x="0" y="0" width="362" height="100" rx="14" fill="#1E293B" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1.5"/>
+        <rect x="15" y="15" width="40" height="40" rx="10" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.2"/>
+        <circle cx="35" cy="35" r="8" fill="${GOOGLE_COLORS.yellow}"/>
+        <text x="70" y="32" font-family="sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">Exam Hall Navigation &amp; Path</text>
+        <text x="70" y="48" font-family="sans-serif" font-size="11" fill="#94A3B8">Augmented Reality Compass Live</text>
+      </g>
+
+      <!-- Metrics Telemetry Bar at Screen Base -->
+      <g transform="translate(35, 420)">
+        <rect x="0" y="0" width="362" height="50" rx="10" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+        <text x="20" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.green}">INP: 24MS</text>
+        <text x="140" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.blue}">ZERO-CLS</text>
+        <text x="260" y="24" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.yellow}">WCAG AAA</text>
+        <text x="20" y="40" font-family="monospace" font-size="9" fill="#64748B">LATENCY 12MS // CLIENTSIDE STREAMING</text>
+      </g>
+    </g>
+
+    <!-- Floating Holographic Metric Badges Beside Phone -->
+    <g transform="translate(1120, 240)">
+      <rect x="0" y="0" width="220" height="50" rx="10" fill="#0A0F1D" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+      <circle cx="20" cy="25" r="5" fill="${GOOGLE_COLORS.green}"/>
+      <text x="35" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF">LIGHTHOUSE 100</text>
+      <text x="35" y="40" font-family="monospace" font-size="9" fill="#94A3B8">PERFECT CORE VITALS</text>
+    </g>
+    <g transform="translate(1120, 360)">
+      <rect x="0" y="0" width="220" height="50" rx="10" fill="#0A0F1D" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2"/>
+      <circle cx="20" cy="25" r="5" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="35" y="24" font-family="monospace" font-size="11" font-weight="bold" fill="#FFFFFF">TOOL-CALLING AI</text>
+      <text x="35" y="40" font-family="monospace" font-size="9" fill="#94A3B8">STRUCTURED JSON SCHEMA</text>
+    </g>
+
+    <!-- Confident Presenter on Stage Gesturing at the Big Screen -->
+    <g transform="translate(560, 320)">
+      <!-- Shadow -->
+      <ellipse cx="25" cy="180" rx="40" ry="12" fill="#000000" fill-opacity="0.4"/>
+      <!-- Torso & Blue Hoodie -->
+      <path d="M5 180L12 90C12 60 45 60 45 90L52 180Z" fill="${GOOGLE_COLORS.blue}"/>
+      <!-- Outstretched Right Arm pointing at phone -->
+      <path d="M42 90L90 70L145 60" stroke="${GOOGLE_COLORS.blue}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="150" cy="60" r="7" fill="#FDBA74"/>
+      <!-- Left Arm in Pocket -->
+      <path d="M12 90L5 130" stroke="${GOOGLE_COLORS.blue}" stroke-width="12" stroke-linecap="round"/>
+      <!-- Head with Hair -->
+      <circle cx="28" cy="45" r="20" fill="#FDBA74"/>
+      <path d="M10 42C10 20 28 15 48 18C52 28 50 40 50 40Z" fill="#1E293B"/>
+    </g>
+
+    <!-- Semicircular Tiered Amphitheater Audience & Jury (Left side) -->
+    <!-- Tier 1 (Jury Front Row, y=440-540) -->
+    <g transform="translate(60, 440)">
+      <path d="M0 60 Q 240 60 460 120" stroke="#334155" stroke-width="18" fill="none"/>
+      <!-- 3 Industry Judges with Evaluation Tablets -->
+      ${[60, 190, 320].map((x, i) => `
+        <g transform="translate(${x}, 0)">
+          <circle cx="25" cy="15" r="16" fill="#FED7AA"/>
+          <path d="M10 12C10 -2 25 -4 40 0Z" fill="#0F172A"/>
+          <path d="M6 70C6 35 44 35 44 70Z" fill="#1E293B"/>
+          <!-- Tablet in hands -->
+          <rect x="15" y="35" width="26" height="34" rx="2" fill="#0A0E1A" stroke="${i === 1 ? GOOGLE_COLORS.yellow : GOOGLE_COLORS.blue}" stroke-width="1.5"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- Tier 2 (Peer Students, y=560-680) -->
+    <g transform="translate(40, 560)">
+      <path d="M0 60 Q 280 60 520 120" stroke="#1E293B" stroke-width="18" fill="none"/>
+      <!-- 5 Engaged Students Taking Notes -->
+      ${[40, 140, 240, 340, 440].map((x, i) => `
+        <g transform="translate(${x}, 0)">
+          <circle cx="22" cy="15" r="15" fill="#FDBA74"/>
+          <path d="M5 70C5 35 40 35 40 70Z" fill="${i % 2 === 0 ? GOOGLE_COLORS.green : GOOGLE_COLORS.red}"/>
+        </g>
+      `).join('')}
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 05 // PROTOTYPE DEMO DAY SHOWCASE</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">EXHIBITION STAGE · PEER JURY REVIEW</text>
+    </g>
+  </svg>`,
+
+  // 6. Evening Open-Source Code Jam
+  'open-source-night-jam.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="terraceNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050811"/>
+        <stop offset="60%" stop-color="#0C1222"/>
+        <stop offset="100%" stop-color="#141B30"/>
+      </linearGradient>
+      <linearGradient id="skyCity" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0A122A"/>
+        <stop offset="70%" stop-color="#1E1B4B"/>
+        <stop offset="100%" stop-color="#312E81"/>
+      </linearGradient>
+      <radialGradient id="fairyGlow" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="#FBBC04" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#FBBC04" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#terraceNight)"/>
+
+    <!-- ======================================================== -->
+    <!-- Architectural Glass Wall with 3 Sweeping Arches          -->
+    <!-- ======================================================== -->
+    <!-- Beyond Glass: Twilight Bengaluru Skyline -->
+    <g>
+      <!-- Arches Window Mask/Bounds -->
+      <path d="M 60 500 V 220 A 180 180 0 0 1 420 220 V 500 Z" fill="url(#skyCity)"/>
+      <path d="M 520 500 V 220 A 180 180 0 0 1 880 220 V 500 Z" fill="url(#skyCity)"/>
+      <path d="M 980 500 V 220 A 180 180 0 0 1 1340 220 V 500 Z" fill="url(#skyCity)"/>
+
+      <!-- Skyline Silhouettes (Distant Towers & Campus Trees) -->
+      <g fill="#060913">
+        <rect x="120" y="380" width="50" height="120"/>
+        <rect x="190" y="320" width="60" height="180"/>
+        <rect x="270" y="360" width="40" height="140"/>
+
+        <rect x="580" y="340" width="70" height="160"/>
+        <rect x="670" y="290" width="80" height="210"/>
+        <polygon points="710,240 670,290 750,290" fill="#060913"/>
+        <rect x="770" y="370" width="50" height="130"/>
+
+        <rect x="1050" y="350" width="60" height="150"/>
+        <rect x="1140" y="310" width="70" height="190"/>
+        <rect x="1230" y="370" width="50" height="130"/>
+      </g>
+      <!-- Stars in Sky -->
+      <g fill="#FFFFFF" opacity="0.7">
+        <circle cx="200" cy="180" r="1.5"/><circle cx="340" cy="140" r="1.5"/><circle cx="700" cy="120" r="2"/>
+        <circle cx="820" cy="160" r="1.5"/><circle cx="1120" cy="150" r="2"/><circle cx="1250" cy="130" r="1.5"/>
+      </g>
+      <!-- Crescent Moon in center arch -->
+      <path d="M740 140 A 16 16 0 1 0 760 168 A 14 14 0 1 1 740 140 Z" fill="${GOOGLE_COLORS.yellow}"/>
+
+      <!-- Heavy Architectural Frame Arches (Interior Timber/Steel) -->
+      <path d="M 60 500 V 220 A 180 180 0 0 1 420 220 V 500" stroke="#334155" stroke-width="12" fill="none"/>
+      <path d="M 520 500 V 220 A 180 180 0 0 1 880 220 V 500" stroke="#334155" stroke-width="12" fill="none"/>
+      <path d="M 980 500 V 220 A 180 180 0 0 1 1340 220 V 500" stroke="#334155" stroke-width="12" fill="none"/>
+    </g>
+
+    <!-- Hanging Ceiling String Fairy Lights (Warm Golden #FBBC04) -->
+    <path d="M 0 60 Q 350 120 700 70 Q 1050 120 1400 60" stroke="#475569" stroke-width="2" fill="none"/>
+    ${[100, 220, 340, 460, 580, 700, 820, 940, 1060, 1180, 1300].map(x => `
+      <circle cx="${x}" cy="${80 + Math.sin(x) * 15}" r="6" fill="${GOOGLE_COLORS.yellow}"/>
+      <circle cx="${x}" cy="${80 + Math.sin(x) * 15}" r="16" fill="url(#fairyGlow)"/>
+    `).join('')}
+
+    <!-- Central Projection Wall (Git Commit-Tree DAG) -->
+    <g transform="translate(380, 90)">
+      <rect x="0" y="0" width="640" height="260" rx="16" fill="#0A0E1A" stroke="#334155" stroke-width="2"/>
+      <text x="24" y="30" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8">GIT TREE // REPO: GDG-RVCE/CORE-WEB</text>
+      <text x="610" y="30" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="end">ALL CHECKS PASSED ✔</text>
+      <line x1="24" y1="40" x2="610" y2="40" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- Git DAG Visual Tree -->
+      <g transform="translate(50, 70)">
+        <!-- Main Branch Line (Blue) -->
+        <line x1="0" y1="80" x2="520" y2="80" stroke="${GOOGLE_COLORS.blue}" stroke-width="4"/>
+        <!-- Feature Branch Curve (Green) -->
+        <path d="M 80 80 C 140 80, 160 20, 220 20 L 340 20 C 400 20, 420 80, 460 80" stroke="${GOOGLE_COLORS.green}" stroke-width="4" fill="none"/>
+
+        <!-- Commit Nodes -->
+        <circle cx="80" cy="80" r="10" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="3"/>
+        <text x="80" y="105" font-family="monospace" font-size="9" fill="#94A3B8" text-anchor="middle">v1.2.0</text>
+
+        <circle cx="220" cy="20" r="10" fill="#1E293B" stroke="${GOOGLE_COLORS.green}" stroke-width="3"/>
+        <text x="220" y="10" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.green}" text-anchor="middle">feat: agent</text>
+
+        <circle cx="340" cy="20" r="10" fill="#1E293B" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3"/>
+        <text x="340" y="10" font-family="monospace" font-size="9" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">fix: zero-cls</text>
+
+        <!-- Merged Commit -->
+        <circle cx="460" cy="80" r="14" fill="${GOOGLE_COLORS.green}" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="460" y="85" font-family="monospace" font-size="10" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+        <text x="460" y="108" font-family="monospace" font-size="9" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">PR #42 MERGED</text>
+      </g>
+    </g>
+
+    <!-- Terrace Floor -->
+    <rect x="0" y="480" width="1400" height="320" fill="#0C1220"/>
+    <line x1="0" y1="480" x2="1400" y2="480" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- ======================================================== -->
+    <!-- Collaborative Clusters on the Terrace                    -->
+    <!-- ======================================================== -->
+    <!-- Cluster 1: Left Lounge Beanbag Seating (3 Developers) -->
+    <g transform="translate(140, 480)">
+      <!-- Low Circular Coffee Table -->
+      <ellipse cx="140" cy="140" rx="90" ry="35" fill="#1E293B" stroke="#475569" stroke-width="2"/>
+      <ellipse cx="140" cy="138" rx="80" ry="30" fill="#0F172A"/>
+      <!-- Mugs on table -->
+      <circle cx="120" cy="135" r="6" fill="${GOOGLE_COLORS.blue}"/>
+      <circle cx="160" cy="135" r="6" fill="${GOOGLE_COLORS.yellow}"/>
+
+      <!-- Dev A (Left Beanbag) -->
+      <g transform="translate(0, 70)">
+        <ellipse cx="30" cy="70" rx="40" ry="25" fill="#1E293B"/>
+        <circle cx="30" cy="20" r="18" fill="#FDBA74"/>
+        <path d="M10 80C10 40 50 40 50 80Z" fill="${GOOGLE_COLORS.blue}"/>
+        <!-- Laptop on lap -->
+        <polygon points="20,60 50,60 55,75 15,75" fill="#334155"/>
+        <rect x="22" y="42" width="26" height="18" rx="2" fill="#60A5FA"/>
+      </g>
+
+      <!-- Dev B (Right Beanbag) -->
+      <g transform="translate(210, 70)">
+        <ellipse cx="30" cy="70" rx="40" ry="25" fill="#1E293B"/>
+        <circle cx="30" cy="20" r="18" fill="#FED7AA"/>
+        <path d="M10 80C10 40 50 40 50 80Z" fill="${GOOGLE_COLORS.green}"/>
+        <!-- Laptop on lap -->
+        <polygon points="10,60 40,60 45,75 5,75" fill="#334155"/>
+        <rect x="12" y="42" width="26" height="18" rx="2" fill="${GOOGLE_COLORS.green}"/>
+      </g>
+    </g>
+
+    <!-- Cluster 2: Right Communal Bench Reviewing Pull Request (3 Developers) -->
+    <g transform="translate(820, 460)">
+      <!-- High Wooden Communal Bench -->
+      <rect x="60" y="80" width="460" height="120" rx="10" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+      <!-- Ultrawide Monitor on Bench -->
+      <rect x="180" y="0" width="220" height="90" rx="6" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+      <rect x="186" y="6" width="208" height="78" rx="3" fill="#111827"/>
+      <!-- Code Diff Lines -->
+      <rect x="195" y="16" width="90" height="8" rx="2" fill="${GOOGLE_COLORS.green}" fill-opacity="0.8"/>
+      <rect x="195" y="28" width="110" height="8" rx="2" fill="${GOOGLE_COLORS.red}" fill-opacity="0.8"/>
+      <rect x="195" y="40" width="80" height="8" rx="2" fill="${GOOGLE_COLORS.green}" fill-opacity="0.8"/>
+      <rect x="195" y="52" width="130" height="8" rx="2" fill="#64748B"/>
+
+      <!-- 3 Developers Huddled Around Ultrawide Screen -->
+      <!-- Dev 1 -->
+      <g transform="translate(100, 30)">
+        <circle cx="25" cy="18" r="16" fill="#FDE047"/>
+        <path d="M6 80C6 40 44 40 44 80Z" fill="${GOOGLE_COLORS.yellow}"/>
+      </g>
+      <!-- Dev 2 (Typing) -->
+      <g transform="translate(240, 40)">
+        <circle cx="25" cy="18" r="16" fill="#FDBA74"/>
+        <path d="M6 80C6 40 44 40 44 80Z" fill="${GOOGLE_COLORS.red}"/>
+      </g>
+      <!-- Dev 3 -->
+      <g transform="translate(390, 30)">
+        <circle cx="25" cy="18" r="16" fill="#FED7AA"/>
+        <path d="M6 80C6 40 44 40 44 80Z" fill="${GOOGLE_COLORS.blue}"/>
+      </g>
+    </g>
+
+    <!-- Side Espresso & Refreshment Credenza -->
+    <g transform="translate(560, 460)">
+      <rect x="0" y="20" width="120" height="80" rx="6" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+      <rect x="20" y="0" width="35" height="24" rx="3" fill="#475569"/>
+      <!-- Steam -->
+      <path d="M28 -8Q25 -14 30 -18" stroke="#94A3B8" stroke-width="2" fill="none"/>
+      <circle cx="80" cy="10" r="7" fill="${GOOGLE_COLORS.red}"/>
+      <circle cx="95" cy="10" r="7" fill="${GOOGLE_COLORS.blue}"/>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 06 // OPEN-SOURCE NIGHT JAM</text>
+    </g>
+    <g transform="translate(980, 45)">
+      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">TERRACE LOUNGE · 100% OPEN REPOSITORIES</text>
+    </g>
+  </svg>`
+};
+
+Object.entries(scenes).forEach(([filename, svgContent]) => {
+  fs.writeFileSync(path.join(SCENES_DIR, filename), svgContent.trim());
+});
+
+console.log('✓ Successfully generated all 45 bespoke SVG assets:');
 console.log('  - 1 Official GDG RVCE brand mark (public/assets/brand/gdg-rvce-mark.svg)');
-console.log('  - 12 Developer emotes & sticker badges (public/assets/emotes/)');
+console.log('  - 20 Developer emotes & sticker badges (public/assets/emotes/)');
 console.log('  - 8 Architectural 16:9 vector cover artworks (public/assets/covers/)');
 console.log('  - 10 Bauhaus developer avatar portraits (public/assets/avatars/)');
+console.log('  - 6 Multi-layered community scene illustrations (public/assets/scenes/)');

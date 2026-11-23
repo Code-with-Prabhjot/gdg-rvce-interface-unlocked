@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -68,8 +68,11 @@ interface EventCardProps {
 
 function EventCard({ event, index }: EventCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryStyles = getCategoryBadgeStyles(event.eventType);
   const formattedDateTime = formatEventDate(event.date, event.time);
+  const activeImage =
+    viewType === 'scene' && event.sceneImage ? event.sceneImage : event.coverImage;
 
   return (
     <motion.article
@@ -90,7 +93,7 @@ function EventCard({ event, index }: EventCardProps) {
         {/* ============================================================= */}
         <div className="relative w-full aspect-[16/9] bg-[var(--bg-subtle)] border-b border-[var(--border-hairline)] overflow-hidden">
           <Image
-            src={event.coverImage}
+            src={activeImage}
             alt={event.title}
             fill
             className="object-cover transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
@@ -101,7 +104,7 @@ function EventCard({ event, index }: EventCardProps) {
 
           {/* ============================================================= */}
           {/* 2. TOP OVERLAY PILLS                                          */}
-          {/* Category Badge (4 Google Colours) + Mode Badge (In-Person...) */}
+          {/* Category Badge + Diagram / Scene Toggle + Mode Badge          */}
           {/* ============================================================= */}
           <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10">
             {/* Category Badge */}
@@ -112,10 +115,48 @@ function EventCard({ event, index }: EventCardProps) {
               {event.eventType}
             </span>
 
-            {/* Mode Badge */}
-            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/60 dark:bg-black/80 backdrop-blur-md text-white/95 border border-white/20">
-              {event.mode}
-            </span>
+            <div className="flex items-center gap-2">
+              {/* Diagram / Scene Toggle Pill */}
+              {event.sceneImage && (
+                <div className="inline-flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-xs">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setViewType('cover');
+                    }}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                      viewType === 'cover'
+                        ? 'bg-white/25 text-white shadow-xs'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    Diagram
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setViewType('scene');
+                    }}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                      viewType === 'scene'
+                        ? 'bg-[#4285F4] text-white shadow-xs'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    Scene
+                  </button>
+                </div>
+              )}
+
+              {/* Mode Badge */}
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/60 dark:bg-black/80 backdrop-blur-md text-white/95 border border-white/20">
+                {event.mode}
+              </span>
+            </div>
           </div>
 
           {/* Bottom Banner Accent Strip */}

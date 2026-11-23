@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#1C1917" stroke="#44403C" stroke-width="2"/>
+    <!-- Outer Red Flame -->
+    <path d="M64 20C64 20 78 38 78 52C78 44 86 42 90 48C98 58 98 74 92 86C84 100 68 104 56 102C40 99 30 84 32 68C33 54 44 42 48 38C50 48 56 50 56 42C56 32 64 20 64 20Z" fill="#EA4335"/>
+    <!-- Inner Yellow Flame -->
+    <path d="M64 42C64 42 72 54 72 64C72 58 78 58 80 62C84 70 82 80 76 88C70 96 58 98 50 94C42 90 38 80 40 70C41 62 48 54 50 52C52 58 56 58 56 52C56 46 64 42 64 42Z" fill="#FBBC04"/>
+    <!-- White Hot Core -->
+    <path d="M64 66C68 66 72 72 72 78C72 84 68 90 64 90C60 90 56 84 56 78C56 72 60 66 64 66Z" fill="#FFFFFF"/>
+    <!-- Terminal Prompt in Fire Core -->
+    <rect x="46" y="94" width="36" height="16" rx="4" fill="#0C0A09" stroke="#78716C" stroke-width="1"/>
+    <text x="50" y="105" font-family="monospace" font-size="9" font-weight="bold" fill="#FBBC04">&gt;_</text>
+    <rect x="64" y="99" width="4" height="7" fill="#EA4335"/>
+  </svg>

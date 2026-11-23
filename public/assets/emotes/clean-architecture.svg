@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0B132B" stroke="#1E293B" stroke-width="2"/>
+    <!-- Stacked Isometric Blueprint Slabs -->
+    <!-- Bottom Layer: Infrastructure (Google Green) -->
+    <g transform="translate(0, 26)">
+      <polygon points="64,68 28,50 64,32 100,50" fill="#34A853" stroke="#10B981" stroke-width="1.5"/>
+      <polygon points="28,50 64,68 64,74 28,56" fill="#047857"/>
+      <polygon points="64,68 100,50 100,56 64,74" fill="#065F46"/>
+    </g>
+    <!-- Middle Layer: Use Cases / Domain (Google Yellow #FBBC04) -->
+    <g transform="translate(0, 10)">
+      <polygon points="64,56 32,40 64,24 96,40" fill="#FBBC04" stroke="#EAB308" stroke-width="1.5"/>
+      <polygon points="32,40 64,56 64,62 32,46" fill="#CA8A04"/>
+      <polygon points="64,56 96,40 96,46 64,62" fill="#A16207"/>
+    </g>
+    <!-- Top Layer: UI / Presentation (Google Blue) -->
+    <g transform="translate(0, -6)">
+      <polygon points="64,44 36,30 64,16 92,30" fill="#4285F4" stroke="#60A5FA" stroke-width="1.5"/>
+      <polygon points="36,30 64,44 64,50 36,36" fill="#2563EB"/>
+      <polygon points="64,44 92,30 92,36 64,50" fill="#1D4ED8"/>
+    </g>
+    <!-- Connecting Vertical Data Bus -->
+    <line x1="64" y1="20" x2="64" y2="102" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="3 3"/>
+    <circle cx="64" cy="20" r="3" fill="#FFFFFF"/>
+    <circle cx="64" cy="102" r="3" fill="#34A853"/>
+    <!-- Label -->
+    <text x="64" y="118" font-family="monospace" font-size="8" font-weight="bold" fill="#94A3B8" text-anchor="middle">CLEAN ARCH</text>
+  </svg>

@@ -85,6 +85,7 @@ export interface GDGEvent {
   mode: DeliveryMode;
   venue: string;
   coverImage: string;
+  sceneImage?: string;
   summary: string;
   description: string;
   speaker: EventSpeaker;
@@ -95,6 +96,26 @@ export interface GDGEvent {
   displayDate?: string;
   badgeText?: string;
   registrationStatus?: 'open' | 'waitlist' | 'concluded';
+}
+
+export type SceneCategory =
+  | 'Keynote Broadcast'
+  | 'Hackathon Sprint'
+  | 'Livestream Studio'
+  | 'Hands-On Lab'
+  | 'Demo Day'
+  | 'Open Source Jam';
+
+export interface CommunityScene {
+  id: string;
+  code: string;
+  title: string;
+  category: SceneCategory;
+  venue: string;
+  googleColor: GoogleAccent;
+  image: string;
+  caption: string;
+  highlights: string[];
 }
 
 export interface RecapHighlight {
@@ -306,6 +327,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'In-Person',
     venue: 'IEM Auditorium, RVCE',
     coverImage: '/assets/covers/ai-multimodal.svg',
+    sceneImage: '/assets/scenes/hackathon-table-sprint.svg',
     summary: '24-hour rapid prototyping arena architecting next-gen multimodal apps using Gemini 1.5 Pro and Vertex AI.',
     description:
       'An intensive 24-hour on-campus development sprint challenging student engineers to architect multimodal applications fusing audio, vision, long-context text, and structured tool-calling with the Gemini API. Compete in multidisciplinary teams with direct API credits and mentor code checkpoints.',
@@ -381,6 +403,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'Hybrid',
     venue: 'Kotlin & Cloud Lab, RVCE',
     coverImage: '/assets/covers/cloud-kubernetes.svg',
+    sceneImage: '/assets/scenes/cloud-workshop-lab.svg',
     summary: 'Architect and deploy resilient microservices on GKE and Google Cloud Run with canary traffic splits.',
     description:
       'Hands-on production laboratory exploring twelve-factor systems, multi-stage distroless container packaging, gRPC internal service meshes, and automated zero-downtime canary rollouts on Google Cloud Platform.',
@@ -449,6 +472,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'In-Person',
     venue: 'CSE Seminar Hall, RVCE',
     coverImage: '/assets/covers/android-compose.svg',
+    sceneImage: '/assets/scenes/demo-day-showcase.svg',
     summary: 'Declarative UI engineering, state hoisting pipelines, and reactive coroutine architecture in Kotlin 2.0.',
     description:
       'An interactive study jam exploring modern Android architecture: building dynamic Material You interfaces, managing unidirectional state flows with Kotlin StateFlow, and optimizing recomposition trees.',
@@ -517,6 +541,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'Online',
     venue: 'Google Meet Live',
     coverImage: '/assets/covers/web-perf.svg',
+    sceneImage: '/assets/scenes/broadcast-livestream-studio.svg',
     summary: 'Server Components, Streaming SSR, and Core Web Vitals optimization on edge runtimes.',
     description:
       'Dive into bleeding-edge web engineering with React 19 Compiler, Next.js 15 App Router, streaming Suspense boundaries, and surgical Core Web Vitals profiling for sub-50ms interaction latencies.',
@@ -587,6 +612,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'In-Person',
     venue: 'IEM Auditorium, RVCE',
     coverImage: '/assets/covers/hackathon-neural.svg',
+    sceneImage: '/assets/scenes/hackathon-table-sprint.svg',
     summary: 'Full-day hardware sprint deploying quantized vision and audio models onto microcontrollers.',
     description:
       'Student teams trained custom neural networks, applied post-training 8-bit integer quantization, and flashed models onto Raspberry Pi and ESP32 targets with sub-20ms inference times.',
@@ -655,6 +681,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'Hybrid',
     venue: 'CSE Seminar Hall, RVCE',
     coverImage: '/assets/covers/opensource-git.svg',
+    sceneImage: '/assets/scenes/open-source-night-jam.svg',
     summary: 'Deep dive into Git internals, DAG commit graphs, interactive rebasing, and CI automation.',
     description:
       'An engineering breakdown of Git internals: dissecting the object database, tree objects, SHA-1 commit graphs, cherry-picking, interactive rebase conflict resolution, and creating enterprise GitHub Actions.',
@@ -723,6 +750,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'In-Person',
     venue: 'Kotlin & Cloud Lab, RVCE',
     coverImage: '/assets/covers/design-systems.svg',
+    sceneImage: '/assets/scenes/cloud-workshop-lab.svg',
     summary: 'Bridging Figma variables with Tailwind CSS v4, semantic primitives, and WCAG AAA compliance.',
     description:
       'Explored how modern frontend teams construct maintainable design systems with automated token transforms, style dictionaries, fluid typography scales, and accessible color contrast modeling.',
@@ -791,6 +819,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     mode: 'Online',
     venue: 'Google Meet Live',
     coverImage: '/assets/covers/devfest-recap.svg',
+    sceneImage: '/assets/scenes/auditorium-keynote.svg',
     summary: 'Inaugural keynote broadcast previewing engineering roadmaps across AI, Cloud, Web, and Mobile.',
     description:
       'The chapter ignition event bringing student builders, faculty mentors, and industry practitioners together to broadcast the year’s engineering roadmaps, live code demonstrations, and open-source project launches.',
@@ -945,7 +974,85 @@ export const RECAP_DATA: EventRecap = {
 };
 
 // -----------------------------------------------------------------------------
-// 7. DEVELOPER STICKERS & BADGES METADATA
+// 7. COMMUNITY SCENES METADATA (PHASE 9)
+// -----------------------------------------------------------------------------
+export const COMMUNITY_SCENES: CommunityScene[] = [
+  {
+    id: 'auditorium-keynote',
+    code: 'SCENE // 01',
+    title: 'Campus Auditorium Keynote',
+    category: 'Keynote Broadcast',
+    venue: 'IEM Auditorium · RVCE',
+    googleColor: 'blue',
+    image: '/assets/scenes/auditorium-keynote.svg',
+    caption:
+      'Wide-angle tiered amphitheater illuminated by the luminous GDG chevron projection and architecture slides. Over 1,200 student developers collaborate across terraced seating with glowing laptops during the annual DevFest kickoff.',
+    highlights: ['1,200+ Capacity', 'Multi-Agent Keynote', 'Live Arch Demo'],
+  },
+  {
+    id: 'hackathon-table-sprint',
+    code: 'SCENE // 02',
+    title: '24-Hour Hackathon Build Table',
+    category: 'Hackathon Sprint',
+    venue: 'CSE Systems Lab · RVCE',
+    googleColor: 'red',
+    image: '/assets/scenes/hackathon-table-sprint.svg',
+    caption:
+      'Late-night collaborative engineering table bustling with active pair-programming, external monitors, and rapid terminal feedback loops. Teams orchestrate Gemini multimodal endpoints and microservices against a 24-hour sprint deadline.',
+    highlights: ['24-Hour Crucible', 'Dual 27" Displays', 'Gemini Streaming'],
+  },
+  {
+    id: 'broadcast-livestream-studio',
+    code: 'SCENE // 03',
+    title: 'Hybrid Tech Broadcast & Livestream',
+    category: 'Livestream Studio',
+    venue: 'GDG Broadcast Desk · Hybrid',
+    googleColor: 'blue',
+    image: '/assets/scenes/broadcast-livestream-studio.svg',
+    caption:
+      'State-of-the-art hybrid broadcasting studio featuring real-time telemetry, dynamic audio waveforms, and developer anchor discussions. Student hosts stream architecture breakdowns to global viewers with sub-10ms edge latency.',
+    highlights: ['1080p60 Stream', 'Real-Time Telemetry', 'Zero-Downtime Edge'],
+  },
+  {
+    id: 'cloud-workshop-lab',
+    code: 'SCENE // 04',
+    title: 'Hands-On Cloud & AI Lab',
+    category: 'Hands-On Lab',
+    venue: 'Kotlin & Cloud Lab (Room 304) · RVCE',
+    googleColor: 'green',
+    image: '/assets/scenes/cloud-workshop-lab.svg',
+    caption:
+      'Rigorous systems laboratory where student developers pair-program through Kubernetes cluster deployments and Vertex AI pipelines. Instructors walk through live declarative topologies while student benches debug container manifests.',
+    highlights: ['Kubernetes Autopilot', 'Pair Programming', 'Distroless Containers'],
+  },
+  {
+    id: 'demo-day-showcase',
+    code: 'SCENE // 05',
+    title: 'Prototype Demo Day Stage',
+    category: 'Demo Day',
+    venue: 'Exhibition Showcase Stage · RVCE',
+    googleColor: 'yellow',
+    image: '/assets/scenes/demo-day-showcase.svg',
+    caption:
+      'Stage exhibition showcasing live prototype demonstrations before an amphitheater of peer builders and industry mentors. Presenters demonstrate real-time AI function calling on giant vertical device interfaces.',
+    highlights: ['Live App Pitch', 'INP < 24ms', 'WCAG AAA Accessible'],
+  },
+  {
+    id: 'open-source-night-jam',
+    code: 'SCENE // 06',
+    title: 'Evening Open-Source Code Jam',
+    category: 'Open Source Jam',
+    venue: 'Campus Terrace Lounge · RVCE',
+    googleColor: 'yellow',
+    image: '/assets/scenes/open-source-night-jam.svg',
+    caption:
+      'Atmospheric twilight campus terrace with panoramic architectural arches overlooking the Bengaluru skyline. Builders cluster on beanbags and high benches around a central Git commit-tree projection, reviewing community pull requests.',
+    highlights: ['100% Open Source', 'Git PR Reviews', 'Twilight Terrace'],
+  },
+];
+
+// -----------------------------------------------------------------------------
+// 8. DEVELOPER STICKERS & BADGES METADATA
 // -----------------------------------------------------------------------------
 export interface DeveloperSticker {
   id: string;
@@ -980,6 +1087,22 @@ export const DEVELOPER_STICKERS: DeveloperSticker[] = [
     tooltip: 'Open Source',
     accent: 'green',
     accentHex: '#34A853',
+  },
+  {
+    id: 'pair-program',
+    file: 'pair-program.svg',
+    label: 'Pair Program',
+    tooltip: 'Pair Dev & Review',
+    accent: 'green',
+    accentHex: '#34A853',
+  },
+  {
+    id: 'lgtm-stamp',
+    file: 'lgtm-stamp.svg',
+    label: 'LGTM Stamp',
+    tooltip: 'LGTM Approved',
+    accent: 'yellow',
+    accentHex: '#FBBC04',
   },
   {
     id: 'kotlin-android',

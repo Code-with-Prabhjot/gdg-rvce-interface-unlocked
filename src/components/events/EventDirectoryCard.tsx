@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, MapPin, Video, ArrowRight } from 'lucide-react';
@@ -54,8 +54,11 @@ export function EventDirectoryCard({
   index,
 }: EventDirectoryCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryData = getCategoryBadgeData(event.category);
   const isUpcoming = event.status === 'Upcoming';
+  const displayImage =
+    viewType === 'scene' && event.sceneImage ? event.sceneImage : event.coverImage;
 
   // =========================================================================
   // 1. GRID CARD MODE
@@ -79,7 +82,7 @@ export function EventDirectoryCard({
           {/* Cover Artwork Container (16:9) with smooth hover zoom */}
           <div className="relative w-full aspect-[16/9] bg-[var(--bg-subtle)] border-b border-[var(--border-hairline)] overflow-hidden">
             <Image
-              src={event.coverImage}
+              src={displayImage}
               alt={event.title}
               fill
               className="object-cover transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
@@ -98,17 +101,53 @@ export function EventDirectoryCard({
                 {event.category}
               </span>
 
-              {/* Status Badge */}
-              {isUpcoming ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white border border-white/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
-                  Upcoming
-                </span>
-              ) : (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white/80 border border-white/20">
-                  Past Recap
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {/* Diagram / Scene Toggle */}
+                {event.sceneImage && (
+                  <div className="inline-flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-xs">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewType('cover');
+                      }}
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                        viewType === 'cover'
+                          ? 'bg-white/25 text-white shadow-xs'
+                          : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      Diagram
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewType('scene');
+                      }}
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                        viewType === 'scene'
+                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          : 'text-white/60 hover:text-white'
+                      }`}
+                    >
+                      Scene
+                    </button>
+                  </div>
+                )}
+
+                {/* Status Badge */}
+                {isUpcoming ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white border border-white/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+                    Upcoming
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white/80 border border-white/20">
+                    Past Recap
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Delivery Mode Chip (Bottom right overlay) */}
@@ -262,7 +301,7 @@ export function EventDirectoryCard({
       {/* Column 2: Thumbnail Cover Preview (Hidden on mobile) */}
       <div className="w-24 h-16 rounded-xl overflow-hidden relative shrink-0 hidden sm:block border border-[var(--border-hairline)] bg-[var(--bg-subtle)]">
         <Image
-          src={event.coverImage}
+          src={displayImage}
           alt={event.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"

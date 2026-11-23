@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#064E3B" stroke="#047857" stroke-width="2"/>
+    <!-- Ground Line -->
+    <line x1="20" y1="96" x2="108" y2="96" stroke="#059669" stroke-width="2" stroke-dasharray="4 4"/>
+    <!-- Jumping Pixel Dino (Google Green #34A853) in Mid-Air -->
+    <g fill="#34A853">
+      <!-- Head and Snout -->
+      <rect x="64" y="28" width="28" height="20"/>
+      <rect x="92" y="32" width="8" height="12"/>
+      <!-- Eye (White cutout) -->
+      <rect x="70" y="32" width="4" height="4" fill="#FFFFFF"/>
+      <!-- Body & Neck -->
+      <rect x="60" y="44" width="20" height="26"/>
+      <rect x="48" y="52" width="16" height="22"/>
+      <!-- Tail -->
+      <rect x="36" y="56" width="12" height="12"/>
+      <rect x="28" y="52" width="8" height="8"/>
+      <!-- Arms -->
+      <rect x="80" y="52" width="8" height="4"/>
+      <!-- Bent Jumping Legs -->
+      <rect x="48" y="74" width="6" height="12"/>
+      <rect x="42" y="82" width="10" height="4"/>
+      <rect x="66" y="74" width="6" height="10"/>
+      <rect x="70" y="80" width="8" height="4"/>
+    </g>
+    <!-- Pixel Cactus Obstacle -->
+    <g fill="#047857">
+      <rect x="96" y="76" width="6" height="20"/>
+      <rect x="90" y="80" width="6" height="10"/>
+      <rect x="90" y="80" width="12" height="4"/>
+      <rect x="102" y="82" width="6" height="8"/>
+      <rect x="98" y="82" width="10" height="4"/>
+    </g>
+    <!-- Floating Pixel Cloud / Stars -->
+    <rect x="32" y="30" width="12" height="4" fill="#FBBC04"/>
+    <rect x="36" y="26" width="8" height="4" fill="#FBBC04"/>
+  </svg>
