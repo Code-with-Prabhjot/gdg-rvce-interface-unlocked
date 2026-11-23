@@ -47,10 +47,10 @@
     <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">CODE LAB SESSION</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Modern Android & Compose</text>
+    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Modern Android &amp; Compose</text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Declarative UI Engineering with Kotlin & Material 3</text>
+    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Declarative UI Engineering with Kotlin &amp; Material 3</text>
 
     <!-- Meta specs -->
     <g transform="translate(0, 220)">

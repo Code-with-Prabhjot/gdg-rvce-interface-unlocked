@@ -38,25 +38,25 @@ const GOOGLE_TIMELINE_COLORS = [
   {
     border: '#4285F4',
     bg: 'rgba(66, 133, 244, 0.12)',
-    text: '#4285F4',
+    textClass: 'text-[#4285F4]',
     name: 'Blue',
   },
   {
     border: '#EA4335',
     bg: 'rgba(234, 67, 53, 0.12)',
-    text: '#EA4335',
+    textClass: 'text-[#EA4335]',
     name: 'Red',
   },
   {
     border: '#FBBC04',
     bg: 'rgba(251, 188, 4, 0.15)',
-    text: '#FBBC04',
+    textClass: 'text-[#B45309] dark:text-[#FBBC04]',
     name: 'Yellow',
   },
   {
     border: '#34A853',
     bg: 'rgba(52, 168, 83, 0.12)',
-    text: '#34A853',
+    textClass: 'text-[#34A853]',
     name: 'Green',
   },
 ];
@@ -799,10 +799,9 @@ export function EventDetailDrawer({
                           <div className="p-3.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all space-y-1">
                             <div className="flex items-center gap-2">
                               <span
-                                className="px-2 py-0.5 rounded text-[11px] font-mono font-bold"
+                                className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${color.textClass}`}
                                 style={{
                                   backgroundColor: color.bg,
-                                  color: color.text,
                                 }}
                               >
                                 {item.time}

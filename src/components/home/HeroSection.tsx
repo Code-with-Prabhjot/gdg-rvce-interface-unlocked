@@ -134,19 +134,19 @@ export function HeroSection() {
               <MagneticWrapper maxOffset={6}>
                 <Link
                   href="/events"
-                  className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                  className="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
                 >
                   <span>Explore Events</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </MagneticWrapper>
 
               <MagneticWrapper maxOffset={6}>
                 <Link
                   href="/team"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
                 >
-                  <Code className="w-4 h-4 text-[#34A853]" />
+                  <Code className="w-4 h-4 shrink-0 text-[#34A853]" />
                   <span>Meet the Builders</span>
                 </Link>
               </MagneticWrapper>
@@ -164,7 +164,7 @@ export function HeroSection() {
                 <span>DEVELOPER EMOTE BADGES</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 {DEVELOPER_STICKERS.map((sticker) => {
                   const isHovered = activeTooltip === sticker.id;
 
@@ -185,7 +185,7 @@ export function HeroSection() {
                               }
                         }
                         transition={{ type: 'spring', stiffness: 350, damping: 18 }}
-                        className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs flex items-center justify-center p-2 cursor-pointer transition-colors hover:border-[#4285F4]"
+                        className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs flex items-center justify-center p-1.5 sm:p-2 cursor-pointer transition-colors hover:border-[#4285F4]"
                       >
                         <Image
                           src={`/assets/emotes/${sticker.file}`}
@@ -225,7 +225,7 @@ export function HeroSection() {
                     e.preventDefault();
                     document.getElementById('community-scenes')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="group/scene-pill inline-flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 max-w-fit cursor-pointer"
+                  className="group/scene-pill inline-flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 max-w-full cursor-pointer"
                 >
                   <div className="relative w-12 h-8 rounded-lg overflow-hidden border border-white/20 shrink-0 bg-black">
                     <Image
@@ -237,14 +237,14 @@ export function HeroSection() {
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC04] animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC04] animate-pulse shrink-0" />
                       <span className="text-[10px] font-mono font-semibold text-[var(--text-muted)] tracking-wider uppercase">
                         IN THE BUILD ROOM
                       </span>
                     </div>
                     <span className="text-xs font-display font-bold text-[var(--text-primary)] group-hover/scene-pill:text-[#4285F4] transition-colors flex items-center gap-1">
                       <span>Auditorium Keynote · SCENE // 01</span>
-                      <ArrowRight className="w-3 h-3 group-hover/scene-pill:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3 h-3 shrink-0 group-hover/scene-pill:translate-x-1 transition-transform" />
                     </span>
                   </div>
                 </a>

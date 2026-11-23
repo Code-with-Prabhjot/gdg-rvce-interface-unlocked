@@ -10,7 +10,7 @@ import { SectionScrollSpyRail } from '@/components/home/SectionScrollSpyRail';
 
 export default function HomePage() {
   return (
-    <div className="w-full flex flex-col relative">
+    <div className="w-full flex flex-col relative overflow-x-clip">
       {/* ============================================================= */}
       {/* ACT I: Kinetic Split Hero & Interactive 3D Prism Stage        */}
       {/* ============================================================= */}

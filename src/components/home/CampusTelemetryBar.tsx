@@ -25,7 +25,7 @@ function getAccentClasses(accent: GoogleAccent) {
         bar: 'bg-[#FBBC04]',
         borderHover: 'hover:border-[#FBBC04]/60 dark:hover:border-[#FBBC04]/50',
         glow: 'group-hover:shadow-[0_0_24px_rgba(251,188,4,0.12)]',
-        code: 'text-[#FBBC04]',
+        code: 'text-[#B45309] dark:text-[#FBBC04]',
       };
     case 'green':
       return {

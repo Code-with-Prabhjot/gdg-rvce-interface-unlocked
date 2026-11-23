@@ -11,7 +11,7 @@ export default function NotFound() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative min-h-[calc(100vh-12rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-blueprint-grid">
+    <div className="relative min-h-[calc(100vh-12rem)] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-blueprint-grid overflow-hidden">
       {/* Decorative Radial Ambient Glow */}
       <div
         className="absolute w-96 h-96 rounded-full bg-[#4285F4]/10 blur-3xl pointer-events-none -top-12 -left-12"

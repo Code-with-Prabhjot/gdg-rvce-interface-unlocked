@@ -108,7 +108,7 @@ export function ArchitecturalBootLoader() {
               ease: [0.22, 1, 0.36, 1],
             },
           }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--bg-canvas)] text-[var(--text-primary)] select-none overflow-hidden"
+          className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-[var(--bg-canvas)] text-[var(--text-primary)] select-none overflow-hidden"
           aria-hidden="true"
         >
           {/* Subtle Architectural Blueprint Grid Background */}

@@ -47,7 +47,7 @@
     <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">DESIGN ENGINEERING</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Design Systems & Tokens</text>
+    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Design Systems &amp; Tokens</text>
     
     <!-- Subtitle -->
     <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Crafting Scalable Architectural UI Component Libraries</text>

@@ -240,10 +240,10 @@ export function EventDirectoryCard({
               e.stopPropagation();
               onSelectEvent(event.slug);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn shrink-0"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap"
           >
             <span>Inspect Event</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+            <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover/btn:translate-x-1" />
           </button>
         </div>
       </motion.article>
@@ -368,10 +368,10 @@ export function EventDirectoryCard({
             e.stopPropagation();
             onSelectEvent(event.slug);
           }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-200 shadow-2xs hover:shadow-md group/btn"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-200 shadow-2xs hover:shadow-md group/btn min-h-[40px] whitespace-nowrap"
         >
           <span>Inspect Event</span>
-          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+          <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover/btn:translate-x-1" />
         </button>
       </div>
     </motion.article>

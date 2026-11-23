@@ -91,7 +91,7 @@ export default function RootLayout({
               <Navbar />
 
               {/* Main Application Routes Viewport */}
-              <main className="flex-1 w-full bg-blueprint-grid">
+              <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
                 {children}
               </main>
 

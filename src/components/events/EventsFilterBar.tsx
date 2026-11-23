@@ -26,10 +26,10 @@ interface EventsFilterBarProps {
   totalResultsCount: number;
 }
 
-const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
-  { id: 'All', label: 'All Sessions' },
-  { id: 'Upcoming', label: 'Upcoming' },
-  { id: 'Past', label: 'Past Recaps' },
+const STATUS_OPTIONS: { id: StatusFilter; label: string; shortLabel: string }[] = [
+  { id: 'All', label: 'All Sessions', shortLabel: 'All' },
+  { id: 'Upcoming', label: 'Upcoming', shortLabel: 'Upcoming' },
+  { id: 'Past', label: 'Past Recaps', shortLabel: 'Past' },
 ];
 
 const TRACK_OPTIONS: { id: TrackFilter; label: string; dotColor?: string }[] = [
@@ -85,7 +85,7 @@ export function EventsFilterBar({
       {/* ============================================================= */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
         {/* Status Segmented Control with Framer Motion spring pill */}
-        <div className="inline-flex items-center p-1 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] self-start sm:self-auto shrink-0">
+        <div className="inline-flex items-center p-1 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] self-start sm:self-auto shrink-0 max-w-full overflow-x-auto no-scrollbar">
           {STATUS_OPTIONS.map((option) => {
             const isActive = statusFilter === option.id;
             return (
@@ -93,7 +93,7 @@ export function EventsFilterBar({
                 key={option.id}
                 type="button"
                 onClick={() => onStatusChange(option.id)}
-                className={`relative px-3 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
+                className={`relative min-h-[38px] sm:min-h-[36px] inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
                   isActive
                     ? 'text-[var(--text-primary)] font-semibold'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -106,7 +106,8 @@ export function EventsFilterBar({
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-                {option.label}
+                <span className="hidden sm:inline">{option.label}</span>
+                <span className="sm:hidden">{option.shortLabel}</span>
               </button>
             );
           })}
@@ -115,7 +116,7 @@ export function EventsFilterBar({
         {/* Search Input Container */}
         <div className="relative flex-1 max-w-2xl">
           <div className="relative flex items-center">
-            <Search className="w-4 h-4 text-[var(--text-muted)] absolute left-3.5 pointer-events-none" />
+            <Search className="w-4 h-4 text-[var(--text-muted)] absolute left-3.5 pointer-events-none shrink-0" />
             <input
               ref={searchInputRef}
               type="text"
@@ -123,7 +124,7 @@ export function EventsFilterBar({
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search sessions, speakers, tech tags, venues... (Press '/' to focus)"
               aria-label="Search events"
-              className="w-full pl-10 pr-20 py-2 sm:py-2.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
+              className="w-full min-h-[44px] pl-10 pr-20 py-2 sm:py-2.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
             />
 
             {/* Clear Button & Shortcut Badge */}
@@ -135,10 +136,10 @@ export function EventsFilterBar({
                     onSearchChange('');
                     searchInputRef.current?.focus();
                   }}
-                  className="p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors"
+                  className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors"
                   aria-label="Clear search query"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-4 h-4 shrink-0" />
                 </button>
               ) : (
                 <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-elevated)] font-mono text-[10px] text-[var(--text-muted)] shadow-2xs">
@@ -156,7 +157,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('grid')}
             aria-label="Switch to grid view"
             title="Grid View"
-            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
               viewMode === 'grid'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -169,7 +170,7 @@ export function EventsFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <LayoutGrid className="w-3.5 h-3.5" />
+            <LayoutGrid className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden sm:inline">Grid</span>
           </button>
 
@@ -178,7 +179,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('list')}
             aria-label="Switch to schedule list view"
             title="Schedule List View"
-            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
               viewMode === 'list'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -191,7 +192,7 @@ export function EventsFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <List className="w-3.5 h-3.5" />
+            <List className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden sm:inline">Schedule</span>
           </button>
 
@@ -200,7 +201,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('calendar')}
             aria-label="Calendar Matrix View"
             title="Calendar Matrix View"
-            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
               viewMode === 'calendar'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -213,7 +214,7 @@ export function EventsFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <CalendarDays className="w-3.5 h-3.5" />
+            <CalendarDays className="w-3.5 h-3.5 shrink-0" />
             <span className="hidden sm:inline">Calendar</span>
           </button>
         </div>
@@ -226,7 +227,7 @@ export function EventsFilterBar({
         {/* Left Side: Track & Mode Pills Group */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Track Filter Pills */}
-          <span className="text-[11px] font-mono font-semibold uppercase text-[var(--text-muted)] mr-1 hidden sm:inline">
+          <span className="text-[11px] font-mono font-semibold uppercase text-[var(--text-muted)] mr-1 hidden sm:inline whitespace-nowrap">
             Track:
           </span>
           {TRACK_OPTIONS.map((track) => {
@@ -236,7 +237,7 @@ export function EventsFilterBar({
                 key={track.id}
                 type="button"
                 onClick={() => onTrackChange(track.id)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
+                className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap ${
                   isSelected
                     ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -253,10 +254,10 @@ export function EventsFilterBar({
             );
           })}
 
-          <div className="h-4 w-px bg-[var(--border-hairline)] mx-1 hidden sm:block" />
+          <div className="h-4 w-px bg-[var(--border-hairline)] mx-1 hidden sm:block shrink-0" />
 
           {/* Delivery Mode Filter Pills */}
-          <span className="text-[11px] font-mono font-semibold uppercase text-[var(--text-muted)] mr-1 hidden sm:inline">
+          <span className="text-[11px] font-mono font-semibold uppercase text-[var(--text-muted)] mr-1 hidden sm:inline whitespace-nowrap">
             Mode:
           </span>
           {MODE_OPTIONS.map((mode) => {
@@ -266,7 +267,7 @@ export function EventsFilterBar({
                 key={mode.id}
                 type="button"
                 onClick={() => onModeChange(mode.id)}
-                className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono transition-all ${
+                className={`min-h-[36px] inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap ${
                   isSelected
                     ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -280,7 +281,7 @@ export function EventsFilterBar({
 
         {/* Right Side: Telemetry count & Clear All Filters button */}
         <div className="flex items-center justify-between md:justify-end gap-3 text-xs font-mono">
-          <span className="text-[var(--text-muted)]">
+          <span className="text-[var(--text-muted)] whitespace-nowrap">
             {totalResultsCount} {totalResultsCount === 1 ? 'session' : 'sessions'}
           </span>
 
@@ -288,9 +289,9 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onResetFilters}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#EA4335] hover:text-[#C5221F] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/20"
+              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[#EA4335] hover:text-[#C5221F] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/20 whitespace-nowrap"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3 h-3 shrink-0" />
               <span>Clear filters</span>
             </button>
           )}

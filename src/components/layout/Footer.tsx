@@ -99,37 +99,37 @@ export function Footer() {
                 href="https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="GDG RVCE GitHub Repository"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="GDG RVCE LinkedIn Community"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="GDG RVCE Instagram"
               >
-                <InstagramIcon className="w-4 h-4" />
+                <InstagramIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="GDG RVCE YouTube Channel"
               >
-                <YoutubeIcon className="w-4 h-4" />
+                <YoutubeIcon className="w-4 h-4 shrink-0" />
               </a>
             </div>
 
@@ -173,11 +173,16 @@ export function Footer() {
 
       {/* Attributions Modal */}
       {showAttributions && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowAttributions(false);
+          }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        >
           <div className="relative w-full max-w-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] rounded-2xl p-6 shadow-2xl max-h-[85vh] flex flex-col">
             <div className="flex items-center justify-between pb-4 border-b border-[var(--border-hairline)]">
               <div className="flex items-center gap-2">
-                <Info className="w-5 h-5 text-[#4285F4]" />
+                <Info className="w-5 h-5 text-[#4285F4] shrink-0" />
                 <h3 className="font-['Space_Grotesk',sans-serif] font-bold text-lg text-[var(--text-primary)]">
                   Open Source Attributions &amp; Licenses
                 </h3>
@@ -185,10 +190,10 @@ export function Footer() {
               <button
                 type="button"
                 onClick={() => setShowAttributions(false)}
-                className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]"
                 aria-label="Close dialog"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 shrink-0" />
               </button>
             </div>
 

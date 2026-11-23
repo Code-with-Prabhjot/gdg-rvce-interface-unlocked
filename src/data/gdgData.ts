@@ -986,8 +986,8 @@ export const COMMUNITY_SCENES: CommunityScene[] = [
     googleColor: 'blue',
     image: '/assets/scenes/auditorium-keynote.svg',
     caption:
-      'Wide-angle tiered amphitheater illuminated by the luminous GDG chevron projection and architecture slides. Over 1,200 student developers collaborate across terraced seating with glowing laptops during the annual DevFest kickoff.',
-    highlights: ['1,200+ Capacity', 'Multi-Agent Keynote', 'Live Arch Demo'],
+      'Wide-angle tiered amphitheater illuminated by the luminous GDG chevron projection and architecture slides. Student developers and builders collaborate across terraced seating with glowing laptops during the annual DevFest kickoff.',
+    highlights: ['Tiered Amphitheater', 'Multi-Agent Keynote', 'Live Arch Demo'],
   },
   {
     id: 'hackathon-table-sprint',

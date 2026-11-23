@@ -50,12 +50,12 @@
     <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">NeuralSprint 2026</text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">36-Hour Autonomous Agent & ML Hackathon</text>
+    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">36-Hour Autonomous Agent &amp; ML Hackathon</text>
 
     <!-- Meta specs -->
     <g transform="translate(0, 220)">
       <rect x="0" y="0" width="220" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">TRACK // APPLIED AI & GENAI</text>
+      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">TRACK // APPLIED AI &amp; GENAI</text>
     </g>
   </g>
 

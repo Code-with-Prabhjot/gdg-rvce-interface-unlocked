@@ -127,10 +127,10 @@ export function Navbar() {
           <button
             type="button"
             onClick={openCommandPalette}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--text-secondary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+            className="min-h-[36px] inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--text-secondary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
             aria-label="Open Command Palette"
           >
-            <Command className="w-3.5 h-3.5 text-[var(--text-muted)]" />
+            <Command className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />
             <span className="hidden lg:inline text-[var(--text-muted)]">Search or jump</span>
             <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
               {isMac ? '⌘K' : 'Ctrl K'}
@@ -141,7 +141,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+            className="min-w-[36px] min-h-[36px] p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
             aria-label={`Toggle color theme. Current theme is ${theme}`}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -153,7 +153,7 @@ export function Navbar() {
                   exit={{ rotate: 90, scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Moon className="w-4 h-4 text-[#FBBC04]" />
+                  <Moon className="w-4 h-4 shrink-0 text-[#FBBC04]" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -163,7 +163,7 @@ export function Navbar() {
                   exit={{ rotate: -90, scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Sun className="w-4 h-4 text-[#EA4335]" />
+                  <Sun className="w-4 h-4 shrink-0 text-[#EA4335]" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -172,10 +172,10 @@ export function Navbar() {
           {/* Primary CTA Button */}
           <Link
             href="/events"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
           >
             <span>Explore Events</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
           </Link>
 
           {/* Mobile Menu Toggle Button */}
@@ -186,7 +186,7 @@ export function Navbar() {
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 shrink-0" /> : <Menu className="w-5 h-5 shrink-0" />}
           </button>
         </div>
       </div>

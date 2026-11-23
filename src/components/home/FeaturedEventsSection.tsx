@@ -212,9 +212,9 @@ function EventCard({ event, index }: EventCardProps) {
       {/* Speaker preview + Direct link to /events?event=${event.slug}  */}
       {/* Strictly NO RSVP counts or attendee numbers.                  */}
       {/* ============================================================= */}
-      <div className="p-6 pt-4 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between">
+      <div className="p-4 sm:p-6 pt-3 sm:pt-4 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between gap-2">
         {/* Speaker Info */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 min-w-0">
           <div className="w-7 h-7 rounded-full overflow-hidden relative border border-[var(--border-strong)] shrink-0 bg-[var(--bg-canvas)]">
             <Image
               src={event.speaker.avatar || event.speaker.avatarUrl || '/assets/avatars/member-01.svg'}
@@ -224,10 +224,10 @@ function EventCard({ event, index }: EventCardProps) {
             />
           </div>
           <div className="truncate">
-            <p className="text-xs font-semibold text-[var(--text-primary)] truncate max-w-[110px] sm:max-w-[130px]">
+            <p className="text-xs font-semibold text-[var(--text-primary)] truncate max-w-[90px] xs:max-w-[110px] sm:max-w-[130px]">
               {event.speaker.name}
             </p>
-            <p className="text-[10px] font-mono text-[var(--text-muted)] truncate max-w-[110px] sm:max-w-[130px]">
+            <p className="text-[10px] font-mono text-[var(--text-muted)] truncate max-w-[90px] xs:max-w-[110px] sm:max-w-[130px]">
               {event.speaker.role}
             </p>
           </div>
@@ -236,10 +236,11 @@ function EventCard({ event, index }: EventCardProps) {
         {/* Direct Action Link */}
         <Link
           href={`/events?event=${event.slug}`}
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0"
         >
-          <span>Inspect Agenda &amp; Register</span>
-          <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+          <span className="hidden sm:inline">Inspect Agenda &amp; Register</span>
+          <span className="sm:hidden">Inspect</span>
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 transition-transform group-hover/btn:translate-x-1" />
         </Link>
       </div>
     </motion.article>
@@ -291,10 +292,10 @@ export function FeaturedEventsSection() {
           {/* Right-Aligned Directory Button with Subtle Hover Translation */}
           <Link
             href="/events"
-            className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 self-start md:self-auto shadow-xs hover:shadow-md"
+            className="group inline-flex items-center justify-center gap-2.5 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 self-start md:self-auto shadow-xs hover:shadow-md whitespace-nowrap"
           >
             <span>View Full Directory</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 text-[#4285F4]" />
+            <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 text-[#4285F4]" />
           </Link>
         </motion.div>
 

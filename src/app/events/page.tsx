@@ -10,20 +10,35 @@ export const metadata: Metadata = {
 
 function EventsDirectorySkeleton() {
   return (
-    <div className="w-full space-y-8 animate-pulse" aria-hidden="true">
-      {/* Header Skeleton */}
-      <div className="w-full h-72 sm:h-80 rounded-3xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)]" />
+    <div className="w-full space-y-10 sm:space-y-12 animate-pulse" aria-hidden="true">
+      {/* Header Skeleton matching EventsHeroHeader */}
+      <div className="w-full rounded-3xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-6 sm:p-10 lg:p-16 flex flex-col lg:flex-row justify-between gap-8">
+        <div className="space-y-4 max-w-xl">
+          <div className="w-48 h-6 rounded-full bg-[var(--border-subtle)]" />
+          <div className="w-full sm:w-96 h-10 sm:h-12 rounded-xl bg-[var(--border-subtle)]" />
+          <div className="w-3/4 h-5 rounded-md bg-[var(--border-hairline)]" />
+        </div>
+        <div className="w-full lg:w-80 h-44 rounded-2xl bg-[var(--border-hairline)]" />
+      </div>
 
-      {/* Filter Bar Skeleton */}
-      <div className="w-full h-32 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)]" />
+      {/* Filter Bar Skeleton matching EventsFilterBar */}
+      <div className="w-full h-32 sm:h-28 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-4 sm:p-6" />
 
-      {/* Grid Skeleton */}
+      {/* Grid Skeleton matching EventDirectoryCard grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="h-[420px] rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] overflow-hidden"
-          />
+            className="h-[460px] rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] overflow-hidden flex flex-col justify-between p-5"
+          >
+            <div className="w-full h-44 rounded-xl bg-[var(--border-subtle)] mb-4" />
+            <div className="space-y-3 flex-1">
+              <div className="w-24 h-4 rounded-full bg-[var(--border-subtle)]" />
+              <div className="w-5/6 h-6 rounded-md bg-[var(--border-subtle)]" />
+              <div className="w-full h-10 rounded-md bg-[var(--border-hairline)]" />
+            </div>
+            <div className="w-full h-10 rounded-xl bg-[var(--border-subtle)] mt-4" />
+          </div>
         ))}
       </div>
     </div>

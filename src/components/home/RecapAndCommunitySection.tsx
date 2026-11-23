@@ -56,7 +56,7 @@ export function RecapAndCommunitySection() {
   return (
     <section
       id="recap-community"
-      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-20 lg:space-y-28 scroll-mt-24"
+      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-20 lg:space-y-28 scroll-mt-24 overflow-hidden"
     >
       {/* ============================================================= */}
       {/* PART A: EDITORIAL EVENT RECAP SPOTLIGHT                       */}
@@ -268,8 +268,8 @@ export function RecapAndCommunitySection() {
           {/* RIGHT COLUMN: Interactive Track Tabs                        */}
           {/* ----------------------------------------------------------- */}
           <motion.div
-            initial={prefersReducedMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 space-y-6"
@@ -414,8 +414,8 @@ export function RecapAndCommunitySection() {
         <div className="absolute inset-0 bg-blueprint-grid opacity-30 pointer-events-none" />
 
         {/* Ambient Subtle Gradients */}
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#4285F4]/10 blur-3xl pointer-events-none -z-0" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#34A853]/10 blur-3xl pointer-events-none -z-0" />
+        <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 max-w-full rounded-full bg-[#4285F4]/10 blur-3xl pointer-events-none -z-0" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 max-w-full rounded-full bg-[#34A853]/10 blur-3xl pointer-events-none -z-0" />
 
         <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto space-y-8">
           {/* Eyebrow */}
@@ -466,17 +466,17 @@ export function RecapAndCommunitySection() {
             <MagneticWrapper maxOffset={6} className="w-full sm:w-auto">
               <Link
                 href="/events"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all duration-200 shadow-md hover:shadow-lg group"
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all duration-200 shadow-md hover:shadow-lg group"
               >
                 <span>Browse All Events</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </MagneticWrapper>
 
             {/* Secondary CTA: Meet the Team (Outlined) */}
             <Link
               href="/team"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 shadow-xs hover:shadow-md"
+              className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 shadow-xs hover:shadow-md"
             >
               <span>Meet the Team</span>
             </Link>

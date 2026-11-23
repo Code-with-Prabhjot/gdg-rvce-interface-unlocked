@@ -665,10 +665,10 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
             {pillar.indexTag}
           </span>
           <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border ${styles.badgeClass}`}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border whitespace-nowrap ${styles.badgeClass}`}
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${styles.dotColor}`} />
-            {pillar.pillBadge}
+            <span className={`w-1.5 h-1.5 rounded-full ${styles.dotColor} shrink-0`} />
+            <span>{pillar.pillBadge}</span>
           </span>
         </div>
 

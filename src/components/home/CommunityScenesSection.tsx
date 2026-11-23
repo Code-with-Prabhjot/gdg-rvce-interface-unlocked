@@ -340,7 +340,12 @@ export function CommunityScenesSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 bg-black/92 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setIsLightboxOpen(false);
+              }
+            }}
+            className="fixed inset-0 z-50 bg-black/92 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 lg:p-8 select-none overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label={`${currentScene.title} - Fullscreen Inspection`}

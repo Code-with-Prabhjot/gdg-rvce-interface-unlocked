@@ -47,15 +47,15 @@
     <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">COMMUNITY JAM</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Git & Open Source Summit</text>
+    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Git &amp; Open Source Summit</text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Demystifying PRs, CI Workflows & Global Collaboration</text>
+    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Demystifying PRs, CI Workflows &amp; Global Collaboration</text>
 
     <!-- Meta specs -->
     <g transform="translate(0, 220)">
       <rect x="0" y="0" width="220" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">COLLAB // GITHUB & WORKFLOWS</text>
+      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">COLLAB // GITHUB &amp; WORKFLOWS</text>
     </g>
   </g>
 
