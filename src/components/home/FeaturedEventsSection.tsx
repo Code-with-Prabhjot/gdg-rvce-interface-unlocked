@@ -176,7 +176,7 @@ function EventCard({ event, index }: EventCardProps) {
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-full overflow-hidden relative border border-[var(--border-strong)] shrink-0 bg-[var(--bg-canvas)]">
             <Image
-              src={event.speaker.avatarUrl}
+              src={event.speaker.avatar || event.speaker.avatarUrl || '/assets/avatars/member-01.svg'}
               alt={event.speaker.name}
               fill
               className="object-cover"
@@ -212,7 +212,7 @@ export function FeaturedEventsSection() {
   const prefersReducedMotion = useReducedMotion();
 
   // Filter for top 3 upcoming sessions
-  const featuredUpcomingEvents = EVENTS_DATA.filter((e) => e.status === 'upcoming').slice(0, 3);
+  const featuredUpcomingEvents = EVENTS_DATA.filter((e) => e.status.toLowerCase() === 'upcoming').slice(0, 3);
 
   return (
     <section

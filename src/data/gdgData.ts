@@ -52,38 +52,49 @@ export interface PillarItem {
 export interface EventSpeaker {
   name: string;
   role: string;
-  company: string;
-  avatarUrl: string;
+  avatar: string;
+  avatarUrl?: string;
+  company?: string;
 }
 
 export interface EventAgendaItem {
   time: string;
-  title: string;
-  description: string;
+  topic: string;
+  detail: string;
+  title?: string;
+  description?: string;
 }
+
+export type EventCategory = 'Hackathon' | 'Workshop' | 'Study Jam' | 'Tech Talk';
+export type EventStatus = 'Upcoming' | 'Past';
+export type DeliveryMode = 'In-Person' | 'Hybrid' | 'Online';
 
 export interface GDGEvent {
   id: string;
   slug: string;
   title: string;
-  subtitle: string;
-  category: 'AI & ML' | 'Android' | 'Cloud' | 'Web' | 'Open Source' | 'Design & Systems' | 'Flagship';
-  status: 'upcoming' | 'past';
-  accent: GoogleAccent;
+  category: EventCategory;
+  eventType?: EventCategory;
+  status: EventStatus;
+  googleColor: GoogleAccent;
+  accent?: GoogleAccent;
   date: string;
-  displayDate: string;
   time: string;
+  isoStart: string;
+  isoEnd: string;
+  mode: DeliveryMode;
   venue: string;
   coverImage: string;
+  summary: string;
   description: string;
-  prerequisites: string[];
   speaker: EventSpeaker;
   agenda: EventAgendaItem[];
+  prerequisites: string[];
   tags: string[];
-  badgeText: string;
-  registrationStatus: 'open' | 'waitlist' | 'concluded';
-  mode: 'In-Person' | 'Hybrid' | 'Online';
-  eventType: 'Hackathon' | 'Workshop' | 'Study Jam' | 'Tech Talk';
+  subtitle?: string;
+  displayDate?: string;
+  badgeText?: string;
+  registrationStatus?: 'open' | 'waitlist' | 'concluded';
 }
 
 export interface RecapHighlight {
@@ -272,6 +283,8 @@ export const PILLARS_DATA: PillarItem[] = [
 
 // -----------------------------------------------------------------------------
 // 5. EVENTS DATA (8 Events: 4 Upcoming, 4 Past)
+// Evenly covering 4 tracks (Hackathon, Workshop, Study Jam, Tech Talk)
+// and 3 delivery modes (In-Person, Hybrid, Online)
 // -----------------------------------------------------------------------------
 export const EVENTS_DATA: GDGEvent[] = [
   // --- UPCOMING EVENTS ---
@@ -280,198 +293,279 @@ export const EVENTS_DATA: GDGEvent[] = [
     slug: 'gemini-multimodal-buildathon',
     title: "Gemini Multimodal Buildathon '26",
     subtitle: '24-Hour Prototype Sprint with Gemini 1.5 Pro & Flash',
-    category: 'AI & ML',
-    status: 'upcoming',
+    category: 'Hackathon',
+    eventType: 'Hackathon',
+    status: 'Upcoming',
+    googleColor: 'red',
     accent: 'red',
-    date: '2026-12-12',
-    displayDate: 'Dec 12, 2026',
-    time: '09:30 AM – Next Day 09:30 AM (24 Hours)',
-    venue: 'IEM Auditorium · RVCE Campus',
+    date: '12 DEC 2026',
+    displayDate: '12 DEC 2026',
+    time: '09:30 – 09:30 IST (+24h)',
+    isoStart: '2026-12-12T09:30:00+05:30',
+    isoEnd: '2026-12-13T09:30:00+05:30',
+    mode: 'In-Person',
+    venue: 'IEM Auditorium, RVCE',
     coverImage: '/assets/covers/ai-multimodal.svg',
+    summary: '24-hour rapid prototyping arena architecting next-gen multimodal apps using Gemini 1.5 Pro and Vertex AI.',
     description:
-      'An intensive 24-hour on-campus development sprint challenging student engineers to architect multimodal applications fusing audio, vision, long-context text, and tool-calling with the Gemini API.',
+      'An intensive 24-hour on-campus development sprint challenging student engineers to architect multimodal applications fusing audio, vision, long-context text, and structured tool-calling with the Gemini API. Compete in multidisciplinary teams with direct API credits and mentor code checkpoints.',
     prerequisites: [
       'Proficiency in Python 3.11+ or TypeScript / Node.js',
-      'Basic familiarity with REST / streaming APIs and JSON schemas',
-      'Active GitHub account with a configured SSH environment',
+      'Familiarity with REST APIs, streaming responses, and JSON schemas',
+      'Configured Git environment with SSH key authentication',
+      'Active laptop with Docker or Node runtime installed',
     ],
     speaker: {
       name: 'Dr. Ananya Rao',
-      role: 'AI Research Staff Engineer',
-      company: 'Google Developer Expert',
+      role: 'Staff AI Research Fellow',
+      company: 'Google Developer Expert Guild',
+      avatar: '/assets/avatars/member-01.svg',
       avatarUrl: '/assets/avatars/member-01.svg',
     },
     agenda: [
       {
         time: '09:30 AM',
-        title: 'Opening Keynote & Problem Brief Distribution',
+        topic: 'Opening Keynote & Problem Statements',
+        detail: 'Deep dive into Gemini 1.5 long context caching and system instruction crafting.',
+        title: 'Opening Keynote & Problem Statements',
         description: 'Deep dive into Gemini 1.5 long context caching and system instruction crafting.',
       },
       {
         time: '11:00 AM',
-        title: 'Hacking Kickoff & Cloud Sandboxes Active',
-        description: 'Teams set up repositories and wire streaming API endpoints.',
+        topic: 'Sprint Ignition & Cloud Sandbox Live',
+        detail: 'Teams spin up git repositories and configure streaming endpoint pipelines.',
+        title: 'Sprint Ignition & Cloud Sandbox Live',
+        description: 'Teams spin up git repositories and configure streaming endpoint pipelines.',
       },
       {
         time: '07:30 PM',
-        title: 'Architecture Review & Mentor Checkpoint',
+        topic: 'Architecture & Token Benchmark Review',
+        detail: 'Hands-on debugging of token latency, system prompts, and rate limits.',
+        title: 'Architecture & Token Benchmark Review',
         description: 'Hands-on debugging of token latency, system prompts, and rate limits.',
       },
       {
-        time: '08:00 AM (+1)',
-        title: 'Code Freeze & Live Floor Demonstrations',
-        description: 'Final commit tag submission and 3-minute technical jury demos.',
+        time: '02:00 AM',
+        topic: 'Midnight Crucible & Mentor Desk',
+        detail: 'Dry-run API integrations with live function calling verification.',
+        title: 'Midnight Crucible & Mentor Desk',
+        description: 'Dry-run API integrations with live function calling verification.',
+      },
+      {
+        time: '08:00 AM',
+        topic: 'Code Freeze & Live Jury Pitches',
+        detail: 'Final commit tag submission and 3-minute technical jury demonstrations.',
+        title: 'Code Freeze & Live Jury Pitches',
+        description: 'Final commit tag submission and 3-minute technical jury demonstrations.',
       },
     ],
-    tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python', 'Hackathon'],
+    tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python'],
     badgeText: 'FLAGSHIP SPRINT',
     registrationStatus: 'open',
-    mode: 'In-Person',
-    eventType: 'Hackathon',
   },
   {
     id: 'event-02',
-    slug: 'android-compose-kotlin',
-    title: 'Modern Android with Jetpack Compose & Kotlin',
-    subtitle: 'Declarative UI Pipelines, State Hosting, and Coroutines',
-    category: 'Android',
-    status: 'upcoming',
-    accent: 'yellow',
-    date: '2026-12-19',
-    displayDate: 'Dec 19, 2026',
-    time: '02:00 PM – 05:30 PM',
-    venue: 'Computer Lab 4 · RVCE Campus',
-    coverImage: '/assets/covers/android-compose.svg',
-    description:
-      'A hands-on code laboratory dedicated to building modern declarative Android applications using Jetpack Compose, Kotlin 2.0 Coroutines, StateFlow, and Material You design components.',
-    prerequisites: [
-      'Android Studio Ladybug installed on laptop',
-      'Fundamental understanding of Kotlin syntax and OOP principles',
-    ],
-    speaker: {
-      name: 'Karthik Subramanian',
-      role: 'Staff Mobile Architect',
-      company: 'Android GDE Guild',
-      avatarUrl: '/assets/avatars/member-02.svg',
-    },
-    agenda: [
-      {
-        time: '02:00 PM',
-        title: 'Compose Recomposition & Slot API Design',
-        description: 'Understanding recomposition trees, remembered lambdas, and derived state.',
-      },
-      {
-        time: '03:15 PM',
-        title: 'Unidirectional Data Flow & State Hosting',
-        description: 'Wiring ViewModels with StateFlow and immutable UI states.',
-      },
-      {
-        time: '04:30 PM',
-        title: 'Building a Dynamic Theme System',
-        description: 'Pairing dynamic system palette accents with accessible dark mode overrides.',
-      },
-    ],
-    tags: ['Jetpack Compose', 'Kotlin 2.0', 'Coroutines', 'Material 3'],
-    badgeText: 'HANDS-ON LAB',
-    registrationStatus: 'open',
-    mode: 'In-Person',
-    eventType: 'Study Jam',
-  },
-  {
-    id: 'event-03',
     slug: 'cloud-native-k8s-cloudrun',
     title: 'Cloud-Native Microservices on K8s & Cloud Run',
     subtitle: 'Containerization, Traffic Splitting, and Zero-Scale Serverless',
-    category: 'Cloud',
-    status: 'upcoming',
+    category: 'Workshop',
+    eventType: 'Workshop',
+    status: 'Upcoming',
+    googleColor: 'blue',
     accent: 'blue',
-    date: '2027-01-09',
-    displayDate: 'Jan 09, 2027',
-    time: '10:00 AM – 01:30 PM',
-    venue: 'Seminar Hall 2 · RVCE Campus',
+    date: '09 JAN 2027',
+    displayDate: '09 JAN 2027',
+    time: '10:00 – 14:00 IST',
+    isoStart: '2027-01-09T10:00:00+05:30',
+    isoEnd: '2027-01-09T14:00:00+05:30',
+    mode: 'Hybrid',
+    venue: 'Kotlin & Cloud Lab, RVCE',
     coverImage: '/assets/covers/cloud-kubernetes.svg',
+    summary: 'Architect and deploy resilient microservices on GKE and Google Cloud Run with canary traffic splits.',
     description:
-      'Discover how to design resilient microservices and deploy them onto Google Cloud Run and GKE. Learn canary traffic splits, gRPC communication, and secret management.',
+      'Hands-on production laboratory exploring twelve-factor systems, multi-stage distroless container packaging, gRPC internal service meshes, and automated zero-downtime canary rollouts on Google Cloud Platform.',
     prerequisites: [
       'Docker Desktop or Podman installed locally',
-      'Basic familiarity with command-line Linux and HTTP protocols',
+      'Fundamental grasp of containerization and Linux CLI commands',
+      'Google Cloud SDK (gcloud CLI) initialized on your machine',
+      'Familiarity with YAML and microservice architecture',
     ],
     speaker: {
       name: 'Sneha Mukherjee',
       role: 'Cloud Infrastructure Specialist',
       company: 'Google Cloud Platform',
+      avatar: '/assets/avatars/member-03.svg',
       avatarUrl: '/assets/avatars/member-03.svg',
     },
     agenda: [
       {
         time: '10:00 AM',
-        title: 'Twelve-Factor App Architecture on Cloud Run',
-        description: 'Stateless concurrency, revision management, and VPC access.',
+        topic: 'Twelve-Factor Cloud Run Architecture',
+        detail: 'Stateless concurrency, revision management, and VPC peering topologies.',
+        title: 'Twelve-Factor Cloud Run Architecture',
+        description: 'Stateless concurrency, revision management, and VPC peering topologies.',
       },
       {
         time: '11:15 AM',
-        title: 'Container Multi-Stage Builds & Distroless Images',
-        description: 'Optimizing container images from 800MB to 24MB for ultra-fast cold starts.',
+        topic: 'Distroless Multi-Stage Container Builds',
+        detail: 'Trimming image layers from 800MB to 24MB for sub-second cold starts.',
+        title: 'Distroless Multi-Stage Container Builds',
+        description: 'Trimming image layers from 800MB to 24MB for sub-second cold starts.',
       },
       {
         time: '12:30 PM',
-        title: 'Traffic Splitting & Canary Deployment Demo',
-        description: 'Automating zero-downtime progressive rollouts using Cloud Build.',
+        topic: 'Canary Traffic Splitting & Cloud Build CI',
+        detail: 'Automating zero-downtime progressive rollouts with health telemetry.',
+        title: 'Canary Traffic Splitting & Cloud Build CI',
+        description: 'Automating zero-downtime progressive rollouts with health telemetry.',
+      },
+      {
+        time: '01:30 PM',
+        topic: 'GKE Autopilot Workload Hardening',
+        detail: 'Configuring network policies, secrets management, and least-privilege IAM.',
+        title: 'GKE Autopilot Workload Hardening',
+        description: 'Configuring network policies, secrets management, and least-privilege IAM.',
       },
     ],
-    tags: ['Cloud Run', 'Kubernetes', 'Docker', 'GCP', 'DevOps'],
-    badgeText: 'ARCHITECTURE WORKSHOP',
+    tags: ['Kubernetes', 'Cloud Run', 'Docker', 'GCP'],
+    badgeText: 'ARCHITECTURE LAB',
     registrationStatus: 'open',
+  },
+  {
+    id: 'event-03',
+    slug: 'android-compose-kotlin',
+    title: 'Modern Android with Jetpack Compose & Kotlin',
+    subtitle: 'Declarative UI Pipelines, State Hoisting, and Coroutines',
+    category: 'Study Jam',
+    eventType: 'Study Jam',
+    status: 'Upcoming',
+    googleColor: 'yellow',
+    accent: 'yellow',
+    date: '19 DEC 2026',
+    displayDate: '19 DEC 2026',
+    time: '14:00 – 17:30 IST',
+    isoStart: '2026-12-19T14:00:00+05:30',
+    isoEnd: '2026-12-19T17:30:00+05:30',
     mode: 'In-Person',
-    eventType: 'Workshop',
+    venue: 'CSE Seminar Hall, RVCE',
+    coverImage: '/assets/covers/android-compose.svg',
+    summary: 'Declarative UI engineering, state hoisting pipelines, and reactive coroutine architecture in Kotlin 2.0.',
+    description:
+      'An interactive study jam exploring modern Android architecture: building dynamic Material You interfaces, managing unidirectional state flows with Kotlin StateFlow, and optimizing recomposition trees.',
+    prerequisites: [
+      'Android Studio Ladybug installed on personal laptop',
+      'Basic knowledge of Kotlin syntax and object-oriented principles',
+      'An Android device or configured AVD emulator',
+      'Understanding of basic reactive UI concepts',
+    ],
+    speaker: {
+      name: 'Karthik Subramanian',
+      role: 'Staff Mobile Architect',
+      company: 'Android GDE Guild',
+      avatar: '/assets/avatars/member-02.svg',
+      avatarUrl: '/assets/avatars/member-02.svg',
+    },
+    agenda: [
+      {
+        time: '02:00 PM',
+        topic: 'Compose Slot APIs & Recomposition Trees',
+        detail: 'Understanding compiler optimization flags, remembered lambdas, and derived state.',
+        title: 'Compose Slot APIs & Recomposition Trees',
+        description: 'Understanding compiler optimization flags, remembered lambdas, and derived state.',
+      },
+      {
+        time: '03:15 PM',
+        topic: 'Unidirectional Data Flow & State Hosting',
+        detail: 'Wiring Android ViewModels with StateFlow and immutable UI states.',
+        title: 'Unidirectional Data Flow & State Hosting',
+        description: 'Wiring Android ViewModels with StateFlow and immutable UI states.',
+      },
+      {
+        time: '04:15 PM',
+        topic: 'Kotlin Coroutines & Flow Channels',
+        detail: 'Handling asynchronous network pipelines without thread blocking.',
+        title: 'Kotlin Coroutines & Flow Channels',
+        description: 'Handling asynchronous network pipelines without thread blocking.',
+      },
+      {
+        time: '05:00 PM',
+        topic: 'Dynamic Theming & Contrast Auditing',
+        detail: 'Pairing system palette tokens with accessible dark mode overrides.',
+        title: 'Dynamic Theming & Contrast Auditing',
+        description: 'Pairing system palette tokens with accessible dark mode overrides.',
+      },
+    ],
+    tags: ['Jetpack Compose', 'Kotlin 2.0', 'Coroutines', 'Material 3'],
+    badgeText: 'HANDS-ON LAB',
+    registrationStatus: 'open',
   },
   {
     id: 'event-04',
     slug: 'high-performance-web-nextjs15',
     title: 'High-Performance Web: Next.js 15 & Edge Runtimes',
     subtitle: 'Server Components, Streaming SSR, and Core Web Vitals at Scale',
-    category: 'Web',
-    status: 'upcoming',
+    category: 'Tech Talk',
+    eventType: 'Tech Talk',
+    status: 'Upcoming',
+    googleColor: 'green',
     accent: 'green',
-    date: '2027-01-23',
-    displayDate: 'Jan 23, 2027',
-    time: '02:30 PM – 05:30 PM',
-    venue: 'Civil Seminar Hall · RVCE Campus',
+    date: '23 JAN 2027',
+    displayDate: '23 JAN 2027',
+    time: '14:30 – 17:30 IST',
+    isoStart: '2027-01-23T14:30:00+05:30',
+    isoEnd: '2027-01-23T17:30:00+05:30',
+    mode: 'Online',
+    venue: 'Google Meet Live',
     coverImage: '/assets/covers/web-perf.svg',
+    summary: 'Server Components, Streaming SSR, and Core Web Vitals optimization on edge runtimes.',
     description:
-      'Master the cutting edge of web engineering with React 19, Next.js 15 App Router, streaming Suspense architectures, and surgical Core Web Vitals optimization.',
+      'Dive into bleeding-edge web engineering with React 19 Compiler, Next.js 15 App Router, streaming Suspense boundaries, and surgical Core Web Vitals profiling for sub-50ms interaction latencies.',
     prerequisites: [
-      'Proficiency in modern TypeScript & React hooks',
-      'Node.js 20+ installed on personal machine',
+      'Solid grasp of TypeScript and modern React hooks',
+      'Node.js 20+ runtime installed on your machine',
+      'Familiarity with HTTP/2, streaming, and CDN edge caching',
+      'Active Google account for Google Meet stream access',
     ],
     speaker: {
       name: 'Rohan Deshmukh',
       role: 'Principal Frontend Engineer',
       company: 'Open Web Collective',
+      avatar: '/assets/avatars/member-04.svg',
       avatarUrl: '/assets/avatars/member-04.svg',
     },
     agenda: [
       {
         time: '02:30 PM',
+        topic: 'React 19 Compiler & Server Action Mechanics',
+        detail: 'How React Server Components eliminate clientside JavaScript payload overhead.',
         title: 'React 19 Compiler & Server Action Mechanics',
-        description: 'How server components eliminate clientside JS payload bloat.',
+        description: 'How React Server Components eliminate clientside JavaScript payload overhead.',
       },
       {
-        time: '03:45 PM',
-        title: 'Optimizing INP, LCP, and Cumulative Layout Shift',
-        description: 'Diagnosing micro-stutters and orchestrating font-display fallbacks.',
+        time: '03:30 PM',
+        topic: 'Interaction to Next Paint (INP) Deep Dive',
+        detail: 'Diagnosing main-thread micro-stutters with Chrome DevTools trace profiles.',
+        title: 'Interaction to Next Paint (INP) Deep Dive',
+        description: 'Diagnosing main-thread micro-stutters with Chrome DevTools trace profiles.',
       },
       {
-        time: '04:45 PM',
+        time: '04:30 PM',
+        topic: 'Edge Middleware & Distributed KV Caching',
+        detail: 'Executing low-latency sub-10ms routing rules across global edge locations.',
         title: 'Edge Middleware & Distributed KV Caching',
-        description: 'Executing low-latency sub-10ms routing rules across global edge points.',
+        description: 'Executing low-latency sub-10ms routing rules across global edge locations.',
+      },
+      {
+        time: '05:00 PM',
+        topic: 'Live Q&A & Architecture Review',
+        detail: 'Live teardown of participant web applications and Lighthouse scores.',
+        title: 'Live Q&A & Architecture Review',
+        description: 'Live teardown of participant web applications and Lighthouse scores.',
       },
     ],
-    tags: ['Next.js 15', 'React 19', 'Performance', 'TypeScript', 'Web Vitals'],
+    tags: ['Next.js 15', 'React 19', 'Performance', 'Web Vitals'],
     badgeText: 'TECH LAB',
     registrationStatus: 'waitlist',
-    mode: 'Hybrid',
-    eventType: 'Tech Talk',
   },
 
   // --- PAST EVENTS ---
@@ -480,165 +574,272 @@ export const EVENTS_DATA: GDGEvent[] = [
     slug: 'neural-hack-sprint-edge-ml',
     title: 'Neural Hack Sprint: Edge ML & TensorFlow Lite',
     subtitle: 'Deploying Quantized Neural Networks on Embedded Devices',
-    category: 'AI & ML',
-    status: 'past',
+    category: 'Hackathon',
+    eventType: 'Hackathon',
+    status: 'Past',
+    googleColor: 'red',
     accent: 'red',
-    date: '2026-11-15',
-    displayDate: 'Nov 15, 2026',
-    time: '09:00 AM – 06:00 PM',
-    venue: 'IEM Auditorium · RVCE Campus',
+    date: '15 NOV 2026',
+    displayDate: '15 NOV 2026',
+    time: '09:00 – 18:00 IST',
+    isoStart: '2026-11-15T09:00:00+05:30',
+    isoEnd: '2026-11-15T18:00:00+05:30',
+    mode: 'In-Person',
+    venue: 'IEM Auditorium, RVCE',
     coverImage: '/assets/covers/hackathon-neural.svg',
+    summary: 'Full-day hardware sprint deploying quantized vision and audio models onto microcontrollers.',
     description:
-      'A deep dive into edge machine learning where students trained computer vision models, performed post-training integer quantization, and deployed them to Raspberry Pi and Android targets.',
-    prerequisites: ['Python 3.10+', 'Basic linear algebra and NumPy basics'],
+      'Student teams trained custom neural networks, applied post-training 8-bit integer quantization, and flashed models onto Raspberry Pi and ESP32 targets with sub-20ms inference times.',
+    prerequisites: [
+      'Python 3.10+ with NumPy and TensorFlow packages',
+      'Basic understanding of convolutional neural networks',
+      'Familiarity with serial communication protocols (UART/I2C)',
+      'Personal laptop with hardware flashing tools configured',
+    ],
     speaker: {
       name: 'Arjun Natarajan',
-      role: 'Edge ML Engineer',
+      role: 'Edge AI Systems Engineer',
       company: 'TensorFlow User Group',
+      avatar: '/assets/avatars/member-05.svg',
       avatarUrl: '/assets/avatars/member-05.svg',
     },
     agenda: [
       {
         time: '09:00 AM',
+        topic: 'Model Pruning and Quantization Fundamentals',
+        detail: 'Converting float32 models to int8 with zero noticeable accuracy degradation.',
         title: 'Model Pruning and Quantization Fundamentals',
         description: 'Converting float32 models to int8 with zero noticeable accuracy degradation.',
       },
       {
-        time: '01:00 PM',
-        title: 'TFLite Micro & Sensor Streaming',
-        description: 'Real-time gesture recognition from continuous accelerometer streams.',
+        time: '11:00 AM',
+        topic: 'TFLite Micro & Sensor Streaming Harness',
+        detail: 'Interfacing continuous accelerometer and camera frames over I2C/SPI.',
+        title: 'TFLite Micro & Sensor Streaming Harness',
+        description: 'Interfacing continuous accelerometer and camera frames over I2C/SPI.',
+      },
+      {
+        time: '02:00 PM',
+        topic: 'Hardware Build Sprint & Benchmarking',
+        detail: 'Measuring power draw and inference latency on physical edge hardware.',
+        title: 'Hardware Build Sprint & Benchmarking',
+        description: 'Measuring power draw and inference latency on physical edge hardware.',
+      },
+      {
+        time: '05:00 PM',
+        topic: 'Showcase Demonstrations & Evaluation',
+        detail: 'Live hardware proof-of-concept showcases judged on latency and accuracy.',
+        title: 'Showcase Demonstrations & Evaluation',
+        description: 'Live hardware proof-of-concept showcases judged on latency and accuracy.',
       },
     ],
     tags: ['TensorFlow Lite', 'Edge AI', 'Quantization', 'Python'],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
-    mode: 'In-Person',
-    eventType: 'Hackathon',
   },
   {
     id: 'event-06',
-    slug: 'design-systems-tokens-code',
-    title: 'Design Systems at Scale: Tokens to Code',
-    subtitle: 'Figma Variables, Semantic Primitives, and Tailwind PostCSS Architecture',
-    category: 'Design & Systems',
-    status: 'past',
-    accent: 'yellow',
-    date: '2026-10-28',
-    displayDate: 'Oct 28, 2026',
-    time: '03:00 PM – 06:00 PM',
-    venue: 'Design Studio · RVCE Architecture Block',
-    coverImage: '/assets/covers/design-systems.svg',
-    description:
-      'Exploring how modern engineering organizations bridge design and code using automated design token pipelines, style dictionary transforms, and accessible WCAG AA+ contrast models.',
-    prerequisites: ['Figma fundamentals & basic CSS variables knowledge'],
-    speaker: {
-      name: 'Meera Menon',
-      role: 'Senior Design Technologist',
-      company: 'Material Design Guild',
-      avatarUrl: '/assets/avatars/member-06.svg',
-    },
-    agenda: [
-      {
-        time: '03:00 PM',
-        title: 'Design Token Taxonomy & Primitive Scales',
-        description: 'Organizing semantic layers across spacing, color, and elevation.',
-      },
-      {
-        time: '04:30 PM',
-        title: 'Exporting Tokens into Tailwind v4 Theme Variables',
-        description: 'Automating CSS variable distribution with zero manual drift.',
-      },
-    ],
-    tags: ['Design Systems', 'Figma', 'Tokens', 'Tailwind CSS', 'WCAG'],
-    badgeText: 'ARCHIVED MASTERCLASS',
-    registrationStatus: 'concluded',
-    mode: 'In-Person',
-    eventType: 'Workshop',
-  },
-  {
-    id: 'event-07',
     slug: 'open-source-architecture-git',
     title: 'Open Source Architecture & Git Mastery Sprint',
     subtitle: 'Interactive Rebasing, Monorepo Plumbing, and GitHub Actions CI',
-    category: 'Open Source',
-    status: 'past',
-    accent: 'green',
-    date: '2026-10-10',
-    displayDate: 'Oct 10, 2026',
-    time: '11:00 AM – 04:00 PM',
-    venue: 'CSE Seminar Hall · RVCE Campus',
+    category: 'Workshop',
+    eventType: 'Workshop',
+    status: 'Past',
+    googleColor: 'blue',
+    accent: 'blue',
+    date: '10 OCT 2026',
+    displayDate: '10 OCT 2026',
+    time: '11:00 – 16:00 IST',
+    isoStart: '2026-10-10T11:00:00+05:30',
+    isoEnd: '2026-10-10T16:00:00+05:30',
+    mode: 'Hybrid',
+    venue: 'CSE Seminar Hall, RVCE',
     coverImage: '/assets/covers/opensource-git.svg',
+    summary: 'Deep dive into Git internals, DAG commit graphs, interactive rebasing, and CI automation.',
     description:
-      'An architectural dive under the hood of Git: understanding the object database, commit graphs, interactive rebase surgery, and crafting bulletproof GitHub Actions workflows.',
-    prerequisites: ['Git CLI installed and basic commit/push workflow experience'],
+      'An engineering breakdown of Git internals: dissecting the object database, tree objects, SHA-1 commit graphs, cherry-picking, interactive rebase conflict resolution, and creating enterprise GitHub Actions.',
+    prerequisites: [
+      'Git CLI installed on Linux, macOS, or Windows WSL',
+      'Active GitHub account with two-factor authentication',
+      'Basic knowledge of git add, commit, push, and branching',
+      'Bash or Zsh shell comfort',
+    ],
     speaker: {
       name: 'Vikramaditya Hegde',
-      role: 'Open Source Maintainer',
+      role: 'Open Source Systems Maintainer',
       company: 'Linux Foundation Fellow',
+      avatar: '/assets/avatars/member-07.svg',
       avatarUrl: '/assets/avatars/member-07.svg',
     },
     agenda: [
       {
         time: '11:00 AM',
+        topic: 'Git Internals: Blobs, Trees, and Commits',
+        detail: 'Dissecting the .git folder and inspecting hash pointers and index states.',
         title: 'Git Internals: Blobs, Trees, and Commits',
-        description: 'Dissecting the .git folder and inspecting SHA-1 hash pointers.',
+        description: 'Dissecting the .git folder and inspecting hash pointers and index states.',
       },
       {
-        time: '02:00 PM',
+        time: '12:30 PM',
+        topic: 'Interactive Rebasing & History Rewriting',
+        detail: 'Squashing, splitting, and reordering commits without losing upstream state.',
+        title: 'Interactive Rebasing & History Rewriting',
+        description: 'Squashing, splitting, and reordering commits without losing upstream state.',
+      },
+      {
+        time: '02:30 PM',
+        topic: 'Crafting Automated Release Workflows',
+        detail: 'Semantic release automation, changelog generation, and package publishing.',
         title: 'Crafting Automated Release Workflows',
-        description: 'Semantic release automation, changelog generation, and NPM publish.',
+        description: 'Semantic release automation, changelog generation, and package publishing.',
+      },
+      {
+        time: '03:45 PM',
+        topic: 'Monorepo Tooling & Upstream PR Reviews',
+        detail: 'Setting up Turborepo workspaces and managing large multi-package codebases.',
+        title: 'Monorepo Tooling & Upstream PR Reviews',
+        description: 'Setting up Turborepo workspaces and managing large multi-package codebases.',
       },
     ],
-    tags: ['Git', 'GitHub Actions', 'CI/CD', 'Open Source', 'Bash'],
-    badgeText: 'ARCHIVED SPRINT',
+    tags: ['Git', 'GitHub Actions', 'CI/CD', 'Open Source'],
+    badgeText: 'ARCHIVED WORKSHOP',
     registrationStatus: 'concluded',
+  },
+  {
+    id: 'event-07',
+    slug: 'design-systems-tokens-code',
+    title: 'Design Systems at Scale: Tokens to Code',
+    subtitle: 'Figma Variables, Semantic Primitives, and Tailwind PostCSS Architecture',
+    category: 'Study Jam',
+    eventType: 'Study Jam',
+    status: 'Past',
+    googleColor: 'yellow',
+    accent: 'yellow',
+    date: '28 OCT 2026',
+    displayDate: '28 OCT 2026',
+    time: '15:00 – 18:00 IST',
+    isoStart: '2026-10-28T15:00:00+05:30',
+    isoEnd: '2026-10-28T18:00:00+05:30',
     mode: 'In-Person',
-    eventType: 'Workshop',
+    venue: 'Kotlin & Cloud Lab, RVCE',
+    coverImage: '/assets/covers/design-systems.svg',
+    summary: 'Bridging Figma variables with Tailwind CSS v4, semantic primitives, and WCAG AAA compliance.',
+    description:
+      'Explored how modern frontend teams construct maintainable design systems with automated token transforms, style dictionaries, fluid typography scales, and accessible color contrast modeling.',
+    prerequisites: [
+      'Figma account and understanding of components/variants',
+      'CSS custom properties and modern styling experience',
+      'Basic React or Next.js development workflow',
+      'Passion for accessible UI engineering',
+    ],
+    speaker: {
+      name: 'Meera Menon',
+      role: 'Senior Design Technologist',
+      company: 'Material Design Guild',
+      avatar: '/assets/avatars/member-06.svg',
+      avatarUrl: '/assets/avatars/member-06.svg',
+    },
+    agenda: [
+      {
+        time: '03:00 PM',
+        topic: 'Design Token Taxonomy & Primitive Scales',
+        detail: 'Organizing semantic layers across spacing, color, and elevation.',
+        title: 'Design Token Taxonomy & Primitive Scales',
+        description: 'Organizing semantic layers across spacing, color, and elevation.',
+      },
+      {
+        time: '04:00 PM',
+        topic: 'Exporting Tokens into Tailwind v4 Theme Variables',
+        detail: 'Automating CSS variable distribution with zero manual drift.',
+        title: 'Exporting Tokens into Tailwind v4 Theme Variables',
+        description: 'Automating CSS variable distribution with zero manual drift.',
+      },
+      {
+        time: '05:00 PM',
+        topic: 'WCAG AAA Contrast & Fluid Type Scales',
+        detail: 'Calculating perceptual lightness and contrast curves across themes.',
+        title: 'WCAG AAA Contrast & Fluid Type Scales',
+        description: 'Calculating perceptual lightness and contrast curves across themes.',
+      },
+      {
+        time: '05:30 PM',
+        topic: 'Building Accessible Primitives in React',
+        detail: 'Developing keyboard-navigable dialogs, switches, and tabs.',
+        title: 'Building Accessible Primitives in React',
+        description: 'Developing keyboard-navigable dialogs, switches, and tabs.',
+      },
+    ],
+    tags: ['Design Systems', 'Figma', 'Tokens', 'Tailwind CSS'],
+    badgeText: 'ARCHIVED MASTERCLASS',
+    registrationStatus: 'concluded',
   },
   {
     id: 'event-08',
     slug: 'devfest-campus-warmup-26',
     title: "DevFest Campus Warmup '26",
     subtitle: 'Annual Chapter Launch, Architecture Keynote & Technology Showcase',
-    category: 'Flagship',
-    status: 'past',
-    accent: 'blue',
-    date: '2026-09-20',
-    displayDate: 'Sep 20, 2026',
-    time: '09:30 AM – 05:30 PM',
-    venue: 'Sir M. Visvesvaraya Hall · RVCE Campus',
+    category: 'Tech Talk',
+    eventType: 'Tech Talk',
+    status: 'Past',
+    googleColor: 'green',
+    accent: 'green',
+    date: '20 SEP 2026',
+    displayDate: '20 SEP 2026',
+    time: '09:30 – 17:30 IST',
+    isoStart: '2026-09-20T09:30:00+05:30',
+    isoEnd: '2026-09-20T17:30:00+05:30',
+    mode: 'Online',
+    venue: 'Google Meet Live',
     coverImage: '/assets/covers/devfest-recap.svg',
+    summary: 'Inaugural keynote broadcast previewing engineering roadmaps across AI, Cloud, Web, and Mobile.',
     description:
-      'The inaugural campus keynote bringing together student developers, faculty mentors, and industry practitioners to preview the year’s engineering roadmaps across AI, Cloud, Web, and Mobile.',
-    prerequisites: ['Open to all RVCE engineering students across all semesters'],
+      'The chapter ignition event bringing student builders, faculty mentors, and industry practitioners together to broadcast the year’s engineering roadmaps, live code demonstrations, and open-source project launches.',
+    prerequisites: [
+      'Open to all RVCE engineering students across all semesters',
+      'Curiosity about emerging developer ecosystems and cloud platforms',
+      'Active Google account for online stream access',
+      'No prior specialized prerequisites required',
+    ],
     speaker: {
       name: 'Pooja Sundaram',
       role: 'Community Ecosystem Lead',
-      company: 'Google Developers',
+      company: 'Google Developers Guild',
+      avatar: '/assets/avatars/member-08.svg',
       avatarUrl: '/assets/avatars/member-08.svg',
     },
     agenda: [
       {
         time: '09:30 AM',
+        topic: 'Opening Keynote: The Multi-Disciplinary Engineer',
+        detail: 'Navigating rapid shifts in developer tooling and AI-native software.',
         title: 'Opening Keynote: The Multi-Disciplinary Engineer',
         description: 'Navigating rapid shifts in developer tooling and AI-native software.',
       },
       {
         time: '11:30 AM',
+        topic: 'Four-Vertical Live Code Demonstrations',
+        detail: 'Simultaneous deep-dives in Gemini APIs, Jetpack Compose, Next.js, and Cloud Run.',
         title: 'Four-Vertical Live Code Demonstrations',
         description: 'Simultaneous deep-dives in Gemini APIs, Jetpack Compose, Next.js, and Cloud Run.',
       },
       {
-        time: '03:30 PM',
-        title: 'Open Source Roadmap & Chapter Guild Launch',
+        time: '02:30 PM',
+        topic: 'Campus Open Source Guild Launch',
+        detail: 'Announcing student working groups and upcoming buildathlon schedules.',
+        title: 'Campus Open Source Guild Launch',
         description: 'Announcing student working groups and upcoming buildathlon schedules.',
       },
+      {
+        time: '04:30 PM',
+        topic: 'Student Builder Showcase & Lightning Talks',
+        detail: 'Five student projects showcased live to the global community.',
+        title: 'Student Builder Showcase & Lightning Talks',
+        description: 'Five student projects showcased live to the global community.',
+      },
     ],
-    tags: ['DevFest', 'Keynote', 'Architecture', 'AI', 'Cloud', 'Android', 'Web'],
+    tags: ['Keynote', 'Architecture', 'AI', 'Cloud', 'Android'],
     badgeText: 'ANNUAL KEYNOTE',
     registrationStatus: 'concluded',
-    mode: 'In-Person',
-    eventType: 'Tech Talk',
   },
 ];
 
@@ -658,6 +859,7 @@ export const RECAP_DATA: EventRecap = {
     name: 'Pooja Sundaram',
     role: 'Community Ecosystem Lead',
     company: 'Google Developers',
+    avatar: '/assets/avatars/member-08.svg',
     avatarUrl: '/assets/avatars/member-08.svg',
   },
   deliverables: [
