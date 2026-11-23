@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Terminal } from 'lucide-react';
 import { RECAP_DATA, RecapTabItem } from '@/data/gdgData';
+import { MagneticWrapper } from '@/components/ui/MagneticWrapper';
 
 // Google Checkmark Accent Palette
 const CHECK_COLORS = ['#4285F4', '#EA4335', '#34A853'];
@@ -400,13 +401,15 @@ export function RecapAndCommunitySection() {
           {/* Dual CTAs */}
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full sm:w-auto">
             {/* Primary CTA: Browse All Events (Google Blue #4285F4) */}
-            <Link
-              href="/events"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all duration-200 shadow-md hover:shadow-lg group"
-            >
-              <span>Browse All Events</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
+            <MagneticWrapper maxOffset={6} className="w-full sm:w-auto">
+              <Link
+                href="/events"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all duration-200 shadow-md hover:shadow-lg group"
+              >
+                <span>Browse All Events</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </Link>
+            </MagneticWrapper>
 
             {/* Secondary CTA: Meet the Team (Outlined) */}
             <Link

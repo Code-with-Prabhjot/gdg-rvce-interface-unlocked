@@ -96,7 +96,12 @@ body {
     linear-gradient(to bottom, var(--border-hairline) 1px, transparent 1px);
 }
 
-/* Custom scrollbar */
+/* Custom cross-browser scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--bg-canvas);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -115,10 +120,16 @@ body {
   background: var(--text-muted);
 }
 
-/* Selection style */
+/* Global Selection style with Google Blue */
 ::selection {
-  background-color: rgba(66, 133, 244, 0.25);
-  color: var(--text-primary);
+  background: rgba(66, 133, 244, 0.24);
+  color: inherit;
+}
+
+/* Consistent high-contrast focus-visible rings across interactive elements */
+:focus-visible {
+  outline: 2px solid #4285F4;
+  outline-offset: 2px;
 }
 
 /* GPU-Accelerated Infinite Marquee */

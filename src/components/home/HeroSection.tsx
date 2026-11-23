@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Code, ShieldCheck } from 'lucide-react';
 import { KineticPrismStage } from './KineticPrismStage';
 import { DEVELOPER_STICKERS } from '@/data/gdgData';
+import { MagneticWrapper } from '@/components/ui/MagneticWrapper';
 
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
@@ -127,21 +128,25 @@ export function HeroSection() {
               transition={maskTransition(0.58)}
               className="flex flex-wrap items-center gap-4 pt-1"
             >
-              <Link
-                href="/events"
-                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
-              >
-                <span>Explore Events</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
+              <MagneticWrapper maxOffset={6}>
+                <Link
+                  href="/events"
+                  className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                >
+                  <span>Explore Events</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+              </MagneticWrapper>
 
-              <Link
-                href="/team"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
-              >
-                <Code className="w-4 h-4 text-[#34A853]" />
-                <span>Meet the Builders</span>
-              </Link>
+              <MagneticWrapper maxOffset={6}>
+                <Link
+                  href="/team"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                >
+                  <Code className="w-4 h-4 text-[#34A853]" />
+                  <span>Meet the Builders</span>
+                </Link>
+              </MagneticWrapper>
             </motion.div>
 
             {/* 680ms: Interactive Developer Sticker Strip */}

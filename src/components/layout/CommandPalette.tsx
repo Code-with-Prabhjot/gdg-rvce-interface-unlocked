@@ -11,12 +11,14 @@ import {
   Sun,
   Moon,
   Sparkles,
+  Terminal,
   ArrowRight,
   CornerDownLeft,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
+import { useDevTerminal } from '@/context/DevTerminalContext';
 
 interface CommandItem {
   id: string;
@@ -30,6 +32,7 @@ interface CommandItem {
 
 export function CommandPalette() {
   const { isOpen, close, toggle } = useCommandPalette();
+  const { open: openTerminal } = useDevTerminal();
   const router = useRouter();
   const { theme, toggleTheme, setTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -157,6 +160,18 @@ export function CommandPalette() {
       run: () => {
         fireGoogleConfetti();
         close();
+      },
+    },
+    {
+      id: 'action-dev-terminal',
+      title: 'Open Developer Terminal ( ~ )',
+      subtitle: 'Access interactive CLI with whoami, events, stack & celebrate',
+      category: 'Community',
+      icon: Terminal,
+      accentColor: '#34A853',
+      run: () => {
+        close();
+        openTerminal();
       },
     },
   ];

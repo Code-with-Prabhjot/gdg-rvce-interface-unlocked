@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { MapPin, Terminal, Heart, Info, X } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
+import { useDevTerminal } from '@/context/DevTerminalContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
+  const { toggle: toggleTerminal } = useDevTerminal();
 
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
@@ -131,11 +133,26 @@ export function Footer() {
               </a>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)]">
                 <Terminal className="w-3 h-3 text-[#34A853]" />
                 Next.js 15 App Router
               </span>
+
+              {/* Signature Developer CLI Drawer Trigger */}
+              <button
+                type="button"
+                onClick={toggleTerminal}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[#34A853] border border-[var(--border-hairline)] hover:border-[#34A853]/50 transition-all cursor-pointer shadow-2xs active:scale-95 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#34A853]"
+                aria-label="Open Developer CLI Terminal"
+                title="Toggle Developer Terminal (` or ~)"
+              >
+                <span className="text-[#34A853] font-bold group-hover:scale-110 transition-transform">&gt;_</span>
+                <span>CLI</span>
+                <kbd className="text-[9px] px-1 py-0.2 bg-[var(--bg-elevated)] border border-[var(--border-hairline)] rounded text-[var(--text-muted)] font-mono">
+                  ~
+                </kbd>
+              </button>
             </div>
           </div>
         </div>

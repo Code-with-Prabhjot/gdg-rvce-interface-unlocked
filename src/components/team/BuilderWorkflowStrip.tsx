@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, FileCode2, Terminal, Rocket } from 'lucide-react';
+import { MagneticWrapper } from '@/components/ui/MagneticWrapper';
 
 interface StageDef {
   number: string;
@@ -89,13 +90,15 @@ export function BuilderWorkflowStrip() {
 
           {/* CTA Link Button back to /events */}
           <div className="shrink-0">
-            <Link
-              href="/events"
-              className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-strong)] hover:border-[#4285F4] text-xs sm:text-sm font-mono font-medium transition-all shadow-xs group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-            >
-              <span>Explore Upcoming Sprints</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <MagneticWrapper maxOffset={6}>
+              <Link
+                href="/events"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-strong)] hover:border-[#4285F4] text-xs sm:text-sm font-mono font-medium transition-all shadow-xs group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <span>Explore Upcoming Sprints</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </MagneticWrapper>
           </div>
         </div>
 

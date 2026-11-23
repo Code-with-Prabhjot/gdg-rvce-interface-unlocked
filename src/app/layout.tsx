@@ -3,10 +3,12 @@ import { Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/goog
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { CommandPaletteProvider } from '@/context/CommandPaletteContext';
+import { DevTerminalProvider } from '@/context/DevTerminalContext';
 import { ScrollProgressBar } from '@/components/layout/ScrollProgressBar';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CommandPalette } from '@/components/layout/CommandPalette';
+import { DevTerminalModal } from '@/components/ui/DevTerminalModal';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -73,26 +75,31 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased font-sans selection:bg-[#4285F4]/20 selection:text-[var(--text-primary)]`}
+        className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased font-sans`}
       >
         <ThemeProvider>
           <CommandPaletteProvider>
-            {/* Visual Top Scroll Indicator */}
-            <ScrollProgressBar />
+            <DevTerminalProvider>
+              {/* Visual Top Scroll Indicator */}
+              <ScrollProgressBar />
 
-            {/* Global Sticky Navigation */}
-            <Navbar />
+              {/* Global Sticky Navigation */}
+              <Navbar />
 
-            {/* Main Application Routes Viewport */}
-            <main className="flex-1 w-full bg-blueprint-grid">
-              {children}
-            </main>
+              {/* Main Application Routes Viewport */}
+              <main className="flex-1 w-full bg-blueprint-grid">
+                {children}
+              </main>
 
-            {/* Global Architectural Footer */}
-            <Footer />
+              {/* Global Architectural Footer */}
+              <Footer />
 
-            {/* Global Command Palette Overlay */}
-            <CommandPalette />
+              {/* Global Command Palette Overlay */}
+              <CommandPalette />
+
+              {/* Signature Developer Interactive CLI Terminal Drawer */}
+              <DevTerminalModal />
+            </DevTerminalProvider>
           </CommandPaletteProvider>
         </ThemeProvider>
       </body>
