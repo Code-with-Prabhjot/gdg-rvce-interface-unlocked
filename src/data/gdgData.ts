@@ -43,6 +43,10 @@ export interface PillarItem {
   iconName: string;
   features: string[];
   techSpec: string;
+  chips: string[];
+  indexTag: string;
+  pillBadge: string;
+  emoteBadge?: string;
 }
 
 export interface EventSpeaker {
@@ -78,12 +82,23 @@ export interface GDGEvent {
   tags: string[];
   badgeText: string;
   registrationStatus: 'open' | 'waitlist' | 'concluded';
+  mode: 'In-Person' | 'Hybrid' | 'Online';
+  eventType: 'Hackathon' | 'Workshop' | 'Study Jam' | 'Tech Talk';
 }
 
 export interface RecapHighlight {
   label: string;
   value: string;
   detail: string;
+}
+
+export interface RecapTabItem {
+  id: 'keynotes' | 'labs' | 'artifacts';
+  label: string;
+  tagline: string;
+  narrative: string;
+  takeaways: string[];
+  badges: string[];
 }
 
 export interface EventRecap {
@@ -101,6 +116,7 @@ export interface EventRecap {
     tech: string[];
   }[];
   highlights: RecapHighlight[];
+  tabs: RecapTabItem[];
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +187,7 @@ export const TECH_MARQUEE_ITEMS: string[] = [
 export const PILLARS_DATA: PillarItem[] = [
   {
     id: 'core-workshops',
-    title: 'Core Workshops',
+    title: 'Hands-On Build Labs',
     tagline: 'Deep-dive architectural bootcamps and systems labs',
     description:
       'Rigorous, instructor-led masterclasses diving deep into distributed cloud systems, modern Android app architectures, and high-performance Web Vitals.',
@@ -185,10 +201,13 @@ export const PILLARS_DATA: PillarItem[] = [
       'Production deployment pipelines on Google Cloud Platform',
     ],
     techSpec: 'SYSTEMS // RUNTIME // INFRA',
+    chips: ['Cloud Run', 'Next.js 15', 'Android Compose'],
+    indexTag: '01 // BLUE',
+    pillBadge: 'SYSTEMS LAB',
   },
   {
     id: 'flagship-hackathons',
-    title: 'Flagship Hackathons',
+    title: 'Campus Hackathons',
     tagline: '24-to-36 hour rapid prototyping arenas',
     description:
       'Immersive on-campus buildathlons where multi-disciplinary student teams build full-stack solutions with Gemini Multimodal APIs, Vertex AI, and scalable microservices.',
@@ -202,10 +221,14 @@ export const PILLARS_DATA: PillarItem[] = [
       'Peer-reviewed live demo pitch showcases',
     ],
     techSpec: 'SPRINT // DEMOS // BENCHMARKS',
+    chips: ['Gemini APIs', 'Vertex AI', '24h Prototype'],
+    indexTag: '02 // RED',
+    pillBadge: 'RAPID SPRINT',
+    emoteBadge: '/assets/emotes/trophy-build.svg',
   },
   {
     id: 'study-jams',
-    title: 'Study Jams',
+    title: 'Study Jams & Pathways',
     tagline: 'Focused cohort study groups & credential tracks',
     description:
       'Structured weekly cohorts tackling machine learning models, cloud computing fundamentals, and native development with peer accountability and code reviews.',
@@ -219,10 +242,14 @@ export const PILLARS_DATA: PillarItem[] = [
       'Senior student mentor office hours & guidance',
     ],
     techSpec: 'COHORTS // LABS // PEER REVIEW',
+    chips: ['Cloud Boost', 'TensorFlow', 'Peer Reviews'],
+    indexTag: '03 // YELLOW',
+    pillBadge: 'LEARNING TRACK',
+    emoteBadge: '/assets/emotes/gemini-spark.svg',
   },
   {
     id: 'open-source-builds',
-    title: 'Open Source Builds',
+    title: 'Open Source & Research',
     tagline: 'High-craft software created for public benefit',
     description:
       'Collaborative engineering projects maintaining public utility tools, student portals, and library packages under MIT and Apache-2.0 open-source licenses.',
@@ -236,6 +263,10 @@ export const PILLARS_DATA: PillarItem[] = [
       'Open design systems with accessible Figma primitives',
     ],
     techSpec: 'REPOS // MIT // MONOREPO',
+    chips: ['MIT / Apache', 'GitHub Actions', 'Monorepos'],
+    indexTag: '04 // GREEN',
+    pillBadge: 'OPEN PROTOCOL',
+    emoteBadge: '/assets/emotes/merge-clean.svg',
   },
 ];
 
@@ -295,6 +326,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python', 'Hackathon'],
     badgeText: 'FLAGSHIP SPRINT',
     registrationStatus: 'open',
+    mode: 'In-Person',
+    eventType: 'Hackathon',
   },
   {
     id: 'event-02',
@@ -341,6 +374,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Jetpack Compose', 'Kotlin 2.0', 'Coroutines', 'Material 3'],
     badgeText: 'HANDS-ON LAB',
     registrationStatus: 'open',
+    mode: 'In-Person',
+    eventType: 'Study Jam',
   },
   {
     id: 'event-03',
@@ -387,6 +422,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Cloud Run', 'Kubernetes', 'Docker', 'GCP', 'DevOps'],
     badgeText: 'ARCHITECTURE WORKSHOP',
     registrationStatus: 'open',
+    mode: 'In-Person',
+    eventType: 'Workshop',
   },
   {
     id: 'event-04',
@@ -433,6 +470,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Next.js 15', 'React 19', 'Performance', 'TypeScript', 'Web Vitals'],
     badgeText: 'TECH LAB',
     registrationStatus: 'waitlist',
+    mode: 'Hybrid',
+    eventType: 'Tech Talk',
   },
 
   // --- PAST EVENTS ---
@@ -473,6 +512,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['TensorFlow Lite', 'Edge AI', 'Quantization', 'Python'],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
+    mode: 'In-Person',
+    eventType: 'Hackathon',
   },
   {
     id: 'event-06',
@@ -511,6 +552,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Design Systems', 'Figma', 'Tokens', 'Tailwind CSS', 'WCAG'],
     badgeText: 'ARCHIVED MASTERCLASS',
     registrationStatus: 'concluded',
+    mode: 'In-Person',
+    eventType: 'Workshop',
   },
   {
     id: 'event-07',
@@ -549,6 +592,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Git', 'GitHub Actions', 'CI/CD', 'Open Source', 'Bash'],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
+    mode: 'In-Person',
+    eventType: 'Workshop',
   },
   {
     id: 'event-08',
@@ -592,6 +637,8 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['DevFest', 'Keynote', 'Architecture', 'AI', 'Cloud', 'Android', 'Web'],
     badgeText: 'ANNUAL KEYNOTE',
     registrationStatus: 'concluded',
+    mode: 'In-Person',
+    eventType: 'Tech Talk',
   },
 ];
 
@@ -650,6 +697,47 @@ export const RECAP_DATA: EventRecap = {
       label: 'Engineering Philosophy',
       value: '100% Student-Driven',
       detail: 'Designed, architected, and delivered by RVCE student developers',
+    },
+  ],
+  tabs: [
+    {
+      id: 'keynotes',
+      label: 'Keynote Highlights',
+      tagline: 'Engineering Leadership & Modern Systems Philosophy',
+      narrative:
+        'Four technical keynotes delivered foundational blueprints on building production-grade AI systems, zero-trust cloud infrastructure, declarative mobile runtimes, and accessible web systems without commercial hype.',
+      takeaways: [
+        'System prompt engineering & multimodal tool-calling architectures for real-time streaming latency',
+        'Distroless container builds reducing cold starts from 800MB to 24MB on Google Cloud Run',
+        'Declarative UI state isolation with unidirectional data flow in Kotlin 2.0 & Jetpack Compose',
+      ],
+      badges: ['Gemini 1.5', 'Cloud Run', 'Compose', 'Next.js 15'],
+    },
+    {
+      id: 'labs',
+      label: 'Hands-On Labs',
+      tagline: 'Zero-Slide Live Terminal Implementation',
+      narrative:
+        'RVCE student engineers engaged in concurrent zero-slide workshops where laptops remained open, terminal sessions were live-streamed, and participants wrote and deployed test suites against real APIs.',
+      takeaways: [
+        'Live deployment of containerized microservices to Google Cloud Run with canary traffic routing',
+        'On-device quantized neural net inference using TensorFlow Lite Micro and continuous sensor streams',
+        'Interactive Git rebase surgeries, monorepo plumbing, and automated GitHub Actions release workflows',
+      ],
+      badges: ['Docker', 'TFLite Micro', 'GitHub Actions', 'gRPC'],
+    },
+    {
+      id: 'artifacts',
+      label: 'Shipped Artifacts',
+      tagline: 'Production Open-Source Student Codebases',
+      narrative:
+        'Beyond conceptual learning, DevFest Campus Warmup incubated and initialized three open-source utility codebases maintained under MIT license by RVCE student developer guilds.',
+      takeaways: [
+        'Multimodal Sensor Hub: Telemetry dashboard fusing Gemini Flash with Next.js 15 App Router',
+        'RVCE Campus Transit: Offline-first Android navigational companion with Room DB & Compose',
+        'Cloud Run CI Pipeline: Reusable GitHub Actions template for automated container verification',
+      ],
+      badges: ['MIT License', 'Open Source', 'TypeScript', 'Kotlin'],
     },
   ],
 };
