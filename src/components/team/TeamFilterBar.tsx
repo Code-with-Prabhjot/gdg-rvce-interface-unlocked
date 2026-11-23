@@ -2,16 +2,19 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { RotateCw, LayoutGrid } from 'lucide-react';
+import { RotateCw, LayoutGrid, Network } from 'lucide-react';
 import { TeamVertical } from '@/data/gdgData';
 
 export type TeamFilterOption = 'All Builders' | TeamVertical;
+export type TeamViewMode = 'grid' | 'topology';
 
 interface TeamFilterBarProps {
   selectedVertical: TeamFilterOption;
   onSelectVertical: (vertical: TeamFilterOption) => void;
   inspectAll: boolean;
   onToggleInspectAll: () => void;
+  viewMode: TeamViewMode;
+  onViewModeChange: (mode: TeamViewMode) => void;
 }
 
 interface FilterTabDef {
@@ -34,11 +37,13 @@ export function TeamFilterBar({
   onSelectVertical,
   inspectAll,
   onToggleInspectAll,
+  viewMode,
+  onViewModeChange,
 }: TeamFilterBarProps) {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-2 sm:p-2.5 shadow-xs mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+    <div className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-2 sm:p-2.5 shadow-xs mb-8 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3 sm:gap-4">
       {/* Scrollable / Wrapping Filter Tabs */}
       <div
         role="tablist"
@@ -88,8 +93,76 @@ export function TeamFilterBar({
         })}
       </div>
 
-      {/* Global Inspect All Specs / Show Profiles Toggle */}
-      <div className="shrink-0 flex items-center justify-end pt-2 md:pt-0 border-t md:border-t-0 border-[var(--border-hairline)]">
+      {/* Right Controls: Segmented View Switcher & Global Spec Toggle */}
+      <div className="shrink-0 flex flex-wrap items-center justify-end gap-2 sm:gap-3 pt-2 xl:pt-0 border-t xl:border-t-0 border-[var(--border-hairline)]">
+        {/* Segmented View Mode Switcher (Roster Grid | Chapter Topology) */}
+        <div
+          role="group"
+          aria-label="Team directory display view"
+          className="flex items-center p-1 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]"
+        >
+          {/* Roster Grid Toggle */}
+          <button
+            type="button"
+            onClick={() => onViewModeChange('grid')}
+            aria-pressed={viewMode === 'grid'}
+            aria-label="Switch to Roster Grid view"
+            className={`relative min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              viewMode === 'grid'
+                ? 'text-[var(--text-primary)] font-semibold'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            {viewMode === 'grid' && (
+              <motion.div
+                layoutId="team-view-mode-pill"
+                transition={{
+                  type: 'spring',
+                  stiffness: prefersReducedMotion ? 1000 : 400,
+                  damping: 35,
+                }}
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs"
+              />
+            )}
+            <span className="relative z-10 flex items-center gap-1.5">
+              <LayoutGrid className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+              <span className="hidden sm:inline">Roster Grid</span>
+              <span className="sm:hidden">Grid</span>
+            </span>
+          </button>
+
+          {/* Chapter Topology Toggle */}
+          <button
+            type="button"
+            onClick={() => onViewModeChange('topology')}
+            aria-pressed={viewMode === 'topology'}
+            aria-label="Switch to Chapter Topology circuit view"
+            className={`relative min-h-[40px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              viewMode === 'topology'
+                ? 'text-[var(--text-primary)] font-semibold'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            {viewMode === 'topology' && (
+              <motion.div
+                layoutId="team-view-mode-pill"
+                transition={{
+                  type: 'spring',
+                  stiffness: prefersReducedMotion ? 1000 : 400,
+                  damping: 35,
+                }}
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs"
+              />
+            )}
+            <span className="relative z-10 flex items-center gap-1.5">
+              <Network className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+              <span className="hidden sm:inline">Chapter Topology</span>
+              <span className="sm:hidden">Topology</span>
+            </span>
+          </button>
+        </div>
+
+        {/* Global Inspect All Specs / Show Profiles Toggle */}
         <button
           type="button"
           onClick={onToggleInspectAll}
@@ -99,7 +172,7 @@ export function TeamFilterBar({
               ? 'Show builder profiles for all cards'
               : 'Inspect technical builder specs for all cards'
           }
-          className={`min-h-[44px] w-full md:w-auto px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all flex items-center justify-center gap-2.5 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+          className={`min-h-[44px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all flex items-center justify-center gap-2 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
             inspectAll
               ? 'bg-[#4285F4] text-white border-[#4285F4] shadow-sm hover:bg-[#3367D6]'
               : 'bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[#4285F4] hover:text-[#4285F4]'
@@ -108,12 +181,14 @@ export function TeamFilterBar({
           {inspectAll ? (
             <>
               <LayoutGrid className="w-4 h-4 shrink-0 text-white" aria-hidden="true" />
-              <span>Show Profiles ↺</span>
+              <span className="hidden sm:inline">Show Profiles ↺</span>
+              <span className="sm:hidden">Profiles ↺</span>
             </>
           ) : (
             <>
               <RotateCw className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>Inspect All Specs ↻</span>
+              <span className="hidden sm:inline">Inspect All Specs ↻</span>
+              <span className="sm:hidden">Specs ↻</span>
             </>
           )}
         </button>

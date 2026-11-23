@@ -1124,6 +1124,11 @@ export type TeamVertical =
   | 'Design & UX'
   | 'Community & Events';
 
+export interface BuilderCompetency {
+  label: string;
+  level: number;
+}
+
 export interface BuilderSpec {
   focusArea: string;
   favoriteStack: string;
@@ -1142,6 +1147,7 @@ export interface GDGTeamMember {
   emoteBadge: string;
   bio: string;
   skills: string[];
+  competencies: BuilderCompetency[];
   builderSpec: BuilderSpec;
   links: {
     github: string;
@@ -1162,6 +1168,11 @@ export const TEAM_DATA: GDGTeamMember[] = [
     emoteBadge: '/assets/emotes/terminal-wizard.svg',
     bio: 'Architecting campus engineering roadmaps and steering distributed open-source sprints with strict zero-hype focus.',
     skills: ['Go', 'Distributed Systems', 'GCP'],
+    competencies: [
+      { label: 'Systems & Cloud Architecture', level: 94 },
+      { label: 'Distributed Peer Protocols', level: 90 },
+      { label: 'Open Source & Mentorship', level: 92 },
+    ],
     builderSpec: {
       focusArea: 'Distributed Consensus & Peer Protocols',
       favoriteStack: 'Go 1.23, gRPC, Cloud Run, Raft',
@@ -1182,9 +1193,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '3rd Year · ISE',
     googleColor: 'red',
     avatar: '/assets/avatars/member-02.svg',
-    emoteBadge: '/assets/emotes/merge-clean.svg',
+    emoteBadge: '/assets/emotes/clean-architecture.svg',
     bio: 'Enforcing strict code review gates, monorepo tooling ergonomics, and zero-downtime deployment pipelines.',
     skills: ['Rust', 'Kubernetes', 'CI/CD'],
+    competencies: [
+      { label: 'Systems & Concurrency Craft', level: 93 },
+      { label: 'CI/CD & Monorepo Tooling', level: 91 },
+      { label: 'Code Review & Security Gates', level: 89 },
+    ],
     builderSpec: {
       focusArea: 'Safe Concurrency & Developer Ergonomics',
       favoriteStack: 'Rust, Tokio, Docker, GitHub Actions',
@@ -1207,6 +1223,11 @@ export const TEAM_DATA: GDGTeamMember[] = [
     emoteBadge: '/assets/emotes/cloud-deploy.svg',
     bio: 'Engineering resilient event-driven cloud topologies and sub-millisecond API gateways on Google Cloud Run.',
     skills: ['Next.js 15', 'Cloud Run', 'TypeScript'],
+    competencies: [
+      { label: 'Frontend & Interactive Craft', level: 95 },
+      { label: 'Edge Networks & Cloud Run', level: 91 },
+      { label: 'Turbopack & Performance DX', level: 88 },
+    ],
     builderSpec: {
       focusArea: 'Zero-Trust Edge Networks & Turbopack Optimization',
       favoriteStack: 'Next.js App Router, Tailwind, Cloudflare Workers',
@@ -1230,6 +1251,11 @@ export const TEAM_DATA: GDGTeamMember[] = [
     emoteBadge: '/assets/emotes/ship-it.svg',
     bio: 'Building declarative infrastructure, event streams with Pub/Sub, and high-concurrency microservices.',
     skills: ['GKE', 'Terraform', 'Kafka'],
+    competencies: [
+      { label: 'Stream Ingestion & Pub/Sub', level: 92 },
+      { label: 'Infrastructure as Code', level: 88 },
+      { label: 'Resilient Microservices', level: 90 },
+    ],
     builderSpec: {
       focusArea: 'Stream Ingestion & Resilient Microservices',
       favoriteStack: 'Terraform, Google Cloud Pub/Sub, Node.js, ClickHouse',
@@ -1252,6 +1278,11 @@ export const TEAM_DATA: GDGTeamMember[] = [
     emoteBadge: '/assets/emotes/gemini-spark.svg',
     bio: 'Deploying streaming multimodal agents with Gemini 1.5 Pro and low-latency structured output function pipelines.',
     skills: ['Gemini API', 'PyTorch', 'Vector Search'],
+    competencies: [
+      { label: 'Multimodal Agent Architecture', level: 96 },
+      { label: 'Vector Search & Grounding', level: 92 },
+      { label: 'Structured Tool Calling', level: 94 },
+    ],
     builderSpec: {
       focusArea: 'Multimodal Agent Workflows & Grounding Verification',
       favoriteStack: 'Python, Gemini Flash/Pro, FastAPI, ChromaDB',
@@ -1272,9 +1303,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '2nd Year · CSE',
     googleColor: 'green',
     avatar: '/assets/avatars/member-06.svg',
-    emoteBadge: '/assets/emotes/bug-squashed.svg',
+    emoteBadge: '/assets/emotes/hotfix-fire.svg',
     bio: 'Researching on-device model quantization, TFLite Micro runtimes, and low-latency audio feature extraction.',
     skills: ['TFLite', 'JAX', 'On-Device ML'],
+    competencies: [
+      { label: 'Edge ML & Model Quantization', level: 93 },
+      { label: 'TFLite Micro Silicon Runtime', level: 89 },
+      { label: 'Embedded Signal Processing', level: 87 },
+    ],
     builderSpec: {
       focusArea: 'Embedded Edge ML & 8-bit Integer Quantization',
       favoriteStack: 'TensorFlow Lite Micro, C++, Python, ESP32',
@@ -1294,9 +1330,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '3rd Year · ECE',
     googleColor: 'yellow',
     avatar: '/assets/avatars/member-07.svg',
-    emoteBadge: '/assets/emotes/kotlin-android.svg',
+    emoteBadge: '/assets/emotes/lgtm-stamp.svg',
     bio: 'Architecting multi-brand design tokens, accessible color math, and mathematical Bauhaus geometric layout systems.',
     skills: ['Design Tokens', 'Figma API', 'WCAG AAA'],
+    competencies: [
+      { label: 'Design Tokens & Bauhaus Scale', level: 95 },
+      { label: 'WCAG AAA Accessibility Math', level: 94 },
+      { label: 'UI / DX Component Craft', level: 90 },
+    ],
     builderSpec: {
       focusArea: 'Design Token Compilation & Fluid Spatial Scales',
       favoriteStack: 'Style Dictionary, Figma Tokens, CSS Next, SVG',
@@ -1317,9 +1358,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '2nd Year · ISE',
     googleColor: 'yellow',
     avatar: '/assets/avatars/member-08.svg',
-    emoteBadge: '/assets/emotes/coffee-compile.svg',
+    emoteBadge: '/assets/emotes/kotlin-android.svg',
     bio: 'Crafting fluid tactile micro-interactions, hardware-accelerated SVG shaders, and zero-CLS web interfaces.',
     skills: ['Framer Motion', 'Web Animations', 'Accessibility'],
+    competencies: [
+      { label: 'Kinetic Physics & Motion', level: 94 },
+      { label: 'Hardware-Accelerated UI', level: 90 },
+      { label: 'Reduced-Motion Ergonomics', level: 92 },
+    ],
     builderSpec: {
       focusArea: 'Kinetic Physics Models & Reduced Motion Ergonomics',
       favoriteStack: 'React, Framer Motion, Tailwind CSS, Canvas API',
@@ -1339,9 +1385,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '3rd Year · ECE',
     googleColor: 'green',
     avatar: '/assets/avatars/member-09.svg',
-    emoteBadge: '/assets/emotes/rvce-bengaluru.svg',
+    emoteBadge: '/assets/emotes/rvce-crest.svg',
     bio: 'Running cross-campus technical workshops, open-source documentation sprints, and hardware laboratory logistics.',
     skills: ['DevRel', 'Technical Writing', 'Open Source'],
+    competencies: [
+      { label: 'RFC & System Documentation', level: 94 },
+      { label: 'Peer Pedagogy & Labs', level: 92 },
+      { label: 'Community Infrastructure', level: 89 },
+    ],
     builderSpec: {
       focusArea: 'Peer-Led Pedagogy & RFC Documentation Pipelines',
       favoriteStack: 'Markdown/MDX, Git, Astro, Python',
@@ -1362,9 +1413,14 @@ export const TEAM_DATA: GDGTeamMember[] = [
     yearAndBranch: '2nd Year · CSE',
     googleColor: 'green',
     avatar: '/assets/avatars/member-10.svg',
-    emoteBadge: '/assets/emotes/trophy-build.svg',
+    emoteBadge: '/assets/emotes/pair-program.svg',
     bio: 'Directing buildathon judging matrices, mentor code checkpointing, and live-streaming technical demonstrations.',
     skills: ['Event Architecture', 'Judging Rubrics', 'Live Ops'],
+    competencies: [
+      { label: 'Buildathon Operations & DX', level: 93 },
+      { label: 'Judging Rubric Verification', level: 91 },
+      { label: 'Open Source Mentorship', level: 90 },
+    ],
     builderSpec: {
       focusArea: 'Real-Time Buildathon Ops & Hacker Onboarding',
       favoriteStack: 'Next.js, Supabase, WebSockets, Python',

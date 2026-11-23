@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCw, Globe, Sparkles } from 'lucide-react';
@@ -21,6 +21,13 @@ interface AccentStyleConfig {
   glowClass: string;
   hoverBorderClass: string;
   socialHoverClass: string;
+}
+
+interface EmoteParticle {
+  id: number;
+  deltaX: number;
+  deltaY: number;
+  rotation: number;
 }
 
 function getAccentConfig(color: GoogleAccent): AccentStyleConfig {
@@ -76,6 +83,25 @@ export function TeamMemberCard({
   const accent = getAccentConfig(member.googleColor);
   const devIdTag = member.id.replace('builder-', 'DEV // ');
 
+  // Ephemeral emote pop burst state (purely local, zero analytics/counters)
+  const [particles, setParticles] = useState<EmoteParticle[]>([]);
+
+  const handleEmoteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const burstTimestamp = Date.now();
+    const newParticles: EmoteParticle[] = [
+      { id: burstTimestamp + 1, deltaX: -18, deltaY: -48, rotation: -15 },
+      { id: burstTimestamp + 2, deltaX: 0, deltaY: -58, rotation: 5 },
+      { id: burstTimestamp + 3, deltaX: 18, deltaY: -46, rotation: 18 },
+    ];
+    setParticles((prev) => [...prev, ...newParticles]);
+    setTimeout(() => {
+      setParticles((prev) =>
+        prev.filter((p) => !newParticles.some((np) => np.id === p.id))
+      );
+    }, 750);
+  };
+
   return (
     <motion.article
       layout
@@ -87,7 +113,7 @@ export function TeamMemberCard({
         delay: prefersReducedMotion ? 0 : Math.min(index * 0.04, 0.4),
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-5 sm:p-6 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[490px] overflow-hidden`}
+      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-5 sm:p-6 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[530px] overflow-hidden`}
     >
       {/* Subtle top indicator bar */}
       <div
@@ -149,7 +175,7 @@ export function TeamMemberCard({
               className="flex-1 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-4">
-                {/* Avatar with Bauhaus Geometric Ring & Emote Badge */}
+                {/* Avatar with Bauhaus Geometric Ring & Interactive Emote Badge */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="relative shrink-0">
                     <div
@@ -164,18 +190,60 @@ export function TeamMemberCard({
                       />
                     </div>
 
-                    {/* Overlapping Developer Emote Badge (32x32) */}
-                    <div
-                      className="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                      title={`${member.name}'s craft badge`}
-                    >
-                      <Image
-                        src={member.emoteBadge}
-                        alt="Emote badge"
-                        width={24}
-                        height={24}
-                        className="w-5 h-5 object-contain"
-                      />
+                    {/* Interactive Ephemeral Emote Badge (Clickable 32x32) */}
+                    <div className="absolute -bottom-2 -right-2">
+                      <button
+                        type="button"
+                        onClick={handleEmoteClick}
+                        aria-label="Trigger developer emote reaction"
+                        className="relative w-8 h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-115 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                        title="Click to trigger developer reaction"
+                      >
+                        <Image
+                          src={member.emoteBadge}
+                          alt="Emote badge"
+                          width={24}
+                          height={24}
+                          className="w-5 h-5 object-contain pointer-events-none"
+                        />
+                      </button>
+
+                      {/* Ephemeral Floating Emote Pop Bursts */}
+                      <AnimatePresence>
+                        {particles.map((p) => (
+                          <motion.div
+                            key={p.id}
+                            initial={{
+                              opacity: 1,
+                              scale: 0.5,
+                              x: 0,
+                              y: 0,
+                              rotate: 0,
+                            }}
+                            animate={{
+                              opacity: 0,
+                              scale: 1.25,
+                              x: p.deltaX,
+                              y: p.deltaY,
+                              rotate: p.rotation,
+                            }}
+                            exit={{ opacity: 0 }}
+                            transition={{
+                              duration: prefersReducedMotion ? 0.2 : 0.75,
+                              ease: [0.16, 1, 0.3, 1],
+                            }}
+                            className="absolute -top-1 -right-1 pointer-events-none z-50 w-6 h-6 select-none"
+                          >
+                            <Image
+                              src={member.emoteBadge}
+                              alt=""
+                              width={24}
+                              height={24}
+                              className="w-full h-full object-contain filter drop-shadow-sm"
+                            />
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
                     </div>
                   </div>
 
@@ -229,7 +297,7 @@ export function TeamMemberCard({
               transition={{ duration: prefersReducedMotion ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
               className="flex-1 flex flex-col justify-between space-y-3"
             >
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {/* Spec Sheet Header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-primary)]">
@@ -244,8 +312,8 @@ export function TeamMemberCard({
                 </div>
 
                 {/* Focus Area */}
-                <div className="p-2.5 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-1">
-                  <div className="text-[10px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+                <div className="p-2 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-0.5">
+                  <div className="text-[9px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                     Current Focus
                   </div>
                   <div className="text-xs font-medium text-[var(--text-primary)] leading-tight">
@@ -254,8 +322,8 @@ export function TeamMemberCard({
                 </div>
 
                 {/* Favorite Stack */}
-                <div className="p-2.5 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-1">
-                  <div className="text-[10px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+                <div className="p-2 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-0.5">
+                  <div className="text-[9px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                     Favorite Stack
                   </div>
                   <div className="text-xs font-mono text-[var(--text-secondary)] leading-tight">
@@ -264,8 +332,8 @@ export function TeamMemberCard({
                 </div>
 
                 {/* Open Source Contribution */}
-                <div className="p-2.5 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-1">
-                  <div className="text-[10px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+                <div className="p-2 rounded-xl bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] space-y-0.5">
+                  <div className="text-[9px] font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
                     Open Source
                   </div>
                   <div className="text-xs font-mono text-[var(--text-secondary)] truncate">
@@ -274,13 +342,56 @@ export function TeamMemberCard({
                 </div>
 
                 {/* Build Motto */}
-                <div className="p-2.5 rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-elevated)]">
-                  <div className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
+                <div className="p-2 rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-elevated)]">
+                  <div className="text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
                     Build Motto
                   </div>
                   <div className="text-xs italic text-[var(--text-primary)] leading-snug">
                     &ldquo;{member.builderSpec.buildMotto}&rdquo;
                   </div>
+                </div>
+
+                {/* Animated Engineering Competency Allocation Bars */}
+                <div className="pt-2 border-t border-[var(--border-hairline)] space-y-2">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                    <span>Domain Focus</span>
+                    <span>Craft Index</span>
+                  </div>
+
+                  {member.competencies.map((comp) => (
+                    <div key={comp.label} className="space-y-0.5">
+                      <div className="flex items-center justify-between text-[10px] font-mono">
+                        <span className="text-[var(--text-secondary)] truncate">
+                          {comp.label}
+                        </span>
+                        <span
+                          className="font-bold shrink-0 ml-2"
+                          style={{ color: accent.hex }}
+                        >
+                          {comp.level}%
+                        </span>
+                      </div>
+                      <div className="w-full h-1.5 rounded-full bg-[var(--bg-subtle)] overflow-hidden">
+                        <motion.div
+                          initial={
+                            prefersReducedMotion
+                              ? { scaleX: comp.level / 100 }
+                              : { scaleX: 0 }
+                          }
+                          animate={{ scaleX: comp.level / 100 }}
+                          transition={{
+                            duration: prefersReducedMotion ? 0 : 0.5,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          className="h-full rounded-full"
+                          style={{
+                            transformOrigin: 'left',
+                            backgroundColor: accent.hex,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.div>
