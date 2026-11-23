@@ -990,3 +990,267 @@ export const DEVELOPER_STICKERS: DeveloperSticker[] = [
     accentHex: '#FBBC04',
   },
 ];
+
+// -----------------------------------------------------------------------------
+// 8. TEAM & BUILDER ARCHITECTURES (PHASE 6)
+// -----------------------------------------------------------------------------
+export type TeamVertical =
+  | 'Core Lead'
+  | 'Web & Cloud'
+  | 'AI & ML'
+  | 'Design & UX'
+  | 'Community & Events';
+
+export interface BuilderSpec {
+  focusArea: string;
+  favoriteStack: string;
+  buildMotto: string;
+  openSourceContrib: string;
+}
+
+export interface GDGTeamMember {
+  id: string;
+  name: string;
+  role: string;
+  vertical: TeamVertical;
+  yearAndBranch: string;
+  googleColor: GoogleAccent;
+  avatar: string;
+  emoteBadge: string;
+  bio: string;
+  skills: string[];
+  builderSpec: BuilderSpec;
+  links: {
+    github: string;
+    linkedin: string;
+    website?: string;
+  };
+}
+
+export const TEAM_DATA: GDGTeamMember[] = [
+  {
+    id: 'builder-01',
+    name: 'Aarav Kulkarni',
+    role: 'Chapter Lead · Sample',
+    vertical: 'Core Lead',
+    yearAndBranch: '3rd Year · CSE',
+    googleColor: 'red',
+    avatar: '/assets/avatars/member-01.svg',
+    emoteBadge: '/assets/emotes/terminal-wizard.svg',
+    bio: 'Architecting campus engineering roadmaps and steering distributed open-source sprints with strict zero-hype focus.',
+    skills: ['Go', 'Distributed Systems', 'GCP'],
+    builderSpec: {
+      focusArea: 'Distributed Consensus & Peer Protocols',
+      favoriteStack: 'Go 1.23, gRPC, Cloud Run, Raft',
+      buildMotto: 'Ship boring architectures that withstand real traffic.',
+      openSourceContrib: 'rvce-distributed/consensus-mesh (Maintainer)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+      website: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-02',
+    name: 'Meera Nair',
+    role: 'Technical Lead · Sample',
+    vertical: 'Core Lead',
+    yearAndBranch: '3rd Year · ISE',
+    googleColor: 'red',
+    avatar: '/assets/avatars/member-02.svg',
+    emoteBadge: '/assets/emotes/merge-clean.svg',
+    bio: 'Enforcing strict code review gates, monorepo tooling ergonomics, and zero-downtime deployment pipelines.',
+    skills: ['Rust', 'Kubernetes', 'CI/CD'],
+    builderSpec: {
+      focusArea: 'Safe Concurrency & Developer Ergonomics',
+      favoriteStack: 'Rust, Tokio, Docker, GitHub Actions',
+      buildMotto: 'Clean git trees and reproducible builds define engineering craft.',
+      openSourceContrib: 'cargo-rvce/audit-pipeline (Lead)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-03',
+    name: 'Rohan Deshmukh',
+    role: 'Web & Cloud Lead',
+    vertical: 'Web & Cloud',
+    yearAndBranch: '3rd Year · CSE',
+    googleColor: 'blue',
+    avatar: '/assets/avatars/member-03.svg',
+    emoteBadge: '/assets/emotes/cloud-deploy.svg',
+    bio: 'Engineering resilient event-driven cloud topologies and sub-millisecond API gateways on Google Cloud Run.',
+    skills: ['Next.js 15', 'Cloud Run', 'TypeScript'],
+    builderSpec: {
+      focusArea: 'Zero-Trust Edge Networks & Turbopack Optimization',
+      favoriteStack: 'Next.js App Router, Tailwind, Cloudflare Workers',
+      buildMotto: 'Eliminate waterfalls; every millisecond on the wire matters.',
+      openSourceContrib: 'rvce-edge/distroless-k8s-action (Contributor)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+      website: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-04',
+    name: 'Kavya Subramanian',
+    role: 'Distributed Systems Builder',
+    vertical: 'Web & Cloud',
+    yearAndBranch: '2nd Year · ISE',
+    googleColor: 'blue',
+    avatar: '/assets/avatars/member-04.svg',
+    emoteBadge: '/assets/emotes/ship-it.svg',
+    bio: 'Building declarative infrastructure, event streams with Pub/Sub, and high-concurrency microservices.',
+    skills: ['GKE', 'Terraform', 'Kafka'],
+    builderSpec: {
+      focusArea: 'Stream Ingestion & Resilient Microservices',
+      favoriteStack: 'Terraform, Google Cloud Pub/Sub, Node.js, ClickHouse',
+      buildMotto: 'Idempotent workers make distributed systems sleep soundly.',
+      openSourceContrib: 'cloud-stream/pubsub-bench (Author)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-05',
+    name: 'Siddharth Menon',
+    role: 'AI Systems Lead',
+    vertical: 'AI & ML',
+    yearAndBranch: '3rd Year · AI & ML',
+    googleColor: 'green',
+    avatar: '/assets/avatars/member-05.svg',
+    emoteBadge: '/assets/emotes/gemini-spark.svg',
+    bio: 'Deploying streaming multimodal agents with Gemini 1.5 Pro and low-latency structured output function pipelines.',
+    skills: ['Gemini API', 'PyTorch', 'Vector Search'],
+    builderSpec: {
+      focusArea: 'Multimodal Agent Workflows & Grounding Verification',
+      favoriteStack: 'Python, Gemini Flash/Pro, FastAPI, ChromaDB',
+      buildMotto: 'Ground every generation with verifiable tool executions.',
+      openSourceContrib: 'gemini-agent-toolkit/rvce-sensors (Maintainer)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+      website: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-06',
+    name: 'Diya Chatterjee',
+    role: 'Multimodal ML Researcher',
+    vertical: 'AI & ML',
+    yearAndBranch: '2nd Year · CSE',
+    googleColor: 'green',
+    avatar: '/assets/avatars/member-06.svg',
+    emoteBadge: '/assets/emotes/bug-squashed.svg',
+    bio: 'Researching on-device model quantization, TFLite Micro runtimes, and low-latency audio feature extraction.',
+    skills: ['TFLite', 'JAX', 'On-Device ML'],
+    builderSpec: {
+      focusArea: 'Embedded Edge ML & 8-bit Integer Quantization',
+      favoriteStack: 'TensorFlow Lite Micro, C++, Python, ESP32',
+      buildMotto: 'Intelligence belongs on edge silicon, not just in server farms.',
+      openSourceContrib: 'tflite-micro/rvce-edge-audio (Author)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-07',
+    name: 'Vikramaditya Joshi',
+    role: 'Design Systems Architect',
+    vertical: 'Design & UX',
+    yearAndBranch: '3rd Year · ECE',
+    googleColor: 'yellow',
+    avatar: '/assets/avatars/member-07.svg',
+    emoteBadge: '/assets/emotes/kotlin-android.svg',
+    bio: 'Architecting multi-brand design tokens, accessible color math, and mathematical Bauhaus geometric layout systems.',
+    skills: ['Design Tokens', 'Figma API', 'WCAG AAA'],
+    builderSpec: {
+      focusArea: 'Design Token Compilation & Fluid Spatial Scales',
+      favoriteStack: 'Style Dictionary, Figma Tokens, CSS Next, SVG',
+      buildMotto: 'Accessibility is not a feature; it is the structural foundation.',
+      openSourceContrib: 'rvce-tokens/bauhaus-primitives (Lead)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+      website: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-08',
+    name: 'Nandini Rao',
+    role: 'Interactive UI Engineer',
+    vertical: 'Design & UX',
+    yearAndBranch: '2nd Year · ISE',
+    googleColor: 'yellow',
+    avatar: '/assets/avatars/member-08.svg',
+    emoteBadge: '/assets/emotes/coffee-compile.svg',
+    bio: 'Crafting fluid tactile micro-interactions, hardware-accelerated SVG shaders, and zero-CLS web interfaces.',
+    skills: ['Framer Motion', 'Web Animations', 'Accessibility'],
+    builderSpec: {
+      focusArea: 'Kinetic Physics Models & Reduced Motion Ergonomics',
+      favoriteStack: 'React, Framer Motion, Tailwind CSS, Canvas API',
+      buildMotto: 'Interfaces should feel tactile, responsive, and respectful of user focus.',
+      openSourceContrib: 'rvce-motion/accessible-springs (Maintainer)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-09',
+    name: 'Karthik Iyer',
+    role: 'Developer Relations & Ops',
+    vertical: 'Community & Events',
+    yearAndBranch: '3rd Year · ECE',
+    googleColor: 'green',
+    avatar: '/assets/avatars/member-09.svg',
+    emoteBadge: '/assets/emotes/rvce-bengaluru.svg',
+    bio: 'Running cross-campus technical workshops, open-source documentation sprints, and hardware laboratory logistics.',
+    skills: ['DevRel', 'Technical Writing', 'Open Source'],
+    builderSpec: {
+      focusArea: 'Peer-Led Pedagogy & RFC Documentation Pipelines',
+      favoriteStack: 'Markdown/MDX, Git, Astro, Python',
+      buildMotto: 'Clear documentation unlocks more builders than clever code ever will.',
+      openSourceContrib: 'gdg-rvce/developer-handbook (Lead)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+      website: '#sample-profile',
+    },
+  },
+  {
+    id: 'builder-10',
+    name: 'Tanya Verma',
+    role: 'Hackathon Experience Lead',
+    vertical: 'Community & Events',
+    yearAndBranch: '2nd Year · CSE',
+    googleColor: 'green',
+    avatar: '/assets/avatars/member-10.svg',
+    emoteBadge: '/assets/emotes/trophy-build.svg',
+    bio: 'Directing buildathon judging matrices, mentor code checkpointing, and live-streaming technical demonstrations.',
+    skills: ['Event Architecture', 'Judging Rubrics', 'Live Ops'],
+    builderSpec: {
+      focusArea: 'Real-Time Buildathon Ops & Hacker Onboarding',
+      favoriteStack: 'Next.js, Supabase, WebSockets, Python',
+      buildMotto: 'Hackathons thrive on unblocked APIs, hot coffee, and fast mentor reviews.',
+      openSourceContrib: 'rvce-hack/matrix-scoring-engine (Contributor)',
+    },
+    links: {
+      github: '#sample-profile',
+      linkedin: '#sample-profile',
+    },
+  },
+];
