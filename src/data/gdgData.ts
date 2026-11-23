@@ -1377,3 +1377,196 @@ export const TEAM_DATA: GDGTeamMember[] = [
     },
   },
 ];
+
+// =============================================================================
+// PHASE 10: 4-VERTICAL DEVELOPER LEARNING TRACKS DATASET
+// 100% curriculum and engineering progression — zero student counts or metrics.
+// =============================================================================
+
+export interface LearningTrackStage {
+  step: string;
+  stepTitle: string;
+  name: string;
+  description: string;
+}
+
+export interface LearningTrack {
+  id: 'ai-gemini' | 'cloud-k8s' | 'web-nextjs' | 'android-kotlin';
+  title: string;
+  category: string;
+  tagline: string;
+  googleColor: GoogleAccent;
+  accentHex: string;
+  emote: string;
+  recommendedFilterTrack: EventCategory;
+  tools: string[];
+  stages: LearningTrackStage[];
+}
+
+export const LEARNING_TRACKS: LearningTrack[] = [
+  {
+    id: 'ai-gemini',
+    title: 'AI & Gemini Systems',
+    category: 'Artificial Intelligence & Machine Learning',
+    googleColor: 'red',
+    accentHex: '#EA4335',
+    emote: '/assets/emotes/gemini-spark.svg',
+    recommendedFilterTrack: 'Hackathon',
+    tagline: 'From prompt engineering to multimodal agentic workflows and edge inference.',
+    tools: ['Gemini 2.5 API', 'Vertex AI', 'LangGraph', 'TensorFlow Lite', 'Python'],
+    stages: [
+      {
+        step: '01',
+        stepTitle: 'Foundations',
+        name: 'Structured Outputs & Multimodal Context',
+        description:
+          'Mastering JSON schemas, vision/audio token pipelines, and system instructions.',
+      },
+      {
+        step: '02',
+        stepTitle: 'Architecture',
+        name: 'RAG Pipelines & Tool-Calling Agents',
+        description:
+          'Building grounded vector retrieval and deterministic function-calling loops.',
+      },
+      {
+        step: '03',
+        stepTitle: 'Campus Lab',
+        name: '24-Hour Multimodal Prototype Build',
+        description:
+          'Hands-on team sprint in CSE Labs deploying real-time campus assistants.',
+      },
+      {
+        step: '04',
+        stepTitle: 'Open Source Ship',
+        name: 'Public GitHub Reference Blueprint',
+        description:
+          'Publishing documented, reproducible starter templates with evaluation harnesses.',
+      },
+    ],
+  },
+  {
+    id: 'cloud-k8s',
+    title: 'Cloud & Distributed Systems',
+    category: 'Cloud Engineering & Infrastructure',
+    googleColor: 'blue',
+    accentHex: '#4285F4',
+    emote: '/assets/emotes/cloud-deploy.svg',
+    recommendedFilterTrack: 'Workshop',
+    tagline: 'Containerized microservices, serverless scale, and production observability.',
+    tools: ['Cloud Run', 'Kubernetes (GKE)', 'Docker', 'Terraform', 'Firebase'],
+    stages: [
+      {
+        step: '01',
+        stepTitle: 'Foundations',
+        name: 'Linux Containers & Multi-Stage Dockerfiles',
+        description:
+          'Crafting slim, reproducible container images with zero-root security posture.',
+      },
+      {
+        step: '02',
+        stepTitle: 'Architecture',
+        name: 'Event-Driven Services on Cloud Run',
+        description:
+          'Designing stateless HTTP/gRPC services with autoscaling and Pub/Sub queues.',
+      },
+      {
+        step: '03',
+        stepTitle: 'Campus Lab',
+        name: 'Zero-Downtime Cluster Deployment',
+        description:
+          'Live infrastructure lab configuring health probes, secrets, and CI/CD pipelines.',
+      },
+      {
+        step: '04',
+        stepTitle: 'Open Source Ship',
+        name: 'Infrastructure-as-Code Modules',
+        description:
+          'Releasing reusable Terraform & GitHub Actions templates for student projects.',
+      },
+    ],
+  },
+  {
+    id: 'web-nextjs',
+    title: 'Modern Web & Design Systems',
+    category: 'Frontend Engineering & Web Vitals',
+    googleColor: 'yellow',
+    accentHex: '#FBBC04',
+    emote: '/assets/emotes/clean-architecture.svg',
+    recommendedFilterTrack: 'Study Jam',
+    tagline: 'Sub-second React Server Components, accessible tokens, and 60fps motion.',
+    tools: ['Next.js 15', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'Web Vitals'],
+    stages: [
+      {
+        step: '01',
+        stepTitle: 'Foundations',
+        name: 'Semantic HTML, WCAG Contrast & Type Safety',
+        description:
+          'Building keyboard-first, screen-reader-verified UI primitives.',
+      },
+      {
+        step: '02',
+        stepTitle: 'Architecture',
+        name: 'App Router Streaming & Design Tokens',
+        description:
+          'Architecting multi-theme CSS variable engines and zero-CLS server layouts.',
+      },
+      {
+        step: '03',
+        stepTitle: 'Campus Lab',
+        name: 'Core Web Vitals & INP Optimization',
+        description:
+          'Profiling bundle graphs, GPU-composited transforms, and edge caching.',
+      },
+      {
+        step: '04',
+        stepTitle: 'Open Source Ship',
+        name: 'Component Registry & Documentation',
+        description:
+          'Shipping accessible, tested UI kits under MIT open-source licenses.',
+      },
+    ],
+  },
+  {
+    id: 'android-kotlin',
+    title: 'Android & Cross-Platform Craft',
+    category: 'Mobile & On-Device Systems',
+    googleColor: 'green',
+    accentHex: '#34A853',
+    emote: '/assets/emotes/kotlin-android.svg',
+    recommendedFilterTrack: 'Tech Talk',
+    tagline: 'Declarative Jetpack Compose UIs, offline-first sync, and on-device ML.',
+    tools: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Flutter', 'MediaPipe'],
+    stages: [
+      {
+        step: '01',
+        stepTitle: 'Foundations',
+        name: 'Idiomatic Kotlin & Coroutine Flows',
+        description:
+          'Asynchronous state management with structured concurrency and clean architecture.',
+      },
+      {
+        step: '02',
+        stepTitle: 'Architecture',
+        name: 'Declarative Compose & Material 3 Motion',
+        description:
+          'Crafting adaptive phone-to-tablet layouts with shared-element transitions.',
+      },
+      {
+        step: '03',
+        stepTitle: 'Campus Lab',
+        name: 'On-Device Vision with MediaPipe',
+        description:
+          'Running low-latency gesture and object detection models locally on Android hardware.',
+      },
+      {
+        step: '04',
+        stepTitle: 'Open Source Ship',
+        name: 'Play-Ready Sample Applications',
+        description:
+          'Publishing modular open-source Android repositories with automated UI tests.',
+      },
+    ],
+  },
+];
+

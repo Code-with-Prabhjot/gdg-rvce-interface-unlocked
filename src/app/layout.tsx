@@ -9,6 +9,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CommandPalette } from '@/components/layout/CommandPalette';
 import { DevTerminalModal } from '@/components/ui/DevTerminalModal';
+import { ArchitecturalBootLoader } from '@/components/ui/ArchitecturalBootLoader';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -78,6 +79,9 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased font-sans`}
       >
         <ThemeProvider>
+          {/* Sub-Second Architectural < > Prism Boot Sequence */}
+          <ArchitecturalBootLoader />
+
           <CommandPaletteProvider>
             <DevTerminalProvider>
               {/* Visual Top Scroll Indicator */}

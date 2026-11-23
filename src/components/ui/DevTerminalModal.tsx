@@ -122,6 +122,10 @@ export function DevTerminalModal() {
                   <span className="text-white/60"> - Navigate to chapter home (/)</span>
                 </div>
                 <div>
+                  <span className="text-[#4285F4] font-bold">boot</span>
+                  <span className="text-white/60"> - Replay architectural &lt; &gt; prism boot</span>
+                </div>
+                <div>
                   <span className="text-[#4285F4] font-bold">theme [light|dark]</span>
                   <span className="text-white/60"> - Toggle or set active theme</span>
                 </div>
@@ -313,6 +317,23 @@ export function DevTerminalModal() {
         break;
       }
 
+      case 'boot': {
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('gdg:replay-boot'));
+        }
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <p className="text-[#4285F4] text-xs font-mono">
+              Replaying architectural &lt; &gt; prism boot sequence...
+            </p>
+          ),
+        });
+        close();
+        break;
+      }
+
       case 'clear': {
         setHistory([]);
         setInputVal('');
@@ -364,7 +385,7 @@ export function DevTerminalModal() {
     }
   };
 
-  const quickChips = ['help', 'events', 'team', 'theme', 'stack', 'celebrate'];
+  const quickChips = ['help', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
 
   return (
     <AnimatePresence>

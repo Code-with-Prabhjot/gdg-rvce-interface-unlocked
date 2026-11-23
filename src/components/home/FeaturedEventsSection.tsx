@@ -257,8 +257,8 @@ export function FeaturedEventsSection() {
 
   return (
     <section
-      id="events"
-      className="py-20 lg:py-28 bg-[var(--bg-subtle)]/50 border-t border-[var(--border-hairline)]"
+      id="upcoming-events"
+      className="py-20 lg:py-28 bg-[var(--bg-subtle)]/50 border-t border-[var(--border-hairline)] scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}
@@ -273,7 +273,7 @@ export function FeaturedEventsSection() {
             {/* Eyebrow */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
               <span className="font-mono text-xs font-semibold text-[#EA4335] tracking-wider">
-                [ 02 // UPCOMING ON CAMPUS ]
+                [ 03 // UPCOMING ON CAMPUS ]
               </span>
             </div>
 

@@ -54,10 +54,13 @@ export function RecapAndCommunitySection() {
     RECAP_DATA.tabs.find((t) => t.id === activeTabId) || RECAP_DATA.tabs[0];
 
   return (
-    <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-20 lg:space-y-28">
+    <section
+      id="recap-community"
+      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-20 lg:space-y-28 scroll-mt-24"
+    >
       {/* ============================================================= */}
       {/* PART A: EDITORIAL EVENT RECAP SPOTLIGHT                       */}
-      {/* Telemetry eyebrow: [ 03 // LATEST RECAP ]                     */}
+      {/* Telemetry eyebrow: [ 05 // LATEST RECAP ]                     */}
       {/* Showcases "DevFest Campus Warmup '26"                         */}
       {/* ============================================================= */}
       <div id="recap" className="space-y-12">
@@ -72,7 +75,7 @@ export function RecapAndCommunitySection() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
             <span className="font-mono text-xs font-semibold text-[#4285F4] tracking-wider">
-              [ 04 // LATEST RECAP ]
+              [ 05 // LATEST RECAP ]
             </span>
           </div>
 
@@ -418,7 +421,7 @@ export function RecapAndCommunitySection() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-hairline)] shadow-xs">
             <span className="font-mono text-xs font-semibold text-[#34A853] tracking-wider">
-              [ 05 // PLUG IN ]
+              [ 06 // PLUG IN ]
             </span>
           </div>
 

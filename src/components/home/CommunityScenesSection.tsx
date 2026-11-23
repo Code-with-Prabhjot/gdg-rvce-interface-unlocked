@@ -101,7 +101,7 @@ export function CommunityScenesSection() {
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
           <span className="w-2 h-2 rounded-full bg-[#FBBC04] animate-pulse" />
           <span className="font-mono text-xs font-semibold text-[var(--text-secondary)] tracking-wider">
-            [ 03 // IN THE BUILD ROOM ]
+            [ 04 // IN THE BUILD ROOM ]
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4]" />
         </div>
