@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#064E3B" stroke="#059669" stroke-width="2"/>
+    <!-- Android Antennae -->
+    <line x1="48" y1="42" x2="40" y2="30" stroke="#34A853" stroke-width="4" stroke-linecap="round"/>
+    <line x1="80" y1="42" x2="88" y2="30" stroke="#34A853" stroke-width="4" stroke-linecap="round"/>
+    <!-- Android Head Dome -->
+    <path d="M34 66C34 49.4 47.4 36 64 36C80.6 36 94 49.4 94 66H34Z" fill="#34A853" stroke="#10B981" stroke-width="2"/>
+    <!-- Robot Eyes -->
+    <circle cx="50" cy="52" r="4" fill="#FFFFFF"/>
+    <circle cx="78" cy="52" r="4" fill="#FFFFFF"/>
+    <!-- Kotlin Prism Shape Overlay -->
+    <polygon points="44,72 84,72 64,96" fill="#F97316"/>
+    <polygon points="44,72 64,96 44,96" fill="#7C3AED"/>
+  </svg>

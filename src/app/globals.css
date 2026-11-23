@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: var(--font-display), 'Space Grotesk', -apple-system, sans-serif;
+  --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono: var(--font-mono), 'JetBrains Mono', monospace;
+
+  --color-google-blue: #4285F4;
+  --color-google-red: #EA4335;
+  --color-google-yellow: #FBBC04;
+  --color-google-green: #34A853;
+  --color-yellow-dark-ink: #111827;
+
+  --color-canvas: var(--bg-canvas);
+  --color-elevated: var(--bg-elevated);
+  --color-subtle: var(--bg-subtle);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-hairline: var(--border-hairline);
+  --color-border-strong: var(--border-strong);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Google Core Semantic Tokens */
+  --google-blue: #4285F4;
+  --google-red: #EA4335;
+  --google-yellow: #FBBC04;
+  --google-green: #34A853;
+  --yellow-dark-ink: #111827;
+
+  /* Light Mode ("Daylight Blueprint") Tokens */
+  --bg-canvas: #FAFAFB;
+  --bg-elevated: #FFFFFF;
+  --bg-subtle: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border-hairline: rgba(15, 23, 42, 0.09);
+  --border-strong: rgba(15, 23, 42, 0.18);
+  --grid-dot: rgba(15, 23, 42, 0.07);
+
+  --focus-ring: rgba(66, 133, 244, 0.5);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.dark,
+[data-theme="dark"] {
+  /* Dark Mode ("Obsidian IDE") Tokens */
+  --bg-canvas: #0A0D12;
+  --bg-elevated: #121721;
+  --bg-subtle: #19202E;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-hairline: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --grid-dot: rgba(255, 255, 255, 0.06);
+
+  --focus-ring: rgba(66, 133, 244, 0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Architectural 32px blueprint dot-grid background utility */
+.bg-blueprint-grid {
+  background-size: 32px 32px;
+  background-image: radial-gradient(circle, var(--grid-dot) 1.25px, transparent 1.25px);
+}
+
+/* Subtle blueprint line grid */
+.bg-blueprint-lines {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, var(--border-hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-hairline) 1px, transparent 1px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Selection style */
+::selection {
+  background-color: rgba(66, 133, 244, 0.25);
+  color: var(--text-primary);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

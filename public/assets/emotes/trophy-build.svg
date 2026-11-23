@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#1C1917" stroke="#44403C" stroke-width="2"/>
+    <!-- Trophy Handles -->
+    <path d="M40 44H32C28 44 24 48 24 54C24 62 30 68 38 68H44" stroke="#FBBC04" stroke-width="3" stroke-linecap="round"/>
+    <path d="M88 44H96C100 44 104 48 104 54C104 62 98 68 90 68H84" stroke="#FBBC04" stroke-width="3" stroke-linecap="round"/>
+    <!-- Trophy Cup -->
+    <path d="M42 34H86V58C86 70 76 80 64 80C52 80 42 70 42 58V34Z" fill="#FBBC04" stroke="#CA8A04" stroke-width="2"/>
+    <!-- Star on Cup (High Contrast Dark Ink #111827) -->
+    <polygon points="64,44 67,52 75,52 69,57 71,65 64,60 57,65 59,57 53,52 61,52" fill="#111827"/>
+    <!-- Stem and Pedestal -->
+    <rect x="60" y="80" width="8" height="12" fill="#CA8A04"/>
+    <rect x="42" y="92" width="44" height="12" rx="3" fill="#4285F4" stroke="#1E40AF" stroke-width="2"/>
+    <!-- Winner Label -->
+    <text x="64" y="101" font-family="monospace" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">RVCE #1</text>
+  </svg>

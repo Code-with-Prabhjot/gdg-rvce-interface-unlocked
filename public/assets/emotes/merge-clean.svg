@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+    <!-- Main Branch Line -->
+    <path d="M40 28V100" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+    <!-- Feature Branch Curve -->
+    <path d="M40 44C56 44 88 52 88 72V76C88 88 56 94 44 94" stroke="#34A853" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Branch Commits -->
+    <circle cx="40" cy="38" r="8" fill="#1E293B" stroke="#94A3B8" stroke-width="3"/>
+    <circle cx="40" cy="64" r="8" fill="#1E293B" stroke="#94A3B8" stroke-width="3"/>
+    <circle cx="88" cy="74" r="8" fill="#1E293B" stroke="#FBBC04" stroke-width="3"/>
+    <!-- Clean Merge Target Commit -->
+    <circle cx="40" cy="94" r="9" fill="#34A853" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M36 94L39 97L45 91" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <defs>
+      <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FFFFFF"/>
+        <stop offset="100%" stop-color="#E2E8F0"/>
+      </linearGradient>
+      <filter id="emoteGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.2"/>
+      </filter>
+    </defs>
+    <!-- Background Circle Badge -->
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#1E293B" stroke="#334155" stroke-width="2" filter="url(#emoteGlow)"/>
+    <!-- Exhaust Plume -->
+    <path d="M42 86L26 102C24 104 22 106 20 108C22 106 28 102 32 98L48 82Z" fill="#FBBC04"/>
+    <path d="M46 82L32 96C30 98 28 100 24 104C26 100 32 94 36 90L52 76Z" fill="#EA4335"/>
+    <circle cx="28" cy="100" r="4" fill="#FBBC04"/>
+    <!-- Rocket Thruster Cone -->
+    <polygon points="46,74 54,82 44,88 38,80" fill="#64748B" stroke="#0F172A" stroke-width="2"/>
+    <!-- Left Wing -->
+    <path d="M44 64L28 72L40 84Z" fill="#EA4335" stroke="#0F172A" stroke-width="2"/>
+    <!-- Right Wing -->
+    <path d="M64 44L72 28L84 40Z" fill="#4285F4" stroke="#0F172A" stroke-width="2"/>
+    <!-- Rocket Main Fuselage -->
+    <path d="M52 38C58 26 84 18 96 18C96 30 88 56 76 62L52 38Z" fill="url(#rocketBody)" stroke="#0F172A" stroke-width="3"/>
+    <!-- Porthole Window -->
+    <circle cx="74" cy="38" r="8" fill="#4285F4" stroke="#0F172A" stroke-width="2"/>
+    <circle cx="76" cy="36" r="3" fill="#FFFFFF"/>
+    <!-- Front Nose Cone -->
+    <path d="M84 24C92 20 96 18 96 18C96 18 94 22 90 30L84 24Z" fill="#EA4335"/>
+    <!-- Speed Lines -->
+    <path d="M96 52L108 58" stroke="#34A853" stroke-width="3" stroke-linecap="round"/>
+    <path d="M52 96L58 108" stroke="#34A853" stroke-width="3" stroke-linecap="round"/>
+    <path d="M92 76L102 82" stroke="#FBBC04" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tiny GDG Chevron Badge -->
+    <text x="64" y="112" font-family="monospace" font-size="10" font-weight="bold" fill="#94A3B8" text-anchor="middle">SHIP IT &gt;</text>
+  </svg>

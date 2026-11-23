@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#090D16" stroke="#1E293B" stroke-width="2"/>
+    <!-- Ambient Sparkles -->
+    <circle cx="34" cy="36" r="3" fill="#FBBC04"/>
+    <circle cx="94" cy="88" r="3" fill="#34A853"/>
+    <circle cx="90" cy="38" r="2" fill="#EA4335"/>
+    <circle cx="36" cy="92" r="2" fill="#4285F4"/>
+    <!-- Central Prism Star (Gemini Diamond) -->
+    <path d="M64 20Q64 64 20 64Q64 64 64 108Q64 64 108 64Q64 64 64 20Z" fill="url(#geminiGrad)" stroke="#FFFFFF" stroke-width="1.5"/>
+    <defs>
+      <linearGradient id="geminiGrad" x1="20" y1="20" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#4285F4"/>
+        <stop offset="35%" stop-color="#EA4335"/>
+        <stop offset="70%" stop-color="#FBBC04"/>
+        <stop offset="100%" stop-color="#34A853"/>
+      </linearGradient>
+    </defs>
+    <!-- Core Sparkle Center -->
+    <circle cx="64" cy="64" r="5" fill="#FFFFFF"/>
+  </svg>
