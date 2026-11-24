@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Terminal as TerminalIcon, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useDevTerminal } from '@/context/DevTerminalContext';
+import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useTheme } from '@/context/ThemeContext';
 import { EVENTS_DATA } from '@/data/gdgData';
 
@@ -18,6 +19,7 @@ interface HistoryItem {
 
 export function DevTerminalModal() {
   const { isOpen, close } = useDevTerminal();
+  const { open: openApiInspector } = useApiInspector();
   const { theme, toggleTheme, setTheme } = useTheme();
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -110,6 +112,10 @@ export function DevTerminalModal() {
                   <span className="text-white/60"> - Mission, coordinates &amp; verticals</span>
                 </div>
                 <div>
+                  <span className="text-[#4285F4] font-bold">api</span>
+                  <span className="text-white/60"> - Open Live Backend API Inspector (/api)</span>
+                </div>
+                <div>
                   <span className="text-[#EA4335] font-bold">events</span>
                   <span className="text-white/60"> - List sprints &amp; jump to /events</span>
                 </div>
@@ -145,6 +151,32 @@ export function DevTerminalModal() {
             </div>
           ),
         });
+        break;
+      }
+
+      case 'api': {
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <div className="space-y-1.5 text-xs font-mono">
+              <div className="flex items-center gap-2 text-[#4285F4] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
+                <span>Launching GDG RVCE Live Backend &amp; API Inspector...</span>
+              </div>
+              <p className="text-white/70">
+                Opening interactive route tester for <span className="text-[#34A853]">/api/chapter</span>,{' '}
+                <span className="text-[#EA4335]">/api/events</span>,{' '}
+                <span className="text-[#FBBC04]">/api/team</span>, and{' '}
+                <span className="text-[#4285F4]">/api/pass/verify</span>.
+              </p>
+            </div>
+          ),
+        });
+        setTimeout(() => {
+          close();
+          openApiInspector();
+        }, 300);
         break;
       }
 
@@ -385,7 +417,7 @@ export function DevTerminalModal() {
     }
   };
 
-  const quickChips = ['help', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
+  const quickChips = ['help', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
 
   return (
     <AnimatePresence>

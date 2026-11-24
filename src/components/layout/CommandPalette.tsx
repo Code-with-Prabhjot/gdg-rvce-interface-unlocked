@@ -19,6 +19,7 @@ import confetti from 'canvas-confetti';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDevTerminal } from '@/context/DevTerminalContext';
+import { useApiInspector } from '@/context/ApiInspectorContext';
 
 interface CommandItem {
   id: string;
@@ -33,6 +34,7 @@ interface CommandItem {
 export function CommandPalette() {
   const { isOpen, close, toggle } = useCommandPalette();
   const { open: openTerminal } = useDevTerminal();
+  const { open: openApiInspector } = useApiInspector();
   const router = useRouter();
   const { theme, toggleTheme, setTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -172,6 +174,18 @@ export function CommandPalette() {
       run: () => {
         close();
         openTerminal();
+      },
+    },
+    {
+      id: 'action-api-inspector',
+      title: 'Inspect Live Backend API (/api)',
+      subtitle: 'Stateless Next.js route handlers, live telemetry & pass verification',
+      category: 'Community',
+      icon: Terminal,
+      accentColor: '#4285F4',
+      run: () => {
+        close();
+        openApiInspector();
       },
     },
   ];

@@ -230,7 +230,7 @@ function getCategoryColors(category: EventCategory) {
 /**
  * Downloads a high-resolution 1200x630 architectural PNG pass for the given session.
  */
-export function downloadSamplePassPng(event: GDGEvent): void {
+export function downloadSamplePassPng(event: GDGEvent, passId?: string): void {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const width = 1200;
@@ -501,7 +501,7 @@ export function downloadSamplePassPng(event: GDGEvent): void {
 
   ctx.font = 'bold 15px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
   ctx.fillStyle = '#4285F4';
-  ctx.fillText('RVCE-GDG-2026-DEV', stubContentX, tokenY + 22);
+  ctx.fillText(passId || 'RVCE-GDG-2026-DEV', stubContentX, tokenY + 22);
 
   // Stub Metadata Fields
   const stubInfoY = tokenY + 54;

@@ -6,10 +6,12 @@ import { MapPin, Terminal, Heart, Info, X } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
 import { useDevTerminal } from '@/context/DevTerminalContext';
+import { useApiInspector } from '@/context/ApiInspectorContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
   const { toggle: toggleTerminal } = useDevTerminal();
+  const { open: openApiInspector } = useApiInspector();
 
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
@@ -138,6 +140,20 @@ export function Footer() {
                 <Terminal className="w-3 h-3 text-[#34A853]" />
                 Next.js 15 App Router
               </span>
+
+              {/* Live Backend & API Inspector Drawer Trigger */}
+              <button
+                type="button"
+                onClick={openApiInspector}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[#4285F4]/50 transition-all cursor-pointer shadow-2xs active:scale-95 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                aria-label="Open Live Backend API Inspector"
+                title="Inspect Live Backend API (/api)"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+                <span className="text-[#4285F4] font-bold">API</span>
+                <span className="text-[var(--text-muted)] font-normal">{'//'}</span>
+                <span className="text-[#34A853]">200 OK</span>
+              </button>
 
               {/* Signature Developer CLI Drawer Trigger */}
               <button

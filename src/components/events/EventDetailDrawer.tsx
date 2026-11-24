@@ -19,11 +19,13 @@ import {
   CheckCircle2,
   ShieldCheck,
   RotateCcw,
+  Terminal,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
 import { downloadEventIcs } from '@/utils/calendarExport';
 import { downloadSamplePassPng } from '@/utils/passExport';
+import { useApiInspector } from '@/context/ApiInspectorContext';
 
 interface EventDetailDrawerProps {
   event: GDGEvent | null;
@@ -102,12 +104,16 @@ export function EventDetailDrawer({
   const drawerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
+  const { openWithPreset } = useApiInspector();
 
   // Local interactive state
   const [copiedLink, setCopiedLink] = useState(false);
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
   const [passDownloaded, setPassDownloaded] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isIssuingPass, setIsIssuingPass] = useState(false);
+  const [serverPassId, setServerPassId] = useState<string | null>(null);
+  const [serverLatencyMs, setServerLatencyMs] = useState<number | null>(null);
   const [checkedPrereqs, setCheckedPrereqs] = useState<Set<number>>(new Set());
   const [artworkMode, setArtworkMode] = useState<'schematic' | 'scene'>('schematic');
 
@@ -117,6 +123,9 @@ export function EventDetailDrawer({
     setCalendarDownloaded(false);
     setPassDownloaded(false);
     setIsRegistered(false);
+    setIsIssuingPass(false);
+    setServerPassId(null);
+    setServerLatencyMs(null);
     setCheckedPrereqs(new Set());
     setArtworkMode('schematic');
   }, [event?.id]);
@@ -244,27 +253,58 @@ export function EventDetailDrawer({
   // Handle client-side PNG sample pass download
   const handleDownloadPass = useCallback(() => {
     if (!event) return;
-    downloadSamplePassPng(event);
+    downloadSamplePassPng(event, serverPassId || undefined);
     setPassDownloaded(true);
     setTimeout(() => setPassDownloaded(false), 3000);
-  }, [event]);
+  }, [event, serverPassId]);
 
-  // Handle sample registration flow
-  const handleRegister = useCallback(() => {
-    setIsRegistered(true);
-    if (!prefersReducedMotion) {
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 70,
-          origin: { y: 0.75 },
-          colors: ['#4285F4', '#EA4335', '#FBBC04', '#34A853'],
-        });
-      } catch {
-        // Safe fallback
+  // Handle real stateless sample pass issuance via POST /api/pass/verify
+  const handleRegister = useCallback(async () => {
+    if (!event) return;
+    setIsIssuingPass(true);
+    const startTime = performance.now();
+
+    try {
+      const res = await fetch('/api/pass/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: event.slug }),
+      });
+      const json = await res.json();
+      const elapsed = Number((performance.now() - startTime).toFixed(1));
+
+      if (res.ok && json.data?.passId) {
+        setServerPassId(json.data.passId);
+        setServerLatencyMs(
+          typeof json.meta?.executionMs === 'number'
+            ? json.meta.executionMs
+            : elapsed
+        );
+      } else {
+        setServerPassId(`RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`);
+        setServerLatencyMs(elapsed);
+      }
+    } catch {
+      setServerPassId(`RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`);
+      setServerLatencyMs(null);
+    } finally {
+      setIsIssuingPass(false);
+      setIsRegistered(true);
+
+      if (!prefersReducedMotion) {
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 70,
+            origin: { y: 0.75 },
+            colors: ['#4285F4', '#EA4335', '#FBBC04', '#34A853'],
+          });
+        } catch {
+          // Safe fallback
+        }
       }
     }
-  }, [prefersReducedMotion]);
+  }, [event, prefersReducedMotion]);
 
   // Toggle prerequisite checklist item
   const togglePrereq = useCallback((idx: number) => {
@@ -580,10 +620,20 @@ export function EventDetailDrawer({
                       <button
                         type="button"
                         onClick={handleRegister}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] active:scale-[0.98] transition-all shadow-md hover:shadow-lg cursor-pointer"
+                        disabled={isIssuingPass}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] active:scale-[0.98] disabled:opacity-75 transition-all shadow-md hover:shadow-lg cursor-pointer"
                       >
-                        <Ticket className="w-4 h-4" />
-                        <span>Register for Session →</span>
+                        {isIssuingPass ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>Issuing Sample Pass...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Ticket className="w-4 h-4" />
+                            <span>Register for Session →</span>
+                          </>
+                        )}
                       </button>
                     )}
 
@@ -637,10 +687,19 @@ export function EventDetailDrawer({
                             </div>
                           </div>
 
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#34A853]/15 text-[#34A853] font-bold border border-[#34A853]/30">
-                            <ShieldCheck className="w-3.5 h-3.5" />
-                            CONFIRMED
-                          </span>
+                          <div className="flex items-center gap-2">
+                            {serverLatencyMs !== null && (
+                              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#4285F4]/10 text-[#4285F4] border border-[#4285F4]/30">
+                                <span>API 200</span>
+                                <span>·</span>
+                                <span>{serverLatencyMs}ms</span>
+                              </span>
+                            )}
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#34A853]/15 text-[#34A853] font-bold border border-[#34A853]/30">
+                              <ShieldCheck className="w-3.5 h-3.5" />
+                              CONFIRMED
+                            </span>
+                          </div>
                         </div>
 
                         {/* Pass Details */}
@@ -660,16 +719,44 @@ export function EventDetailDrawer({
 
                         {/* Barcode / Token Section */}
                         <div className="p-3.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] flex flex-col md:flex-row md:items-center justify-between gap-3">
-                          <div>
-                            <span className="text-[10px] font-mono text-[var(--text-muted)] block">
-                              AUTHENTICATION TOKEN
-                            </span>
-                            <span className="text-xs font-mono font-bold text-[#4285F4] tracking-wider">
-                              RVCE-GDG-2026-DEV
+                          <div className="space-y-0.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-mono text-[var(--text-muted)] block">
+                                AUTHENTICATION TOKEN
+                              </span>
+                              {serverLatencyMs !== null && (
+                                <span className="inline-flex sm:hidden items-center px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#4285F4]/10 text-[#4285F4] border border-[#4285F4]/30">
+                                  {serverLatencyMs}ms
+                                </span>
+                              )}
+                            </div>
+                            <span className="text-xs font-mono font-bold text-[#4285F4] tracking-wider block">
+                              {serverPassId || 'RVCE-GDG-2026-DEV'}
                             </span>
                           </div>
 
                           <div className="flex flex-wrap items-center gap-2">
+                            {/* Inspect in API Drawer Button */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                openWithPreset({
+                                  method: 'POST',
+                                  endpoint: '/api/pass/verify',
+                                  body: JSON.stringify(
+                                    { slug: event.slug, trackPreference: event.category },
+                                    null,
+                                    2
+                                  ),
+                                });
+                              }}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/30 hover:border-[#4285F4]/60 transition-all cursor-pointer shadow-2xs"
+                              title="Inspect this real POST issuance in the API Drawer"
+                            >
+                              <Terminal className="w-3.5 h-3.5" />
+                              <span>Inspect in API Drawer</span>
+                            </button>
+
                             {/* Download High-DPI PNG Sample Pass */}
                             <button
                               type="button"
@@ -704,7 +791,11 @@ export function EventDetailDrawer({
 
                             <button
                               type="button"
-                              onClick={() => setIsRegistered(false)}
+                              onClick={() => {
+                                setIsRegistered(false);
+                                setServerPassId(null);
+                                setServerLatencyMs(null);
+                              }}
                               title="Reset registration pass"
                               className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all cursor-pointer"
                               aria-label="Reset pass"

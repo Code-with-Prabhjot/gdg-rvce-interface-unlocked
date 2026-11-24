@@ -4,11 +4,13 @@ import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { CommandPaletteProvider } from '@/context/CommandPaletteContext';
 import { DevTerminalProvider } from '@/context/DevTerminalContext';
+import { ApiInspectorProvider } from '@/context/ApiInspectorContext';
 import { ScrollProgressBar } from '@/components/layout/ScrollProgressBar';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CommandPalette } from '@/components/layout/CommandPalette';
 import { DevTerminalModal } from '@/components/ui/DevTerminalModal';
+import { ApiInspectorModal } from '@/components/ui/ApiInspectorModal';
 import { ArchitecturalBootLoader } from '@/components/ui/ArchitecturalBootLoader';
 
 const spaceGrotesk = Space_Grotesk({
@@ -84,25 +86,30 @@ export default function RootLayout({
 
           <CommandPaletteProvider>
             <DevTerminalProvider>
-              {/* Visual Top Scroll Indicator */}
-              <ScrollProgressBar />
+              <ApiInspectorProvider>
+                {/* Visual Top Scroll Indicator */}
+                <ScrollProgressBar />
 
-              {/* Global Sticky Navigation */}
-              <Navbar />
+                {/* Global Sticky Navigation */}
+                <Navbar />
 
-              {/* Main Application Routes Viewport */}
-              <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
-                {children}
-              </main>
+                {/* Main Application Routes Viewport */}
+                <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
+                  {children}
+                </main>
 
-              {/* Global Architectural Footer */}
-              <Footer />
+                {/* Global Architectural Footer */}
+                <Footer />
 
-              {/* Global Command Palette Overlay */}
-              <CommandPalette />
+                {/* Global Command Palette Overlay */}
+                <CommandPalette />
 
-              {/* Signature Developer Interactive CLI Terminal Drawer */}
-              <DevTerminalModal />
+                {/* Signature Developer Interactive CLI Terminal Drawer */}
+                <DevTerminalModal />
+
+                {/* Live Backend & API Inspector Drawer */}
+                <ApiInspectorModal />
+              </ApiInspectorProvider>
             </DevTerminalProvider>
           </CommandPaletteProvider>
         </ThemeProvider>
