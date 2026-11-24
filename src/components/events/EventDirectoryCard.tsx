@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Calendar, MapPin, Video, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Video, ArrowRight, Bookmark } from 'lucide-react';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
+import { useSavedEvents } from '@/context/SavedEventsContext';
 
 interface EventDirectoryCardProps {
   event: GDGEvent;
@@ -54,6 +55,8 @@ export function EventDirectoryCard({
   index,
 }: EventDirectoryCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { isSaved, toggleSave } = useSavedEvents();
+  const saved = isSaved(event.slug);
   const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryData = getCategoryBadgeData(event.category);
   const isUpcoming = event.status === 'Upcoming';
@@ -147,6 +150,27 @@ export function EventDirectoryCard({
                     Past Recap
                   </span>
                 )}
+
+                {/* Bookmark Toggle Button (Client-side private storage) */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSave(event.slug);
+                  }}
+                  aria-label={saved ? 'Remove from saved sprints' : 'Save sprint locally'}
+                  aria-pressed={saved}
+                  title={saved ? 'Saved in personal schedule' : 'Save sprint locally'}
+                  className={`min-w-[28px] min-h-[28px] p-1.5 rounded-md backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center ${
+                    saved
+                      ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
+                      : 'bg-black/65 hover:bg-black/85 text-white/80 hover:text-white border-white/20'
+                  }`}
+                >
+                  <Bookmark
+                    className={`w-3 h-3 ${saved ? 'fill-[#111827]' : ''}`}
+                  />
+                </button>
               </div>
             </div>
 
@@ -360,8 +384,26 @@ export function EventDirectoryCard({
         </div>
       </div>
 
-      {/* Column 4: Action Button CTA */}
-      <div className="shrink-0 self-end md:self-center pt-2 md:pt-0">
+      {/* Column 4: Action Button CTA & Personal Bookmark Button */}
+      <div className="shrink-0 self-end md:self-center pt-2 md:pt-0 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleSave(event.slug);
+          }}
+          aria-label={saved ? 'Remove from saved sprints' : 'Save sprint locally'}
+          aria-pressed={saved}
+          title={saved ? 'Saved in personal schedule' : 'Save sprint locally'}
+          className={`min-w-[40px] min-h-[40px] p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+            saved
+              ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
+              : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
+          }`}
+        >
+          <Bookmark className={`w-4 h-4 ${saved ? 'fill-[#111827]' : ''}`} />
+        </button>
+
         <button
           type="button"
           onClick={(e) => {

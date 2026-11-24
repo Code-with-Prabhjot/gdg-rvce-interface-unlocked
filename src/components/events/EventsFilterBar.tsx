@@ -2,15 +2,29 @@
 
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, X, LayoutGrid, List, CalendarDays, RotateCcw } from 'lucide-react';
+import {
+  Search,
+  X,
+  LayoutGrid,
+  List,
+  CalendarDays,
+  RotateCcw,
+  Bookmark,
+  Download,
+  Terminal,
+  Activity,
+  Server,
+  Zap,
+} from 'lucide-react';
 import { EventCategory, DeliveryMode, EventStatus } from '@/data/gdgData';
 
 export type StatusFilter = 'All' | EventStatus;
 export type TrackFilter = 'All' | EventCategory;
 export type ModeFilter = 'All' | DeliveryMode;
 export type ViewMode = 'grid' | 'list' | 'calendar';
+export type DataSourceMode = 'static' | 'live';
 
-interface EventsFilterBarProps {
+export interface EventsFilterBarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   statusFilter: StatusFilter;
@@ -24,6 +38,21 @@ interface EventsFilterBarProps {
   onResetFilters: () => void;
   hasActiveFilters: boolean;
   totalResultsCount: number;
+
+  // Phase 18: Live /api/events Backend Mode & Personal Saved Sprints
+  dataSourceMode: DataSourceMode;
+  onDataSourceModeChange: (mode: DataSourceMode) => void;
+  liveTelemetry: {
+    endpoint: string;
+    status: number;
+    latencyMs: number;
+  } | null;
+  isFetchingLive: boolean;
+  onInspectQuery: (endpoint: string) => void;
+  onlySaved: boolean;
+  onOnlySavedChange: (saved: boolean) => void;
+  savedCount: number;
+  onExportSavedBundle: () => void;
 }
 
 const STATUS_OPTIONS: { id: StatusFilter; label: string; shortLabel: string }[] = [
@@ -61,6 +90,15 @@ export function EventsFilterBar({
   onResetFilters,
   hasActiveFilters,
   totalResultsCount,
+  dataSourceMode,
+  onDataSourceModeChange,
+  liveTelemetry,
+  isFetchingLive,
+  onInspectQuery,
+  onlySaved,
+  onOnlySavedChange,
+  savedCount,
+  onExportSavedBundle,
 }: EventsFilterBarProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,7 +117,115 @@ export function EventsFilterBar({
   }, []);
 
   return (
-    <div className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs p-4 sm:p-5 space-y-4 mb-8">
+    <div
+      id="events-filter-bar"
+      className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs p-4 sm:p-5 space-y-4 mb-8"
+    >
+      {/* ============================================================= */}
+      {/* ROW 0: DATA SOURCE SEGMENTED SWITCHER & LIVE TELEMETRY STRIP  */}
+      {/* ============================================================= */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-hairline)]">
+        {/* Left Telemetry Status Indicator */}
+        <div className="flex items-center gap-2.5 min-w-0">
+          {dataSourceMode === 'live' ? (
+            <div className="flex items-center gap-2 overflow-hidden text-xs font-mono">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34A853] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#34A853]" />
+              </span>
+
+              {isFetchingLive ? (
+                <span className="text-[#4285F4] font-medium flex items-center gap-1.5 truncate">
+                  <Activity className="w-3.5 h-3.5 animate-spin shrink-0" />
+                  <span className="truncate">GET /api/events · Executing query...</span>
+                </span>
+              ) : liveTelemetry ? (
+                <span className="text-[var(--text-secondary)] truncate flex items-center gap-1.5">
+                  <span className="font-semibold text-[var(--text-primary)]">
+                    GET {liveTelemetry.endpoint.split('?')[0]}
+                  </span>
+                  <span className="text-[var(--text-muted)]">·</span>
+                  <span className="text-[#34A853] font-semibold">{liveTelemetry.status} OK</span>
+                  <span className="text-[var(--text-muted)]">·</span>
+                  <span className="text-[var(--text-primary)] font-bold">{liveTelemetry.latencyMs} ms</span>
+                </span>
+              ) : (
+                <span className="text-[var(--text-muted)] truncate">
+                  GET /api/events · Ready
+                </span>
+              )}
+
+              {/* Inspect Query Button */}
+              {liveTelemetry && (
+                <button
+                  type="button"
+                  onClick={() => onInspectQuery(liveTelemetry.endpoint)}
+                  aria-label="Inspect query in API Inspector"
+                  title="Inspect real query response payload"
+                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/20 transition-all shrink-0 cursor-pointer"
+                >
+                  <Terminal className="w-3 h-3 shrink-0" />
+                  <span>Inspect</span>
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
+              <span className="inline-flex rounded-full h-2 w-2 bg-[#4285F4] shrink-0" />
+              <span>STATIC EDGE // ZERO_LATENCY (0.0 ms)</span>
+              <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] text-[10px] border border-[var(--border-hairline)]">
+                In-Memory
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Right Data Source Switcher: Static Edge vs Live API */}
+        <div className="inline-flex items-center p-1 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] shrink-0 self-end sm:self-auto">
+          <button
+            type="button"
+            onClick={() => onDataSourceModeChange('static')}
+            aria-pressed={dataSourceMode === 'static'}
+            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+              dataSourceMode === 'static'
+                ? 'text-[var(--text-primary)] font-semibold'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+            }`}
+          >
+            {dataSourceMode === 'static' && (
+              <motion.div
+                layoutId="events-datasource-pill"
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs z-[-1]"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <Zap className="w-3 h-3 text-[#4285F4] shrink-0" />
+            <span>Static Edge</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onDataSourceModeChange('live')}
+            aria-pressed={dataSourceMode === 'live'}
+            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+              dataSourceMode === 'live'
+                ? 'text-[var(--text-primary)] font-semibold'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+            }`}
+          >
+            {dataSourceMode === 'live' && (
+              <motion.div
+                layoutId="events-datasource-pill"
+                className="absolute inset-0 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs z-[-1]"
+                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              />
+            )}
+            <Server className="w-3 h-3 text-[#34A853] shrink-0" />
+            <span>Live API</span>
+          </button>
+        </div>
+      </div>
+
       {/* ============================================================= */}
       {/* ROW 1: STATUS SWITCH, REAL-TIME SEARCH, & VIEW MODE TOGGLE    */}
       {/* ============================================================= */}
@@ -93,7 +239,7 @@ export function EventsFilterBar({
                 key={option.id}
                 type="button"
                 onClick={() => onStatusChange(option.id)}
-                className={`relative min-h-[38px] sm:min-h-[36px] inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
+                className={`relative min-h-[38px] sm:min-h-[36px] inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'text-[var(--text-primary)] font-semibold'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -136,7 +282,7 @@ export function EventsFilterBar({
                     onSearchChange('');
                     searchInputRef.current?.focus();
                   }}
-                  className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors"
+                  className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
                   aria-label="Clear search query"
                 >
                   <X className="w-4 h-4 shrink-0" />
@@ -157,7 +303,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('grid')}
             aria-label="Switch to grid view"
             title="Grid View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'grid'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -179,7 +325,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('list')}
             aria-label="Switch to schedule list view"
             title="Schedule List View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'list'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -201,7 +347,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('calendar')}
             aria-label="Calendar Matrix View"
             title="Calendar Matrix View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap ${
+            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'calendar'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -221,11 +367,56 @@ export function EventsFilterBar({
       </div>
 
       {/* ============================================================= */}
-      {/* ROW 2: TRACK & DELIVERY MODE PILLS + RESET ACTIVE FILTERS     */}
+      {/* ROW 2: TRACK & MODE PILLS, SAVED FILTER, BUNDLE EXPORT        */}
       {/* ============================================================= */}
       <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Left Side: Track & Mode Pills Group */}
+        {/* Left Side: Track & Mode Pills Group + Personal Saved Pill */}
         <div className="flex flex-wrap items-center gap-2">
+          {/* Personal Saved Sprints Bookmark Pill */}
+          <button
+            type="button"
+            onClick={() => onOnlySavedChange(!onlySaved)}
+            aria-pressed={onlySaved}
+            aria-label={onlySaved ? 'Show all sessions' : 'Filter by saved sessions'}
+            className={`min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+              onlySaved
+                ? 'bg-[#FBBC04] text-[#111827] font-bold shadow-xs border border-[#FBBC04]'
+                : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
+            }`}
+          >
+            <Bookmark
+              className={`w-3.5 h-3.5 ${
+                onlySaved ? 'fill-[#111827] text-[#111827]' : 'text-[var(--text-muted)]'
+              }`}
+            />
+            <span>Saved</span>
+            {savedCount > 0 && (
+              <span
+                className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                  onlySaved
+                    ? 'bg-[#111827] text-white'
+                    : 'bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)]'
+                }`}
+              >
+                {savedCount}
+              </span>
+            )}
+          </button>
+
+          {/* Bundle .ics Export CTA when Saved filter is active and at least 1 session is saved */}
+          {onlySaved && savedCount > 0 && (
+            <button
+              type="button"
+              onClick={onExportSavedBundle}
+              className="min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all shadow-xs hover:shadow-md whitespace-nowrap cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5 shrink-0" />
+              <span>Export Saved Schedule (.ics)</span>
+            </button>
+          )}
+
+          <div className="h-4 w-px bg-[var(--border-hairline)] mx-1 hidden sm:block shrink-0" />
+
           {/* Track Filter Pills */}
           <span className="text-[11px] font-mono font-semibold uppercase text-[var(--text-muted)] mr-1 hidden sm:inline whitespace-nowrap">
             Track:
@@ -237,7 +428,7 @@ export function EventsFilterBar({
                 key={track.id}
                 type="button"
                 onClick={() => onTrackChange(track.id)}
-                className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap ${
+                className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
                     ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -267,7 +458,7 @@ export function EventsFilterBar({
                 key={mode.id}
                 type="button"
                 onClick={() => onModeChange(mode.id)}
-                className={`min-h-[36px] inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap ${
+                className={`min-h-[36px] inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
                     ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -289,7 +480,7 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onResetFilters}
-              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[#EA4335] hover:text-[#C5221F] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/20 whitespace-nowrap"
+              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[#EA4335] hover:text-[#C5221F] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/20 whitespace-nowrap cursor-pointer"
             >
               <RotateCcw className="w-3 h-3 shrink-0" />
               <span>Clear filters</span>

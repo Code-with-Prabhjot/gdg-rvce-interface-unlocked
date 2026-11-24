@@ -20,12 +20,14 @@ import {
   ShieldCheck,
   RotateCcw,
   Terminal,
+  Bookmark,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
 import { downloadEventIcs } from '@/utils/calendarExport';
 import { downloadSamplePassPng } from '@/utils/passExport';
 import { useApiInspector } from '@/context/ApiInspectorContext';
+import { useSavedEvents } from '@/context/SavedEventsContext';
 
 interface EventDetailDrawerProps {
   event: GDGEvent | null;
@@ -105,6 +107,8 @@ export function EventDetailDrawer({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const { openWithPreset } = useApiInspector();
+  const { isSaved, toggleSave } = useSavedEvents();
+  const isEventSaved = event ? isSaved(event.slug) : false;
 
   // Local interactive state
   const [copiedLink, setCopiedLink] = useState(false);
@@ -373,8 +377,27 @@ export function EventDetailDrawer({
                 </span>
               </div>
 
-              {/* Top Bar Actions: Copy Link & Close Button (44x44px accessible target) */}
+              {/* Top Bar Actions: Bookmark, Copy Link & Close Button (44x44px accessible target) */}
               <div className="flex items-center gap-2">
+                {/* Personal Saved Sprints Bookmark Button */}
+                <button
+                  type="button"
+                  onClick={() => event && toggleSave(event.slug)}
+                  aria-label={isEventSaved ? 'Remove from saved sprints' : 'Save sprint locally'}
+                  aria-pressed={isEventSaved}
+                  title={isEventSaved ? 'Saved in personal schedule' : 'Save sprint locally'}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer ${
+                    isEventSaved
+                      ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] font-bold shadow-xs'
+                      : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
+                  }`}
+                >
+                  <Bookmark
+                    className={`w-3.5 h-3.5 ${isEventSaved ? 'fill-[#111827]' : ''}`}
+                  />
+                  <span>{isEventSaved ? 'Saved' : 'Save'}</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={handleCopyLink}

@@ -40,13 +40,9 @@ function escapeIcsText(text: string): string {
 }
 
 /**
- * Generates and triggers a browser download of an .ics calendar file for a GDG RVCE session.
- * 
- * @param event - The GDGEvent object containing session metadata
+ * Builds RFC 5545 VEVENT block lines for a single GDG RVCE event.
  */
-export function downloadEventIcs(event: GDGEvent): void {
-  if (typeof window === 'undefined') return;
-
+function buildVEventLines(event: GDGEvent, dtStamp: string): string[] {
   const dtStart = formatToIcsUtc(event.isoStart);
   // If isoEnd is missing or invalid, default to 2 hours after isoStart
   let dtEnd: string;
@@ -58,8 +54,7 @@ export function downloadEventIcs(event: GDGEvent): void {
     dtEnd = formatToIcsUtc(endDate.toISOString());
   }
 
-  const dtStamp = formatToIcsUtc(new Date().toISOString());
-  const uid = `${event.slug || event.id}-${Date.now()}@gdgrvce.app`;
+  const uid = `${event.slug || event.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}@gdgrvce.app`;
 
   // Build structured description with highlights, speaker, and agenda
   const descriptionSections: string[] = [];
@@ -100,13 +95,7 @@ export function downloadEventIcs(event: GDGEvent): void {
 
   const fullDescription = descriptionSections.join('\n\n');
 
-  // RFC 5545 iCalendar content
-  const icsLines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//GDG on Campus RVCE//Interface Unlocked//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
+  return [
     'BEGIN:VEVENT',
     `UID:${uid}`,
     `DTSTAMP:${dtStamp}`,
@@ -118,20 +107,79 @@ export function downloadEventIcs(event: GDGEvent): void {
     'STATUS:CONFIRMED',
     'SEQUENCE:0',
     'END:VEVENT',
-    'END:VCALENDAR',
   ];
+}
 
-  const icsContent = icsLines.join('\r\n');
+/**
+ * Triggers a browser download of an .ics file from raw calendar string content.
+ */
+function triggerIcsDownload(icsContent: string, filename: string): void {
   const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
   const downloadUrl = URL.createObjectURL(blob);
 
   const link = document.createElement('a');
   link.href = downloadUrl;
-  link.setAttribute('download', `${event.slug}-gdg-rvce.ics`);
+  link.setAttribute('download', filename);
   document.body.appendChild(link);
   link.click();
 
   // Cleanup
   document.body.removeChild(link);
   URL.revokeObjectURL(downloadUrl);
+}
+
+/**
+ * Generates and triggers a browser download of an .ics calendar file for a single GDG RVCE session.
+ * 
+ * @param event - The GDGEvent object containing session metadata
+ */
+export function downloadEventIcs(event: GDGEvent): void {
+  if (typeof window === 'undefined' || !event) return;
+
+  const dtStamp = formatToIcsUtc(new Date().toISOString());
+  const vEventLines = buildVEventLines(event, dtStamp);
+
+  const icsLines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//GDG on Campus RVCE//Interface Unlocked//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    ...vEventLines,
+    'END:VCALENDAR',
+  ];
+
+  triggerIcsDownload(icsLines.join('\r\n'), `${event.slug}-gdg-rvce.ics`);
+}
+
+/**
+ * Combines multiple GDG RVCE sessions into a single valid RFC 5545 VCALENDAR file
+ * and triggers a client-side download of `gdg-rvce-saved-schedule.ics`.
+ *
+ * @param events - Array of GDGEvent items to bundle
+ */
+export function downloadBundleIcs(events: GDGEvent[]): void {
+  if (typeof window === 'undefined' || !events || events.length === 0) return;
+
+  const dtStamp = formatToIcsUtc(new Date().toISOString());
+  const allVEvents: string[] = [];
+
+  events.forEach((ev) => {
+    const vEvent = buildVEventLines(ev, dtStamp);
+    allVEvents.push(...vEvent);
+  });
+
+  const icsLines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//GDG on Campus RVCE//Saved Schedule Bundle//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'X-WR-CALNAME:GDG RVCE Saved Schedule',
+    'X-WR-CALDESC:Saved developer sprints and workshops from GDG on Campus RV College of Engineering.',
+    ...allVEvents,
+    'END:VCALENDAR',
+  ];
+
+  triggerIcsDownload(icsLines.join('\r\n'), 'gdg-rvce-saved-schedule.ics');
 }
