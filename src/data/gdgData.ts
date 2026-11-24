@@ -1412,7 +1412,7 @@ export const TEAM_DATA: GDGTeamMember[] = [
     avatar: '/assets/avatars/member-08.svg',
     emoteBadge: '/assets/emotes/kotlin-android.svg',
     bio: 'Crafting fluid tactile micro-interactions, hardware-accelerated SVG shaders, and zero-CLS web interfaces.',
-    skills: ['Framer Motion', 'Web Animations', 'Accessibility'],
+    skills: ['Kotlin', 'Framer Motion', 'Accessibility'],
     competencies: [
       { label: 'Kinetic Physics & Motion', level: 94 },
       { label: 'Hardware-Accelerated UI', level: 90 },
@@ -1420,7 +1420,7 @@ export const TEAM_DATA: GDGTeamMember[] = [
     ],
     builderSpec: {
       focusArea: 'Kinetic Physics Models & Reduced Motion Ergonomics',
-      favoriteStack: 'React, Framer Motion, Tailwind CSS, Canvas API',
+      favoriteStack: 'React, Kotlin Compose, Framer Motion, Canvas API',
       buildMotto: 'Interfaces should feel tactile, responsive, and respectful of user focus.',
       openSourceContrib: 'rvce-motion/accessible-springs (Maintainer)',
     },

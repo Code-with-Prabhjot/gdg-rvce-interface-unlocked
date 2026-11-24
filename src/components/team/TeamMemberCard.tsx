@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { RotateCw, Globe, Sparkles } from 'lucide-react';
+import { RotateCw, Globe, Sparkles, Check } from 'lucide-react';
 import { GDGTeamMember, GoogleAccent } from '@/data/gdgData';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
 
@@ -12,6 +12,7 @@ interface TeamMemberCardProps {
   isFlipped: boolean;
   onToggleFlip: () => void;
   index: number;
+  onSelectSkill?: (skill: string) => void;
 }
 
 interface AccentStyleConfig {
@@ -78,10 +79,26 @@ export function TeamMemberCard({
   isFlipped,
   onToggleFlip,
   index,
+  onSelectSkill,
 }: TeamMemberCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const accent = getAccentConfig(member.googleColor);
   const devIdTag = member.id.replace('builder-', 'DEV // ');
+  const [copiedId, setCopiedId] = useState(false);
+
+  // Quick-copy builder sample tag with instant feedback
+  const handleCopyId = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const handle = `@gdg-rvce/${member.id}`;
+      await navigator.clipboard.writeText(handle);
+      setCopiedId(true);
+      setTimeout(() => setCopiedId(false), 2000);
+    } catch {
+      setCopiedId(true);
+      setTimeout(() => setCopiedId(false), 2000);
+    }
+  };
 
   // Ephemeral emote pop burst state (purely local, zero analytics/counters)
   const [particles, setParticles] = useState<EmoteParticle[]>([]);
@@ -124,9 +141,27 @@ export function TeamMemberCard({
       {/* Top Architectural Header Bar */}
       <div className="flex items-center justify-between gap-2 pb-4 mb-4 border-b border-[var(--border-hairline)]">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="font-mono text-[11px] font-semibold text-[var(--text-muted)] tracking-wider">
-            {devIdTag}
-          </span>
+          {/* Quick-Copy Builder ID Badge */}
+          <button
+            type="button"
+            onClick={handleCopyId}
+            title={`Click to copy sample builder handle (@gdg-rvce/${member.id})`}
+            aria-label={`Copy handle for ${member.name}`}
+            className={`font-mono text-[11px] font-semibold tracking-wider px-2 py-0.5 rounded transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              copiedId
+                ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
+            }`}
+          >
+            {copiedId ? (
+              <span className="flex items-center gap-1 font-bold text-[#34A853]">
+                <Check className="w-3 h-3" aria-hidden="true" />
+                <span>COPIED ✓</span>
+              </span>
+            ) : (
+              <span>{devIdTag}</span>
+            )}
+          </button>
           <span className="text-[var(--text-muted)] text-[10px]">·</span>
           <span className="font-mono text-[10px] text-[var(--text-secondary)] px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] truncate">
             {member.yearAndBranch}
@@ -273,15 +308,22 @@ export function TeamMemberCard({
                 </p>
               </div>
 
-              {/* 3 Technical Skill Chips */}
+              {/* 3 Technical Skill Chips with Click-to-Filter */}
               <div className="pt-2 flex flex-wrap gap-1.5">
                 {member.skills.map((skill) => (
-                  <span
+                  <button
                     key={skill}
-                    className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[var(--bg-subtle)] text-[var(--text-secondary)] border border-[var(--border-hairline)]"
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectSkill?.(skill);
+                    }}
+                    aria-label={`Filter builders by ${skill}`}
+                    title={`Filter directory by ${skill}`}
+                    className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] hover:bg-[#4285F4]/10 border border-[var(--border-hairline)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   >
                     {skill}
-                  </span>
+                  </button>
                 ))}
               </div>
             </motion.div>
