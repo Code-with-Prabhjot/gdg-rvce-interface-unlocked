@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -21,6 +21,32 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
 
+  // Ephemeral Theme Mode Telemetry Toast state
+  const [themeToast, setThemeToast] = useState<{ mode: 'light' | 'dark' } | null>(null);
+  const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isInitialMount = useRef(true);
+
+  // Trigger telemetry pill for 1.4s on theme changes
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    setThemeToast({ mode: theme });
+    toastTimerRef.current = setTimeout(() => {
+      setThemeToast(null);
+    }, 1400);
+
+    return () => {
+      if (toastTimerRef.current) {
+        clearTimeout(toastTimerRef.current);
+      }
+    };
+  }, [theme]);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent));
@@ -33,7 +59,7 @@ export function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-hairline)] bg-[var(--bg-canvas)]/85 backdrop-blur-md transition-colors duration-200">
+    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-hairline)] bg-[var(--bg-canvas)]/85 backdrop-blur-md transition-colors duration-200 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Identity */}
         <Link
@@ -231,6 +257,33 @@ export function Navbar() {
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
               </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* Ephemeral Theme Mode Telemetry Toast */}
+      <AnimatePresence>
+        {themeToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="absolute top-full mt-2 right-4 z-50 pointer-events-none"
+            role="status"
+            aria-live="polite"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-lg backdrop-blur-md">
+              <span
+                className={`w-2 h-2 rounded-full shrink-0 ${
+                  themeToast.mode === 'dark' ? 'bg-[#4285F4]' : 'bg-[#FBBC04]'
+                } animate-pulse`}
+              />
+              <span className="font-['JetBrains_Mono',monospace] text-xs font-semibold text-[var(--text-primary)] tracking-wider whitespace-nowrap">
+                {themeToast.mode === 'dark'
+                  ? 'THEME // OBSIDIAN_IDE'
+                  : 'THEME // DAYLIGHT_BLUEPRINT'}
+              </span>
             </div>
           </motion.div>
         )}

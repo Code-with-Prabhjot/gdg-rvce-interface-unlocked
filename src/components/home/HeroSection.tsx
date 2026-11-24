@@ -1,20 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Code, ShieldCheck } from 'lucide-react';
 import { KineticPrismStage } from './KineticPrismStage';
 import { DEVELOPER_STICKERS } from '@/data/gdgData';
 import { MagneticWrapper } from '@/components/ui/MagneticWrapper';
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   // Easing curve specified in challenge requirements
   const easeOutQuart = [0.22, 1, 0.36, 1] as const;
+
+  // Scroll-driven GPU-composited parallax transforms
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const rawGridParallaxY = useTransform(scrollYProgress, [0, 1], [0, 44]);
+  const rawCopyParallaxY = useTransform(scrollYProgress, [0, 1], [0, 16]);
+  const rawStageParallaxY = useTransform(scrollYProgress, [0, 1], [0, -22]);
+
+  const gridParallaxY = prefersReducedMotion ? 0 : rawGridParallaxY;
+  const copyParallaxY = prefersReducedMotion ? 0 : rawCopyParallaxY;
+  const stageParallaxY = prefersReducedMotion ? 0 : rawStageParallaxY;
 
   const maskTransition = (delay: number) => ({
     duration: prefersReducedMotion ? 0 : 0.85,
@@ -24,15 +39,26 @@ export function HeroSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center py-10 lg:py-16 overflow-hidden"
     >
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Background Architectural Blueprint Grid Parallax Layer */}
+      <motion.div
+        style={{ y: gridParallaxY }}
+        className="absolute inset-0 bg-blueprint-grid opacity-60 dark:opacity-35 pointer-events-none will-change-transform -z-0"
+        aria-hidden="true"
+      />
+
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* ========================================================= */}
           {/* LEFT COLUMN: Choreographed Masked Typography & CTAs       */}
           {/* ========================================================= */}
-          <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center space-y-7 z-10">
+          <motion.div
+            style={{ y: copyParallaxY }}
+            className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center space-y-7 z-10 will-change-transform"
+          >
             {/* 0ms: Eyebrow Telemetry Pill */}
             <motion.div
               initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
@@ -250,14 +276,17 @@ export function HeroSection() {
                 </a>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* ========================================================= */}
           {/* RIGHT COLUMN: Interactive 3D Kinetic Prism Stage          */}
           {/* ========================================================= */}
-          <div className="lg:col-span-6 xl:col-span-5 flex items-center justify-center w-full z-10">
+          <motion.div
+            style={{ y: stageParallaxY }}
+            className="lg:col-span-6 xl:col-span-5 flex items-center justify-center w-full z-10 will-change-transform"
+          >
             <KineticPrismStage />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

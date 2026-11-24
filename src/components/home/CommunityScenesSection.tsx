@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Maximize2, X, ChevronLeft, ChevronRight, MapPin, Sparkles } from 'lucide-react';
 import { COMMUNITY_SCENES, CommunityScene, GoogleAccent } from '@/data/gdgData';
 
@@ -47,6 +47,14 @@ export function CommunityScenesSection() {
   const currentScene: CommunityScene =
     activeIndex !== -1 ? COMMUNITY_SCENES[activeIndex] : COMMUNITY_SCENES[0];
   const accentHex = getGoogleAccentHex(currentScene.googleColor);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: cinemaScrollY } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
+  const rawSceneParallaxY = useTransform(cinemaScrollY, [0, 1], [-10, 10]);
+  const sceneParallaxY = prefersReducedMotion ? 0 : rawSceneParallaxY;
 
   const handleNextScene = useCallback(() => {
     const nextIdx = (activeIndex + 1) % COMMUNITY_SCENES.length;
@@ -184,6 +192,7 @@ export function CommunityScenesSection() {
 
         {/* 16:9 Cinema Aspect Stage */}
         <div
+          ref={containerRef}
           className="relative w-full aspect-[16/9] bg-black cursor-pointer overflow-hidden"
           onClick={() => setIsLightboxOpen(true)}
         >
@@ -199,7 +208,8 @@ export function CommunityScenesSection() {
                 duration: prefersReducedMotion ? 0 : 0.45,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="absolute inset-0"
+              style={{ y: sceneParallaxY }}
+              className="absolute inset-0 will-change-transform"
             >
               <Image
                 src={currentScene.image}
