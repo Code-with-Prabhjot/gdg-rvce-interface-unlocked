@@ -104,7 +104,11 @@ export type SceneCategory =
   | 'Livestream Studio'
   | 'Hands-On Lab'
   | 'Demo Day'
-  | 'Open Source Jam';
+  | 'Open Source Jam'
+  | 'Design Systems Studio'
+  | 'Architecture War Room'
+  | 'Mobile Device Lab'
+  | 'Release Party';
 
 export interface CommunityScene {
   id: string;
@@ -1048,6 +1052,54 @@ export const COMMUNITY_SCENES: CommunityScene[] = [
     caption:
       'Atmospheric twilight campus terrace with panoramic architectural arches overlooking the Bengaluru skyline. Builders cluster on beanbags and high benches around a central Git commit-tree projection, reviewing community pull requests.',
     highlights: ['100% Open Source', 'Git PR Reviews', 'Twilight Terrace'],
+  },
+  {
+    id: 'design-system-critique',
+    code: 'SCENE // 07',
+    title: 'UI/UX Design Systems Critique',
+    category: 'Design Systems Studio',
+    venue: 'Design & Architecture Studio · RVCE',
+    googleColor: 'blue',
+    image: '/assets/scenes/design-system-critique.svg',
+    caption:
+      'Architectural critique studio where student designers audit color token contrast ratios, typography scale rulers in Space Grotesk and JetBrains Mono, and responsive viewport wireframes across mobile, tablet, and desktop breakpoints.',
+    highlights: ['Design Tokens', 'WCAG AAA Ratios', 'Responsive Grid'],
+  },
+  {
+    id: 'api-architecture-warroom',
+    code: 'SCENE // 08',
+    title: 'Distributed Systems & API War Room',
+    category: 'Architecture War Room',
+    venue: 'Cloud & Systems Incubator · RVCE',
+    googleColor: 'red',
+    image: '/assets/scenes/api-architecture-warroom.svg',
+    caption:
+      'High-intensity engineering war room centered around an architectural glass whiteboard mapping microservice topologies, JSON payloads, and distributed tracing graphs with sub-10ms edge latency metrics.',
+    highlights: ['Microservices', 'Sub-10ms Latency', 'JSON Schemas'],
+  },
+  {
+    id: 'mobile-compose-jam',
+    code: 'SCENE // 09',
+    title: 'Android & Jetpack Compose Device Lab',
+    category: 'Mobile Device Lab',
+    venue: 'Mobile Engineering Suite · RVCE',
+    googleColor: 'green',
+    image: '/assets/scenes/mobile-compose-jam.svg',
+    caption:
+      'Collaborative multi-device hardware lab testing Material 3 composables, reactive StateFlow pipelines, and recomposition trees across phones, foldables, and tablets tethered to real-time Android Studio test rigs.',
+    highlights: ['Jetpack Compose', 'Material 3', 'StateFlow Reactive'],
+  },
+  {
+    id: 'open-source-release-party',
+    code: 'SCENE // 10',
+    title: 'Open-Source Release & Maintainer Night',
+    category: 'Release Party',
+    venue: 'Central Auditorium Foyer · RVCE',
+    googleColor: 'yellow',
+    image: '/assets/scenes/open-source-release-party.svg',
+    caption:
+      'Festive campus release night celebrating the v1.0.0 production merge with all 128 green CI checks passing, celebratory geometric confetti, and student maintainers shipping open-source code to global repositories.',
+    highlights: ['v1.0.0 Release', '100% Green CI', 'MIT License'],
   },
 ];
 

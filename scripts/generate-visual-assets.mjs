@@ -29,7 +29,7 @@ const GOOGLE_COLORS = {
 };
 
 // ==========================================
-// 1. BRAND EMBLEM (gdg-rvce-mark.svg)
+// 1. BRAND ASSETS (3 items: 1 mark + 2 architectural chapter seals, public/assets/brand/)
 // ==========================================
 const gdgRvceMarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 64" fill="none" role="img" aria-label="GDG RVCE Chevron Emblem">
   <defs>
@@ -50,7 +50,165 @@ const gdgRvceMarkSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120
   <path d="M98 32L74 53" stroke="${GOOGLE_COLORS.yellow}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" filter="url(#mark-glow)"/>
 </svg>`;
 
+// Brand Seal 1: Circular precision architectural seal (240x240)
+const interfaceUnlockedSealSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" role="img" aria-label="Interface Unlocked Architectural Chapter Seal">
+  <defs>
+    <radialGradient id="sealBgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141F38"/>
+      <stop offset="70%" stop-color="#0B0F19"/>
+      <stop offset="100%" stop-color="#060910"/>
+    </radialGradient>
+    <path id="sealTextPath" d="M 120, 120 m -94, 0 a 94,94 0 1,1 188,0 a 94,94 0 1,1 -188,0" />
+    <filter id="sealMarkGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#4285F4" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Deep Obsidian Dial Base -->
+  <circle cx="120" cy="120" r="118" fill="url(#sealBgGlow)"/>
+  <circle cx="120" cy="120" r="116" stroke="#1E293B" stroke-width="2"/>
+  
+  <!-- Outer Concentric Precision Rulers and Dashed Rings -->
+  <circle cx="120" cy="120" r="110" stroke="#334155" stroke-width="1.5"/>
+  <circle cx="120" cy="120" r="106" stroke="#475569" stroke-width="0.75" stroke-dasharray="3 3"/>
+  <circle cx="120" cy="120" r="84" stroke="#334155" stroke-width="1" stroke-dasharray="2 4"/>
+  <circle cx="120" cy="120" r="70" stroke="#1E293B" stroke-width="2" fill="#0A0E1A"/>
+
+  <!-- Radial Drafting Caliper Ticks (36 ticks at 10-degree increments) -->
+  <g stroke="#475569" stroke-width="1" opacity="0.65">
+    ${Array.from({ length: 36 }).map((_, i) => {
+      const angle = i * 10;
+      const isMajor = i % 9 === 0;
+      const isMedium = i % 3 === 0;
+      const r1 = isMajor ? 102 : (isMedium ? 104 : 106);
+      const r2 = 110;
+      const rad = (angle * Math.PI) / 180;
+      const x1 = 120 + r1 * Math.cos(rad);
+      const y1 = 120 + r1 * Math.sin(rad);
+      const x2 = 120 + r2 * Math.cos(rad);
+      const y2 = 120 + r2 * Math.sin(rad);
+      const stroke = isMajor ? '#60A5FA' : '#475569';
+      const sw = isMajor ? 1.5 : 1;
+      return `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${stroke}" stroke-width="${sw}"/>`;
+    }).join('')}
+  </g>
+
+  <!-- Perimeter Mono Lettering Path -->
+  <text font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#E2E8F0" letter-spacing="2.6">
+    <textPath href="#sealTextPath" startOffset="50%" text-anchor="middle">
+      INTERFACE UNLOCKED · GDG RVCE · BENGALURU ·
+    </textPath>
+  </text>
+
+  <!-- 4 Cardinal Compass Alignment Marks in Google 4-Colours -->
+  <!-- Top: Red -->
+  <circle cx="120" cy="24" r="3" fill="${GOOGLE_COLORS.red}"/>
+  <line x1="120" y1="14" x2="120" y2="28" stroke="${GOOGLE_COLORS.red}" stroke-width="1.5"/>
+  <!-- Right: Green -->
+  <circle cx="216" cy="120" r="3" fill="${GOOGLE_COLORS.green}"/>
+  <line x1="212" y1="120" x2="226" y2="120" stroke="${GOOGLE_COLORS.green}" stroke-width="1.5"/>
+  <!-- Bottom: Yellow -->
+  <circle cx="120" cy="216" r="3" fill="${GOOGLE_COLORS.yellow}"/>
+  <line x1="120" y1="212" x2="120" y2="226" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1.5"/>
+  <!-- Left: Blue -->
+  <circle cx="24" cy="120" r="3" fill="${GOOGLE_COLORS.blue}"/>
+  <line x1="14" y1="120" x2="28" y2="120" stroke="${GOOGLE_COLORS.blue}" stroke-width="1.5"/>
+
+  <!-- Technical Inner Badge Details -->
+  <text x="120" y="82" font-family="'JetBrains Mono', monospace" font-size="6.5" font-weight="600" fill="#94A3B8" text-anchor="middle" letter-spacing="1">ARCHITECTURAL SEAL</text>
+  <text x="120" y="162" font-family="'JetBrains Mono', monospace" font-size="6" fill="#64748B" text-anchor="middle" letter-spacing="1">12.9237°N · 77.4987°E</text>
+  <text x="120" y="174" font-family="'JetBrains Mono', monospace" font-size="5.5" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle" letter-spacing="0.5">DEV COLLECTIVE // 2026</text>
+
+  <!-- Center Official GDG < > Mark (Scaled and Centered at 120, 118) -->
+  <g transform="translate(72, 98) scale(0.8)" filter="url(#sealMarkGlow)">
+    <!-- Left Chevron: < -->
+    <path d="M46 11L22 32" stroke="${GOOGLE_COLORS.red}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22 32L46 53" stroke="${GOOGLE_COLORS.blue}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Right Chevron: > -->
+    <path d="M74 11L98 32" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M98 32L74 53" stroke="${GOOGLE_COLORS.yellow}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Precision Crosshair Reticle -->
+  <line x1="120" y1="62" x2="120" y2="68" stroke="#60A5FA" stroke-width="1"/>
+  <line x1="120" y1="178" x2="120" y2="184" stroke="#60A5FA" stroke-width="1"/>
+  <line x1="62" y1="120" x2="68" y2="120" stroke="#60A5FA" stroke-width="1"/>
+  <line x1="172" y1="120" x2="178" y2="120" stroke="#60A5FA" stroke-width="1"/>
+</svg>`;
+
+// Brand Seal 2: Technical drafting crest combining isometric grid lines & 4 Google color corner brackets (240x240)
+const gdgRvceBlueprintCrestSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" role="img" aria-label="GDG RVCE Blueprint Drafting Crest">
+  <defs>
+    <linearGradient id="crestBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#080D1A"/>
+      <stop offset="100%" stop-color="#04060C"/>
+    </linearGradient>
+    <pattern id="crestGrid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="rgba(66, 133, 244, 0.12)" stroke-width="1"/>
+    </pattern>
+    <filter id="crestGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#4285F4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Drafting Plate Base (Octagonal beveled boundary) -->
+  <polygon points="44,14 196,14 226,44 226,196 196,226 44,226 14,196 14,44" fill="url(#crestBg)" stroke="#1E293B" stroke-width="2"/>
+  <polygon points="44,14 196,14 226,44 226,196 196,226 44,226 14,196 14,44" fill="url(#crestGrid)"/>
+  <polygon points="48,20 192,20 220,48 220,192 192,220 48,220 20,192 20,48" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- 4 Google Colour Corner L-Brackets -->
+  <!-- Top-Left: Blue -->
+  <path d="M18 36 V24 H30" stroke="${GOOGLE_COLORS.blue}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Top-Right: Red -->
+  <path d="M222 36 V24 H210" stroke="${GOOGLE_COLORS.red}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom-Right: Yellow -->
+  <path d="M222 204 V216 H210" stroke="${GOOGLE_COLORS.yellow}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom-Left: Green -->
+  <path d="M18 204 V216 H30" stroke="${GOOGLE_COLORS.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Isometric Drafting Accent Lines (30 deg) -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+    <line x1="20" y1="120" x2="120" y2="62"/>
+    <line x1="120" y1="62" x2="220" y2="120"/>
+    <line x1="20" y1="120" x2="120" y2="178"/>
+    <line x1="120" y1="178" x2="220" y2="120"/>
+  </g>
+
+  <!-- Central Crest Drafting Shield Frame -->
+  <polygon points="120,42 190,82 190,146 120,186 50,146 50,82" fill="#0B132B" fill-opacity="0.6" stroke="#475569" stroke-width="1.5" filter="url(#crestGlow)"/>
+
+  <!-- Top Title Banner -->
+  <rect x="52" y="28" width="136" height="16" rx="4" fill="#0A0E1A" stroke="#334155" stroke-width="1"/>
+  <text x="120" y="39" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="800" fill="#E2E8F0" text-anchor="middle" letter-spacing="1.8">GDG ON CAMPUS</text>
+
+  <!-- Prominent Architectural RVCE Typography -->
+  <text x="120" y="74" font-family="'Space Grotesk', sans-serif" font-size="24" font-weight="900" fill="#60A5FA" text-anchor="middle" letter-spacing="4">RVCE</text>
+
+  <!-- GDG Chevron Emblem at Crest Heart -->
+  <g transform="translate(74, 82) scale(0.77)">
+    <!-- Left Chevron -->
+    <path d="M46 11L22 32" stroke="${GOOGLE_COLORS.red}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22 32L46 53" stroke="${GOOGLE_COLORS.blue}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right Chevron -->
+    <path d="M74 11L98 32" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M98 32L74 53" stroke="${GOOGLE_COLORS.yellow}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Lower Drafting Specs and Coordinates -->
+  <text x="120" y="145" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="700" fill="#F1F5F9" text-anchor="middle" letter-spacing="1.2">ARCHITECTURAL COLLECTIVE</text>
+  <text x="120" y="157" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#94A3B8" text-anchor="middle" letter-spacing="0.8">12.9237° N · 77.4987° E</text>
+
+  <!-- Bottom Technical Pill -->
+  <rect x="66" y="196" width="108" height="15" rx="4" fill="#0A0F1D" stroke="#334155" stroke-width="1"/>
+  <circle cx="75" cy="203.5" r="2.5" fill="${GOOGLE_COLORS.green}"/>
+  <text x="82" y="206.5" font-family="'JetBrains Mono', monospace" font-size="6.5" font-weight="bold" fill="#34A853" letter-spacing="0.5">BENGALURU // IN</text>
+  <text x="165" y="206.5" font-family="'JetBrains Mono', monospace" font-size="6.5" fill="#64748B" text-anchor="end">SPEC v2</text>
+</svg>`;
+
 fs.writeFileSync(path.join(BRAND_DIR, 'gdg-rvce-mark.svg'), gdgRvceMarkSvg.trim());
+fs.writeFileSync(path.join(BRAND_DIR, 'interface-unlocked-seal.svg'), interfaceUnlockedSealSvg.trim());
+fs.writeFileSync(path.join(BRAND_DIR, 'gdg-rvce-blueprint-crest.svg'), gdgRvceBlueprintCrestSvg.trim());
 
 // ==========================================
 // 2. DEVELOPER EMOTES (20 items: 12 v1 + 8 v2, 128x128)
@@ -482,7 +640,7 @@ Object.entries(emotes).forEach(([filename, svgContent]) => {
 // 3. EVENT COVERS (8 items, 1200x675 16:9)
 // ==========================================
 const createCoverSvg = ({ title, subtitle, accentColor, category, tagText, visualElements }) => `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200px" height="675px" fill="none">
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
@@ -531,15 +689,15 @@ const createCoverSvg = ({ title, subtitle, accentColor, category, tagText, visua
     <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">${category.toUpperCase()}</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">${title}</text>
+    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">${title.replace(/&/g, '&amp;')}</text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">${subtitle}</text>
+    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">${subtitle.replace(/&/g, '&amp;')}</text>
 
     <!-- Meta specs -->
     <g transform="translate(0, 220)">
       <rect x="0" y="0" width="220" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">${tagText}</text>
+      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">${tagText.replace(/&/g, '&amp;')}</text>
     </g>
   </g>
 
@@ -706,7 +864,7 @@ const covers = {
 
   'devfest-recap.svg': createCoverSvg({
     title: 'DevFest Bengaluru Recap',
-    subtitle: 'Celebrating 1,200+ Student Builders & Keynote Sprints',
+    subtitle: 'Celebrating Student Builders & Keynote Sprints',
     accentColor: GOOGLE_COLORS.yellow,
     category: 'Annual Celebration',
     tagText: 'ANNUAL // GDG CAMPUS NETWORK',
@@ -2053,6 +2211,1010 @@ const scenes = {
       <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
       <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">TERRACE LOUNGE · 100% OPEN REPOSITORIES</text>
     </g>
+  </svg>`,
+
+  // 7. UI/UX Design Systems Critique Studio (1400x800)
+  'design-system-critique.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#070B16"/>
+        <stop offset="60%" stop-color="#0C1322"/>
+        <stop offset="100%" stop-color="#121B2F"/>
+      </linearGradient>
+      <pattern id="dsGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      </pattern>
+      <filter id="dsCardGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#dsBg)"/>
+    <rect width="1400" height="800" fill="url(#dsGrid)"/>
+
+    <!-- Ceiling Studio Track Lighting and Spotlights -->
+    <line x1="80" y1="25" x2="1320" y2="25" stroke="#334155" stroke-width="5"/>
+    <g fill="#475569">
+      <rect x="220" y="27" width="28" height="14" rx="2"/>
+      <rect x="520" y="27" width="28" height="14" rx="2"/>
+      <rect x="850" y="27" width="28" height="14" rx="2"/>
+      <rect x="1150" y="27" width="28" height="14" rx="2"/>
+    </g>
+    <!-- Spotlight Cones -->
+    <polygon points="234,41 120,480 380,480" fill="rgba(66, 133, 244, 0.03)"/>
+    <polygon points="534,41 420,480 680,480" fill="rgba(234, 67, 53, 0.03)"/>
+    <polygon points="864,41 740,480 1000,480" fill="rgba(251, 188, 4, 0.03)"/>
+    <polygon points="1164,41 1020,480 1280,480" fill="rgba(52, 168, 83, 0.03)"/>
+
+    <!-- Architectural Design Studio Pin-up Board (x: 100, y: 65, w: 1200, h: 420) -->
+    <g transform="translate(100, 65)">
+      <!-- Board Outer Frame -->
+      <rect x="0" y="0" width="1200" height="420" rx="14" fill="#0A0E1A" stroke="#334155" stroke-width="2.5" filter="url(#dsCardGlow)"/>
+      <rect x="8" y="8" width="1184" height="404" rx="10" fill="#0D1424"/>
+      <!-- Felt Pinboard Inner Border -->
+      <line x1="410" y1="8" x2="410" y2="412" stroke="#1E293B" stroke-width="2"/>
+      <line x1="790" y1="8" x2="790" y2="412" stroke="#1E293B" stroke-width="2"/>
+
+      <!-- SECTION A (LEFT): 4 GOOGLE COLOUR TOKEN SWATCHES -->
+      <text x="30" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#60A5FA" letter-spacing="1">DESIGN TOKENS // PALETTE TOKENS</text>
+      
+      <!-- Token 1: Blue -->
+      <g transform="translate(30, 54)">
+        <rect x="0" y="0" width="165" height="150" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="${GOOGLE_COLORS.blue}"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-blue</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#4285F4 · RGB(66,133,244)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#60A5FA">WCAG 4.6:1 (AA PASS)</text>
+      </g>
+
+      <!-- Token 2: Red -->
+      <g transform="translate(210, 54)">
+        <rect x="0" y="0" width="165" height="150" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="${GOOGLE_COLORS.red}"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-red</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#EA4335 · RGB(234,67,53)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#F87171">DESTRUCTIVE / ALERT</text>
+      </g>
+
+      <!-- Token 3: Yellow (WCAG AAA with #111827 Dark Ink) -->
+      <g transform="translate(30, 222)">
+        <rect x="0" y="0" width="165" height="160" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="${GOOGLE_COLORS.yellow}"/>
+        <text x="82" y="50" font-family="'Space Grotesk', sans-serif" font-size="12" font-weight="900" fill="#111827" text-anchor="middle">DARK INK ONLY</text>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-yellow</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#FBBC04 · INK #111827</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" fill="#FCD34D">WCAG AAA 7.4:1 RATIO</text>
+        <text x="14" y="150" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">HIGH-CONTRAST INK</text>
+      </g>
+
+      <!-- Token 4: Green -->
+      <g transform="translate(210, 222)">
+        <rect x="0" y="0" width="165" height="160" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="${GOOGLE_COLORS.green}"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-green</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#34A853 · RGB(52,168,83)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#4ADE80">SUCCESS / PASS TOKEN</text>
+        <text x="14" y="150" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">CI STATUS VALIDATED</text>
+      </g>
+
+      <!-- SECTION B (CENTER): TYPOGRAPHY SCALE RULER -->
+      <text x="430" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#FBBC04" letter-spacing="1">TYPOGRAPHY SCALE &amp; BASELINE RULER</text>
+      
+      <g transform="translate(430, 54)">
+        <rect x="0" y="0" width="335" height="330" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+        <line x1="30" y1="10" x2="30" y2="320" stroke="#334155" stroke-width="2"/>
+        
+        <!-- Ruler Ticks -->
+        ${Array.from({ length: 20 }).map((_, idx) => {
+          const y = 20 + idx * 15;
+          const isMajor = idx % 4 === 0;
+          return `<line x1="${isMajor ? 14 : 22}" y1="${y}" x2="30" y2="${y}" stroke="${isMajor ? '#60A5FA' : '#475569'}" stroke-width="${isMajor ? 1.5 : 1}"/>
+          ${isMajor ? `<text x="8" y="${y + 3}" font-family="monospace" font-size="7" fill="#64748B">${idx * 8}</text>` : ''}`;
+        }).join('')}
+
+        <!-- Type Specimen 1: Space Grotesk Display -->
+        <g transform="translate(45, 30)">
+          <line x1="0" y1="36" x2="275" y2="36" stroke="${GOOGLE_COLORS.blue}" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="32" font-family="'Space Grotesk', sans-serif" font-size="28" font-weight="700" fill="#F8FAFC">Display 48px</text>
+          <text x="190" y="24" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#60A5FA">Space Grotesk</text>
+          <text x="190" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.15 · Tracking -0.02</text>
+        </g>
+
+        <!-- Type Specimen 2: Space Grotesk Heading -->
+        <g transform="translate(45, 95)">
+          <line x1="0" y1="28" x2="275" y2="28" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="24" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="600" fill="#F1F5F9">Heading 32px</text>
+          <text x="190" y="16" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#FCD34D">Space Grotesk</text>
+          <text x="190" y="26" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.25 · SemiBold</text>
+        </g>
+
+        <!-- Type Specimen 3: Plus Jakarta Sans Body -->
+        <g transform="translate(45, 155)">
+          <line x1="0" y1="22" x2="275" y2="22" stroke="${GOOGLE_COLORS.green}" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="500" fill="#E2E8F0">Body Regular 16px</text>
+          <text x="190" y="12" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#4ADE80">Plus Jakarta</text>
+          <text x="190" y="22" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.5 · Regular 400</text>
+        </g>
+
+        <!-- Type Specimen 4: JetBrains Mono Code -->
+        <g transform="translate(45, 215)">
+          <line x1="0" y1="20" x2="275" y2="20" stroke="${GOOGLE_COLORS.red}" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#93C5FD">const token = '#4285F4'</text>
+          <text x="190" y="10" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#F87171">JetBrains Mono</text>
+          <text x="190" y="20" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.4 · Monospace</text>
+        </g>
+
+        <!-- Component Slot Tag -->
+        <g transform="translate(45, 275)">
+          <rect x="0" y="0" width="275" height="38" rx="6" fill="#141E33" stroke="#334155" stroke-width="1"/>
+          <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#E2E8F0">&lt;Button variant=&quot;blueprint&quot; /&gt;</text>
+          <text x="12" y="30" font-family="'JetBrains Mono', monospace" font-size="8" fill="#64748B">Min Target: 44×44px · Focus Ring: 2px</text>
+        </g>
+      </g>
+
+      <!-- SECTION C (RIGHT): RESPONSIVE WIREFRAME BOARDS -->
+      <text x="810" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#34A853" letter-spacing="1">RESPONSIVE BREAKPOINT ARTBOARDS</text>
+
+      <g transform="translate(810, 54)">
+        <!-- Mobile Frame (390px) -->
+        <g transform="translate(10, 15)">
+          <rect x="0" y="0" width="75" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="25" y="4" width="25" height="3" rx="1.5" fill="#334155"/>
+          <rect x="6" y="14" width="63" height="12" rx="2" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.3"/>
+          <rect x="6" y="32" width="63" height="40" rx="4" fill="#1E293B"/>
+          <circle cx="37" cy="52" r="10" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.4"/>
+          <rect x="12" y="80" width="51" height="8" rx="2" fill="${GOOGLE_COLORS.red}" fill-opacity="0.4"/>
+          <rect x="12" y="94" width="51" height="8" rx="2" fill="${GOOGLE_COLORS.green}" fill-opacity="0.4"/>
+          <text x="37" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">390px</text>
+        </g>
+
+        <!-- Tablet Frame (768px) -->
+        <g transform="translate(105, 15)">
+          <rect x="0" y="0" width="115" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="45" y="4" width="25" height="3" rx="1.5" fill="#334155"/>
+          <rect x="8" y="14" width="99" height="12" rx="2" fill="#1E293B"/>
+          <rect x="8" y="32" width="46" height="65" rx="3" fill="#151F33" stroke="${GOOGLE_COLORS.blue}" stroke-width="1"/>
+          <rect x="60" y="32" width="46" height="65" rx="3" fill="#151F33" stroke="${GOOGLE_COLORS.green}" stroke-width="1"/>
+          <rect x="8" y="104" width="99" height="20" rx="3" fill="#1E293B"/>
+          <text x="57" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">768px</text>
+        </g>
+
+        <!-- Desktop Frame (1280px) -->
+        <g transform="translate(240, 15)">
+          <rect x="0" y="0" width="125" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="0" y="0" width="125" height="12" rx="4" fill="#1E293B"/>
+          <circle cx="8" cy="6" r="2" fill="#EF4444"/>
+          <circle cx="15" cy="6" r="2" fill="#F59E0B"/>
+          <circle cx="22" cy="6" r="2" fill="#10B981"/>
+          <rect x="6" y="18" width="113" height="10" rx="2" fill="#1E293B"/>
+          <rect x="6" y="32" width="34" height="88" rx="2" fill="#131B2C"/>
+          <rect x="44" y="32" width="75" height="40" rx="2" fill="#1A243B" stroke="${GOOGLE_COLORS.blue}" stroke-width="1"/>
+          <rect x="44" y="76" width="35" height="44" rx="2" fill="#1A243B" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1"/>
+          <rect x="84" y="76" width="35" height="44" rx="2" fill="#1A243B" stroke="${GOOGLE_COLORS.green}" stroke-width="1"/>
+          <text x="62" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">1280px</text>
+        </g>
+
+        <!-- Lower Design Critique Checklist Card -->
+        <g transform="translate(10, 185)">
+          <rect x="0" y="0" width="355" height="145" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="14" y="24" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#E2E8F0">AUDIT CHECKLIST // SPEC 2.0</text>
+          
+          <g transform="translate(14, 38)">
+            <circle cx="6" cy="6" r="5" fill="${GOOGLE_COLORS.green}"/>
+            <text x="6" y="9" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="10" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">WCAG AAA Contrast on Yellow Fill (7.4:1)</text>
+
+            <circle cx="6" cy="28" r="5" fill="${GOOGLE_COLORS.green}"/>
+            <text x="6" y="31" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="32" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">Touch Targets &gt;= 44×44px Minimum</text>
+
+            <circle cx="6" cy="50" r="5" fill="${GOOGLE_COLORS.green}"/>
+            <text x="6" y="53" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="54" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">Fluid Viewport Rulers at 390 / 768 / 1280px</text>
+
+            <circle cx="6" cy="72" r="5" fill="${GOOGLE_COLORS.blue}"/>
+            <text x="6" y="75" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ℹ</text>
+            <text x="18" y="76" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#93C5FD">Blueprint X-Ray Token Overlay (Shift+X)</text>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- Studio Floor Base (y: 500 to 800) -->
+    <rect x="0" y="500" width="1400" height="300" fill="#0A0E1A"/>
+    <line x1="0" y1="500" x2="1400" y2="500" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Architectural Studio Critique Table and 3 Designers -->
+    <g transform="translate(180, 480)">
+      <polygon points="60,60 980,60 920,130 0,130" fill="#151D2E" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="130" width="920" height="15" fill="#0C1220"/>
+      <line x1="60" y1="145" x2="60" y2="280" stroke="#334155" stroke-width="8"/>
+      <line x1="860" y1="145" x2="860" y2="280" stroke="#334155" stroke-width="8"/>
+
+      <!-- MacBook on desk (Center) -->
+      <g transform="translate(420, 30)">
+        <polygon points="10,40 90,40 98,55 2,55" fill="#475569"/>
+        <rect x="14" y="2" width="72" height="42" rx="3" fill="#0F172A" stroke="#64748B" stroke-width="1.5"/>
+        <rect x="18" y="6" width="64" height="34" rx="2" fill="#1E293B"/>
+        <rect x="22" y="10" width="20" height="26" fill="#3B82F6" fill-opacity="0.4"/>
+        <rect x="46" y="10" width="32" height="12" fill="#10B981" fill-opacity="0.4"/>
+        <rect x="46" y="24" width="32" height="12" fill="#F59E0B" fill-opacity="0.4"/>
+      </g>
+
+      <!-- iPad with Stylus (Left) -->
+      <g transform="translate(160, 45)">
+        <rect x="0" y="0" width="65" height="45" rx="4" fill="#0F172A" stroke="#64748B" stroke-width="1.5" transform="rotate(-10 0 0)"/>
+        <line x1="55" y1="10" x2="80" y2="4" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Coffee Mug -->
+      <g transform="translate(620, 50)">
+        <rect x="0" y="0" width="16" height="20" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+        <path d="M16 4C20 4 22 7 22 10C22 13 20 16 16 16" stroke="#475569" stroke-width="2" fill="none"/>
+        <circle cx="8" cy="8" r="3" fill="${GOOGLE_COLORS.yellow}"/>
+      </g>
+
+      <!-- Scattered Color Swatches -->
+      <rect x="260" y="70" width="22" height="14" rx="2" fill="${GOOGLE_COLORS.blue}" transform="rotate(12 260 70)"/>
+      <rect x="290" y="65" width="22" height="14" rx="2" fill="${GOOGLE_COLORS.red}" transform="rotate(-8 290 65)"/>
+      <rect x="320" y="72" width="22" height="14" rx="2" fill="${GOOGLE_COLORS.green}" transform="rotate(5 320 72)"/>
+
+      <!-- Designer 1 (Left - Seated on stool, reviewing tablet) -->
+      <g transform="translate(40, -40)">
+        <circle cx="35" cy="20" r="18" fill="#FDBA74"/>
+        <path d="M18 18C18 6 32 2 48 4C52 14 50 24 50 24Z" fill="#1E1B4B"/>
+        <circle cx="30" cy="20" r="5" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <circle cx="42" cy="20" r="5" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <line x1="35" y1="20" x2="37" y2="20" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <path d="M15 90C15 45 55 45 55 90Z" fill="${GOOGLE_COLORS.blue}"/>
+        <path d="M45 55L75 75L110 50" stroke="#FDBA74" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Designer 2 (Center - Seated at laptop, typing and inspecting) -->
+      <g transform="translate(430, -50)">
+        <circle cx="35" cy="20" r="18" fill="#FED7AA"/>
+        <path d="M18 18C18 2 52 2 52 18Z" fill="#0F172A"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="${GOOGLE_COLORS.yellow}"/>
+        <path d="M18 60L35 80" stroke="${GOOGLE_COLORS.yellow}" stroke-width="8" stroke-linecap="round"/>
+        <path d="M52 60L45 80" stroke="${GOOGLE_COLORS.yellow}" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Designer 3 (Right - Standing tall, pointing at wireframes) -->
+      <g transform="translate(760, -90)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="${GOOGLE_COLORS.green}"/>
+        <path d="M48 65L75 35L110 10" stroke="#FDE047" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="110" cy="10" r="5" fill="#FDE047"/>
+        <line x1="108" y1="14" x2="120" y2="2" stroke="${GOOGLE_COLORS.green}" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="370" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.blue}"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 07 // UI/UX DESIGN SYSTEMS CRITIQUE</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DESIGN STUDIO LAB · TOKENS, RULERS &amp; BREAKPOINTS</text>
+    </g>
+  </svg>`,
+
+  // 8. Distributed Systems & API Whiteboard Session (1400x800)
+  'api-architecture-warroom.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="warBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050811"/>
+        <stop offset="50%" stop-color="#0A101D"/>
+        <stop offset="100%" stop-color="#101827"/>
+      </linearGradient>
+      <linearGradient id="glassWhiteboard" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0D1829" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#13233D" stop-opacity="0.85"/>
+      </linearGradient>
+      <pattern id="warGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+      </pattern>
+      <filter id="glassGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#4285F4" flood-opacity="0.15"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#warBg)"/>
+    <rect width="1400" height="800" fill="url(#warGrid)"/>
+
+    <!-- Server Rack Cabinet in Background Left (y: 100 to 460) -->
+    <g transform="translate(45, 90)">
+      <rect x="0" y="0" width="80" height="370" rx="8" fill="#0A0E1A" stroke="#334155" stroke-width="2"/>
+      ${Array.from({ length: 8 }).map((_, i) => `
+        <rect x="8" y="${12 + i * 44}" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="${30 + i * 44}" r="3" fill="${i % 3 === 0 ? GOOGLE_COLORS.green : (i % 3 === 1 ? GOOGLE_COLORS.blue : GOOGLE_COLORS.yellow)}"/>
+        <circle cx="30" cy="${30 + i * 44}" r="2" fill="#34A853"/>
+        <line x1="38" y1="${30 + i * 44}" x2="62" y2="${30 + i * 44}" stroke="#475569" stroke-width="1.5"/>
+      `).join('')}
+    </g>
+
+    <!-- Massive Glass Whiteboard at Center (x: 160, y: 65, w: 1080, h: 420) -->
+    <g transform="translate(160, 65)">
+      <!-- Outer Glass Board Frame with Neon Top Edge -->
+      <rect x="0" y="0" width="1080" height="420" rx="16" fill="url(#glassWhiteboard)" stroke="#475569" stroke-width="2.5" filter="url(#glassGlow)"/>
+      <line x1="16" y1="0" x2="1064" y2="0" stroke="${GOOGLE_COLORS.blue}" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Glass Board Header Bar -->
+      <text x="30" y="34" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#60A5FA" letter-spacing="1">DISTRIBUTED MICROSERVICE TOPOLOGY // CLOUD RUN &amp; GEMINI MESH</text>
+      <text x="1050" y="34" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#34A853" text-anchor="end">REGION: ASIA-SOUTH1 · 99.99% SLO</text>
+      <line x1="30" y1="44" x2="1050" y2="44" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- ============================================== -->
+      <!-- TOP HALF: MICROSERVICE TOPOLOGY DIAGRAM        -->
+      <!-- ============================================== -->
+      <!-- Ingress Node: Cloud Load Balancer (Blue) -->
+      <g transform="translate(35, 65)">
+        <rect x="0" y="0" width="160" height="55" rx="8" fill="#141E33" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <circle cx="16" cy="18" r="4" fill="${GOOGLE_COLORS.blue}"/>
+        <text x="26" y="21" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF">Cloud Armor &amp; LB</text>
+        <text x="14" y="38" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">TLS Termination :443</text>
+        <text x="14" y="48" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#60A5FA">DDoS Mitigation Active</text>
+      </g>
+
+      <!-- Connecting Arrow 1 -->
+      <line x1="195" y1="92" x2="245" y2="92" stroke="#60A5FA" stroke-width="2" stroke-dasharray="4 2"/>
+      <polygon points="245,88 253,92 245,96" fill="#60A5FA"/>
+      <text x="220" y="84" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">0.8ms</text>
+
+      <!-- Gateway Node: Envoy Router (Green) -->
+      <g transform="translate(255, 65)">
+        <rect x="0" y="0" width="165" height="55" rx="8" fill="#141E33" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <circle cx="16" cy="18" r="4" fill="${GOOGLE_COLORS.green}"/>
+        <text x="26" y="21" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF">API Gateway Mesh</text>
+        <text x="14" y="38" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">Envoy Edge Proxy</text>
+        <text x="14" y="48" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#4ADE80">HTTP/2 &amp; gRPC Multiplex</text>
+      </g>
+
+      <!-- Multi-branching Directed Bus to Downstream Services -->
+      <path d="M420 92 H460 V65 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,62 503,65 495,68" fill="#94A3B8"/>
+
+      <path d="M460 92 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,89 503,92 495,95" fill="#94A3B8"/>
+
+      <path d="M460 92 V120 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,117 503,120 495,123" fill="#94A3B8"/>
+
+      <!-- Downstream Service 1: Auth and IAM (Red) -->
+      <g transform="translate(505, 45)">
+        <rect x="0" y="0" width="170" height="40" rx="6" fill="#1E1724" stroke="${GOOGLE_COLORS.red}" stroke-width="1.5"/>
+        <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#FFFFFF">Auth &amp; Session Store</text>
+        <text x="12" y="31" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#F87171">JWT RS256 · Sub-2ms</text>
+      </g>
+
+      <!-- Downstream Service 2: Event Pipeline (Yellow) -->
+      <g transform="translate(505, 95)">
+        <rect x="0" y="0" width="170" height="40" rx="6" fill="#221C14" stroke="${GOOGLE_COLORS.yellow}" stroke-width="1.5"/>
+        <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#FFFFFF">Event Stream Pub/Sub</text>
+        <text x="12" y="31" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#FCD34D">Kafka Mesh · 10k eps</text>
+      </g>
+
+      <!-- Connection to AI and Data Layer -->
+      <line x1="675" y1="65" x2="720" y2="65" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <polygon points="720,62 728,65 720,68" fill="#60A5FA"/>
+
+      <line x1="675" y1="115" x2="720" y2="115" stroke="#4ADE80" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <polygon points="720,112 728,115 720,118" fill="#4ADE80"/>
+
+      <!-- Gemini Multimodal Mesh (Blue) -->
+      <g transform="translate(730, 42)">
+        <rect x="0" y="0" width="200" height="45" rx="6" fill="#141E33" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <circle cx="14" cy="16" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#60A5FA">Gemini 1.5 Pro Agents</text>
+        <text x="12" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#E2E8F0">Multimodal Function Calling</text>
+      </g>
+
+      <!-- Cloud Spanner and Vector DB (Green) -->
+      <g transform="translate(730, 95)">
+        <rect x="0" y="0" width="200" height="45" rx="6" fill="#0D211A" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <circle cx="14" cy="16" r="4" fill="${GOOGLE_COLORS.green}"/>
+        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#4ADE80">Spanner Vector DB</text>
+        <text x="12" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#E2E8F0">HNSW Index · Sub-10ms Cosine</text>
+      </g>
+
+      <!-- Divider line between topology and telemetry -->
+      <line x1="30" y1="170" x2="1050" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- ============================================== -->
+      <!-- BOTTOM LEFT: LATENCY TELEMETRY WAVEFORM GRAPH  -->
+      <!-- ============================================== -->
+      <g transform="translate(30, 185)">
+        <rect x="0" y="0" width="480" height="210" rx="10" fill="#0A0E1A" stroke="#1E293B" stroke-width="1.5"/>
+        <text x="16" y="24" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#E2E8F0">LATENCY TELEMETRY TRACING (P50 / P95 / P99)</text>
+        
+        <!-- Legend Pills -->
+        <g transform="translate(16, 36)">
+          <rect x="0" y="0" width="70" height="18" rx="4" fill="${GOOGLE_COLORS.green}" fill-opacity="0.2"/>
+          <text x="35" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">P50: 4.2ms</text>
+
+          <rect x="80" y="0" width="70" height="18" rx="4" fill="${GOOGLE_COLORS.yellow}" fill-opacity="0.2"/>
+          <text x="115" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">P95: 8.8ms</text>
+
+          <rect x="160" y="0" width="75" height="18" rx="4" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.2"/>
+          <text x="197" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="${GOOGLE_COLORS.blue}" text-anchor="middle">P99: 14.1ms</text>
+        </g>
+
+        <!-- Waveform Graph Grid and Axes -->
+        <g transform="translate(45, 75)">
+          <line x1="0" y1="0" x2="0" y2="100" stroke="#334155" stroke-width="1.5"/>
+          <line x1="0" y1="100" x2="410" y2="100" stroke="#334155" stroke-width="1.5"/>
+          <line x1="0" y1="50" x2="410" y2="50" stroke="#1E293B" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="0" y1="20" x2="410" y2="20" stroke="#1E293B" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- P50 Curve (Smooth low latency, Green #34A853) -->
+          <path d="M0 85 Q60 88 120 82 T240 84 T360 80 T410 83" fill="none" stroke="${GOOGLE_COLORS.green}" stroke-width="2.5"/>
+          <!-- P95 Curve (Mid latency, Yellow #FBBC04) -->
+          <path d="M0 65 Q60 60 120 68 T240 62 T360 64 T410 60" fill="none" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2"/>
+          <!-- P99 Curve (Top latency, Blue #4285F4) -->
+          <path d="M0 35 Q60 25 120 40 T240 30 T360 38 T410 32" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+
+          <!-- Axis Labels -->
+          <text x="-8" y="103" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">0ms</text>
+          <text x="-8" y="53" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">10ms</text>
+          <text x="-8" y="23" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">20ms</text>
+          <text x="200" y="115" font-family="monospace" font-size="7.5" fill="#64748B" text-anchor="middle">ROLLING 60-MINUTE WINDOW</text>
+        </g>
+      </g>
+
+      <!-- ============================================== -->
+      <!-- BOTTOM RIGHT: JSON PAYLOAD TERMINAL BLOCK     -->
+      <!-- ============================================== -->
+      <g transform="translate(530, 185)">
+        <rect x="0" y="0" width="520" height="210" rx="10" fill="#060910" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="0" y="0" width="520" height="26" rx="8" fill="#111827"/>
+        <circle cx="16" cy="13" r="3.5" fill="#EF4444"/>
+        <circle cx="28" cy="13" r="3.5" fill="#F59E0B"/>
+        <circle cx="40" cy="13" r="3.5" fill="#10B981"/>
+        <text x="56" y="17" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#94A3B8">PAYLOAD // HTTP 200 OK (/api/events/stream)</text>
+
+        <!-- Syntax Highlighted JSON Body -->
+        <g transform="translate(18, 44)" font-family="'JetBrains Mono', monospace" font-size="9" line-height="16">
+          <text x="0" y="12" fill="#E2E8F0">{</text>
+          <text x="14" y="28" fill="#93C5FD">&quot;status&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.green}">200</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="44" fill="#93C5FD">&quot;region&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.yellow}">&quot;asia-south1-bengaluru&quot;</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="60" fill="#93C5FD">&quot;route&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.yellow}">&quot;/api/events/stream&quot;</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="76" fill="#93C5FD">&quot;telemetry&quot;<tspan fill="#E2E8F0">: {</tspan></text>
+          <text x="28" y="92" fill="#93C5FD">&quot;p99_latency_ms&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.green}">8.4</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="28" y="108" fill="#93C5FD">&quot;active_nodes&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.green}">32</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="28" y="124" fill="#93C5FD">&quot;health&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="${GOOGLE_COLORS.green}">&quot;ZERO_PACKET_LOSS&quot;</tspan></text>
+          <text x="14" y="140" fill="#E2E8F0">}</text>
+          <text x="0" y="156" fill="#E2E8F0">}</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- War Room Floor and 3 Student Engineers (y: 500 to 800) -->
+    <rect x="0" y="500" width="1400" height="300" fill="#0A0E1A"/>
+    <line x1="0" y1="500" x2="1400" y2="500" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Workstation Desk with Ultrawide Monitor and 3 Engineers -->
+    <g transform="translate(200, 480)">
+      <!-- Desk Base -->
+      <polygon points="40,55 960,55 900,120 0,120" fill="#141E30" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="120" width="900" height="14" fill="#0A0F1D"/>
+      <line x1="60" y1="134" x2="60" y2="280" stroke="#334155" stroke-width="8"/>
+      <line x1="840" y1="134" x2="840" y2="280" stroke="#334155" stroke-width="8"/>
+
+      <!-- Ultrawide Curved Monitor on Desk (Center) -->
+      <g transform="translate(360, -10)">
+        <rect x="0" y="10" width="220" height="75" rx="6" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="6" y="16" width="208" height="63" rx="4" fill="#0F172A"/>
+        <!-- Grafana Graphs on screen -->
+        <rect x="12" y="22" width="95" height="51" fill="#1E293B"/>
+        <path d="M16 65 Q40 50 65 60 T100 45" fill="none" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <rect x="113" y="22" width="95" height="51" fill="#1E293B"/>
+        <path d="M117 60 Q140 40 165 55 T200 35" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
+        <rect x="95" y="85" width="30" height="18" fill="#334155"/>
+        <polygon points="80,103 140,103 130,108 90,108" fill="#475569"/>
+      </g>
+
+      <!-- Keyboard and Mouse -->
+      <rect x="420" y="80" width="100" height="26" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+      <rect x="535" y="82" width="18" height="22" rx="6" fill="#334155"/>
+
+      <!-- Engineer 1 (Left - Standing by glass board with dry-erase stylus) -->
+      <g transform="translate(40, -90)">
+        <circle cx="35" cy="18" r="18" fill="#FDBA74"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#1E1B4B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="${GOOGLE_COLORS.blue}"/>
+        <!-- Arm extended high pointing marker at topology line -->
+        <path d="M50 60L85 30L125 10" stroke="#FDBA74" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="125" cy="10" r="5" fill="#FDBA74"/>
+        <!-- Dry-erase marker -->
+        <line x1="120" y1="14" x2="135" y2="4" stroke="${GOOGLE_COLORS.blue}" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Engineer 2 (Center - Seated at ultrawide screen, typing commands) -->
+      <g transform="translate(415, -45)">
+        <circle cx="35" cy="18" r="18" fill="#FED7AA"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#0F172A"/>
+        <!-- Glasses -->
+        <circle cx="29" cy="18" r="4.5" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>
+        <circle cx="41" cy="18" r="4.5" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>
+        <line x1="33.5" y1="18" x2="36.5" y2="18" stroke="#F8FAFC" stroke-width="1.5"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="${GOOGLE_COLORS.red}"/>
+        <path d="M18 60L35 80" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round"/>
+        <path d="M52 60L45 80" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Engineer 3 (Right - Standing, holding laptop with telemetry) -->
+      <g transform="translate(740, -85)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="${GOOGLE_COLORS.green}"/>
+        <!-- Laptop in arms -->
+        <g transform="translate(10, 60)">
+          <polygon points="10,35 70,35 76,45 4,45" fill="#475569"/>
+          <rect x="14" y="6" width="56" height="30" rx="2" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <rect x="16" y="8" width="52" height="26" rx="1" fill="#1E293B"/>
+          <line x1="20" y1="16" x2="50" y2="16" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+          <line x1="20" y1="22" x2="60" y2="22" stroke="#94A3B8" stroke-width="1.5"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.red}"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 08 // DISTRIBUTED SYSTEMS WAR ROOM</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">HIGH-THROUGHPUT SYSTEMS LAB · SUB-10MS EDGE LATENCY</text>
+    </g>
+  </svg>`,
+
+  // 9. Android & Jetpack Compose Device Lab (1400x800)
+  'mobile-compose-jam.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="jamBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050B14"/>
+        <stop offset="60%" stop-color="#0A1424"/>
+        <stop offset="100%" stop-color="#0E1A2E"/>
+      </linearGradient>
+      <pattern id="jamGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+        <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.028)" stroke-width="1"/>
+      </pattern>
+      <filter id="phoneShadow" x="-15%" y="-15%" width="130%" height="130%">
+        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#jamBg)"/>
+    <rect width="1400" height="800" fill="url(#jamGrid)"/>
+
+    <!-- Ceiling Cable Management Rails and Lights -->
+    <line x1="100" y1="20" x2="1300" y2="20" stroke="#334155" stroke-width="6"/>
+    <line x1="300" y1="20" x2="300" y2="70" stroke="#475569" stroke-width="2"/>
+    <line x1="700" y1="20" x2="700" y2="70" stroke="#475569" stroke-width="2"/>
+    <line x1="1100" y1="20" x2="1100" y2="70" stroke="#475569" stroke-width="2"/>
+
+    <!-- Large Kotlin and Jetpack Compose Display Wall (x: 140, y: 65, w: 1120, h: 400) -->
+    <g transform="translate(140, 65)">
+      <rect x="0" y="0" width="1120" height="400" rx="16" fill="#0A0E1A" stroke="#334155" stroke-width="2.5"/>
+      <rect x="8" y="8" width="1104" height="384" rx="12" fill="#0D1627"/>
+
+      <!-- Header -->
+      <text x="30" y="36" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#34A853" letter-spacing="1">JETPACK COMPOSE &amp; KOTLIN COROUTINES // REACTIVE UDF PIPELINE</text>
+      <text x="1080" y="36" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#60A5FA" text-anchor="end">MATERIAL 3 // ADAPTIVE MULTI-DEVICE SUITE</text>
+      <line x1="30" y1="46" x2="1080" y2="46" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- LEFT: Unidirectional Data Flow Architecture -->
+      <g transform="translate(30, 65)">
+        <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#E2E8F0">UNIDIRECTIONAL DATA FLOW (UDF)</text>
+
+        <!-- UDF Loop Blocks -->
+        <!-- Block 1: UI Composable -->
+        <rect x="0" y="35" width="140" height="60" rx="8" fill="#141E33" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <text x="70" y="60" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">@Composable UI</text>
+        <text x="70" y="78" font-family="'JetBrains Mono', monospace" font-size="8" fill="#4ADE80" text-anchor="middle">Material 3 Surfaces</text>
+
+        <!-- Arrow down: User Event -->
+        <line x1="70" y1="95" x2="70" y2="135" stroke="#64748B" stroke-width="2"/>
+        <polygon points="67,135 70,143 73,135" fill="#64748B"/>
+        <text x="78" y="120" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8">UI Event</text>
+
+        <!-- Block 2: ViewModel StateFlow -->
+        <rect x="0" y="145" width="140" height="60" rx="8" fill="#1E1724" stroke="${GOOGLE_COLORS.red}" stroke-width="2"/>
+        <text x="70" y="170" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ViewModel</text>
+        <text x="70" y="188" font-family="'JetBrains Mono', monospace" font-size="8" fill="#F87171" text-anchor="middle">StateFlow&lt;UiState&gt;</text>
+
+        <!-- Arrow right: Coroutines Repository -->
+        <line x1="140" y1="175" x2="195" y2="175" stroke="#64748B" stroke-width="2"/>
+        <polygon points="195,172 203,175 195,178" fill="#64748B"/>
+        <text x="170" y="168" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">Launch</text>
+
+        <!-- Block 3: Repository Flow -->
+        <rect x="205" y="145" width="140" height="60" rx="8" fill="#221C14" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2"/>
+        <text x="275" y="170" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Repository</text>
+        <text x="275" y="188" font-family="'JetBrains Mono', monospace" font-size="8" fill="#FCD34D" text-anchor="middle">Flow&lt;Data&gt;</text>
+
+        <!-- Arrow up to State return -->
+        <path d="M275 145 V65 H150" stroke="#60A5FA" stroke-width="2" fill="none"/>
+        <polygon points="150,62 142,65 150,68" fill="#60A5FA"/>
+        <text x="215" y="58" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#60A5FA" text-anchor="middle">Immutable State Emit</text>
+
+        <!-- Recomposition Tree Stats -->
+        <g transform="translate(0, 225)">
+          <rect x="0" y="0" width="345" height="85" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="14" y="22" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" fill="#E2E8F0">COMPOSE COMPILER RECOMPOSITION PROFILE</text>
+          <text x="14" y="42" font-family="'JetBrains Mono', monospace" font-size="8" fill="#34A853">✔ 0 unnecessary recompositions detected</text>
+          <text x="14" y="58" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">✔ Skippable Composables: 98.4% (All parameters stable)</text>
+          <text x="14" y="74" font-family="'JetBrains Mono', monospace" font-size="8" fill="#60A5FA">✔ Adaptive Layouts: Compact · Medium · Expanded</text>
+        </g>
+      </g>
+
+      <!-- RIGHT: Kotlin 2.0 Code Card -->
+      <g transform="translate(420, 65)">
+        <rect x="0" y="0" width="660" height="310" rx="10" fill="#070A12" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="0" y="0" width="660" height="26" rx="8" fill="#111827"/>
+        <circle cx="16" cy="13" r="3.5" fill="#EF4444"/>
+        <circle cx="28" cy="13" r="3.5" fill="#F59E0B"/>
+        <circle cx="40" cy="13" r="3.5" fill="#10B981"/>
+        <text x="56" y="17" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#94A3B8">GdgEventCard.kt // Modern Android with Jetpack Compose &amp; Material 3</text>
+
+        <g transform="translate(20, 46)" font-family="'JetBrains Mono', monospace" font-size="9.5" line-height="18">
+          <text x="0" y="14" fill="#F472B6">@Composable</text>
+          <text x="0" y="32" fill="#60A5FA">fun <tspan fill="#FCD34D">GdgBlueprintCard</tspan><tspan fill="#E2E8F0">(</tspan></text>
+          <text x="16" y="50" fill="#E2E8F0">event: <tspan fill="#4ADE80">EventUiState</tspan>,</text>
+          <text x="16" y="68" fill="#E2E8F0">modifier: <tspan fill="#4ADE80">Modifier</tspan> = <tspan fill="#4ADE80">Modifier</tspan></text>
+          <text x="0" y="86" fill="#E2E8F0">) {</text>
+          <text x="16" y="104" fill="#94A3B8">// State hoisting with reactive Flow collector</text>
+          <text x="16" y="122" fill="#E2E8F0">val windowSizeClass = <tspan fill="#60A5FA">LocalWindowSizeClass</tspan>.current</text>
+          <text x="16" y="140" fill="#E2E8F0">val isDark = <tspan fill="#60A5FA">isSystemInDarkTheme</tspan>()</text>
+          <text x="16" y="162" fill="#F472B6">Card</text>
+          <text x="24" y="180" fill="#E2E8F0">colors = <tspan fill="#60A5FA">CardDefaults</tspan>.cardColors(containerColor = <tspan fill="#FCD34D">MaterialTheme</tspan>.colorScheme.surface),</text>
+          <text x="24" y="198" fill="#E2E8F0">shape = <tspan fill="#FCD34D">RoundedCornerShape</tspan>(<tspan fill="#34A853">16.dp</tspan>),</text>
+          <text x="24" y="216" fill="#E2E8F0">modifier = modifier.<tspan fill="#60A5FA">fillMaxWidth</tspan>().<tspan fill="#60A5FA">padding</tspan>(<tspan fill="#34A853">8.dp</tspan>)</text>
+          <text x="16" y="234" fill="#E2E8F0">) { /* Responsive Composable Slot */ }</text>
+          <text x="0" y="252" fill="#E2E8F0">}</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Device Lab Workbench and Multi-Device Test Stands (Foreground, y: 490 to 800) -->
+    <rect x="0" y="490" width="1400" height="310" fill="#0A0E1A"/>
+    <line x1="0" y1="490" x2="1400" y2="490" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Collaborative Engineering Desk with 3 Test Stands -->
+    <g transform="translate(180, 470)">
+      <polygon points="40,50 980,50 920,130 0,130" fill="#131B2B" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="130" width="920" height="15" fill="#080C14"/>
+      <line x1="60" y1="145" x2="60" y2="290" stroke="#334155" stroke-width="8"/>
+      <line x1="860" y1="145" x2="860" y2="290" stroke="#334155" stroke-width="8"/>
+
+      <!-- MULTI-DEVICE TEST STANDS (Center of table) -->
+      <!-- Test Stand 1: Pixel 9 Pro (Vertical) -->
+      <g transform="translate(260, -40)" filter="url(#phoneShadow)">
+        <polygon points="10,135 60,135 50,145 20,145" fill="#334155"/>
+        <rect x="10" y="0" width="50" height="105" rx="8" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <rect x="13" y="4" width="44" height="97" rx="6" fill="#1E293B"/>
+        <!-- Screen elements -->
+        <rect x="17" y="10" width="36" height="8" rx="2" fill="${GOOGLE_COLORS.blue}"/>
+        <rect x="17" y="24" width="36" height="30" rx="3" fill="#141E33"/>
+        <rect x="17" y="60" width="36" height="6" rx="1.5" fill="${GOOGLE_COLORS.green}"/>
+        <rect x="17" y="70" width="36" height="6" rx="1.5" fill="${GOOGLE_COLORS.yellow}"/>
+        <!-- Home bar -->
+        <line x1="28" y1="96" x2="42" y2="96" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- USB-C Cable connecting to hub -->
+        <path d="M35 105 V130 H450" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Test Stand 2: Pixel Fold (Unfolded Widescreen) -->
+      <g transform="translate(360, -55)" filter="url(#phoneShadow)">
+        <polygon points="20,145 100,145 90,155 30,155" fill="#334155"/>
+        <rect x="0" y="0" width="120" height="95" rx="8" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <!-- Fold Hinge line -->
+        <line x1="60" y1="0" x2="60" y2="95" stroke="#334155" stroke-width="1"/>
+        <rect x="4" y="4" width="54" height="87" rx="4" fill="#1A243B"/>
+        <rect x="62" y="4" width="54" height="87" rx="4" fill="#141E33"/>
+        <!-- Two pane UI -->
+        <rect x="8" y="10" width="46" height="6" rx="1.5" fill="${GOOGLE_COLORS.green}"/>
+        <rect x="8" y="20" width="46" height="60" rx="2" fill="#0D1627"/>
+        <rect x="66" y="10" width="46" height="70" rx="2" fill="#0D1627"/>
+        <!-- USB-C Cable -->
+        <path d="M60 95 V125 H450" stroke="${GOOGLE_COLORS.green}" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Test Stand 3: Pixel Tablet on Speaker Dock -->
+      <g transform="translate(530, -50)" filter="url(#phoneShadow)">
+        <polygon points="15,135 135,135 125,145 25,145" fill="#334155"/>
+        <rect x="0" y="0" width="150" height="95" rx="10" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <rect x="5" y="5" width="140" height="85" rx="6" fill="#1E293B"/>
+        <!-- Tablet Nav rail on left -->
+        <rect x="8" y="8" width="16" height="79" rx="2" fill="#141E33"/>
+        <circle cx="16" cy="18" r="3" fill="${GOOGLE_COLORS.red}"/>
+        <circle cx="16" cy="30" r="3" fill="${GOOGLE_COLORS.yellow}"/>
+        <circle cx="16" cy="42" r="3" fill="${GOOGLE_COLORS.green}"/>
+        <!-- Dashboard cards on tablet -->
+        <rect x="30" y="12" width="54" height="34" rx="3" fill="#131C2E"/>
+        <rect x="90" y="12" width="50" height="34" rx="3" fill="#131C2E"/>
+        <rect x="30" y="52" width="110" height="32" rx="3" fill="#131C2E"/>
+        <!-- USB-C Cable -->
+        <path d="M75 95 V125 H450" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Central Multi-Port USB Debugging Hub -->
+      <g transform="translate(435, 115)">
+        <rect x="0" y="0" width="35" height="18" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+        <circle cx="8" cy="9" r="2" fill="${GOOGLE_COLORS.green}"/>
+        <circle cx="16" cy="9" r="2" fill="${GOOGLE_COLORS.blue}"/>
+        <circle cx="24" cy="9" r="2" fill="${GOOGLE_COLORS.yellow}"/>
+      </g>
+
+      <!-- Android Figurine Mascot on Desk -->
+      <g transform="translate(710, 45)">
+        <ellipse cx="14" cy="18" rx="10" ry="12" fill="${GOOGLE_COLORS.green}"/>
+        <circle cx="14" cy="8" r="9" fill="${GOOGLE_COLORS.green}"/>
+        <circle cx="11" cy="6" r="1.5" fill="#FFFFFF"/>
+        <circle cx="17" cy="6" r="1.5" fill="#FFFFFF"/>
+        <line x1="10" y1="0" x2="8" y2="-4" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <line x1="18" y1="0" x2="20" y2="-4" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+      </g>
+
+      <!-- 3 DEVELOPERS PAIR-DEBUGGING -->
+      <!-- Dev 1 (Left - Typing on laptop tethered to devices) -->
+      <g transform="translate(40, -45)">
+        <circle cx="35" cy="18" r="18" fill="#FDBA74"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#1E1B4B"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="${GOOGLE_COLORS.blue}"/>
+        <!-- Laptop -->
+        <g transform="translate(60, 45)">
+          <polygon points="10,35 65,35 70,45 5,45" fill="#475569"/>
+          <rect x="14" y="6" width="52" height="30" rx="2" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <rect x="16" y="8" width="48" height="26" rx="1" fill="#1E293B"/>
+          <text x="20" y="20" font-family="monospace" font-size="6" fill="${GOOGLE_COLORS.green}">adb devices: 3</text>
+        </g>
+      </g>
+
+      <!-- Dev 2 (Center - Pointing at Pixel Fold) -->
+      <g transform="translate(320, -50)">
+        <circle cx="35" cy="18" r="18" fill="#FED7AA"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#0F172A"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="${GOOGLE_COLORS.green}"/>
+        <path d="M50 55L75 40L95 30" stroke="#FED7AA" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Dev 3 (Right - Holding phone testing gestures) -->
+      <g transform="translate(760, -55)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 100C14 50 56 50 56 100Z" fill="${GOOGLE_COLORS.yellow}"/>
+        <!-- Phone in hands with gesture trail -->
+        <g transform="translate(0, 45)">
+          <rect x="0" y="0" width="22" height="40" rx="3" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <circle cx="11" cy="20" r="4" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.6"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.green}"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 09 // ANDROID &amp; JETPACK COMPOSE LAB</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DEVICE COMPATIBILITY SUITE · MATERIAL 3 &amp; KOTLIN 2.0</text>
+    </g>
+  </svg>`,
+
+  // 10. Open-Source Release & Maintainer Night (1400x800)
+  'open-source-release-party.svg': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="partyBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#090919"/>
+        <stop offset="60%" stop-color="#111129"/>
+        <stop offset="100%" stop-color="#181836"/>
+      </linearGradient>
+      <linearGradient id="screenGlow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#112038"/>
+        <stop offset="50%" stop-color="#182A4A"/>
+        <stop offset="100%" stop-color="#0F1B30"/>
+      </linearGradient>
+      <filter id="festiveGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="8" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#partyBg)"/>
+
+    <!-- Overhead Industrial Steel Truss and Festive String Lights -->
+    <line x1="80" y1="30" x2="1320" y2="30" stroke="#334155" stroke-width="8"/>
+    
+    <!-- Draped Festive Bunting and Google Color Party Lamps -->
+    <!-- Swag 1 -->
+    <path d="M100 30 Q300 70 500 30" stroke="#475569" stroke-width="2" fill="none"/>
+    <path d="M500 30 Q700 70 900 30" stroke="#475569" stroke-width="2" fill="none"/>
+    <path d="M900 30 Q1100 70 1300 30" stroke="#475569" stroke-width="2" fill="none"/>
+
+    <!-- Festive Bulbs along swags -->
+    ${[160, 240, 320, 400, 560, 640, 720, 800, 960, 1040, 1120, 1200].map((x, idx) => {
+      const colors = [GOOGLE_COLORS.blue, GOOGLE_COLORS.red, GOOGLE_COLORS.yellow, GOOGLE_COLORS.green];
+      const color = colors[idx % 4];
+      return `<circle cx="${x}" cy="50" r="6" fill="${color}" filter="url(#festiveGlow)"/>
+      <line x1="${x}" y1="30" x2="${x}" y2="44" stroke="#475569" stroke-width="1.5"/>`;
+    }).join('')}
+
+    <!-- Subtle Celebratory Geometric Confetti Particles in Air -->
+    <g opacity="0.75">
+      <!-- Blue diamonds -->
+      <polygon points="180,120 186,126 180,132 174,126" fill="${GOOGLE_COLORS.blue}"/>
+      <polygon points="1220,140 1226,146 1220,152 1214,146" fill="${GOOGLE_COLORS.blue}"/>
+      <polygon points="450,90 456,96 450,102 444,96" fill="${GOOGLE_COLORS.blue}"/>
+      <!-- Red triangles -->
+      <polygon points="280,150 290,165 270,165" fill="${GOOGLE_COLORS.red}"/>
+      <polygon points="1150,110 1160,125 1140,125" fill="${GOOGLE_COLORS.red}"/>
+      <!-- Yellow squares -->
+      <rect x="360" y="110" width="8" height="8" rx="1.5" fill="${GOOGLE_COLORS.yellow}" transform="rotate(25 360 110)"/>
+      <rect x="1050" y="130" width="8" height="8" rx="1.5" fill="${GOOGLE_COLORS.yellow}" transform="rotate(-15 1050 130)"/>
+      <rect x="700" y="80" width="8" height="8" rx="1.5" fill="${GOOGLE_COLORS.yellow}" transform="rotate(45 700 80)"/>
+      <!-- Green circles -->
+      <circle cx="220" cy="180" r="4" fill="${GOOGLE_COLORS.green}"/>
+      <circle cx="1270" cy="180" r="4" fill="${GOOGLE_COLORS.green}"/>
+      <circle cx="820" cy="95" r="4" fill="${GOOGLE_COLORS.green}"/>
+    </g>
+
+    <!-- Giant Projection Screen at Center (x: 180, y: 70, w: 1040, h: 410) -->
+    <g transform="translate(180, 70)">
+      <rect x="0" y="0" width="1040" height="410" rx="18" fill="url(#screenGlow)" stroke="#475569" stroke-width="3" filter="url(#festiveGlow)"/>
+      <rect x="10" y="10" width="1020" height="390" rx="12" fill="#0A0E1A"/>
+
+      <!-- Header Ribbon -->
+      <rect x="10" y="10" width="1020" height="34" rx="10" fill="#141E33"/>
+      <text x="30" y="32" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#60A5FA" letter-spacing="1">CENTRAL AUDITORIUM PROJECTION // STAGE A</text>
+      <text x="990" y="32" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#34A853" text-anchor="end">PRODUCTION MERGE SUCCESSFUL</text>
+
+      <!-- Huge Release Headline -->
+      <g transform="translate(60, 80)">
+        <text x="0" y="40" font-family="'Space Grotesk', sans-serif" font-size="44" font-weight="900" fill="#FFFFFF" letter-spacing="2">RELEASE v1.0.0 // MIT LICENSE</text>
+        <text x="0" y="72" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#FCD34D" letter-spacing="1">GDG ON CAMPUS RVCE · FLAGSHIP REPOSITORY LIVE</text>
+      </g>
+
+      <!-- Central Victory Status Card with Giant Checkmark -->
+      <g transform="translate(60, 180)">
+        <rect x="0" y="0" width="920" height="90" rx="12" fill="#0D211A" stroke="${GOOGLE_COLORS.green}" stroke-width="2"/>
+        <!-- Giant Green Check Circle -->
+        <circle cx="48" cy="45" r="28" fill="${GOOGLE_COLORS.green}"/>
+        <path d="M36 45L44 53L60 37" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Verification Telemetry -->
+        <g transform="translate(95, 24)">
+          <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold" fill="#FFFFFF">ALL 128 CI CHECKS PASSED · BUILD: 100% GREEN</text>
+          <text x="0" y="38" font-family="'JetBrains Mono', monospace" font-size="11" fill="#4ADE80">Zero Regressions · INP &lt; 24ms · WCAG AAA Accessible · 51 Vector Assets Validated</text>
+          <text x="0" y="54" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#94A3B8">Commit 7f3a9d2 · Verified GPG Key · Signed by RVCE Core Chapter Builders</text>
+        </g>
+      </g>
+
+      <!-- Pull Request and Git Merge Branch Flow -->
+      <g transform="translate(60, 295)">
+        <rect x="0" y="0" width="920" height="85" rx="10" fill="#141E33" stroke="#334155" stroke-width="1.5"/>
+        
+        <!-- PR Badge -->
+        <g transform="translate(20, 20)">
+          <rect x="0" y="0" width="80" height="22" rx="5" fill="#10B981" fill-opacity="0.2" stroke="${GOOGLE_COLORS.green}" stroke-width="1"/>
+          <text x="40" y="15" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">PR #108</text>
+          <text x="95" y="16" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#F8FAFC">feat: Core Design System &amp; Multimodal Runtime Architecture</text>
+        </g>
+
+        <!-- Git Branch Diagram inside Card -->
+        <g transform="translate(20, 52)">
+          <!-- Main Branch Line -->
+          <line x1="20" y1="14" x2="880" y2="14" stroke="#475569" stroke-width="3"/>
+          <circle cx="80" cy="14" r="7" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.5"/>
+          <text x="80" y="27" font-family="monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">v0.9</text>
+
+          <circle cx="260" cy="14" r="7" fill="#1E293B" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.5"/>
+          <text x="260" y="27" font-family="monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">v0.9.5</text>
+
+          <!-- Feature Branch arc merging into main -->
+          <path d="M260 14 Q380 -18 500 14" stroke="${GOOGLE_COLORS.green}" stroke-width="3" fill="none"/>
+          <circle cx="380" cy="-2" r="6" fill="${GOOGLE_COLORS.green}"/>
+
+          <!-- Glowing Green Merge Node: v1.0.0 -->
+          <circle cx="500" cy="14" r="10" fill="${GOOGLE_COLORS.green}" stroke="#FFFFFF" stroke-width="2"/>
+          <text x="500" y="18" font-family="monospace" font-size="9" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+          <text x="500" y="29" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">tag: v1.0.0 [origin/main]</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Stage Platform and 3 Student Maintainers Celebrating (y: 500 to 800) -->
+    <rect x="0" y="500" width="1400" height="300" fill="#0C0D1B"/>
+    <line x1="0" y1="500" x2="1400" y2="500" stroke="#334155" stroke-width="2"/>
+
+    <!-- Stage Fascia Banner -->
+    <rect x="180" y="500" width="1040" height="24" fill="#141E33" stroke="#334155" stroke-width="1.5"/>
+    <text x="700" y="516" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#60A5FA" text-anchor="middle" letter-spacing="2">GDG ON CAMPUS RVCE · 100% OPEN SOURCE REPOSITORIES · BENGALURU, INDIA</text>
+
+    <!-- Lectern / Podium (Center) -->
+    <g transform="translate(640, 520)">
+      <polygon points="15,140 105,140 95,20 25,20" fill="#1E293B" stroke="#475569" stroke-width="2"/>
+      <rect x="10" y="14" width="100" height="12" rx="3" fill="#334155"/>
+      <!-- Stickers on Podium -->
+      <circle cx="45" cy="65" r="8" fill="${GOOGLE_COLORS.blue}"/>
+      <text x="45" y="68" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&lt; &gt;</text>
+      <rect x="65" y="55" width="20" height="14" rx="2" fill="${GOOGLE_COLORS.green}"/>
+      <text x="75" y="65" font-family="monospace" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">MIT</text>
+      <rect x="35" y="85" width="26" height="14" rx="2" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="48" y="95" font-family="monospace" font-size="6" font-weight="bold" fill="#111827" text-anchor="middle">v1.0</text>
+      <!-- Presenter Laptop on Podium -->
+      <polygon points="25,14 75,14 80,8 30,8" fill="#64748B"/>
+      <rect x="30" y="-12" width="45" height="20" rx="2" fill="#0A0E1A" stroke="#94A3B8" stroke-width="1"/>
+      <rect x="32" y="-10" width="41" height="16" rx="1" fill="${GOOGLE_COLORS.green}"/>
+    </g>
+
+    <!-- 3 CELEBRATING MAINTAINERS -->
+    <!-- Maintainer 1 (Center - Behind lectern, arms raised high in triumphant victory!) -->
+    <g transform="translate(660, 430)">
+      <circle cx="35" cy="18" r="18" fill="#FDBA74"/>
+      <path d="M18 16C18 2 52 2 52 16Z" fill="#1E1B4B"/>
+      <path d="M14 100C14 50 56 50 56 100Z" fill="${GOOGLE_COLORS.green}"/>
+      <!-- Arms raised high in V-shape victory! -->
+      <path d="M14 60L-10 20L-25 -5" stroke="#FDBA74" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="-25" cy="-5" r="6" fill="#FDBA74"/>
+      <path d="M56 60L80 20L95 -5" stroke="#FDBA74" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="95" cy="-5" r="6" fill="#FDBA74"/>
+    </g>
+
+    <!-- Maintainer 2 (Left - Cheering and Clapping, laptop on table) -->
+    <g transform="translate(420, 440)">
+      <circle cx="35" cy="18" r="18" fill="#FED7AA"/>
+      <path d="M18 16C18 2 52 2 52 16Z" fill="#0F172A"/>
+      <path d="M12 95C12 48 58 48 58 95Z" fill="${GOOGLE_COLORS.blue}"/>
+      <!-- Arms clapping together -->
+      <path d="M18 60L40 45L55 50" stroke="#FED7AA" stroke-width="8" stroke-linecap="round"/>
+      <path d="M52 60L45 45L55 50" stroke="#FED7AA" stroke-width="8" stroke-linecap="round"/>
+      <!-- Small table with cheering mug -->
+      <rect x="-30" y="80" width="50" height="8" rx="2" fill="#334155"/>
+      <rect x="-20" y="62" width="16" height="18" rx="2" fill="${GOOGLE_COLORS.yellow}"/>
+    </g>
+
+    <!-- Maintainer 3 (Right - Holding smartphone snapping photo of giant screen) -->
+    <g transform="translate(900, 435)">
+      <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+      <circle cx="28" cy="8" r="8" fill="#18181B"/>
+      <circle cx="42" cy="8" r="8" fill="#18181B"/>
+      <circle cx="35" cy="4" r="8" fill="#18181B"/>
+      <!-- GDG Lanyard in Google Red -->
+      <path d="M26 36L35 60L44 36" stroke="${GOOGLE_COLORS.red}" stroke-width="2.5" fill="none"/>
+      <rect x="31" y="60" width="8" height="10" rx="1" fill="#FFFFFF"/>
+      <path d="M14 95C14 50 56 50 56 95Z" fill="${GOOGLE_COLORS.red}"/>
+      <!-- Arms holding phone up to capture the screen -->
+      <path d="M20 58L-5 35L-15 30" stroke="#FDE047" stroke-width="8" stroke-linecap="round"/>
+      <path d="M50 58L25 35L-10 30" stroke="#FDE047" stroke-width="8" stroke-linecap="round"/>
+      <!-- Smartphone -->
+      <rect x="-25" y="16" width="18" height="32" rx="3" fill="#0F172A" stroke="#E2E8F0" stroke-width="1.5" transform="rotate(-15 -25 16)"/>
+      <circle cx="-16" cy="32" r="3" fill="${GOOGLE_COLORS.blue}"/>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 10 // OPEN-SOURCE RELEASE PARTY</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CENTRAL AUDITORIUM FOYER · MERGE &amp; RELEASE v1.0.0</text>
+    </g>
   </svg>`
 };
 
@@ -2060,9 +3222,9 @@ Object.entries(scenes).forEach(([filename, svgContent]) => {
   fs.writeFileSync(path.join(SCENES_DIR, filename), svgContent.trim());
 });
 
-console.log('✓ Successfully generated all 45 bespoke SVG assets:');
-console.log('  - 1 Official GDG RVCE brand mark (public/assets/brand/gdg-rvce-mark.svg)');
+console.log('✓ Successfully generated all 51 bespoke SVG assets:');
+console.log('  - 3 Official GDG RVCE brand assets (public/assets/brand/)');
 console.log('  - 20 Developer emotes & sticker badges (public/assets/emotes/)');
 console.log('  - 8 Architectural 16:9 vector cover artworks (public/assets/covers/)');
 console.log('  - 10 Bauhaus developer avatar portraits (public/assets/avatars/)');
-console.log('  - 6 Multi-layered community scene illustrations (public/assets/scenes/)');
+console.log('  - 10 Multi-layered community scene illustrations (public/assets/scenes/)');

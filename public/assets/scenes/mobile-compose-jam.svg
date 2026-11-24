@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="jamBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050B14"/>
+        <stop offset="60%" stop-color="#0A1424"/>
+        <stop offset="100%" stop-color="#0E1A2E"/>
+      </linearGradient>
+      <pattern id="jamGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+        <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.028)" stroke-width="1"/>
+      </pattern>
+      <filter id="phoneShadow" x="-15%" y="-15%" width="130%" height="130%">
+        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#jamBg)"/>
+    <rect width="1400" height="800" fill="url(#jamGrid)"/>
+
+    <!-- Ceiling Cable Management Rails and Lights -->
+    <line x1="100" y1="20" x2="1300" y2="20" stroke="#334155" stroke-width="6"/>
+    <line x1="300" y1="20" x2="300" y2="70" stroke="#475569" stroke-width="2"/>
+    <line x1="700" y1="20" x2="700" y2="70" stroke="#475569" stroke-width="2"/>
+    <line x1="1100" y1="20" x2="1100" y2="70" stroke="#475569" stroke-width="2"/>
+
+    <!-- Large Kotlin and Jetpack Compose Display Wall (x: 140, y: 65, w: 1120, h: 400) -->
+    <g transform="translate(140, 65)">
+      <rect x="0" y="0" width="1120" height="400" rx="16" fill="#0A0E1A" stroke="#334155" stroke-width="2.5"/>
+      <rect x="8" y="8" width="1104" height="384" rx="12" fill="#0D1627"/>
+
+      <!-- Header -->
+      <text x="30" y="36" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#34A853" letter-spacing="1">JETPACK COMPOSE &amp; KOTLIN COROUTINES // REACTIVE UDF PIPELINE</text>
+      <text x="1080" y="36" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#60A5FA" text-anchor="end">MATERIAL 3 // ADAPTIVE MULTI-DEVICE SUITE</text>
+      <line x1="30" y1="46" x2="1080" y2="46" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- LEFT: Unidirectional Data Flow Architecture -->
+      <g transform="translate(30, 65)">
+        <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#E2E8F0">UNIDIRECTIONAL DATA FLOW (UDF)</text>
+
+        <!-- UDF Loop Blocks -->
+        <!-- Block 1: UI Composable -->
+        <rect x="0" y="35" width="140" height="60" rx="8" fill="#141E33" stroke="#34A853" stroke-width="2"/>
+        <text x="70" y="60" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">@Composable UI</text>
+        <text x="70" y="78" font-family="'JetBrains Mono', monospace" font-size="8" fill="#4ADE80" text-anchor="middle">Material 3 Surfaces</text>
+
+        <!-- Arrow down: User Event -->
+        <line x1="70" y1="95" x2="70" y2="135" stroke="#64748B" stroke-width="2"/>
+        <polygon points="67,135 70,143 73,135" fill="#64748B"/>
+        <text x="78" y="120" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8">UI Event</text>
+
+        <!-- Block 2: ViewModel StateFlow -->
+        <rect x="0" y="145" width="140" height="60" rx="8" fill="#1E1724" stroke="#EA4335" stroke-width="2"/>
+        <text x="70" y="170" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ViewModel</text>
+        <text x="70" y="188" font-family="'JetBrains Mono', monospace" font-size="8" fill="#F87171" text-anchor="middle">StateFlow&lt;UiState&gt;</text>
+
+        <!-- Arrow right: Coroutines Repository -->
+        <line x1="140" y1="175" x2="195" y2="175" stroke="#64748B" stroke-width="2"/>
+        <polygon points="195,172 203,175 195,178" fill="#64748B"/>
+        <text x="170" y="168" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">Launch</text>
+
+        <!-- Block 3: Repository Flow -->
+        <rect x="205" y="145" width="140" height="60" rx="8" fill="#221C14" stroke="#FBBC04" stroke-width="2"/>
+        <text x="275" y="170" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Repository</text>
+        <text x="275" y="188" font-family="'JetBrains Mono', monospace" font-size="8" fill="#FCD34D" text-anchor="middle">Flow&lt;Data&gt;</text>
+
+        <!-- Arrow up to State return -->
+        <path d="M275 145 V65 H150" stroke="#60A5FA" stroke-width="2" fill="none"/>
+        <polygon points="150,62 142,65 150,68" fill="#60A5FA"/>
+        <text x="215" y="58" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#60A5FA" text-anchor="middle">Immutable State Emit</text>
+
+        <!-- Recomposition Tree Stats -->
+        <g transform="translate(0, 225)">
+          <rect x="0" y="0" width="345" height="85" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="14" y="22" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" fill="#E2E8F0">COMPOSE COMPILER RECOMPOSITION PROFILE</text>
+          <text x="14" y="42" font-family="'JetBrains Mono', monospace" font-size="8" fill="#34A853">✔ 0 unnecessary recompositions detected</text>
+          <text x="14" y="58" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">✔ Skippable Composables: 98.4% (All parameters stable)</text>
+          <text x="14" y="74" font-family="'JetBrains Mono', monospace" font-size="8" fill="#60A5FA">✔ Adaptive Layouts: Compact · Medium · Expanded</text>
+        </g>
+      </g>
+
+      <!-- RIGHT: Kotlin 2.0 Code Card -->
+      <g transform="translate(420, 65)">
+        <rect x="0" y="0" width="660" height="310" rx="10" fill="#070A12" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="0" y="0" width="660" height="26" rx="8" fill="#111827"/>
+        <circle cx="16" cy="13" r="3.5" fill="#EF4444"/>
+        <circle cx="28" cy="13" r="3.5" fill="#F59E0B"/>
+        <circle cx="40" cy="13" r="3.5" fill="#10B981"/>
+        <text x="56" y="17" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#94A3B8">GdgEventCard.kt // Modern Android with Jetpack Compose &amp; Material 3</text>
+
+        <g transform="translate(20, 46)" font-family="'JetBrains Mono', monospace" font-size="9.5" line-height="18">
+          <text x="0" y="14" fill="#F472B6">@Composable</text>
+          <text x="0" y="32" fill="#60A5FA">fun <tspan fill="#FCD34D">GdgBlueprintCard</tspan><tspan fill="#E2E8F0">(</tspan></text>
+          <text x="16" y="50" fill="#E2E8F0">event: <tspan fill="#4ADE80">EventUiState</tspan>,</text>
+          <text x="16" y="68" fill="#E2E8F0">modifier: <tspan fill="#4ADE80">Modifier</tspan> = <tspan fill="#4ADE80">Modifier</tspan></text>
+          <text x="0" y="86" fill="#E2E8F0">) {</text>
+          <text x="16" y="104" fill="#94A3B8">// State hoisting with reactive Flow collector</text>
+          <text x="16" y="122" fill="#E2E8F0">val windowSizeClass = <tspan fill="#60A5FA">LocalWindowSizeClass</tspan>.current</text>
+          <text x="16" y="140" fill="#E2E8F0">val isDark = <tspan fill="#60A5FA">isSystemInDarkTheme</tspan>()</text>
+          <text x="16" y="162" fill="#F472B6">Card</text>
+          <text x="24" y="180" fill="#E2E8F0">colors = <tspan fill="#60A5FA">CardDefaults</tspan>.cardColors(containerColor = <tspan fill="#FCD34D">MaterialTheme</tspan>.colorScheme.surface),</text>
+          <text x="24" y="198" fill="#E2E8F0">shape = <tspan fill="#FCD34D">RoundedCornerShape</tspan>(<tspan fill="#34A853">16.dp</tspan>),</text>
+          <text x="24" y="216" fill="#E2E8F0">modifier = modifier.<tspan fill="#60A5FA">fillMaxWidth</tspan>().<tspan fill="#60A5FA">padding</tspan>(<tspan fill="#34A853">8.dp</tspan>)</text>
+          <text x="16" y="234" fill="#E2E8F0">) { /* Responsive Composable Slot */ }</text>
+          <text x="0" y="252" fill="#E2E8F0">}</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Device Lab Workbench and Multi-Device Test Stands (Foreground, y: 490 to 800) -->
+    <rect x="0" y="490" width="1400" height="310" fill="#0A0E1A"/>
+    <line x1="0" y1="490" x2="1400" y2="490" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Collaborative Engineering Desk with 3 Test Stands -->
+    <g transform="translate(180, 470)">
+      <polygon points="40,50 980,50 920,130 0,130" fill="#131B2B" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="130" width="920" height="15" fill="#080C14"/>
+      <line x1="60" y1="145" x2="60" y2="290" stroke="#334155" stroke-width="8"/>
+      <line x1="860" y1="145" x2="860" y2="290" stroke="#334155" stroke-width="8"/>
+
+      <!-- MULTI-DEVICE TEST STANDS (Center of table) -->
+      <!-- Test Stand 1: Pixel 9 Pro (Vertical) -->
+      <g transform="translate(260, -40)" filter="url(#phoneShadow)">
+        <polygon points="10,135 60,135 50,145 20,145" fill="#334155"/>
+        <rect x="10" y="0" width="50" height="105" rx="8" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <rect x="13" y="4" width="44" height="97" rx="6" fill="#1E293B"/>
+        <!-- Screen elements -->
+        <rect x="17" y="10" width="36" height="8" rx="2" fill="#4285F4"/>
+        <rect x="17" y="24" width="36" height="30" rx="3" fill="#141E33"/>
+        <rect x="17" y="60" width="36" height="6" rx="1.5" fill="#34A853"/>
+        <rect x="17" y="70" width="36" height="6" rx="1.5" fill="#FBBC04"/>
+        <!-- Home bar -->
+        <line x1="28" y1="96" x2="42" y2="96" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- USB-C Cable connecting to hub -->
+        <path d="M35 105 V130 H450" stroke="#4285F4" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Test Stand 2: Pixel Fold (Unfolded Widescreen) -->
+      <g transform="translate(360, -55)" filter="url(#phoneShadow)">
+        <polygon points="20,145 100,145 90,155 30,155" fill="#334155"/>
+        <rect x="0" y="0" width="120" height="95" rx="8" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <!-- Fold Hinge line -->
+        <line x1="60" y1="0" x2="60" y2="95" stroke="#334155" stroke-width="1"/>
+        <rect x="4" y="4" width="54" height="87" rx="4" fill="#1A243B"/>
+        <rect x="62" y="4" width="54" height="87" rx="4" fill="#141E33"/>
+        <!-- Two pane UI -->
+        <rect x="8" y="10" width="46" height="6" rx="1.5" fill="#34A853"/>
+        <rect x="8" y="20" width="46" height="60" rx="2" fill="#0D1627"/>
+        <rect x="66" y="10" width="46" height="70" rx="2" fill="#0D1627"/>
+        <!-- USB-C Cable -->
+        <path d="M60 95 V125 H450" stroke="#34A853" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Test Stand 3: Pixel Tablet on Speaker Dock -->
+      <g transform="translate(530, -50)" filter="url(#phoneShadow)">
+        <polygon points="15,135 135,135 125,145 25,145" fill="#334155"/>
+        <rect x="0" y="0" width="150" height="95" rx="10" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+        <rect x="5" y="5" width="140" height="85" rx="6" fill="#1E293B"/>
+        <!-- Tablet Nav rail on left -->
+        <rect x="8" y="8" width="16" height="79" rx="2" fill="#141E33"/>
+        <circle cx="16" cy="18" r="3" fill="#EA4335"/>
+        <circle cx="16" cy="30" r="3" fill="#FBBC04"/>
+        <circle cx="16" cy="42" r="3" fill="#34A853"/>
+        <!-- Dashboard cards on tablet -->
+        <rect x="30" y="12" width="54" height="34" rx="3" fill="#131C2E"/>
+        <rect x="90" y="12" width="50" height="34" rx="3" fill="#131C2E"/>
+        <rect x="30" y="52" width="110" height="32" rx="3" fill="#131C2E"/>
+        <!-- USB-C Cable -->
+        <path d="M75 95 V125 H450" stroke="#FBBC04" stroke-width="2.5" fill="none"/>
+      </g>
+
+      <!-- Central Multi-Port USB Debugging Hub -->
+      <g transform="translate(435, 115)">
+        <rect x="0" y="0" width="35" height="18" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+        <circle cx="8" cy="9" r="2" fill="#34A853"/>
+        <circle cx="16" cy="9" r="2" fill="#4285F4"/>
+        <circle cx="24" cy="9" r="2" fill="#FBBC04"/>
+      </g>
+
+      <!-- Android Figurine Mascot on Desk -->
+      <g transform="translate(710, 45)">
+        <ellipse cx="14" cy="18" rx="10" ry="12" fill="#34A853"/>
+        <circle cx="14" cy="8" r="9" fill="#34A853"/>
+        <circle cx="11" cy="6" r="1.5" fill="#FFFFFF"/>
+        <circle cx="17" cy="6" r="1.5" fill="#FFFFFF"/>
+        <line x1="10" y1="0" x2="8" y2="-4" stroke="#34A853" stroke-width="2"/>
+        <line x1="18" y1="0" x2="20" y2="-4" stroke="#34A853" stroke-width="2"/>
+      </g>
+
+      <!-- 3 DEVELOPERS PAIR-DEBUGGING -->
+      <!-- Dev 1 (Left - Typing on laptop tethered to devices) -->
+      <g transform="translate(40, -45)">
+        <circle cx="35" cy="18" r="18" fill="#FDBA74"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#1E1B4B"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="#4285F4"/>
+        <!-- Laptop -->
+        <g transform="translate(60, 45)">
+          <polygon points="10,35 65,35 70,45 5,45" fill="#475569"/>
+          <rect x="14" y="6" width="52" height="30" rx="2" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <rect x="16" y="8" width="48" height="26" rx="1" fill="#1E293B"/>
+          <text x="20" y="20" font-family="monospace" font-size="6" fill="#34A853">adb devices: 3</text>
+        </g>
+      </g>
+
+      <!-- Dev 2 (Center - Pointing at Pixel Fold) -->
+      <g transform="translate(320, -50)">
+        <circle cx="35" cy="18" r="18" fill="#FED7AA"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#0F172A"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="#34A853"/>
+        <path d="M50 55L75 40L95 30" stroke="#FED7AA" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Dev 3 (Right - Holding phone testing gestures) -->
+      <g transform="translate(760, -55)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 100C14 50 56 50 56 100Z" fill="#FBBC04"/>
+        <!-- Phone in hands with gesture trail -->
+        <g transform="translate(0, 45)">
+          <rect x="0" y="0" width="22" height="40" rx="3" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <circle cx="11" cy="20" r="4" fill="#4285F4" fill-opacity="0.6"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="#34A853"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 09 // ANDROID &amp; JETPACK COMPOSE LAB</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DEVICE COMPATIBILITY SUITE · MATERIAL 3 &amp; KOTLIN 2.0</text>
+    </g>
+  </svg>

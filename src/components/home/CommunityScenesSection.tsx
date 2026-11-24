@@ -127,7 +127,7 @@ export function CommunityScenesSection() {
 
           <div className="hidden sm:inline-flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] bg-[var(--bg-elevated)] px-3 py-2 rounded-xl border border-[var(--border-hairline)] self-start lg:self-auto shrink-0">
             <Sparkles className="w-3.5 h-3.5 text-[#FBBC04]" />
-            <span>ORIGINAL VECTOR SUITE // 6 SCENES</span>
+            <span>ORIGINAL VECTOR SUITE // 10 SCENES</span>
           </div>
         </div>
       </motion.div>
@@ -277,7 +277,7 @@ export function CommunityScenesSection() {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {COMMUNITY_SCENES.map((scene) => {
             const isActive = scene.id === activeSceneId;
             const sceneAccent = getGoogleAccentHex(scene.googleColor);

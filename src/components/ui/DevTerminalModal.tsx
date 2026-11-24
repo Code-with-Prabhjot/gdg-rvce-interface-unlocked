@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useTheme } from '@/context/ThemeContext';
+import { useXRay } from '@/context/XRayContext';
 import { EVENTS_DATA } from '@/data/gdgData';
 
 interface HistoryItem {
@@ -21,6 +22,7 @@ export function DevTerminalModal() {
   const { isOpen, close } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
   const { theme, toggleTheme, setTheme } = useTheme();
+  const { isXRayActive, toggleXRay } = useXRay();
   const router = useRouter();
   const [, startTransition] = useTransition();
 
@@ -110,6 +112,10 @@ export function DevTerminalModal() {
                 <div>
                   <span className="text-[#4285F4] font-bold">whoami</span>
                   <span className="text-white/60"> - Mission, coordinates &amp; verticals</span>
+                </div>
+                <div>
+                  <span className="text-[#4285F4] font-bold">xray</span>
+                  <span className="text-white/60"> - Toggle Blueprint X-Ray Inspector (Shift+X)</span>
                 </div>
                 <div>
                   <span className="text-[#4285F4] font-bold">api</span>
@@ -366,6 +372,51 @@ export function DevTerminalModal() {
         break;
       }
 
+      case 'xray': {
+        const nextState = !isXRayActive;
+        toggleXRay();
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <div className="space-y-1.5 text-xs font-mono">
+              <div className="flex items-center gap-2 font-bold">
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    nextState ? 'bg-[#4285F4] animate-pulse' : 'bg-slate-400'
+                  }`}
+                />
+                <span className={nextState ? 'text-[#4285F4]' : 'text-slate-300'}>
+                  BLUEPRINT X-RAY // {nextState ? 'ACTIVATED [ON]' : 'DEACTIVATED [OFF]'}
+                </span>
+              </div>
+              <p className="text-white/80">
+                {nextState
+                  ? 'Architectural diagnostic layer active. Hover over any section, card, button, or heading to inspect live dimensions, typography, CSS tokens, and Google 4-colour compliance rules.'
+                  : 'Architectural diagnostic layer disabled.'}
+              </p>
+              <div className="text-[11px] text-white/60 space-y-0.5 pt-1 pl-2 border-l border-[#4285F4]/40">
+                <div>
+                  <span className="text-[#60A5FA]">📐 Grid:</span> 8px sub-grid · 64px structural guides
+                </div>
+                <div>
+                  <span className="text-[#FCD34D]">🎨 Palette:</span> #4285F4 (Blue) · #EA4335 (Red) · #FBBC04 (Yellow) · #34A853 (Green)
+                </div>
+                <div>
+                  <span className="text-[#4ADE80]">⌨ Shortcut:</span> Shift + X (toggle) · ESC (exit)
+                </div>
+              </div>
+            </div>
+          ),
+        });
+        if (nextState) {
+          setTimeout(() => {
+            close();
+          }, 600);
+        }
+        break;
+      }
+
       case 'clear': {
         setHistory([]);
         setInputVal('');
@@ -417,7 +468,7 @@ export function DevTerminalModal() {
     }
   };
 
-  const quickChips = ['help', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
+  const quickChips = ['help', 'xray', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
 
   return (
     <AnimatePresence>

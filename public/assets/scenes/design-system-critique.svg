@@ -1,0 +1,304 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#070B16"/>
+        <stop offset="60%" stop-color="#0C1322"/>
+        <stop offset="100%" stop-color="#121B2F"/>
+      </linearGradient>
+      <pattern id="dsGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      </pattern>
+      <filter id="dsCardGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#dsBg)"/>
+    <rect width="1400" height="800" fill="url(#dsGrid)"/>
+
+    <!-- Ceiling Studio Track Lighting and Spotlights -->
+    <line x1="80" y1="25" x2="1320" y2="25" stroke="#334155" stroke-width="5"/>
+    <g fill="#475569">
+      <rect x="220" y="27" width="28" height="14" rx="2"/>
+      <rect x="520" y="27" width="28" height="14" rx="2"/>
+      <rect x="850" y="27" width="28" height="14" rx="2"/>
+      <rect x="1150" y="27" width="28" height="14" rx="2"/>
+    </g>
+    <!-- Spotlight Cones -->
+    <polygon points="234,41 120,480 380,480" fill="rgba(66, 133, 244, 0.03)"/>
+    <polygon points="534,41 420,480 680,480" fill="rgba(234, 67, 53, 0.03)"/>
+    <polygon points="864,41 740,480 1000,480" fill="rgba(251, 188, 4, 0.03)"/>
+    <polygon points="1164,41 1020,480 1280,480" fill="rgba(52, 168, 83, 0.03)"/>
+
+    <!-- Architectural Design Studio Pin-up Board (x: 100, y: 65, w: 1200, h: 420) -->
+    <g transform="translate(100, 65)">
+      <!-- Board Outer Frame -->
+      <rect x="0" y="0" width="1200" height="420" rx="14" fill="#0A0E1A" stroke="#334155" stroke-width="2.5" filter="url(#dsCardGlow)"/>
+      <rect x="8" y="8" width="1184" height="404" rx="10" fill="#0D1424"/>
+      <!-- Felt Pinboard Inner Border -->
+      <line x1="410" y1="8" x2="410" y2="412" stroke="#1E293B" stroke-width="2"/>
+      <line x1="790" y1="8" x2="790" y2="412" stroke="#1E293B" stroke-width="2"/>
+
+      <!-- SECTION A (LEFT): 4 GOOGLE COLOUR TOKEN SWATCHES -->
+      <text x="30" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#60A5FA" letter-spacing="1">DESIGN TOKENS // PALETTE TOKENS</text>
+      
+      <!-- Token 1: Blue -->
+      <g transform="translate(30, 54)">
+        <rect x="0" y="0" width="165" height="150" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="#4285F4"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-blue</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#4285F4 · RGB(66,133,244)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#60A5FA">WCAG 4.6:1 (AA PASS)</text>
+      </g>
+
+      <!-- Token 2: Red -->
+      <g transform="translate(210, 54)">
+        <rect x="0" y="0" width="165" height="150" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="#EA4335"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-red</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#EA4335 · RGB(234,67,53)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#F87171">DESTRUCTIVE / ALERT</text>
+      </g>
+
+      <!-- Token 3: Yellow (WCAG AAA with #111827 Dark Ink) -->
+      <g transform="translate(30, 222)">
+        <rect x="0" y="0" width="165" height="160" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="#FBBC04"/>
+        <text x="82" y="50" font-family="'Space Grotesk', sans-serif" font-size="12" font-weight="900" fill="#111827" text-anchor="middle">DARK INK ONLY</text>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-yellow</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#FBBC04 · INK #111827</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="bold" fill="#FCD34D">WCAG AAA 7.4:1 RATIO</text>
+        <text x="14" y="150" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">HIGH-CONTRAST INK</text>
+      </g>
+
+      <!-- Token 4: Green -->
+      <g transform="translate(210, 222)">
+        <rect x="0" y="0" width="165" height="160" rx="8" fill="#141E33" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="10" y="10" width="145" height="70" rx="6" fill="#34A853"/>
+        <text x="14" y="100" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#FFFFFF">--google-green</text>
+        <text x="14" y="118" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">#34A853 · RGB(52,168,83)</text>
+        <text x="14" y="136" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600" fill="#4ADE80">SUCCESS / PASS TOKEN</text>
+        <text x="14" y="150" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">CI STATUS VALIDATED</text>
+      </g>
+
+      <!-- SECTION B (CENTER): TYPOGRAPHY SCALE RULER -->
+      <text x="430" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#FBBC04" letter-spacing="1">TYPOGRAPHY SCALE &amp; BASELINE RULER</text>
+      
+      <g transform="translate(430, 54)">
+        <rect x="0" y="0" width="335" height="330" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+        <line x1="30" y1="10" x2="30" y2="320" stroke="#334155" stroke-width="2"/>
+        
+        <!-- Ruler Ticks -->
+        <line x1="14" y1="20" x2="30" y2="20" stroke="#60A5FA" stroke-width="1.5"/>
+          <text x="8" y="23" font-family="monospace" font-size="7" fill="#64748B">0</text><line x1="22" y1="35" x2="30" y2="35" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="50" x2="30" y2="50" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="65" x2="30" y2="65" stroke="#475569" stroke-width="1"/>
+          <line x1="14" y1="80" x2="30" y2="80" stroke="#60A5FA" stroke-width="1.5"/>
+          <text x="8" y="83" font-family="monospace" font-size="7" fill="#64748B">32</text><line x1="22" y1="95" x2="30" y2="95" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="110" x2="30" y2="110" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="125" x2="30" y2="125" stroke="#475569" stroke-width="1"/>
+          <line x1="14" y1="140" x2="30" y2="140" stroke="#60A5FA" stroke-width="1.5"/>
+          <text x="8" y="143" font-family="monospace" font-size="7" fill="#64748B">64</text><line x1="22" y1="155" x2="30" y2="155" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="170" x2="30" y2="170" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="185" x2="30" y2="185" stroke="#475569" stroke-width="1"/>
+          <line x1="14" y1="200" x2="30" y2="200" stroke="#60A5FA" stroke-width="1.5"/>
+          <text x="8" y="203" font-family="monospace" font-size="7" fill="#64748B">96</text><line x1="22" y1="215" x2="30" y2="215" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="230" x2="30" y2="230" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="245" x2="30" y2="245" stroke="#475569" stroke-width="1"/>
+          <line x1="14" y1="260" x2="30" y2="260" stroke="#60A5FA" stroke-width="1.5"/>
+          <text x="8" y="263" font-family="monospace" font-size="7" fill="#64748B">128</text><line x1="22" y1="275" x2="30" y2="275" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="290" x2="30" y2="290" stroke="#475569" stroke-width="1"/>
+          <line x1="22" y1="305" x2="30" y2="305" stroke="#475569" stroke-width="1"/>
+          
+
+        <!-- Type Specimen 1: Space Grotesk Display -->
+        <g transform="translate(45, 30)">
+          <line x1="0" y1="36" x2="275" y2="36" stroke="#4285F4" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="32" font-family="'Space Grotesk', sans-serif" font-size="28" font-weight="700" fill="#F8FAFC">Display 48px</text>
+          <text x="190" y="24" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#60A5FA">Space Grotesk</text>
+          <text x="190" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.15 · Tracking -0.02</text>
+        </g>
+
+        <!-- Type Specimen 2: Space Grotesk Heading -->
+        <g transform="translate(45, 95)">
+          <line x1="0" y1="28" x2="275" y2="28" stroke="#FBBC04" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="24" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="600" fill="#F1F5F9">Heading 32px</text>
+          <text x="190" y="16" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#FCD34D">Space Grotesk</text>
+          <text x="190" y="26" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.25 · SemiBold</text>
+        </g>
+
+        <!-- Type Specimen 3: Plus Jakarta Sans Body -->
+        <g transform="translate(45, 155)">
+          <line x1="0" y1="22" x2="275" y2="22" stroke="#34A853" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="500" fill="#E2E8F0">Body Regular 16px</text>
+          <text x="190" y="12" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#4ADE80">Plus Jakarta</text>
+          <text x="190" y="22" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.5 · Regular 400</text>
+        </g>
+
+        <!-- Type Specimen 4: JetBrains Mono Code -->
+        <g transform="translate(45, 215)">
+          <line x1="0" y1="20" x2="275" y2="20" stroke="#EA4335" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="0" y="16" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="600" fill="#93C5FD">const token = '#4285F4'</text>
+          <text x="190" y="10" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#F87171">JetBrains Mono</text>
+          <text x="190" y="20" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#64748B">LH: 1.4 · Monospace</text>
+        </g>
+
+        <!-- Component Slot Tag -->
+        <g transform="translate(45, 275)">
+          <rect x="0" y="0" width="275" height="38" rx="6" fill="#141E33" stroke="#334155" stroke-width="1"/>
+          <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#E2E8F0">&lt;Button variant=&quot;blueprint&quot; /&gt;</text>
+          <text x="12" y="30" font-family="'JetBrains Mono', monospace" font-size="8" fill="#64748B">Min Target: 44×44px · Focus Ring: 2px</text>
+        </g>
+      </g>
+
+      <!-- SECTION C (RIGHT): RESPONSIVE WIREFRAME BOARDS -->
+      <text x="810" y="38" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#34A853" letter-spacing="1">RESPONSIVE BREAKPOINT ARTBOARDS</text>
+
+      <g transform="translate(810, 54)">
+        <!-- Mobile Frame (390px) -->
+        <g transform="translate(10, 15)">
+          <rect x="0" y="0" width="75" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="25" y="4" width="25" height="3" rx="1.5" fill="#334155"/>
+          <rect x="6" y="14" width="63" height="12" rx="2" fill="#4285F4" fill-opacity="0.3"/>
+          <rect x="6" y="32" width="63" height="40" rx="4" fill="#1E293B"/>
+          <circle cx="37" cy="52" r="10" fill="#FBBC04" fill-opacity="0.4"/>
+          <rect x="12" y="80" width="51" height="8" rx="2" fill="#EA4335" fill-opacity="0.4"/>
+          <rect x="12" y="94" width="51" height="8" rx="2" fill="#34A853" fill-opacity="0.4"/>
+          <text x="37" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">390px</text>
+        </g>
+
+        <!-- Tablet Frame (768px) -->
+        <g transform="translate(105, 15)">
+          <rect x="0" y="0" width="115" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="45" y="4" width="25" height="3" rx="1.5" fill="#334155"/>
+          <rect x="8" y="14" width="99" height="12" rx="2" fill="#1E293B"/>
+          <rect x="8" y="32" width="46" height="65" rx="3" fill="#151F33" stroke="#4285F4" stroke-width="1"/>
+          <rect x="60" y="32" width="46" height="65" rx="3" fill="#151F33" stroke="#34A853" stroke-width="1"/>
+          <rect x="8" y="104" width="99" height="20" rx="3" fill="#1E293B"/>
+          <text x="57" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">768px</text>
+        </g>
+
+        <!-- Desktop Frame (1280px) -->
+        <g transform="translate(240, 15)">
+          <rect x="0" y="0" width="125" height="150" rx="8" fill="#070A12" stroke="#475569" stroke-width="1.5"/>
+          <rect x="0" y="0" width="125" height="12" rx="4" fill="#1E293B"/>
+          <circle cx="8" cy="6" r="2" fill="#EF4444"/>
+          <circle cx="15" cy="6" r="2" fill="#F59E0B"/>
+          <circle cx="22" cy="6" r="2" fill="#10B981"/>
+          <rect x="6" y="18" width="113" height="10" rx="2" fill="#1E293B"/>
+          <rect x="6" y="32" width="34" height="88" rx="2" fill="#131B2C"/>
+          <rect x="44" y="32" width="75" height="40" rx="2" fill="#1A243B" stroke="#4285F4" stroke-width="1"/>
+          <rect x="44" y="76" width="35" height="44" rx="2" fill="#1A243B" stroke="#FBBC04" stroke-width="1"/>
+          <rect x="84" y="76" width="35" height="44" rx="2" fill="#1A243B" stroke="#34A853" stroke-width="1"/>
+          <text x="62" y="142" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle">1280px</text>
+        </g>
+
+        <!-- Lower Design Critique Checklist Card -->
+        <g transform="translate(10, 185)">
+          <rect x="0" y="0" width="355" height="145" rx="8" fill="#080D18" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="14" y="24" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#E2E8F0">AUDIT CHECKLIST // SPEC 2.0</text>
+          
+          <g transform="translate(14, 38)">
+            <circle cx="6" cy="6" r="5" fill="#34A853"/>
+            <text x="6" y="9" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="10" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">WCAG AAA Contrast on Yellow Fill (7.4:1)</text>
+
+            <circle cx="6" cy="28" r="5" fill="#34A853"/>
+            <text x="6" y="31" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="32" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">Touch Targets &gt;= 44×44px Minimum</text>
+
+            <circle cx="6" cy="50" r="5" fill="#34A853"/>
+            <text x="6" y="53" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✔</text>
+            <text x="18" y="54" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#E2E8F0">Fluid Viewport Rulers at 390 / 768 / 1280px</text>
+
+            <circle cx="6" cy="72" r="5" fill="#4285F4"/>
+            <text x="6" y="75" font-family="monospace" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ℹ</text>
+            <text x="18" y="76" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#93C5FD">Blueprint X-Ray Token Overlay (Shift+X)</text>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- Studio Floor Base (y: 500 to 800) -->
+    <rect x="0" y="500" width="1400" height="300" fill="#0A0E1A"/>
+    <line x1="0" y1="500" x2="1400" y2="500" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Architectural Studio Critique Table and 3 Designers -->
+    <g transform="translate(180, 480)">
+      <polygon points="60,60 980,60 920,130 0,130" fill="#151D2E" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="130" width="920" height="15" fill="#0C1220"/>
+      <line x1="60" y1="145" x2="60" y2="280" stroke="#334155" stroke-width="8"/>
+      <line x1="860" y1="145" x2="860" y2="280" stroke="#334155" stroke-width="8"/>
+
+      <!-- MacBook on desk (Center) -->
+      <g transform="translate(420, 30)">
+        <polygon points="10,40 90,40 98,55 2,55" fill="#475569"/>
+        <rect x="14" y="2" width="72" height="42" rx="3" fill="#0F172A" stroke="#64748B" stroke-width="1.5"/>
+        <rect x="18" y="6" width="64" height="34" rx="2" fill="#1E293B"/>
+        <rect x="22" y="10" width="20" height="26" fill="#3B82F6" fill-opacity="0.4"/>
+        <rect x="46" y="10" width="32" height="12" fill="#10B981" fill-opacity="0.4"/>
+        <rect x="46" y="24" width="32" height="12" fill="#F59E0B" fill-opacity="0.4"/>
+      </g>
+
+      <!-- iPad with Stylus (Left) -->
+      <g transform="translate(160, 45)">
+        <rect x="0" y="0" width="65" height="45" rx="4" fill="#0F172A" stroke="#64748B" stroke-width="1.5" transform="rotate(-10 0 0)"/>
+        <line x1="55" y1="10" x2="80" y2="4" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Coffee Mug -->
+      <g transform="translate(620, 50)">
+        <rect x="0" y="0" width="16" height="20" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+        <path d="M16 4C20 4 22 7 22 10C22 13 20 16 16 16" stroke="#475569" stroke-width="2" fill="none"/>
+        <circle cx="8" cy="8" r="3" fill="#FBBC04"/>
+      </g>
+
+      <!-- Scattered Color Swatches -->
+      <rect x="260" y="70" width="22" height="14" rx="2" fill="#4285F4" transform="rotate(12 260 70)"/>
+      <rect x="290" y="65" width="22" height="14" rx="2" fill="#EA4335" transform="rotate(-8 290 65)"/>
+      <rect x="320" y="72" width="22" height="14" rx="2" fill="#34A853" transform="rotate(5 320 72)"/>
+
+      <!-- Designer 1 (Left - Seated on stool, reviewing tablet) -->
+      <g transform="translate(40, -40)">
+        <circle cx="35" cy="20" r="18" fill="#FDBA74"/>
+        <path d="M18 18C18 6 32 2 48 4C52 14 50 24 50 24Z" fill="#1E1B4B"/>
+        <circle cx="30" cy="20" r="5" fill="none" stroke="#4285F4" stroke-width="2"/>
+        <circle cx="42" cy="20" r="5" fill="none" stroke="#4285F4" stroke-width="2"/>
+        <line x1="35" y1="20" x2="37" y2="20" stroke="#4285F4" stroke-width="2"/>
+        <path d="M15 90C15 45 55 45 55 90Z" fill="#4285F4"/>
+        <path d="M45 55L75 75L110 50" stroke="#FDBA74" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Designer 2 (Center - Seated at laptop, typing and inspecting) -->
+      <g transform="translate(430, -50)">
+        <circle cx="35" cy="20" r="18" fill="#FED7AA"/>
+        <path d="M18 18C18 2 52 2 52 18Z" fill="#0F172A"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="#FBBC04"/>
+        <path d="M18 60L35 80" stroke="#FBBC04" stroke-width="8" stroke-linecap="round"/>
+        <path d="M52 60L45 80" stroke="#FBBC04" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Designer 3 (Right - Standing tall, pointing at wireframes) -->
+      <g transform="translate(760, -90)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="#34A853"/>
+        <path d="M48 65L75 35L110 10" stroke="#FDE047" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="110" cy="10" r="5" fill="#FDE047"/>
+        <line x1="108" y1="14" x2="120" y2="2" stroke="#34A853" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="370" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="#4285F4"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 07 // UI/UX DESIGN SYSTEMS CRITIQUE</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DESIGN STUDIO LAB · TOKENS, RULERS &amp; BREAKPOINTS</text>
+    </g>
+  </svg>

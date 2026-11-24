@@ -1,0 +1,306 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" fill="none">
+    <defs>
+      <linearGradient id="warBg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#050811"/>
+        <stop offset="50%" stop-color="#0A101D"/>
+        <stop offset="100%" stop-color="#101827"/>
+      </linearGradient>
+      <linearGradient id="glassWhiteboard" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0D1829" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#13233D" stop-opacity="0.85"/>
+      </linearGradient>
+      <pattern id="warGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+      </pattern>
+      <filter id="glassGlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#4285F4" flood-opacity="0.15"/>
+      </filter>
+    </defs>
+
+    <rect width="1400" height="800" fill="url(#warBg)"/>
+    <rect width="1400" height="800" fill="url(#warGrid)"/>
+
+    <!-- Server Rack Cabinet in Background Left (y: 100 to 460) -->
+    <g transform="translate(45, 90)">
+      <rect x="0" y="0" width="80" height="370" rx="8" fill="#0A0E1A" stroke="#334155" stroke-width="2"/>
+      
+        <rect x="8" y="12" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="30" r="3" fill="#34A853"/>
+        <circle cx="30" cy="30" r="2" fill="#34A853"/>
+        <line x1="38" y1="30" x2="62" y2="30" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="56" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="74" r="3" fill="#4285F4"/>
+        <circle cx="30" cy="74" r="2" fill="#34A853"/>
+        <line x1="38" y1="74" x2="62" y2="74" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="100" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="118" r="3" fill="#FBBC04"/>
+        <circle cx="30" cy="118" r="2" fill="#34A853"/>
+        <line x1="38" y1="118" x2="62" y2="118" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="144" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="162" r="3" fill="#34A853"/>
+        <circle cx="30" cy="162" r="2" fill="#34A853"/>
+        <line x1="38" y1="162" x2="62" y2="162" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="188" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="206" r="3" fill="#4285F4"/>
+        <circle cx="30" cy="206" r="2" fill="#34A853"/>
+        <line x1="38" y1="206" x2="62" y2="206" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="232" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="250" r="3" fill="#FBBC04"/>
+        <circle cx="30" cy="250" r="2" fill="#34A853"/>
+        <line x1="38" y1="250" x2="62" y2="250" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="276" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="294" r="3" fill="#34A853"/>
+        <circle cx="30" cy="294" r="2" fill="#34A853"/>
+        <line x1="38" y1="294" x2="62" y2="294" stroke="#475569" stroke-width="1.5"/>
+      
+        <rect x="8" y="320" width="64" height="36" rx="4" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+        <circle cx="20" cy="338" r="3" fill="#4285F4"/>
+        <circle cx="30" cy="338" r="2" fill="#34A853"/>
+        <line x1="38" y1="338" x2="62" y2="338" stroke="#475569" stroke-width="1.5"/>
+      
+    </g>
+
+    <!-- Massive Glass Whiteboard at Center (x: 160, y: 65, w: 1080, h: 420) -->
+    <g transform="translate(160, 65)">
+      <!-- Outer Glass Board Frame with Neon Top Edge -->
+      <rect x="0" y="0" width="1080" height="420" rx="16" fill="url(#glassWhiteboard)" stroke="#475569" stroke-width="2.5" filter="url(#glassGlow)"/>
+      <line x1="16" y1="0" x2="1064" y2="0" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Glass Board Header Bar -->
+      <text x="30" y="34" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#60A5FA" letter-spacing="1">DISTRIBUTED MICROSERVICE TOPOLOGY // CLOUD RUN &amp; GEMINI MESH</text>
+      <text x="1050" y="34" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#34A853" text-anchor="end">REGION: ASIA-SOUTH1 · 99.99% SLO</text>
+      <line x1="30" y1="44" x2="1050" y2="44" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- ============================================== -->
+      <!-- TOP HALF: MICROSERVICE TOPOLOGY DIAGRAM        -->
+      <!-- ============================================== -->
+      <!-- Ingress Node: Cloud Load Balancer (Blue) -->
+      <g transform="translate(35, 65)">
+        <rect x="0" y="0" width="160" height="55" rx="8" fill="#141E33" stroke="#4285F4" stroke-width="2"/>
+        <circle cx="16" cy="18" r="4" fill="#4285F4"/>
+        <text x="26" y="21" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF">Cloud Armor &amp; LB</text>
+        <text x="14" y="38" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">TLS Termination :443</text>
+        <text x="14" y="48" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#60A5FA">DDoS Mitigation Active</text>
+      </g>
+
+      <!-- Connecting Arrow 1 -->
+      <line x1="195" y1="92" x2="245" y2="92" stroke="#60A5FA" stroke-width="2" stroke-dasharray="4 2"/>
+      <polygon points="245,88 253,92 245,96" fill="#60A5FA"/>
+      <text x="220" y="84" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94A3B8" text-anchor="middle">0.8ms</text>
+
+      <!-- Gateway Node: Envoy Router (Green) -->
+      <g transform="translate(255, 65)">
+        <rect x="0" y="0" width="165" height="55" rx="8" fill="#141E33" stroke="#34A853" stroke-width="2"/>
+        <circle cx="16" cy="18" r="4" fill="#34A853"/>
+        <text x="26" y="21" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#FFFFFF">API Gateway Mesh</text>
+        <text x="14" y="38" font-family="'JetBrains Mono', monospace" font-size="8" fill="#94A3B8">Envoy Edge Proxy</text>
+        <text x="14" y="48" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#4ADE80">HTTP/2 &amp; gRPC Multiplex</text>
+      </g>
+
+      <!-- Multi-branching Directed Bus to Downstream Services -->
+      <path d="M420 92 H460 V65 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,62 503,65 495,68" fill="#94A3B8"/>
+
+      <path d="M460 92 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,89 503,92 495,95" fill="#94A3B8"/>
+
+      <path d="M460 92 V120 H495" stroke="#94A3B8" stroke-width="1.5" fill="none"/>
+      <polygon points="495,117 503,120 495,123" fill="#94A3B8"/>
+
+      <!-- Downstream Service 1: Auth and IAM (Red) -->
+      <g transform="translate(505, 45)">
+        <rect x="0" y="0" width="170" height="40" rx="6" fill="#1E1724" stroke="#EA4335" stroke-width="1.5"/>
+        <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#FFFFFF">Auth &amp; Session Store</text>
+        <text x="12" y="31" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#F87171">JWT RS256 · Sub-2ms</text>
+      </g>
+
+      <!-- Downstream Service 2: Event Pipeline (Yellow) -->
+      <g transform="translate(505, 95)">
+        <rect x="0" y="0" width="170" height="40" rx="6" fill="#221C14" stroke="#FBBC04" stroke-width="1.5"/>
+        <text x="12" y="18" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#FFFFFF">Event Stream Pub/Sub</text>
+        <text x="12" y="31" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#FCD34D">Kafka Mesh · 10k eps</text>
+      </g>
+
+      <!-- Connection to AI and Data Layer -->
+      <line x1="675" y1="65" x2="720" y2="65" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <polygon points="720,62 728,65 720,68" fill="#60A5FA"/>
+
+      <line x1="675" y1="115" x2="720" y2="115" stroke="#4ADE80" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <polygon points="720,112 728,115 720,118" fill="#4ADE80"/>
+
+      <!-- Gemini Multimodal Mesh (Blue) -->
+      <g transform="translate(730, 42)">
+        <rect x="0" y="0" width="200" height="45" rx="6" fill="#141E33" stroke="#4285F4" stroke-width="2"/>
+        <circle cx="14" cy="16" r="4" fill="#FBBC04"/>
+        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#60A5FA">Gemini 1.5 Pro Agents</text>
+        <text x="12" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#E2E8F0">Multimodal Function Calling</text>
+      </g>
+
+      <!-- Cloud Spanner and Vector DB (Green) -->
+      <g transform="translate(730, 95)">
+        <rect x="0" y="0" width="200" height="45" rx="6" fill="#0D211A" stroke="#34A853" stroke-width="2"/>
+        <circle cx="14" cy="16" r="4" fill="#34A853"/>
+        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#4ADE80">Spanner Vector DB</text>
+        <text x="12" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#E2E8F0">HNSW Index · Sub-10ms Cosine</text>
+      </g>
+
+      <!-- Divider line between topology and telemetry -->
+      <line x1="30" y1="170" x2="1050" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- ============================================== -->
+      <!-- BOTTOM LEFT: LATENCY TELEMETRY WAVEFORM GRAPH  -->
+      <!-- ============================================== -->
+      <g transform="translate(30, 185)">
+        <rect x="0" y="0" width="480" height="210" rx="10" fill="#0A0E1A" stroke="#1E293B" stroke-width="1.5"/>
+        <text x="16" y="24" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#E2E8F0">LATENCY TELEMETRY TRACING (P50 / P95 / P99)</text>
+        
+        <!-- Legend Pills -->
+        <g transform="translate(16, 36)">
+          <rect x="0" y="0" width="70" height="18" rx="4" fill="#34A853" fill-opacity="0.2"/>
+          <text x="35" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#34A853" text-anchor="middle">P50: 4.2ms</text>
+
+          <rect x="80" y="0" width="70" height="18" rx="4" fill="#FBBC04" fill-opacity="0.2"/>
+          <text x="115" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#FBBC04" text-anchor="middle">P95: 8.8ms</text>
+
+          <rect x="160" y="0" width="75" height="18" rx="4" fill="#4285F4" fill-opacity="0.2"/>
+          <text x="197" y="12" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="bold" fill="#4285F4" text-anchor="middle">P99: 14.1ms</text>
+        </g>
+
+        <!-- Waveform Graph Grid and Axes -->
+        <g transform="translate(45, 75)">
+          <line x1="0" y1="0" x2="0" y2="100" stroke="#334155" stroke-width="1.5"/>
+          <line x1="0" y1="100" x2="410" y2="100" stroke="#334155" stroke-width="1.5"/>
+          <line x1="0" y1="50" x2="410" y2="50" stroke="#1E293B" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="0" y1="20" x2="410" y2="20" stroke="#1E293B" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- P50 Curve (Smooth low latency, Green #34A853) -->
+          <path d="M0 85 Q60 88 120 82 T240 84 T360 80 T410 83" fill="none" stroke="#34A853" stroke-width="2.5"/>
+          <!-- P95 Curve (Mid latency, Yellow #FBBC04) -->
+          <path d="M0 65 Q60 60 120 68 T240 62 T360 64 T410 60" fill="none" stroke="#FBBC04" stroke-width="2"/>
+          <!-- P99 Curve (Top latency, Blue #4285F4) -->
+          <path d="M0 35 Q60 25 120 40 T240 30 T360 38 T410 32" fill="none" stroke="#4285F4" stroke-width="2"/>
+
+          <!-- Axis Labels -->
+          <text x="-8" y="103" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">0ms</text>
+          <text x="-8" y="53" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">10ms</text>
+          <text x="-8" y="23" font-family="monospace" font-size="7" fill="#64748B" text-anchor="end">20ms</text>
+          <text x="200" y="115" font-family="monospace" font-size="7.5" fill="#64748B" text-anchor="middle">ROLLING 60-MINUTE WINDOW</text>
+        </g>
+      </g>
+
+      <!-- ============================================== -->
+      <!-- BOTTOM RIGHT: JSON PAYLOAD TERMINAL BLOCK     -->
+      <!-- ============================================== -->
+      <g transform="translate(530, 185)">
+        <rect x="0" y="0" width="520" height="210" rx="10" fill="#060910" stroke="#1E293B" stroke-width="1.5"/>
+        <rect x="0" y="0" width="520" height="26" rx="8" fill="#111827"/>
+        <circle cx="16" cy="13" r="3.5" fill="#EF4444"/>
+        <circle cx="28" cy="13" r="3.5" fill="#F59E0B"/>
+        <circle cx="40" cy="13" r="3.5" fill="#10B981"/>
+        <text x="56" y="17" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#94A3B8">PAYLOAD // HTTP 200 OK (/api/events/stream)</text>
+
+        <!-- Syntax Highlighted JSON Body -->
+        <g transform="translate(18, 44)" font-family="'JetBrains Mono', monospace" font-size="9" line-height="16">
+          <text x="0" y="12" fill="#E2E8F0">{</text>
+          <text x="14" y="28" fill="#93C5FD">&quot;status&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#34A853">200</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="44" fill="#93C5FD">&quot;region&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#FBBC04">&quot;asia-south1-bengaluru&quot;</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="60" fill="#93C5FD">&quot;route&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#FBBC04">&quot;/api/events/stream&quot;</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="14" y="76" fill="#93C5FD">&quot;telemetry&quot;<tspan fill="#E2E8F0">: {</tspan></text>
+          <text x="28" y="92" fill="#93C5FD">&quot;p99_latency_ms&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#34A853">8.4</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="28" y="108" fill="#93C5FD">&quot;active_nodes&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#34A853">32</tspan><tspan fill="#E2E8F0">,</tspan></text>
+          <text x="28" y="124" fill="#93C5FD">&quot;health&quot;<tspan fill="#E2E8F0">: </tspan><tspan fill="#34A853">&quot;ZERO_PACKET_LOSS&quot;</tspan></text>
+          <text x="14" y="140" fill="#E2E8F0">}</text>
+          <text x="0" y="156" fill="#E2E8F0">}</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- War Room Floor and 3 Student Engineers (y: 500 to 800) -->
+    <rect x="0" y="500" width="1400" height="300" fill="#0A0E1A"/>
+    <line x1="0" y1="500" x2="1400" y2="500" stroke="#1E293B" stroke-width="2"/>
+
+    <!-- Workstation Desk with Ultrawide Monitor and 3 Engineers -->
+    <g transform="translate(200, 480)">
+      <!-- Desk Base -->
+      <polygon points="40,55 960,55 900,120 0,120" fill="#141E30" stroke="#334155" stroke-width="2"/>
+      <rect x="0" y="120" width="900" height="14" fill="#0A0F1D"/>
+      <line x1="60" y1="134" x2="60" y2="280" stroke="#334155" stroke-width="8"/>
+      <line x1="840" y1="134" x2="840" y2="280" stroke="#334155" stroke-width="8"/>
+
+      <!-- Ultrawide Curved Monitor on Desk (Center) -->
+      <g transform="translate(360, -10)">
+        <rect x="0" y="10" width="220" height="75" rx="6" fill="#0A0E1A" stroke="#475569" stroke-width="2"/>
+        <rect x="6" y="16" width="208" height="63" rx="4" fill="#0F172A"/>
+        <!-- Grafana Graphs on screen -->
+        <rect x="12" y="22" width="95" height="51" fill="#1E293B"/>
+        <path d="M16 65 Q40 50 65 60 T100 45" fill="none" stroke="#34A853" stroke-width="2"/>
+        <rect x="113" y="22" width="95" height="51" fill="#1E293B"/>
+        <path d="M117 60 Q140 40 165 55 T200 35" fill="none" stroke="#4285F4" stroke-width="2"/>
+        <rect x="95" y="85" width="30" height="18" fill="#334155"/>
+        <polygon points="80,103 140,103 130,108 90,108" fill="#475569"/>
+      </g>
+
+      <!-- Keyboard and Mouse -->
+      <rect x="420" y="80" width="100" height="26" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+      <rect x="535" y="82" width="18" height="22" rx="6" fill="#334155"/>
+
+      <!-- Engineer 1 (Left - Standing by glass board with dry-erase stylus) -->
+      <g transform="translate(40, -90)">
+        <circle cx="35" cy="18" r="18" fill="#FDBA74"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#1E1B4B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="#4285F4"/>
+        <!-- Arm extended high pointing marker at topology line -->
+        <path d="M50 60L85 30L125 10" stroke="#FDBA74" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="125" cy="10" r="5" fill="#FDBA74"/>
+        <!-- Dry-erase marker -->
+        <line x1="120" y1="14" x2="135" y2="4" stroke="#4285F4" stroke-width="3" stroke-linecap="round"/>
+      </g>
+
+      <!-- Engineer 2 (Center - Seated at ultrawide screen, typing commands) -->
+      <g transform="translate(415, -45)">
+        <circle cx="35" cy="18" r="18" fill="#FED7AA"/>
+        <path d="M18 16C18 2 52 2 52 16Z" fill="#0F172A"/>
+        <!-- Glasses -->
+        <circle cx="29" cy="18" r="4.5" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>
+        <circle cx="41" cy="18" r="4.5" fill="none" stroke="#F8FAFC" stroke-width="1.5"/>
+        <line x1="33.5" y1="18" x2="36.5" y2="18" stroke="#F8FAFC" stroke-width="1.5"/>
+        <path d="M12 95C12 48 58 48 58 95Z" fill="#EA4335"/>
+        <path d="M18 60L35 80" stroke="#EA4335" stroke-width="8" stroke-linecap="round"/>
+        <path d="M52 60L45 80" stroke="#EA4335" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Engineer 3 (Right - Standing, holding laptop with telemetry) -->
+      <g transform="translate(740, -85)">
+        <circle cx="35" cy="18" r="18" fill="#FDE047"/>
+        <circle cx="28" cy="8" r="8" fill="#18181B"/>
+        <circle cx="42" cy="8" r="8" fill="#18181B"/>
+        <circle cx="35" cy="4" r="8" fill="#18181B"/>
+        <path d="M14 140C14 60 56 60 56 140Z" fill="#34A853"/>
+        <!-- Laptop in arms -->
+        <g transform="translate(10, 60)">
+          <polygon points="10,35 70,35 76,45 4,45" fill="#475569"/>
+          <rect x="14" y="6" width="56" height="30" rx="2" fill="#0F172A" stroke="#64748B" stroke-width="1"/>
+          <rect x="16" y="8" width="52" height="26" rx="1" fill="#1E293B"/>
+          <line x1="20" y1="16" x2="50" y2="16" stroke="#34A853" stroke-width="2"/>
+          <line x1="20" y1="22" x2="60" y2="22" stroke="#94A3B8" stroke-width="1.5"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Architectural HUD Badges -->
+    <g transform="translate(60, 45)">
+      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="15" r="4" fill="#EA4335"/>
+      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 08 // DISTRIBUTED SYSTEMS WAR ROOM</text>
+    </g>
+    <g transform="translate(930, 45)">
+      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
+      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">HIGH-THROUGHPUT SYSTEMS LAB · SUB-10MS EDGE LATENCY</text>
+    </g>
+  </svg>

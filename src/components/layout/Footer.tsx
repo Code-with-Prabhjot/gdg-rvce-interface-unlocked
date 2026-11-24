@@ -7,11 +7,13 @@ import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/componen
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
+import { useXRay } from '@/context/XRayContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
   const { toggle: toggleTerminal } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
+  const { isXRayActive, toggleXRay } = useXRay();
 
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
@@ -153,6 +155,33 @@ export function Footer() {
                 <span className="text-[#4285F4] font-bold">API</span>
                 <span className="text-[var(--text-muted)] font-normal">{'//'}</span>
                 <span className="text-[#34A853]">200 OK</span>
+              </button>
+
+              {/* Blueprint X-Ray Design Token Inspector Trigger */}
+              <button
+                type="button"
+                onClick={toggleXRay}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                  isXRayActive
+                    ? 'bg-[#4285F4]/15 border-[#4285F4] text-[#4285F4] shadow-xs'
+                    : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[#4285F4] border-[var(--border-hairline)] hover:border-[#4285F4]/50'
+                }`}
+                aria-label={`Toggle Blueprint X-Ray Inspector (${isXRayActive ? 'On' : 'Off'})`}
+                title="Toggle Blueprint X-Ray Inspector (Shift+X)"
+              >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    isXRayActive ? 'bg-[#4285F4] animate-pulse' : 'bg-slate-400'
+                  }`}
+                />
+                <span className="font-bold">X-RAY</span>
+                <span className="text-[var(--text-muted)] font-normal">{'//'}</span>
+                <span className={isXRayActive ? 'text-[#4285F4] font-bold' : 'text-[var(--text-muted)]'}>
+                  {isXRayActive ? 'ON' : 'OFF'}
+                </span>
+                <kbd className="text-[9px] px-1 py-0.2 bg-[var(--bg-elevated)] border border-[var(--border-hairline)] rounded text-[var(--text-muted)] font-mono">
+                  ⇧X
+                </kbd>
               </button>
 
               {/* Signature Developer CLI Drawer Trigger */}

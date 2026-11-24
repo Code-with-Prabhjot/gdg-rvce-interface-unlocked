@@ -12,6 +12,7 @@ import {
   Moon,
   Sparkles,
   Terminal,
+  Layers,
   ArrowRight,
   CornerDownLeft,
 } from 'lucide-react';
@@ -20,6 +21,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
+import { useXRay } from '@/context/XRayContext';
 
 interface CommandItem {
   id: string;
@@ -35,6 +37,7 @@ export function CommandPalette() {
   const { isOpen, close, toggle } = useCommandPalette();
   const { open: openTerminal } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
+  const { isXRayActive, toggleXRay } = useXRay();
   const router = useRouter();
   const { theme, toggleTheme, setTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -150,6 +153,20 @@ export function CommandPalette() {
       run: () => {
         setTheme('dark');
         close();
+      },
+    },
+    {
+      id: 'action-xray',
+      title: 'Toggle Blueprint X-Ray Inspector (Shift+X)',
+      subtitle: `Inspect real-time element dimensions, tokens & CSS variables (currently ${
+        isXRayActive ? 'Active' : 'Inactive'
+      })`,
+      category: 'Appearance',
+      icon: Layers,
+      accentColor: '#4285F4',
+      run: () => {
+        close();
+        toggleXRay();
       },
     },
     {
