@@ -119,15 +119,15 @@ export function TrackFormatComparator({
   return (
     <section
       aria-label="Track Format Matrix Comparator"
-      className="w-full mb-8 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs transition-all overflow-hidden"
+      className="w-full mb-4 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs transition-all overflow-hidden"
     >
       {/* ============================================================= */}
       {/* 1. COMPACT ARCHITECTURAL HEADER BAR                           */}
       {/* ============================================================= */}
-      <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-1">
+      <div className="p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="space-y-0.5">
           <div className="inline-flex items-center gap-2">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#4285F4]">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--accent-blue-text)]">
               [ TRACK MATRIX // COMPARE FORMATS ]
             </span>
             <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[var(--border-strong)]" />
@@ -146,9 +146,9 @@ export function TrackFormatComparator({
           onClick={() => setIsExpanded((prev) => !prev)}
           aria-expanded={isExpanded}
           aria-controls="track-comparator-content"
-          className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer shrink-0 self-end sm:self-auto"
+          className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer shrink-0 self-end sm:self-auto"
         >
-          <Layers className="w-4 h-4 text-[#4285F4]" />
+          <Layers className="w-4 h-4 text-[var(--accent-blue-text)]" />
           <span>{isExpanded ? 'Collapse Matrix' : 'Compare 4 Formats'}</span>
           {isExpanded ? (
             <ChevronUp className="w-4 h-4 text-[var(--text-muted)]" />
@@ -212,7 +212,14 @@ export function TrackFormatComparator({
                           className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
                           style={{
                             backgroundColor: `${track.accentHex}15`,
-                            color: track.accentHex,
+                            color:
+                              track.category === 'Study Jam'
+                                ? 'var(--accent-yellow-text)'
+                                : track.category === 'Hackathon'
+                                ? 'var(--accent-red-text)'
+                                : track.category === 'Tech Talk'
+                                ? 'var(--accent-green-text)'
+                                : 'var(--accent-blue-text)',
                           }}
                         >
                           <IconComponent className="w-4 h-4" />
@@ -249,7 +256,16 @@ export function TrackFormatComparator({
                             </span>
                             <span
                               className="font-bold"
-                              style={{ color: track.accentHex }}
+                              style={{
+                                color:
+                                  track.category === 'Study Jam'
+                                    ? 'var(--accent-yellow-text)'
+                                    : track.category === 'Hackathon'
+                                    ? 'var(--accent-red-text)'
+                                    : track.category === 'Tech Talk'
+                                    ? 'var(--accent-green-text)'
+                                    : 'var(--accent-blue-text)',
+                              }}
                             >
                               {track.handsOnRatio}
                             </span>
@@ -298,7 +314,7 @@ export function TrackFormatComparator({
                         onClick={() => handleTrackFilterClick(track.category)}
                         className={`w-full min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                           isCurrentFilter
-                            ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] shadow-xs'
+                            ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] shadow-xs'
                             : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
                         }`}
                       >

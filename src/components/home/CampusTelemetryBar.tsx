@@ -11,28 +11,28 @@ function getAccentClasses(accent: GoogleAccent) {
         bar: 'bg-[#4285F4]',
         borderHover: 'hover:border-[#4285F4]/60 dark:hover:border-[#4285F4]/50',
         glow: 'group-hover:shadow-[0_0_24px_rgba(66,133,244,0.12)]',
-        code: 'text-[#4285F4]',
+        code: 'text-[var(--accent-blue-text)]',
       };
     case 'red':
       return {
         bar: 'bg-[#EA4335]',
         borderHover: 'hover:border-[#EA4335]/60 dark:hover:border-[#EA4335]/50',
         glow: 'group-hover:shadow-[0_0_24px_rgba(234,67,53,0.12)]',
-        code: 'text-[#EA4335]',
+        code: 'text-[var(--accent-red-text)]',
       };
     case 'yellow':
       return {
         bar: 'bg-[#FBBC04]',
         borderHover: 'hover:border-[#FBBC04]/60 dark:hover:border-[#FBBC04]/50',
         glow: 'group-hover:shadow-[0_0_24px_rgba(251,188,4,0.12)]',
-        code: 'text-[#B45309] dark:text-[#FBBC04]',
+        code: 'text-[var(--accent-yellow-text)]',
       };
     case 'green':
       return {
         bar: 'bg-[#34A853]',
         borderHover: 'hover:border-[#34A853]/60 dark:hover:border-[#34A853]/50',
         glow: 'group-hover:shadow-[0_0_24px_rgba(52,168,83,0.12)]',
-        code: 'text-[#34A853]',
+        code: 'text-[var(--accent-green-text)]',
       };
   }
 }
@@ -83,12 +83,12 @@ export function CampusTelemetryBar() {
                 key={spec.code}
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{
-                  duration: prefersReducedMotion ? 0 : 0.45,
-                  delay: prefersReducedMotion ? 0 : idx * 0.08,
+                  duration: prefersReducedMotion ? 0 : 0.35,
+                  delay: prefersReducedMotion ? 0 : idx * 0.06,
                 }}
-                className={`group relative p-5 sm:p-6 transition-all duration-200 border-l-2 border-transparent ${styling.borderHover} ${styling.glow} bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)]/50`}
+                className={`group relative p-4 sm:p-5 transition-all duration-200 border-l-2 border-transparent ${styling.borderHover} ${styling.glow} bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)]/50`}
               >
                 {/* Header: Code & Bar */}
                 <div className="flex items-center justify-between gap-2 mb-3">

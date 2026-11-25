@@ -43,10 +43,10 @@ export function EventsSceneStrip() {
   return (
     <section
       aria-labelledby="events-scenes-heading"
-      className="mt-16 pt-12 border-t border-[var(--border-hairline)]"
+      className="mt-10 pt-8 border-t border-[var(--border-hairline)]"
     >
       {/* Eyebrow & Headline Row */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-xs font-mono text-[var(--text-muted)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4] animate-pulse" />
@@ -67,7 +67,7 @@ export function EventsSceneStrip() {
         {/* CTA Link to Home Page Scene Gallery */}
         <Link
           href="/#community-scenes"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold text-[#4285F4] bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border border-[#4285F4]/30 transition-all self-start md:self-auto shrink-0 group"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold text-[var(--accent-blue-text)] bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border border-[#4285F4]/30 transition-all self-start md:self-auto shrink-0 group"
         >
           <span>Explore Full Scene Gallery on Home</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -78,6 +78,7 @@ export function EventsSceneStrip() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {showcaseScenes.map((scene) => {
           const accent = ACCENT_COLORS[scene.googleColor] || ACCENT_COLORS.blue;
+          const badgeTextColor = scene.googleColor === 'yellow' ? '#111827' : '#FFFFFF';
 
           return (
             <div
@@ -85,32 +86,32 @@ export function EventsSceneStrip() {
               className="group rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all overflow-hidden flex flex-col shadow-xs"
             >
               {/* 16:9 Visual Artwork Frame with Corner Crosshairs */}
-              <div className="relative w-full aspect-[16/9] bg-[var(--bg-subtle)] overflow-hidden select-none border-b border-[var(--border-hairline)]">
+              <div className="relative w-full aspect-[16/9] bg-[#090C10] overflow-hidden select-none border-b border-[var(--border-hairline)]">
                 <Image
                   src={scene.image}
                   alt={scene.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#090C10]/80 via-[#090C10]/20 to-transparent pointer-events-none" />
 
                 {/* Corner Crosshairs */}
-                <span className="absolute top-2 left-2 z-10 font-mono text-[10px] font-bold text-white/60 pointer-events-none">
+                <span className="absolute top-2 left-2 z-10 font-mono text-[10px] font-bold text-[#CBD5E1]/70 pointer-events-none">
                   +
                 </span>
-                <span className="absolute top-2 right-2 z-10 font-mono text-[10px] font-bold text-white/60 pointer-events-none">
+                <span className="absolute top-2 right-2 z-10 font-mono text-[10px] font-bold text-[#CBD5E1]/70 pointer-events-none">
                   +
                 </span>
 
                 {/* Code Eyebrow & Category Pill */}
                 <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5">
                   <span
-                    className="px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase text-white shadow-xs"
-                    style={{ backgroundColor: accent.hex }}
+                    className="px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase shadow-xs"
+                    style={{ backgroundColor: accent.hex, color: badgeTextColor }}
                   >
                     {scene.code}
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-black/60 backdrop-blur-md text-white border border-white/20">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
                     {scene.category}
                   </span>
                 </div>

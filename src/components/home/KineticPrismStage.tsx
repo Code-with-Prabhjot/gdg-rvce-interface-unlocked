@@ -96,12 +96,12 @@ export function KineticPrismStage() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[460px] sm:min-h-[500px] lg:min-h-0 lg:h-[580px] max-w-2xl mx-auto rounded-3xl p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden select-none border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/70 backdrop-blur-md shadow-2xl transition-all duration-300 group"
+      className="relative w-full min-h-[400px] sm:min-h-[430px] lg:h-[470px] max-h-[490px] max-w-2xl mx-auto rounded-3xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden select-none border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/75 backdrop-blur-md shadow-2xl transition-all duration-300 group"
       style={{ perspective: 1200 }}
     >
       {/* 3D Tilted Wrapper */}
       <motion.div
-        className="relative w-full h-full flex flex-col justify-between overflow-hidden sm:overflow-visible"
+        className="relative w-full h-full flex flex-col justify-between overflow-hidden"
         style={{
           transformStyle: 'preserve-3d',
           rotateX: prefersReducedMotion ? 0 : rotateX,
@@ -116,9 +116,9 @@ export function KineticPrismStage() {
           style={{ transform: 'translateZ(-15px)' }}
         >
           {/* Ambient Glow Orbs */}
-          <div className="absolute top-1/4 left-1/4 w-44 h-44 sm:w-64 sm:h-64 rounded-full bg-[#4285F4]/12 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-1/4 right-1/4 w-44 h-44 sm:w-72 sm:h-72 rounded-full bg-[#34A853]/10 blur-3xl pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 sm:w-80 sm:h-80 rounded-full bg-[#EA4335]/06 blur-3xl pointer-events-none" />
+          <div className="absolute top-1/4 left-1/4 w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-[#4285F4]/12 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-1/4 right-1/4 w-44 h-44 sm:w-64 sm:h-64 rounded-full bg-[#34A853]/10 blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 sm:w-72 sm:h-72 rounded-full bg-[#EA4335]/06 blur-3xl pointer-events-none" />
 
           {/* Dual-Theme Constellation Canvas */}
           <ConstellationCanvas mousePos={canvasMouse} />
@@ -128,79 +128,69 @@ export function KineticPrismStage() {
         {/* LAYER 2 (MID): Architectural Coordinate Frame & Reticles  */}
         {/* ========================================================= */}
         <div
-          className="absolute inset-0 pointer-events-none p-3 flex flex-col justify-between"
+          className="relative pointer-events-none flex items-center justify-between font-mono text-[10px] sm:text-[11px] text-[var(--text-muted)] tracking-wider z-10"
           style={{ transform: 'translateZ(18px)' }}
         >
-          {/* Top Frame: Crosshairs & Telemetry Header */}
-          <div className="flex items-center justify-between font-mono text-[10px] sm:text-[11px] text-[var(--text-muted)] tracking-wider">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[#4285F4] font-bold text-sm">+</span>
-              <span className="opacity-80">SYS // STAGE_3D</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)] backdrop-blur-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
-              <span>
-                {`X: ${String(hudCoords.x).padStart(3, '0')} // Y: ${String(hudCoords.y).padStart(3, '0')}`}
-              </span>
-            </div>
-
-            <div className="hidden sm:flex items-center gap-1.5">
-              <span className="opacity-80">PRISM_PERSPECTIVE</span>
-              <span className="text-[#EA4335] font-bold text-sm">+</span>
-            </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="text-[var(--accent-blue-text)] font-bold text-sm">+</span>
+            <span>SYS // STAGE_3D</span>
           </div>
 
-          {/* Rotating Dashed Orbital Rings in Center Background */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] sm:w-[340px] sm:h-[340px] pointer-events-none opacity-40 dark:opacity-30 overflow-hidden">
-            <svg
-              className={`w-full h-full ${prefersReducedMotion ? '' : 'animate-[spin_40s_linear_infinite]'}`}
-              viewBox="0 0 340 340"
-              fill="none"
-            >
-              <circle
-                cx="170"
-                cy="170"
-                r="160"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="4 8"
-                className="text-[var(--text-muted)]"
-              />
-              <circle
-                cx="170"
-                cy="170"
-                r="115"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="6 6"
-                className="text-[var(--text-muted)]"
-              />
-              <circle
-                cx="170"
-                cy="170"
-                r="70"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="3 5"
-                className="text-[var(--text-muted)]"
-              />
-            </svg>
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] backdrop-blur-xs text-[var(--text-secondary)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+            <span>
+              {`X: ${String(hudCoords.x).padStart(3, '0')} // Y: ${String(hudCoords.y).padStart(3, '0')}`}
+            </span>
           </div>
 
-          {/* Bottom Frame: Crosshairs */}
-          <div className="flex items-center justify-between font-mono text-[11px] text-[var(--text-muted)]">
-            <span className="text-[#34A853] font-bold text-sm">+</span>
-            <span className="opacity-70 text-[10px]">RVCE_CAMPUS_CHAPTER // SPRINT_ENGINE</span>
-            <span className="text-[#FBBC04] font-bold text-sm">+</span>
+          <div className="hidden sm:flex items-center gap-1.5">
+            <span>PRISM_PERSPECTIVE</span>
+            <span className="text-[var(--accent-red-text)] font-bold text-sm">+</span>
           </div>
+        </div>
+
+        {/* Rotating Dashed Orbital Rings in Center Background */}
+        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[210px] h-[210px] sm:w-[270px] sm:h-[270px] pointer-events-none opacity-40 dark:opacity-30 overflow-hidden">
+          <svg
+            className={`w-full h-full ${prefersReducedMotion ? '' : 'animate-[spin_40s_linear_infinite]'}`}
+            viewBox="0 0 340 340"
+            fill="none"
+          >
+            <circle
+              cx="170"
+              cy="170"
+              r="160"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeDasharray="4 8"
+              className="text-[var(--text-muted)]"
+            />
+            <circle
+              cx="170"
+              cy="170"
+              r="115"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeDasharray="6 6"
+              className="text-[var(--text-muted)]"
+            />
+            <circle
+              cx="170"
+              cy="170"
+              r="70"
+              stroke="currentColor"
+              strokeWidth="1"
+              strokeDasharray="3 5"
+              className="text-[var(--text-muted)]"
+            />
+          </svg>
         </div>
 
         {/* ========================================================= */}
         {/* LAYER 3 (CENTERPIECE): 3D GDG < > Prism Sculpture         */}
         {/* ========================================================= */}
         <div
-          className="relative flex-1 flex items-center justify-center pointer-events-none py-6"
+          className="relative flex-1 flex items-center justify-center pointer-events-none py-7 sm:py-8 my-1"
           style={{ transform: 'translateZ(46px)' }}
         >
           {/* Floating Sculpture Container */}
@@ -210,7 +200,7 @@ export function KineticPrismStage() {
               prefersReducedMotion
                 ? {}
                 : {
-                    y: [-6, 6, -6],
+                    y: [-4, 4, -4],
                   }
             }
             transition={{
@@ -220,19 +210,19 @@ export function KineticPrismStage() {
             }}
           >
             {/* The Central GDG Prism Sculpture */}
-            <div className="relative w-[180px] sm:w-[250px] h-[100px] sm:h-[130px] flex items-center justify-center">
+            <div className="relative w-[176px] sm:w-[224px] h-[92px] sm:h-[112px] flex items-center justify-center">
               {/* Outer Glow Halo */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#4285F4]/20 via-[#EA4335]/20 to-[#34A853]/20 blur-xl rounded-full" />
 
               {/* Glassmorphic Base Slate */}
-              <div className="absolute inset-0 rounded-2xl bg-[var(--bg-elevated)]/85 dark:bg-[var(--bg-canvas)]/85 border border-[var(--border-strong)] shadow-xl backdrop-blur-md flex items-center justify-center p-2.5 sm:p-3">
+              <div className="absolute inset-0 rounded-2xl bg-[var(--bg-elevated)]/90 dark:bg-[var(--bg-canvas)]/90 border border-[var(--border-strong)] shadow-xl backdrop-blur-md flex items-center justify-center p-2.5 sm:p-3">
                 {/* Hairline Inner Bevel */}
-                <div className="w-full h-full rounded-xl border border-white/20 dark:border-white/5 flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent dark:from-white/5">
+                <div className="w-full h-full rounded-xl border border-[var(--border-hairline)] flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent dark:from-white/5">
                   {/* GDG Geometric Chevrons < > */}
-                  <div className="flex items-center gap-3 sm:gap-6">
+                  <div className="flex items-center gap-3 sm:gap-5">
                     {/* Left Chevron < in Google Blue & Red */}
                     <div className="relative flex items-center">
-                      <svg width="40" height="48" viewBox="0 0 46 54" fill="none" className="w-7 h-9 sm:w-11 sm:h-13 drop-shadow-sm">
+                      <svg width="36" height="44" viewBox="0 0 46 54" fill="none" className="w-7 h-8 sm:w-10 sm:h-11 drop-shadow-sm">
                         <path
                           d="M40 6L10 27L40 48"
                           stroke="url(#prism-left-grad)"
@@ -250,11 +240,11 @@ export function KineticPrismStage() {
                     </div>
 
                     {/* Slash / Center Line in Google Yellow */}
-                    <div className="w-2 sm:w-2.5 h-8 sm:h-11 rounded-full bg-[#FBBC04] shadow-sm transform -rotate-12" />
+                    <div className="w-2 sm:w-2.5 h-7 sm:h-10 rounded-full bg-[#FBBC04] shadow-sm transform -rotate-12" />
 
                     {/* Right Chevron > in Google Yellow & Green */}
                     <div className="relative flex items-center">
-                      <svg width="40" height="48" viewBox="0 0 46 54" fill="none" className="w-7 h-9 sm:w-11 sm:h-13 drop-shadow-sm">
+                      <svg width="36" height="44" viewBox="0 0 46 54" fill="none" className="w-7 h-8 sm:w-10 sm:h-11 drop-shadow-sm">
                         <path
                           d="M6 6L36 27L6 48"
                           stroke="url(#prism-right-grad)"
@@ -277,8 +267,8 @@ export function KineticPrismStage() {
 
             {/* Orbiting Domain Pill 1: AI & Gemini (Top-Left) */}
             <motion.div
-              className="absolute -top-3 -left-3 sm:-top-5 sm:-left-10 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
-              animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
+              className="absolute -top-6 -left-6 sm:-top-7 sm:-left-16 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
+              animate={prefersReducedMotion ? {} : { y: [-2, 2, -2] }}
               transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
             >
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#EA4335] shrink-0" />
@@ -287,8 +277,8 @@ export function KineticPrismStage() {
 
             {/* Orbiting Domain Pill 2: Cloud & Infra (Top-Right) */}
             <motion.div
-              className="absolute -top-3 -right-3 sm:-top-5 sm:-right-10 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
-              animate={prefersReducedMotion ? {} : { y: [3, -3, 3] }}
+              className="absolute -top-6 -right-6 sm:-top-7 sm:-right-16 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
+              animate={prefersReducedMotion ? {} : { y: [2, -2, 2] }}
               transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
             >
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#4285F4] shrink-0" />
@@ -297,8 +287,8 @@ export function KineticPrismStage() {
 
             {/* Orbiting Domain Pill 3: Web & Systems (Bottom-Left) */}
             <motion.div
-              className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-8 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
-              animate={prefersReducedMotion ? {} : { y: [3, -3, 3] }}
+              className="absolute -bottom-6 -left-6 sm:-bottom-7 sm:-left-16 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
+              animate={prefersReducedMotion ? {} : { y: [2, -2, 2] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
             >
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#34A853] shrink-0" />
@@ -307,8 +297,8 @@ export function KineticPrismStage() {
 
             {/* Orbiting Domain Pill 4: Android & Kotlin (Bottom-Right) */}
             <motion.div
-              className="absolute -bottom-3 -right-3 sm:-bottom-5 sm:-right-8 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
-              animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
+              className="absolute -bottom-6 -right-6 sm:-bottom-7 sm:-right-16 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap"
+              animate={prefersReducedMotion ? {} : { y: [-2, 2, -2] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }}
             >
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FBBC04] shrink-0" />
@@ -321,25 +311,25 @@ export function KineticPrismStage() {
         {/* LAYER 4 (BOTTOM DOCK): Live Flagship Event Countdown HUD  */}
         {/* ========================================================= */}
         <div
-          className="relative w-full mt-auto pt-2 sm:pt-3 z-10"
+          className="relative w-full mt-auto pt-1 z-10"
           style={{ transform: 'translateZ(68px)' }}
         >
-          <div className="w-full rounded-2xl bg-[var(--bg-canvas)]/90 dark:bg-[var(--bg-elevated)]/90 border border-[var(--border-strong)] shadow-xl p-3 sm:p-5 backdrop-blur-md">
+          <div className="w-full rounded-2xl bg-[var(--bg-canvas)]/95 dark:bg-[var(--bg-elevated)]/95 border border-[var(--border-strong)] shadow-xl p-3 sm:p-4 backdrop-blur-md">
             {/* Countdown Header */}
-            <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EA4335]/10 border border-[#EA4335]/30 text-[10px] sm:text-[11px] font-mono font-semibold text-[#EA4335] whitespace-nowrap">
+            <div className="flex items-center justify-between gap-2 mb-1.5 sm:mb-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EA4335]/10 border border-[#EA4335]/30 text-[10px] sm:text-[11px] font-mono font-semibold text-[var(--accent-red-text)] whitespace-nowrap">
                   <Radio className="w-3 h-3 animate-pulse shrink-0" />
                   UPCOMING FLAGSHIP
                 </span>
-                <span className="hidden sm:inline text-xs text-[var(--text-muted)] font-mono">
+                <span className="hidden sm:inline text-xs text-[var(--text-muted)] font-mono truncate">
                   {FLAGSHIP_COUNTDOWN.venue}
                 </span>
               </div>
 
               <Link
                 href={`/events?event=${FLAGSHIP_COUNTDOWN.slug}`}
-                className="group/link inline-flex items-center gap-1 text-xs font-semibold text-[#4285F4] hover:text-[#3367D6] transition-colors whitespace-nowrap shrink-0 min-h-[36px]"
+                className="group/link inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent-blue-text)] hover:underline transition-colors whitespace-nowrap shrink-0 min-h-[32px]"
               >
                 <span>Inspect Sprint</span>
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
@@ -347,7 +337,7 @@ export function KineticPrismStage() {
             </div>
 
             {/* Event Title */}
-            <h3 className="text-xs sm:text-base font-display font-bold text-[var(--text-primary)] truncate mb-2 sm:mb-3">
+            <h3 className="text-xs sm:text-sm font-display font-bold text-[var(--text-primary)] truncate mb-2">
               {FLAGSHIP_COUNTDOWN.title}
             </h3>
 
@@ -355,40 +345,40 @@ export function KineticPrismStage() {
             <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
               {/* DAYS */}
               <div className="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
-                <span className="font-mono text-base sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+                <span className="font-mono text-base sm:text-xl font-bold text-[var(--text-primary)] tracking-tight">
                   {isClient ? String(timeLeft.days).padStart(2, '0') : '14'}
                 </span>
-                <span className="font-mono text-[8px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
                   DAYS
                 </span>
               </div>
 
               {/* HOURS */}
               <div className="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
-                <span className="font-mono text-base sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+                <span className="font-mono text-base sm:text-xl font-bold text-[var(--text-primary)] tracking-tight">
                   {isClient ? String(timeLeft.hours).padStart(2, '0') : '06'}
                 </span>
-                <span className="font-mono text-[8px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
                   HRS
                 </span>
               </div>
 
               {/* MINUTES */}
               <div className="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
-                <span className="font-mono text-base sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+                <span className="font-mono text-base sm:text-xl font-bold text-[var(--text-primary)] tracking-tight">
                   {isClient ? String(timeLeft.minutes).padStart(2, '0') : '42'}
                 </span>
-                <span className="font-mono text-[8px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
                   MIN
                 </span>
               </div>
 
               {/* SECONDS */}
               <div className="flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
-                <span className="font-mono text-base sm:text-2xl font-bold text-[#EA4335] tracking-tight">
+                <span className="font-mono text-base sm:text-xl font-bold text-[var(--accent-red-text)] tracking-tight">
                   {isClient ? String(timeLeft.seconds).padStart(2, '0') : '18'}
                 </span>
-                <span className="font-mono text-[8px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase font-semibold text-[var(--text-muted)] tracking-wider">
                   SEC
                 </span>
               </div>

@@ -115,12 +115,12 @@ export function TeamFilterBar({
   return (
     <div
       id="team-filter-bar"
-      className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-3 sm:p-4 shadow-xs mb-8 space-y-3.5"
+      className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-3 sm:p-4 shadow-xs mb-6 space-y-2.5"
     >
       {/* ============================================================= */}
       {/* ROW 0: DATA SOURCE SEGMENTED SWITCHER & LIVE TELEMETRY STRIP  */}
       {/* ============================================================= */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-hairline)]">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[var(--border-hairline)]">
         {/* Left Telemetry Status Indicator */}
         <div className="flex items-center gap-2.5 min-w-0">
           {dataSourceMode === 'live' ? (
@@ -131,7 +131,7 @@ export function TeamFilterBar({
               </span>
 
               {isFetchingLive ? (
-                <span className="text-[#4285F4] font-medium flex items-center gap-1.5 truncate">
+                <span className="text-[var(--accent-blue-text)] font-medium flex items-center gap-1.5 truncate">
                   <Activity className="w-3.5 h-3.5 animate-spin shrink-0" />
                   <span className="truncate">GET /api/team · Executing query...</span>
                 </span>
@@ -141,7 +141,7 @@ export function TeamFilterBar({
                     GET {liveTelemetry.endpoint.split('?')[0]}
                   </span>
                   <span className="text-[var(--text-muted)]">·</span>
-                  <span className="text-[#34A853] font-semibold">{liveTelemetry.status} OK</span>
+                  <span className="text-[var(--accent-green-text)] font-semibold">{liveTelemetry.status} OK</span>
                   <span className="text-[var(--text-muted)]">·</span>
                   <span className="text-[var(--text-primary)] font-bold">{liveTelemetry.latencyMs} ms</span>
                 </span>
@@ -158,7 +158,7 @@ export function TeamFilterBar({
                   onClick={() => onInspectQuery(liveTelemetry.endpoint)}
                   aria-label="Inspect query in API Inspector"
                   title="Inspect real /api/team response payload"
-                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/20 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 >
                   <Terminal className="w-3 h-3 shrink-0" />
                   <span>Inspect</span>
@@ -169,7 +169,7 @@ export function TeamFilterBar({
             <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
               <span className="inline-flex rounded-full h-2 w-2 bg-[#4285F4] shrink-0" />
               <span>STATIC EDGE // ZERO_LATENCY (0.0 ms)</span>
-              <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] text-[10px] border border-[var(--border-hairline)]">
+              <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] text-[10px] border border-[var(--border-hairline)] text-[var(--text-secondary)]">
                 In-Memory
               </span>
             </div>
@@ -238,7 +238,7 @@ export function TeamFilterBar({
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search fictional builders by name, role, or stack..."
             aria-label="Search fictional builders by name, role, or stack"
-            className="w-full min-h-[44px] pl-10 pr-20 py-2 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-primary)] placeholder-[var(--text-muted)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] focus:border-[#4285F4] text-xs sm:text-sm font-sans focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] transition-all"
+            className="w-full min-h-[40px] pl-10 pr-20 py-1.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] border border-[var(--border-strong)] focus:border-[#4285F4] text-xs sm:text-sm font-sans focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] transition-all"
           />
 
           <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1.5">
@@ -390,25 +390,12 @@ export function TeamFilterBar({
               role="tab"
               aria-selected={isActive}
               onClick={() => onSelectVertical(tab.id)}
-              className={`relative min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors shrink-0 flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              className={`relative min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors shrink-0 flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                 isActive
-                  ? 'text-[var(--text-primary)] font-semibold'
-                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]/70'
+                  ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-semibold shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]/70 border border-transparent'
               }`}
             >
-              {/* Active Tab Spring Indicator */}
-              {isActive && (
-                <motion.div
-                  layoutId="team-vertical-pill"
-                  transition={{
-                    type: 'spring',
-                    stiffness: prefersReducedMotion ? 1000 : 400,
-                    damping: 35,
-                  }}
-                  className="absolute inset-0 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-strong)] shadow-xs"
-                />
-              )}
-
               {/* Dot & Label */}
               <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
                 <span

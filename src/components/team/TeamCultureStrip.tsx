@@ -63,7 +63,7 @@ export function TeamCultureStrip() {
   return (
     <section
       aria-label="Student Developer Culture and Engineering Values"
-      className="relative w-full rounded-3xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs overflow-hidden mt-12 sm:mt-16 p-6 sm:p-8 lg:p-10"
+      className="relative w-full rounded-3xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs overflow-hidden mt-10 p-5 sm:p-6 lg:p-7"
     >
       {/* Blueprint Grid Background */}
       <div className="absolute inset-0 bg-blueprint-grid opacity-50 dark:opacity-30 pointer-events-none" />
@@ -74,13 +74,13 @@ export function TeamCultureStrip() {
       <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#FBBC04] rounded-bl-xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#34A853] rounded-br-xl pointer-events-none" />
 
-      <div className="relative space-y-6">
+      <div className="relative space-y-5">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-5 border-b border-[var(--border-hairline)]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-hairline)]">
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-strong)] text-xs font-mono text-[var(--text-secondary)]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#EA4335]" />
-              <span className="font-semibold text-[#EA4335] dark:text-[#F87171]">
+              <span className="font-semibold text-[var(--accent-red-text)]">
                 [ 03 // BUILDER ETHOS ]
               </span>
               <span className="text-[var(--text-muted)]">·</span>
@@ -105,16 +105,16 @@ export function TeamCultureStrip() {
             <motion.div
               key={item.id}
               initial={
-                prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 14 }
+                prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }
               }
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{
-                duration: prefersReducedMotion ? 0 : 0.4,
-                delay: prefersReducedMotion ? 0 : idx * 0.08,
+                duration: prefersReducedMotion ? 0 : 0.35,
+                delay: prefersReducedMotion ? 0 : idx * 0.06,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="group relative rounded-2xl bg-[var(--bg-subtle)]/70 hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] p-4 sm:p-5 transition-all duration-300 flex flex-col justify-between space-y-4"
+              className="group relative rounded-2xl bg-[var(--bg-subtle)]/70 hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] p-4 transition-all duration-300 flex flex-col justify-between space-y-3"
             >
               {/* Subtle top indicator */}
               <div
@@ -145,8 +145,17 @@ export function TeamCultureStrip() {
                     {item.title}
                   </h3>
                   <div
-                    className="text-[11px] font-mono font-medium"
-                    style={{ color: item.accentHex }}
+                    className="text-[11px] font-mono font-semibold"
+                    style={{
+                      color:
+                        item.accentHex === '#FBBC04'
+                          ? 'var(--accent-yellow-text)'
+                          : item.accentHex === '#EA4335'
+                          ? 'var(--accent-red-text)'
+                          : item.accentHex === '#34A853'
+                          ? 'var(--accent-green-text)'
+                          : 'var(--accent-blue-text)',
+                    }}
                   >
                     {item.subtitle}
                   </div>

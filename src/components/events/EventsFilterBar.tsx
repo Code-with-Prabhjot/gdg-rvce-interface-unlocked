@@ -119,12 +119,12 @@ export function EventsFilterBar({
   return (
     <div
       id="events-filter-bar"
-      className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs p-4 sm:p-5 space-y-4 mb-8"
+      className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs p-3.5 sm:p-4 space-y-3 mb-6"
     >
       {/* ============================================================= */}
       {/* ROW 0: DATA SOURCE SEGMENTED SWITCHER & LIVE TELEMETRY STRIP  */}
       {/* ============================================================= */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-hairline)]">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[var(--border-hairline)]">
         {/* Left Telemetry Status Indicator */}
         <div className="flex items-center gap-2.5 min-w-0">
           {dataSourceMode === 'live' ? (
@@ -135,7 +135,7 @@ export function EventsFilterBar({
               </span>
 
               {isFetchingLive ? (
-                <span className="text-[#4285F4] font-medium flex items-center gap-1.5 truncate">
+                <span className="text-[var(--accent-blue-text)] font-medium flex items-center gap-1.5 truncate">
                   <Activity className="w-3.5 h-3.5 animate-spin shrink-0" />
                   <span className="truncate">GET /api/events · Executing query...</span>
                 </span>
@@ -145,7 +145,7 @@ export function EventsFilterBar({
                     GET {liveTelemetry.endpoint.split('?')[0]}
                   </span>
                   <span className="text-[var(--text-muted)]">·</span>
-                  <span className="text-[#34A853] font-semibold">{liveTelemetry.status} OK</span>
+                  <span className="text-[var(--accent-green-text)] font-semibold">{liveTelemetry.status} OK</span>
                   <span className="text-[var(--text-muted)]">·</span>
                   <span className="text-[var(--text-primary)] font-bold">{liveTelemetry.latencyMs} ms</span>
                 </span>
@@ -162,7 +162,7 @@ export function EventsFilterBar({
                   onClick={() => onInspectQuery(liveTelemetry.endpoint)}
                   aria-label="Inspect query in API Inspector"
                   title="Inspect real query response payload"
-                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/20 transition-all shrink-0 cursor-pointer"
+                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer"
                 >
                   <Terminal className="w-3 h-3 shrink-0" />
                   <span>Inspect</span>
@@ -173,7 +173,7 @@ export function EventsFilterBar({
             <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
               <span className="inline-flex rounded-full h-2 w-2 bg-[#4285F4] shrink-0" />
               <span>STATIC EDGE // ZERO_LATENCY (0.0 ms)</span>
-              <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] text-[10px] border border-[var(--border-hairline)]">
+              <span className="hidden md:inline px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] text-[10px] border border-[var(--border-hairline)] text-[var(--text-secondary)]">
                 In-Memory
               </span>
             </div>
@@ -270,7 +270,7 @@ export function EventsFilterBar({
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search sessions, speakers, tech tags, venues... (Press '/' to focus)"
               aria-label="Search events"
-              className="w-full min-h-[44px] pl-10 pr-20 py-2 sm:py-2.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
+              className="w-full min-h-[42px] pl-10 pr-20 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
             />
 
             {/* Clear Button & Shortcut Badge */}
@@ -369,16 +369,16 @@ export function EventsFilterBar({
       {/* ============================================================= */}
       {/* ROW 2: TRACK & MODE PILLS, SAVED FILTER, BUNDLE EXPORT        */}
       {/* ============================================================= */}
-      <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="pt-2.5 border-t border-[var(--border-hairline)] flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Left Side: Track & Mode Pills Group + Personal Saved Pill */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           {/* Personal Saved Sprints Bookmark Pill */}
           <button
             type="button"
             onClick={() => onOnlySavedChange(!onlySaved)}
             aria-pressed={onlySaved}
             aria-label={onlySaved ? 'Show all sessions' : 'Filter by saved sessions'}
-            className={`min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+            className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
               onlySaved
                 ? 'bg-[#FBBC04] text-[#111827] font-bold shadow-xs border border-[#FBBC04]'
                 : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -408,7 +408,7 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onExportSavedBundle}
-              className="min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all shadow-xs hover:shadow-md whitespace-nowrap cursor-pointer"
+              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-xl text-xs font-mono font-semibold bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all shadow-xs hover:shadow-md whitespace-nowrap cursor-pointer"
             >
               <Download className="w-3.5 h-3.5 shrink-0" />
               <span>Export Saved Schedule (.ics)</span>
@@ -428,9 +428,9 @@ export function EventsFilterBar({
                 key={track.id}
                 type="button"
                 onClick={() => onTrackChange(track.id)}
-                className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[34px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
-                    ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
+                    ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
                 }`}
               >
@@ -458,9 +458,9 @@ export function EventsFilterBar({
                 key={mode.id}
                 type="button"
                 onClick={() => onModeChange(mode.id)}
-                className={`min-h-[36px] inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[34px] inline-flex items-center justify-center px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
-                    ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] font-bold shadow-xs'
+                    ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
                 }`}
               >
@@ -480,7 +480,7 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onResetFilters}
-              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[#EA4335] hover:text-[#C5221F] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/20 whitespace-nowrap cursor-pointer"
+              className="min-h-[34px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/25 whitespace-nowrap cursor-pointer"
             >
               <RotateCcw className="w-3 h-3 shrink-0" />
               <span>Clear filters</span>

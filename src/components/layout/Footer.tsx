@@ -20,7 +20,7 @@ export function Footer() {
       {/* Top Architectural Blueprint Accent Border */}
       <div className="h-[2px] w-full bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand & Mission Column */}
           <div className="md:col-span-2 space-y-4">
@@ -139,7 +139,7 @@ export function Footer() {
 
             <div className="pt-2 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)]">
-                <Terminal className="w-3 h-3 text-[#34A853]" />
+                <Terminal className="w-3 h-3 text-[var(--accent-green-text)]" />
                 Next.js 15 App Router
               </span>
 
@@ -152,9 +152,9 @@ export function Footer() {
                 title="Inspect Live Backend API (/api)"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
-                <span className="text-[#4285F4] font-bold">API</span>
+                <span className="text-[var(--accent-blue-text)] font-bold">API</span>
                 <span className="text-[var(--text-muted)] font-normal">{'//'}</span>
-                <span className="text-[#34A853]">200 OK</span>
+                <span className="text-[var(--accent-green-text)]">200 OK</span>
               </button>
 
               {/* Blueprint X-Ray Design Token Inspector Trigger */}
@@ -163,20 +163,20 @@ export function Footer() {
                 onClick={toggleXRay}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold border transition-all cursor-pointer shadow-2xs active:scale-95 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                   isXRayActive
-                    ? 'bg-[#4285F4]/15 border-[#4285F4] text-[#4285F4] shadow-xs'
-                    : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[#4285F4] border-[var(--border-hairline)] hover:border-[#4285F4]/50'
+                    ? 'bg-[#4285F4]/15 border-[#4285F4] text-[var(--accent-blue-text)] shadow-xs'
+                    : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--accent-blue-text)] border-[var(--border-hairline)] hover:border-[#4285F4]/50'
                 }`}
                 aria-label={`Toggle Blueprint X-Ray Inspector (${isXRayActive ? 'On' : 'Off'})`}
                 title="Toggle Blueprint X-Ray Inspector (Shift+X)"
               >
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${
-                    isXRayActive ? 'bg-[#4285F4] animate-pulse' : 'bg-slate-400'
+                    isXRayActive ? 'bg-[#4285F4] animate-pulse' : 'bg-[var(--text-muted)]'
                   }`}
                 />
                 <span className="font-bold">X-RAY</span>
                 <span className="text-[var(--text-muted)] font-normal">{'//'}</span>
-                <span className={isXRayActive ? 'text-[#4285F4] font-bold' : 'text-[var(--text-muted)]'}>
+                <span className={isXRayActive ? 'text-[var(--accent-blue-text)] font-bold' : 'text-[var(--text-muted)]'}>
                   {isXRayActive ? 'ON' : 'OFF'}
                 </span>
                 <kbd className="text-[9px] px-1 py-0.2 bg-[var(--bg-elevated)] border border-[var(--border-hairline)] rounded text-[var(--text-muted)] font-mono">
@@ -192,7 +192,7 @@ export function Footer() {
                 aria-label="Open Developer CLI Terminal"
                 title="Toggle Developer Terminal (` or ~)"
               >
-                <span className="text-[#34A853] font-bold group-hover:scale-110 transition-transform">&gt;_</span>
+                <span className="text-[var(--accent-green-text)] font-bold group-hover:scale-110 transition-transform">&gt;_</span>
                 <span>CLI</span>
                 <kbd className="text-[9px] px-1 py-0.2 bg-[var(--bg-elevated)] border border-[var(--border-hairline)] rounded text-[var(--text-muted)] font-mono">
                   ~

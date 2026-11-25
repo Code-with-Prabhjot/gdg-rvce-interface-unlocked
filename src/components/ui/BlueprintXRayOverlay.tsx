@@ -97,21 +97,23 @@ export function BlueprintXRayOverlay() {
         setHoveredInfo(info);
 
         // Compute clamped tooltip coordinates to prevent horizontal or vertical overflow
-        const tooltipW = 290;
+        const tooltipW = 280;
         const tooltipH = 150;
-        const pad = 16;
+        const padX = 12;
+        const topPadY = 76;
+        const bottomPadY = 12;
 
         let x = e.clientX + 16;
-        if (x + tooltipW > window.innerWidth - pad) {
+        if (x + tooltipW > window.innerWidth - padX) {
           x = e.clientX - tooltipW - 16;
         }
-        x = Math.max(pad, Math.min(x, window.innerWidth - tooltipW - pad));
+        x = Math.max(padX, Math.min(x, window.innerWidth - tooltipW - padX));
 
         let y = bRect.bottom + 12;
-        if (y + tooltipH > window.innerHeight - pad) {
+        if (y + tooltipH > window.innerHeight - bottomPadY) {
           y = bRect.top - tooltipH - 12;
         }
-        y = Math.max(pad, Math.min(y, window.innerHeight - tooltipH - pad));
+        y = Math.max(topPadY, Math.min(y, window.innerHeight - tooltipH - bottomPadY));
 
         setTooltipPos({ x, y });
       });

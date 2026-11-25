@@ -49,7 +49,7 @@ export default function NotFound() {
         </div>
 
         {/* JetBrains Mono Status Tag */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-strong)] text-xs font-mono text-[#EA4335] mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-strong)] text-xs font-mono text-[var(--accent-red-text)] mb-4">
           <Terminal className="w-3.5 h-3.5" />
           <span className="font-semibold">[ ERROR 404 // ROUTE_NOT_FOUND ]</span>
         </div>
@@ -103,7 +103,7 @@ export default function NotFound() {
           <span>·</span>
           <span>Bengaluru, KA</span>
           <span>·</span>
-          <span className="text-[#34A853]">READY FOR DEPLOY</span>
+          <span className="text-[var(--accent-green-text)] font-semibold">READY FOR DEPLOY</span>
         </div>
       </motion.div>
     </div>

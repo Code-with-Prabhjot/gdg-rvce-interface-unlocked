@@ -33,14 +33,14 @@ export function DevTerminalModal() {
       type: 'welcome',
       output: (
         <div className="space-y-1.5 text-xs">
-          <div className="flex items-center gap-2 text-[#34A853] font-bold">
+          <div className="flex items-center gap-2 text-[#4ADE80] font-bold">
             <span className="inline-block w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
             <span>GDG RVCE Interactive Developer CLI [v1.0.0]</span>
           </div>
-          <p className="text-[var(--text-secondary)]">
-            Type <span className="text-[#4285F4] font-semibold">&quot;help&quot;</span> to see all available commands, or click any quick-command chip below.
+          <p className="text-[#CBD5E1]">
+            Type <span className="text-[#60A5FA] font-semibold">&quot;help&quot;</span> to see all available commands, or click any quick-command chip below.
           </p>
-          <div className="h-px bg-white/10 my-2" />
+          <div className="h-px bg-white/15 my-2" />
         </div>
       ),
     },
@@ -107,51 +107,51 @@ export function DevTerminalModal() {
           type: 'response',
           output: (
             <div className="space-y-1.5 text-xs">
-              <p className="text-[#FBBC04] font-semibold mb-2">Available Developer Commands:</p>
+              <p className="text-[#FCD34D] font-semibold mb-2">Available Developer Commands:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
                 <div>
-                  <span className="text-[#4285F4] font-bold">whoami</span>
-                  <span className="text-white/60"> - Mission, coordinates &amp; verticals</span>
+                  <span className="text-[#60A5FA] font-bold">whoami</span>
+                  <span className="text-[#CBD5E1]"> - Mission, coordinates &amp; verticals</span>
                 </div>
                 <div>
-                  <span className="text-[#4285F4] font-bold">xray</span>
-                  <span className="text-white/60"> - Toggle Blueprint X-Ray Inspector (Shift+X)</span>
+                  <span className="text-[#60A5FA] font-bold">xray</span>
+                  <span className="text-[#CBD5E1]"> - Toggle Blueprint X-Ray Inspector (Shift+X)</span>
                 </div>
                 <div>
-                  <span className="text-[#4285F4] font-bold">api</span>
-                  <span className="text-white/60"> - Open Live Backend API Inspector (/api)</span>
+                  <span className="text-[#60A5FA] font-bold">api</span>
+                  <span className="text-[#CBD5E1]"> - Open Live Backend API Inspector (/api)</span>
                 </div>
                 <div>
-                  <span className="text-[#EA4335] font-bold">events</span>
-                  <span className="text-white/60"> - List sprints &amp; jump to /events</span>
+                  <span className="text-[#F87171] font-bold">events</span>
+                  <span className="text-[#CBD5E1]"> - List sprints &amp; jump to /events</span>
                 </div>
                 <div>
-                  <span className="text-[#34A853] font-bold">team</span>
-                  <span className="text-white/60"> - Open Builders roster (/team)</span>
+                  <span className="text-[#4ADE80] font-bold">team</span>
+                  <span className="text-[#CBD5E1]"> - Open Builders roster (/team)</span>
                 </div>
                 <div>
-                  <span className="text-[#FBBC04] font-bold">home</span>
-                  <span className="text-white/60"> - Navigate to chapter home (/)</span>
+                  <span className="text-[#FCD34D] font-bold">home</span>
+                  <span className="text-[#CBD5E1]"> - Navigate to chapter home (/)</span>
                 </div>
                 <div>
-                  <span className="text-[#4285F4] font-bold">boot</span>
-                  <span className="text-white/60"> - Replay architectural &lt; &gt; prism boot</span>
+                  <span className="text-[#60A5FA] font-bold">boot</span>
+                  <span className="text-[#CBD5E1]"> - Replay architectural &lt; &gt; prism boot</span>
                 </div>
                 <div>
-                  <span className="text-[#4285F4] font-bold">theme [light|dark]</span>
-                  <span className="text-white/60"> - Toggle or set active theme</span>
+                  <span className="text-[#60A5FA] font-bold">theme [light|dark]</span>
+                  <span className="text-[#CBD5E1]"> - Toggle or set active theme</span>
                 </div>
                 <div>
-                  <span className="text-[#EA4335] font-bold">stack</span>
-                  <span className="text-white/60"> - Display architecture manifest</span>
+                  <span className="text-[#F87171] font-bold">stack</span>
+                  <span className="text-[#CBD5E1]"> - Display architecture manifest</span>
                 </div>
                 <div>
-                  <span className="text-[#34A853] font-bold">celebrate</span>
-                  <span className="text-white/60"> - Fire Google 4-colour confetti</span>
+                  <span className="text-[#4ADE80] font-bold">celebrate</span>
+                  <span className="text-[#CBD5E1]"> - Fire Google 4-colour confetti</span>
                 </div>
                 <div>
-                  <span className="text-white/80 font-bold">clear</span>
-                  <span className="text-white/60"> - Clear terminal screen</span>
+                  <span className="text-[#F8FAFC] font-bold">clear</span>
+                  <span className="text-[#CBD5E1]"> - Clear terminal screen</span>
                 </div>
               </div>
             </div>
@@ -383,19 +383,19 @@ export function DevTerminalModal() {
               <div className="flex items-center gap-2 font-bold">
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    nextState ? 'bg-[#4285F4] animate-pulse' : 'bg-slate-400'
+                    nextState ? 'bg-[#4285F4] animate-pulse' : 'bg-[#94A3B8]'
                   }`}
                 />
-                <span className={nextState ? 'text-[#4285F4]' : 'text-slate-300'}>
+                <span className={nextState ? 'text-[#60A5FA]' : 'text-[#CBD5E1]'}>
                   BLUEPRINT X-RAY // {nextState ? 'ACTIVATED [ON]' : 'DEACTIVATED [OFF]'}
                 </span>
               </div>
-              <p className="text-white/80">
+              <p className="text-[#E2E8F0]">
                 {nextState
                   ? 'Architectural diagnostic layer active. Hover over any section, card, button, or heading to inspect live dimensions, typography, CSS tokens, and Google 4-colour compliance rules.'
                   : 'Architectural diagnostic layer disabled.'}
               </p>
-              <div className="text-[11px] text-white/60 space-y-0.5 pt-1 pl-2 border-l border-[#4285F4]/40">
+              <div className="text-[11px] text-[#CBD5E1] space-y-0.5 pt-1 pl-2 border-l border-[#4285F4]/40">
                 <div>
                   <span className="text-[#60A5FA]">📐 Grid:</span> 8px sub-grid · 64px structural guides
                 </div>
@@ -525,22 +525,22 @@ export function DevTerminalModal() {
               </div>
 
               {/* Status Header Title */}
-              <div className="flex items-center gap-1.5 text-xs text-white/70 font-semibold truncate px-2">
-                <TerminalIcon className="w-3.5 h-3.5 text-[#34A853]" />
-                <span className="text-[#34A853]">gdg-rvce@bengaluru</span>
-                <span className="text-white/40">:</span>
-                <span className="text-[#4285F4]">~/interface-unlocked$</span>
+              <div className="flex items-center gap-1.5 text-xs text-[#CBD5E1] font-semibold truncate px-2">
+                <TerminalIcon className="w-3.5 h-3.5 text-[#4ADE80]" />
+                <span className="text-[#4ADE80]">gdg-rvce@bengaluru</span>
+                <span className="text-[#94A3B8]">:</span>
+                <span className="text-[#60A5FA]">~/interface-unlocked$</span>
               </div>
 
               {/* ESC badge */}
               <div className="flex items-center gap-2">
-                <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-white/50 bg-white/5 border border-white/10 rounded">
+                <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-[#CBD5E1] bg-white/10 border border-white/15 rounded">
                   ESC
                 </kbd>
                 <button
                   type="button"
                   onClick={close}
-                  className="p-1 rounded-md text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                  className="p-1 rounded-md text-[#CBD5E1] hover:text-[#F8FAFC] hover:bg-white/10 transition-colors cursor-pointer"
                   aria-label="Close terminal"
                 >
                   <X className="w-4 h-4" />
@@ -556,16 +556,16 @@ export function DevTerminalModal() {
                 }
                 if (item.type === 'command') {
                   return (
-                    <div key={item.id} className="flex items-center gap-2 text-white/90">
-                      <span className="text-[#34A853] font-bold">➜</span>
-                      <span className="text-[#4285F4] font-semibold">~/interface-unlocked</span>
-                      <span className="text-white/40">$</span>
-                      <span className="font-semibold text-white">{item.command}</span>
+                    <div key={item.id} className="flex items-center gap-2 text-[#F8FAFC]">
+                      <span className="text-[#4ADE80] font-bold">➜</span>
+                      <span className="text-[#60A5FA] font-semibold">~/interface-unlocked</span>
+                      <span className="text-[#94A3B8]">$</span>
+                      <span className="font-semibold text-[#F8FAFC]">{item.command}</span>
                     </div>
                   );
                 }
                 return (
-                  <div key={item.id} className="pl-4 border-l-2 border-white/10 py-0.5 text-white/90">
+                  <div key={item.id} className="pl-4 border-l-2 border-white/15 py-0.5 text-[#F8FAFC]">
                     {item.output}
                   </div>
                 );
@@ -575,9 +575,9 @@ export function DevTerminalModal() {
 
             {/* Prompt Input Line */}
             <div className="flex items-center gap-2 px-4 py-2.5 bg-[#0f141d] border-t border-white/10 shrink-0">
-              <span className="text-[#34A853] font-bold text-xs shrink-0">➜</span>
-              <span className="text-[#4285F4] font-semibold text-xs shrink-0 hidden sm:inline">~/interface-unlocked</span>
-              <span className="text-white/40 text-xs shrink-0">$</span>
+              <span className="text-[#4ADE80] font-bold text-xs shrink-0">➜</span>
+              <span className="text-[#60A5FA] font-semibold text-xs shrink-0 hidden sm:inline">~/interface-unlocked</span>
+              <span className="text-[#94A3B8] text-xs shrink-0">$</span>
               <input
                 ref={inputRef}
                 type="text"
@@ -585,7 +585,7 @@ export function DevTerminalModal() {
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type command ('help', 'events', 'stack')..."
-                className="w-full bg-transparent text-xs text-white placeholder-white/30 focus:outline-none caret-[#4285F4] font-mono"
+                className="w-full bg-transparent text-xs text-[#F8FAFC] placeholder:text-[#94A3B8] focus:outline-none caret-[#4285F4] font-mono"
                 aria-label="Terminal command input"
               />
             </div>
@@ -593,20 +593,20 @@ export function DevTerminalModal() {
             {/* Quick Command Chips & Shortcut Guide */}
             <div className="px-4 py-2.5 bg-[#121721] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 shrink-0">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-[10px] text-white/40 uppercase tracking-wider mr-1">Run:</span>
+                <span className="text-[10px] text-[#94A3B8] uppercase tracking-wider mr-1">Run:</span>
                 {quickChips.map((chip) => (
                   <button
                     key={chip}
                     type="button"
                     onClick={() => handleCommand(chip)}
-                    className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/5 hover:bg-white/15 text-white/80 hover:text-white border border-white/10 transition-colors cursor-pointer"
+                    className="px-2 py-0.5 rounded text-[11px] font-mono bg-white/10 hover:bg-white/20 text-[#F8FAFC] border border-white/15 transition-colors cursor-pointer"
                   >
                     {chip}
                   </button>
                 ))}
               </div>
 
-              <div className="text-[10px] text-white/40 font-mono hidden md:flex items-center gap-2">
+              <div className="text-[10px] text-[#94A3B8] font-mono hidden md:flex items-center gap-2">
                 <span>↑↓ history</span>
                 <span>·</span>
                 <span>` or ~ toggle</span>

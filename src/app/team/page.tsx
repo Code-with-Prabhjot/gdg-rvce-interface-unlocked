@@ -32,7 +32,7 @@ function TeamDirectorySkeleton() {
 
 export default function TeamPage() {
   return (
-    <div className="py-8 sm:py-12 lg:py-16">
+    <div className="py-6 sm:py-8 lg:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Suspense fallback={<TeamDirectorySkeleton />}>
           <TeamDirectoryClient />

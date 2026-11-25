@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --font-display: var(--font-display), 'Space Grotesk', -apple-system, sans-serif;
   --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -34,11 +36,17 @@
   --bg-elevated: #FFFFFF;
   --bg-subtle: #F1F5F9;
   --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --border-hairline: rgba(15, 23, 42, 0.09);
-  --border-strong: rgba(15, 23, 42, 0.18);
-  --grid-dot: rgba(15, 23, 42, 0.07);
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --border-hairline: rgba(15, 23, 42, 0.11);
+  --border-strong: rgba(15, 23, 42, 0.22);
+  --grid-dot: rgba(15, 23, 42, 0.08);
+
+  /* High-contrast accessible text tokens for Google 4-colours on Light surfaces */
+  --accent-blue-text: #1A56DB;
+  --accent-red-text: #C5221F;
+  --accent-yellow-text: #92400E;
+  --accent-green-text: #166534;
 
   --focus-ring: rgba(66, 133, 244, 0.5);
 }
@@ -50,11 +58,17 @@ html.dark,
   --bg-elevated: #121721;
   --bg-subtle: #19202E;
   --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --border-hairline: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border-hairline: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.20);
   --grid-dot: rgba(255, 255, 255, 0.06);
+
+  /* High-contrast accessible text tokens for Google 4-colours on Dark surfaces */
+  --accent-blue-text: #60A5FA;
+  --accent-red-text: #F87171;
+  --accent-yellow-text: #FCD34D;
+  --accent-green-text: #4ADE80;
 
   --focus-ring: rgba(66, 133, 244, 0.6);
 }

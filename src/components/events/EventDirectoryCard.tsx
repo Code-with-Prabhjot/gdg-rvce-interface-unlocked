@@ -21,14 +21,14 @@ function getCategoryBadgeData(category: EventCategory) {
         pillClass: 'bg-[#EA4335] text-white border-[#EA4335]',
         accentHex: '#EA4335',
         dotClass: 'bg-white',
-        hoverTextClass: 'group-hover:text-[#EA4335]',
+        hoverTextClass: 'group-hover:text-[var(--accent-red-text)]',
       };
     case 'Workshop':
       return {
         pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
         accentHex: '#4285F4',
         dotClass: 'bg-white',
-        hoverTextClass: 'group-hover:text-[#4285F4]',
+        hoverTextClass: 'group-hover:text-[var(--accent-blue-text)]',
       };
     case 'Study Jam':
       return {
@@ -36,14 +36,14 @@ function getCategoryBadgeData(category: EventCategory) {
         pillClass: 'bg-[#FBBC04] text-[#111827] font-bold border-[#FBBC04]',
         accentHex: '#FBBC04',
         dotClass: 'bg-[#111827]',
-        hoverTextClass: 'group-hover:text-[#FBBC04]',
+        hoverTextClass: 'group-hover:text-[var(--accent-yellow-text)]',
       };
     case 'Tech Talk':
       return {
         pillClass: 'bg-[#34A853] text-white border-[#34A853]',
         accentHex: '#34A853',
         dotClass: 'bg-white',
-        hoverTextClass: 'group-hover:text-[#34A853]',
+        hoverTextClass: 'group-hover:text-[var(--accent-green-text)]',
       };
   }
 }
@@ -107,17 +107,17 @@ export function EventDirectoryCard({
               <div className="flex items-center gap-2">
                 {/* Diagram / Scene Toggle */}
                 {event.sceneImage && (
-                  <div className="inline-flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-xs">
+                  <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs">
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         setViewType('cover');
                       }}
-                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         viewType === 'cover'
-                          ? 'bg-white/25 text-white shadow-xs'
-                          : 'text-white/60 hover:text-white'
+                          ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
+                          : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                       }`}
                     >
                       Diagram
@@ -128,10 +128,10 @@ export function EventDirectoryCard({
                         e.stopPropagation();
                         setViewType('scene');
                       }}
-                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         viewType === 'scene'
                           ? 'bg-[#4285F4] text-white shadow-xs'
-                          : 'text-white/60 hover:text-white'
+                          : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                       }`}
                     >
                       Scene
@@ -141,12 +141,12 @@ export function EventDirectoryCard({
 
                 {/* Status Badge */}
                 {isUpcoming ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white border border-white/20">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
                     Upcoming
                   </span>
                 ) : (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/65 backdrop-blur-md text-white/80 border border-white/20">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#CBD5E1] border border-white/20">
                     Past Recap
                   </span>
                 )}
@@ -164,7 +164,7 @@ export function EventDirectoryCard({
                   className={`min-w-[28px] min-h-[28px] p-1.5 rounded-md backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center ${
                     saved
                       ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
-                      : 'bg-black/65 hover:bg-black/85 text-white/80 hover:text-white border-white/20'
+                      : 'bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#CBD5E1] hover:text-[#F8FAFC] border-white/20'
                   }`}
                 >
                   <Bookmark
@@ -176,11 +176,11 @@ export function EventDirectoryCard({
 
             {/* Delivery Mode Chip (Bottom right overlay) */}
             <div className="absolute bottom-2.5 right-3 z-10">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-black/75 backdrop-blur-md text-white/95 border border-white/15">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/15">
                 {event.mode === 'Online' ? (
-                  <Video className="w-3 h-3 text-[#34A853]" />
+                  <Video className="w-3 h-3 text-[#4ADE80]" />
                 ) : (
-                  <MapPin className="w-3 h-3 text-[#EA4335]" />
+                  <MapPin className="w-3 h-3 text-[#F87171]" />
                 )}
                 {event.mode}
               </span>
@@ -194,25 +194,25 @@ export function EventDirectoryCard({
           </div>
 
           {/* Card Body */}
-          <div className="p-5 sm:p-6 space-y-4">
+          <div className="p-4 sm:p-5 space-y-3">
             {/* JetBrains Mono Date/Time + Venue */}
-            <div className="space-y-1.5 text-xs font-mono text-[var(--text-muted)]">
+            <div className="space-y-1 text-xs font-mono text-[var(--text-muted)]">
               <div className="flex items-center gap-2 text-[var(--text-secondary)] font-semibold">
-                <Calendar className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
+                <Calendar className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
                 <span>
                   {event.date} · {event.time}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#EA4335] shrink-0" />
+                <MapPin className="w-3.5 h-3.5 text-[var(--accent-red-text)] shrink-0" />
                 <span className="truncate">{event.venue}</span>
               </div>
             </div>
 
             {/* Space Grotesk Title + 2-line Summary */}
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <h3
-                className={`text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] transition-colors line-clamp-2 ${categoryData.hoverTextClass}`}
+                className={`text-lg font-display font-bold text-[var(--text-primary)] transition-colors line-clamp-2 ${categoryData.hoverTextClass}`}
               >
                 {event.title}
               </h3>
@@ -222,7 +222,7 @@ export function EventDirectoryCard({
             </div>
 
             {/* Tech Tag Chips */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
               {event.tags.slice(0, 4).map((tag, tagIdx) => (
                 <span
                   key={tagIdx}
@@ -236,7 +236,7 @@ export function EventDirectoryCard({
         </div>
 
         {/* Footer Row: Speaker + Action CTA */}
-        <div className="p-5 sm:p-6 pt-3.5 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between gap-3">
+        <div className="p-4 sm:p-5 pt-3 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between gap-3">
           {/* Speaker Info */}
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-7 h-7 rounded-full overflow-hidden relative border border-[var(--border-strong)] shrink-0 bg-[var(--bg-canvas)]">
@@ -264,7 +264,7 @@ export function EventDirectoryCard({
               e.stopPropagation();
               onSelectEvent(event.slug);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-blue-text)] hover:underline transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap cursor-pointer"
           >
             <span>Inspect Event</span>
             <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover/btn:translate-x-1" />
@@ -310,7 +310,7 @@ export function EventDirectoryCard({
         </p>
         <div className="pt-1 pl-5.5 flex items-center gap-2">
           {isUpcoming ? (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#34A853]/15 text-[#34A853] border border-[#34A853]/30">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/30">
               <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
               Upcoming
             </span>

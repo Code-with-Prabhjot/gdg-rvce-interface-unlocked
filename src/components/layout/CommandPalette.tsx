@@ -261,7 +261,7 @@ export function CommandPalette() {
             aria-label="Quick Command Palette"
           >
             {/* Input Header */}
-            <div className="relative flex items-center px-4 py-3.5 border-b border-[var(--border-hairline)]">
+            <div className="relative flex items-center px-4 py-3.5 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/50">
               <Search className="w-5 h-5 text-[var(--text-muted)] mr-3 shrink-0" />
               <input
                 ref={inputRef}
@@ -273,7 +273,7 @@ export function CommandPalette() {
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a command or jump to page..."
-                className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] text-base focus:outline-none"
+                className="w-full bg-transparent text-[var(--text-primary)] placeholder:text-[var(--text-muted)] text-base focus:outline-none"
               />
               <kbd className="hidden sm:inline-block px-2 py-0.5 text-[11px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
                 ESC

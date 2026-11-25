@@ -15,12 +15,12 @@ function getCategoryBadgeStyles(eventType: GDGEvent['eventType'] | string) {
   switch (eventType) {
     case 'Hackathon':
       return {
-        pillClass: 'bg-[#EA4335]/90 text-white border-[#EA4335]',
+        pillClass: 'bg-[#EA4335] text-white border-[#EA4335]',
         dotClass: 'bg-white',
       };
     case 'Workshop':
       return {
-        pillClass: 'bg-[#4285F4]/90 text-white border-[#4285F4]',
+        pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
         dotClass: 'bg-white',
       };
     case 'Study Jam':
@@ -31,12 +31,12 @@ function getCategoryBadgeStyles(eventType: GDGEvent['eventType'] | string) {
       };
     case 'Tech Talk':
       return {
-        pillClass: 'bg-[#34A853]/90 text-white border-[#34A853]',
+        pillClass: 'bg-[#34A853] text-white border-[#34A853]',
         dotClass: 'bg-white',
       };
     default:
       return {
-        pillClass: 'bg-[#4285F4]/90 text-white border-[#4285F4]',
+        pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
         dotClass: 'bg-white',
       };
   }
@@ -76,12 +76,12 @@ function EventCard({ event, index }: EventCardProps) {
 
   return (
     <motion.article
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{
-        duration: prefersReducedMotion ? 0 : 0.6,
-        delay: prefersReducedMotion ? 0 : index * 0.12,
+        duration: prefersReducedMotion ? 0 : 0.4,
+        delay: prefersReducedMotion ? 0 : index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
       className="flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 group"
@@ -100,7 +100,7 @@ function EventCard({ event, index }: EventCardProps) {
           />
 
           {/* Vignette Gradient for badge legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#090C10]/70 via-transparent to-[#090C10]/40 pointer-events-none" />
 
           {/* ============================================================= */}
           {/* 2. TOP OVERLAY PILLS                                          */}
@@ -118,7 +118,7 @@ function EventCard({ event, index }: EventCardProps) {
             <div className="flex items-center gap-2">
               {/* Diagram / Scene Toggle Pill */}
               {event.sceneImage && (
-                <div className="inline-flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-xs">
+                <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs">
                   <button
                     type="button"
                     onClick={(e) => {
@@ -126,10 +126,10 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('cover');
                     }}
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                       viewType === 'cover'
-                        ? 'bg-white/25 text-white shadow-xs'
-                        : 'text-white/60 hover:text-white'
+                        ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
+                        : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                     }`}
                   >
                     Diagram
@@ -141,10 +141,10 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('scene');
                     }}
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all ${
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                       viewType === 'scene'
                         ? 'bg-[#4285F4] text-white shadow-xs'
-                        : 'text-white/60 hover:text-white'
+                        : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                     }`}
                   >
                     Scene
@@ -153,7 +153,7 @@ function EventCard({ event, index }: EventCardProps) {
               )}
 
               {/* Mode Badge */}
-              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-black/60 dark:bg-black/80 backdrop-blur-md text-white/95 border border-white/20">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
                 {event.mode}
               </span>
             </div>
@@ -164,18 +164,18 @@ function EventCard({ event, index }: EventCardProps) {
         </div>
 
         {/* Card Body */}
-        <div className="p-6 space-y-4">
+        <div className="p-4 sm:p-5 space-y-3">
           {/* ============================================================= */}
           {/* 3. STRUCTURED METADATA                                        */}
           {/* JetBrains Mono Date/Time + RVCE Venue Indicator               */}
           {/* ============================================================= */}
-          <div className="space-y-1.5 text-xs font-mono text-[var(--text-muted)]">
+          <div className="space-y-1 text-xs font-mono text-[var(--text-muted)]">
             <div className="flex items-center gap-2 text-[var(--text-secondary)] font-semibold">
-              <Calendar className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
+              <Calendar className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
               <span>{formattedDateTime}</span>
             </div>
             <div className="flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-[#EA4335] shrink-0" />
+              <MapPin className="w-3.5 h-3.5 text-[var(--accent-red-text)] shrink-0" />
               <span className="truncate">{event.venue}</span>
             </div>
           </div>
@@ -184,8 +184,8 @@ function EventCard({ event, index }: EventCardProps) {
           {/* 4. TITLE & SUMMARY + 3 TECH STACK TAGS                        */}
           {/* Space Grotesk Title + 2-line Summary                          */}
           {/* ============================================================= */}
-          <div className="space-y-2">
-            <h3 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] group-hover:text-[#4285F4] transition-colors line-clamp-2">
+          <div className="space-y-1.5">
+            <h3 className="text-lg font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-blue-text)] transition-colors line-clamp-2">
               {event.title}
             </h3>
             <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
@@ -194,7 +194,7 @@ function EventCard({ event, index }: EventCardProps) {
           </div>
 
           {/* 3 Tech Stack Tags */}
-          <div className="flex flex-wrap gap-1.5 pt-1">
+          <div className="flex flex-wrap gap-1.5 pt-0.5">
             {event.tags.slice(0, 3).map((tag, tagIdx) => (
               <span
                 key={tagIdx}
@@ -212,7 +212,7 @@ function EventCard({ event, index }: EventCardProps) {
       {/* Speaker preview + Direct link to /events?event=${event.slug}  */}
       {/* Strictly NO RSVP counts or attendee numbers.                  */}
       {/* ============================================================= */}
-      <div className="p-4 sm:p-6 pt-3 sm:pt-4 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between gap-2">
+      <div className="p-4 pt-3 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40 flex items-center justify-between gap-2">
         {/* Speaker Info */}
         <div className="flex items-center gap-2 min-w-0">
           <div className="w-7 h-7 rounded-full overflow-hidden relative border border-[var(--border-strong)] shrink-0 bg-[var(--bg-canvas)]">
@@ -236,7 +236,7 @@ function EventCard({ event, index }: EventCardProps) {
         {/* Direct Action Link */}
         <Link
           href={`/events?event=${event.slug}`}
-          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#4285F4] hover:text-[#3367D6] transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[var(--accent-blue-text)] hover:underline transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0"
         >
           <span className="hidden sm:inline">Inspect Agenda &amp; Register</span>
           <span className="sm:hidden">Inspect</span>
@@ -259,21 +259,21 @@ export function FeaturedEventsSection() {
   return (
     <section
       id="upcoming-events"
-      className="py-20 lg:py-28 bg-[var(--bg-subtle)]/50 border-t border-[var(--border-hairline)] scroll-mt-24"
+      className="py-12 lg:py-16 bg-[var(--bg-subtle)]/50 border-t border-[var(--border-hairline)] scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14"
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 lg:mb-8"
         >
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
-              <span className="font-mono text-xs font-semibold text-[#EA4335] tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
+              <span className="font-mono text-xs font-semibold text-[var(--accent-red-text)] tracking-wider">
                 [ 03 // UPCOMING ON CAMPUS ]
               </span>
             </div>
@@ -284,7 +284,7 @@ export function FeaturedEventsSection() {
             </h2>
 
             {/* Subcopy */}
-            <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl leading-relaxed">
               Hands-on architectural laboratories, 24-hour prototype buildathlons, and systems deep-dives hosted on campus.
             </p>
           </div>
@@ -292,15 +292,15 @@ export function FeaturedEventsSection() {
           {/* Right-Aligned Directory Button with Subtle Hover Translation */}
           <Link
             href="/events"
-            className="group inline-flex items-center justify-center gap-2.5 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 self-start md:self-auto shadow-xs hover:shadow-md whitespace-nowrap"
+            className="group inline-flex items-center justify-center gap-2.5 px-5 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] transition-all duration-200 self-start md:self-auto shadow-xs hover:shadow-md whitespace-nowrap shrink-0"
           >
             <span>View Full Directory</span>
-            <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 text-[#4285F4]" />
+            <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 text-[var(--accent-blue-text)]" />
           </Link>
         </motion.div>
 
         {/* Curated Upcoming Sprints Grid (3 Columns) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
           {featuredUpcomingEvents.map((event, idx) => (
             <EventCard key={event.id} event={event} index={idx} />
           ))}

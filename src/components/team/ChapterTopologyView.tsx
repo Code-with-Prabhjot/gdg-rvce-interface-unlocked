@@ -34,18 +34,18 @@ function getAccentVisual(color: GoogleAccent): AccentVisualConfig {
     case 'red':
       return {
         hex: '#EA4335',
-        badgeClass: 'bg-[#EA4335]/10 text-[#EA4335] border-[#EA4335]/30',
+        badgeClass: 'bg-[#EA4335]/10 text-[var(--accent-red-text)] border-[#EA4335]/30',
         ringClass: 'ring-[#EA4335]',
         glowClass: 'shadow-[0_0_16px_rgba(234,67,53,0.35)]',
-        textClass: 'text-[#EA4335]',
+        textClass: 'text-[var(--accent-red-text)]',
       };
     case 'blue':
       return {
         hex: '#4285F4',
-        badgeClass: 'bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/30',
+        badgeClass: 'bg-[#4285F4]/10 text-[var(--accent-blue-text)] border-[#4285F4]/30',
         ringClass: 'ring-[#4285F4]',
         glowClass: 'shadow-[0_0_16px_rgba(66,133,244,0.35)]',
-        textClass: 'text-[#4285F4]',
+        textClass: 'text-[var(--accent-blue-text)]',
       };
     case 'yellow':
       return {
@@ -54,16 +54,16 @@ function getAccentVisual(color: GoogleAccent): AccentVisualConfig {
         badgeClass: 'bg-[#FBBC04] text-[#111827] font-semibold border-[#FBBC04]',
         ringClass: 'ring-[#FBBC04]',
         glowClass: 'shadow-[0_0_16px_rgba(251,188,4,0.35)]',
-        textClass: 'text-[#B45309] dark:text-[#FBBC04]',
+        textClass: 'text-[var(--accent-yellow-text)]',
       };
     case 'green':
     default:
       return {
         hex: '#34A853',
-        badgeClass: 'bg-[#34A853]/10 text-[#34A853] border-[#34A853]/30',
+        badgeClass: 'bg-[#34A853]/10 text-[var(--accent-green-text)] border-[#34A853]/30',
         ringClass: 'ring-[#34A853]',
         glowClass: 'shadow-[0_0_16px_rgba(52,168,83,0.35)]',
-        textClass: 'text-[#34A853]',
+        textClass: 'text-[var(--accent-green-text)]',
       };
   }
 }
@@ -293,7 +293,7 @@ export function ChapterTopologyView() {
           {/* ------------------------------------------------------------- */}
           {/* DESKTOP TOPOLOGY CIRCUIT (SVG + Interactive HTML Nodes)        */}
           {/* ------------------------------------------------------------- */}
-          <div className="hidden md:block relative w-full aspect-[800/560] p-4 select-none">
+          <div className="hidden md:block relative w-full aspect-[800/500] max-h-[520px] p-4 select-none">
             {/* Background SVG Vector Circuit Paths & Pulse Glows */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
@@ -853,7 +853,16 @@ export function ChapterTopologyView() {
                         </span>
                         <span
                           className="font-bold shrink-0 ml-2"
-                          style={{ color: selectedAccent.hex }}
+                          style={{
+                            color:
+                              selectedMember.googleColor === 'yellow'
+                                ? 'var(--accent-yellow-text)'
+                                : selectedMember.googleColor === 'red'
+                                ? 'var(--accent-red-text)'
+                                : selectedMember.googleColor === 'green'
+                                ? 'var(--accent-green-text)'
+                                : 'var(--accent-blue-text)',
+                          }}
                         >
                           {comp.level}%
                         </span>

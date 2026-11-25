@@ -23,16 +23,11 @@ export function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  const rawGridParallaxY = useTransform(scrollYProgress, [0, 1], [0, 44]);
-  const rawCopyParallaxY = useTransform(scrollYProgress, [0, 1], [0, 16]);
-  const rawStageParallaxY = useTransform(scrollYProgress, [0, 1], [0, -22]);
-
+  const rawGridParallaxY = useTransform(scrollYProgress, [0, 1], [0, 36]);
   const gridParallaxY = prefersReducedMotion ? 0 : rawGridParallaxY;
-  const copyParallaxY = prefersReducedMotion ? 0 : rawCopyParallaxY;
-  const stageParallaxY = prefersReducedMotion ? 0 : rawStageParallaxY;
 
   const maskTransition = (delay: number) => ({
-    duration: prefersReducedMotion ? 0 : 0.85,
+    duration: prefersReducedMotion ? 0 : 0.45,
     delay: prefersReducedMotion ? 0 : delay,
     ease: easeOutQuart,
   });
@@ -41,7 +36,7 @@ export function HeroSection() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center py-10 lg:py-16 overflow-hidden"
+      className="relative w-full flex items-center justify-center pt-5 pb-7 lg:pt-7 lg:pb-9 overflow-hidden"
     >
       {/* Background Architectural Blueprint Grid Parallax Layer */}
       <motion.div
@@ -51,68 +46,65 @@ export function HeroSection() {
       />
 
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           {/* ========================================================= */}
           {/* LEFT COLUMN: Choreographed Masked Typography & CTAs       */}
           {/* ========================================================= */}
-          <motion.div
-            style={{ y: copyParallaxY }}
-            className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center space-y-7 z-10 will-change-transform"
-          >
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center space-y-4 lg:space-y-5 z-10">
             {/* 0ms: Eyebrow Telemetry Pill */}
             <motion.div
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 14 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={maskTransition(0)}
               className="flex flex-wrap items-center gap-2.5"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
                 <span className="font-mono text-xs font-semibold text-[var(--text-secondary)] tracking-wide">
                   RVCE · BENGALURU // CHAPTER PORTAL
                 </span>
               </div>
 
-              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-xs font-mono text-[var(--text-muted)]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#4285F4]" />
+              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-xs font-mono text-[var(--text-muted)]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                 <span>OFFICIAL GDG ON CAMPUS</span>
               </div>
             </motion.div>
 
-            {/* 120ms - 420ms: Three Masked Display Lines */}
-            <div className="space-y-1 sm:space-y-2">
+            {/* 120ms - 360ms: Three Masked Display Lines */}
+            <div className="space-y-0.5 sm:space-y-1">
               {/* Line 1: "Engineering the" */}
-              <div className="overflow-hidden py-1">
+              <div className="overflow-hidden py-0.5">
                 <motion.h1
                   initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                   animate={{ y: '0%' }}
-                  transition={maskTransition(0.12)}
-                  className="text-4xl sm:text-6xl xl:text-7xl font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.05]"
+                  transition={maskTransition(0.08)}
+                  className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]"
                 >
                   Engineering the
                 </motion.h1>
               </div>
 
               {/* Line 2: "open web at" */}
-              <div className="overflow-hidden py-1">
+              <div className="overflow-hidden py-0.5">
                 <motion.h2
                   initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                   animate={{ y: '0%' }}
-                  transition={maskTransition(0.24)}
-                  className="text-4xl sm:text-6xl xl:text-7xl font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.05]"
+                  transition={maskTransition(0.16)}
+                  className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]"
                 >
                   open web at
                 </motion.h2>
               </div>
 
               {/* Line 3: "GDG RVCE." + Google Spectrum Bar */}
-              <div className="overflow-hidden py-1">
+              <div className="overflow-hidden py-0.5">
                 <div className="relative inline-block">
                   <motion.h2
                     initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                     animate={{ y: '0%' }}
-                    transition={maskTransition(0.36)}
-                    className="text-4xl sm:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-[1.05]"
+                    transition={maskTransition(0.24)}
+                    className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight leading-[1.06]"
                   >
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853]">
                       GDG RVCE.
@@ -124,12 +116,12 @@ export function HeroSection() {
                     initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{
-                      duration: prefersReducedMotion ? 0 : 0.7,
-                      delay: prefersReducedMotion ? 0 : 0.45,
+                      duration: prefersReducedMotion ? 0 : 0.45,
+                      delay: prefersReducedMotion ? 0 : 0.3,
                       ease: easeOutQuart,
                     }}
                     style={{ transformOrigin: 'left' }}
-                    className="h-1 w-full mt-2.5 rounded-full overflow-hidden flex shadow-xs"
+                    className="h-1 w-full mt-2 rounded-full overflow-hidden flex shadow-xs"
                   >
                     <div className="w-1/4 h-full bg-[#4285F4]" />
                     <div className="w-1/4 h-full bg-[#EA4335]" />
@@ -140,27 +132,27 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* 480ms: Crisp 2-Line Mission Statement */}
+            {/* Crisp 2-Line Mission Statement */}
             <motion.p
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={maskTransition(0.48)}
-              className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl"
+              transition={maskTransition(0.28)}
+              className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl"
             >
               An open student developer community at R.V. College of Engineering building with AI, Cloud, Web, and Android through hands-on sprints and open-source craft.
             </motion.p>
 
-            {/* 580ms: Dual Tactile Action CTAs */}
+            {/* Dual Tactile Action CTAs */}
             <motion.div
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={maskTransition(0.58)}
-              className="flex flex-wrap items-center gap-4 pt-1"
+              transition={maskTransition(0.32)}
+              className="flex flex-wrap items-center gap-3 pt-0.5"
             >
               <MagneticWrapper maxOffset={6}>
                 <Link
                   href="/events"
-                  className="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                  className="group inline-flex items-center justify-center gap-2.5 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
                 >
                   <span>Explore Events</span>
                   <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
@@ -170,90 +162,90 @@ export function HeroSection() {
               <MagneticWrapper maxOffset={6}>
                 <Link
                   href="/team"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] hover:border-[#4285F4] hover:bg-[var(--bg-subtle)] shadow-xs hover:shadow-sm transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
                 >
-                  <Code className="w-4 h-4 shrink-0 text-[#34A853]" />
+                  <Code className="w-4 h-4 shrink-0 text-[var(--accent-green-text)]" />
                   <span>Meet the Builders</span>
                 </Link>
               </MagneticWrapper>
             </motion.div>
 
-            {/* 680ms: Interactive Developer Sticker Strip */}
+            {/* Interactive Developer Sticker Strip + Compact Scene Preview Pill */}
             <motion.div
-              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
+              initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={maskTransition(0.68)}
-              className="pt-2 flex flex-col gap-2.5"
+              transition={maskTransition(0.36)}
+              className="pt-1 flex flex-col gap-2.5"
             >
-              <div className="flex items-center gap-2 text-xs font-mono font-medium text-[var(--text-muted)] tracking-wider">
+              <div className="flex items-center gap-2 text-[11px] font-mono font-medium text-[var(--text-muted)] tracking-wider">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)]" />
                 <span>DEVELOPER EMOTE BADGES</span>
               </div>
 
-              <div className="flex items-center gap-2 sm:gap-3">
-                {DEVELOPER_STICKERS.map((sticker) => {
-                  const isHovered = activeTooltip === sticker.id;
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-2">
+                  {DEVELOPER_STICKERS.map((sticker) => {
+                    const isHovered = activeTooltip === sticker.id;
 
-                  return (
-                    <div
-                      key={sticker.id}
-                      className="relative"
-                      onMouseEnter={() => setActiveTooltip(sticker.id)}
-                      onMouseLeave={() => setActiveTooltip(null)}
-                    >
-                      <motion.div
-                        whileHover={
-                          prefersReducedMotion
-                            ? {}
-                            : {
-                                scale: 1.18,
-                                rotate: -6,
-                              }
-                        }
-                        transition={{ type: 'spring', stiffness: 350, damping: 18 }}
-                        className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs flex items-center justify-center p-1.5 sm:p-2 cursor-pointer transition-colors hover:border-[#4285F4]"
+                    return (
+                      <div
+                        key={sticker.id}
+                        className="relative"
+                        onMouseEnter={() => setActiveTooltip(sticker.id)}
+                        onMouseLeave={() => setActiveTooltip(null)}
                       >
-                        <Image
-                          src={`/assets/emotes/${sticker.file}`}
-                          alt={sticker.label}
-                          width={36}
-                          height={36}
-                          className="w-full h-full object-contain"
-                        />
-                      </motion.div>
-
-                      {/* Tooltip Tag */}
-                      {isHovered && (
                         <motion.div
-                          initial={{ opacity: 0, y: 6, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 4, scale: 0.95 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-lg text-[11px] font-mono font-semibold whitespace-nowrap text-[var(--text-primary)] z-30 pointer-events-none flex items-center gap-1.5"
+                          whileHover={
+                            prefersReducedMotion
+                              ? {}
+                              : {
+                                  scale: 1.12,
+                                  rotate: -4,
+                                }
+                          }
+                          transition={{ type: 'spring', stiffness: 350, damping: 18 }}
+                          className="relative w-10 h-10 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-xs flex items-center justify-center p-1.5 cursor-pointer transition-colors hover:border-[#4285F4]"
                         >
-                          <span
-                            className="w-1.5 h-1.5 rounded-full"
-                            style={{ backgroundColor: sticker.accentHex }}
+                          <Image
+                            src={`/assets/emotes/${sticker.file}`}
+                            alt={sticker.label}
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-contain pointer-events-none select-none"
                           />
-                          <span>{sticker.tooltip}</span>
                         </motion.div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
 
-              {/* Compact Tactile "Latest Scene Preview" Pill Card */}
-              <div className="pt-1.5">
+                        {/* Tooltip Tag */}
+                        {isHovered && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-lg text-[11px] font-mono font-semibold whitespace-nowrap text-[var(--text-primary)] z-30 pointer-events-none flex items-center gap-1.5"
+                          >
+                            <span
+                              className="w-1.5 h-1.5 rounded-full"
+                              style={{ backgroundColor: sticker.accentHex }}
+                            />
+                            <span>{sticker.tooltip}</span>
+                          </motion.div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Compact Tactile "Latest Scene Preview" Pill Card */}
                 <a
                   href="#community-scenes"
                   onClick={(e) => {
                     e.preventDefault();
                     document.getElementById('community-scenes')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="group/scene-pill inline-flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 max-w-full cursor-pointer"
+                  className="group/scene-pill inline-flex items-center gap-2.5 p-1.5 pr-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-0.5 max-w-full cursor-pointer"
                 >
-                  <div className="relative w-12 h-8 rounded-lg overflow-hidden border border-white/20 shrink-0 bg-black">
+                  <div className="relative w-11 h-7 rounded-lg overflow-hidden border border-[var(--border-strong)] shrink-0 bg-[#090C10]">
                     <Image
                       src="/assets/scenes/auditorium-keynote.svg"
                       alt="Auditorium Keynote Preview"
@@ -261,14 +253,14 @@ export function HeroSection() {
                       className="object-cover group-hover/scene-pill:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FBBC04] animate-pulse shrink-0" />
                       <span className="text-[10px] font-mono font-semibold text-[var(--text-muted)] tracking-wider uppercase">
                         IN THE BUILD ROOM
                       </span>
                     </div>
-                    <span className="text-xs font-display font-bold text-[var(--text-primary)] group-hover/scene-pill:text-[#4285F4] transition-colors flex items-center gap-1">
+                    <span className="text-xs font-display font-bold text-[var(--text-primary)] group-hover/scene-pill:text-[var(--accent-blue-text)] transition-colors flex items-center gap-1 truncate">
                       <span>Auditorium Keynote · SCENE // 01</span>
                       <ArrowRight className="w-3 h-3 shrink-0 group-hover/scene-pill:translate-x-1 transition-transform" />
                     </span>
@@ -276,17 +268,14 @@ export function HeroSection() {
                 </a>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* ========================================================= */}
           {/* RIGHT COLUMN: Interactive 3D Kinetic Prism Stage          */}
           {/* ========================================================= */}
-          <motion.div
-            style={{ y: stageParallaxY }}
-            className="lg:col-span-6 xl:col-span-5 flex items-center justify-center w-full z-10 will-change-transform"
-          >
+          <div className="lg:col-span-6 xl:col-span-5 flex items-center justify-center w-full z-10">
             <KineticPrismStage />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

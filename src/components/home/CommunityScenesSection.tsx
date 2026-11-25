@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Maximize2, X, ChevronLeft, ChevronRight, MapPin, Sparkles } from 'lucide-react';
 import { COMMUNITY_SCENES, CommunityScene, GoogleAccent } from '@/data/gdgData';
 
@@ -24,16 +24,16 @@ function getGoogleAccentHex(accent: GoogleAccent) {
 function getCategoryBadgeClass(accent: GoogleAccent) {
   switch (accent) {
     case 'blue':
-      return 'bg-[#4285F4]/90 text-white border-[#4285F4]';
+      return 'bg-[#4285F4] text-white border-[#4285F4]';
     case 'red':
-      return 'bg-[#EA4335]/90 text-white border-[#EA4335]';
+      return 'bg-[#EA4335] text-white border-[#EA4335]';
     case 'yellow':
       // WCAG AAA high contrast with dark ink
       return 'bg-[#FBBC04] text-[#111827] font-bold border-[#FBBC04]';
     case 'green':
-      return 'bg-[#34A853]/90 text-white border-[#34A853]';
+      return 'bg-[#34A853] text-white border-[#34A853]';
     default:
-      return 'bg-[#4285F4]/90 text-white border-[#4285F4]';
+      return 'bg-[#4285F4] text-white border-[#4285F4]';
   }
 }
 
@@ -47,14 +47,6 @@ export function CommunityScenesSection() {
   const currentScene: CommunityScene =
     activeIndex !== -1 ? COMMUNITY_SCENES[activeIndex] : COMMUNITY_SCENES[0];
   const accentHex = getGoogleAccentHex(currentScene.googleColor);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: cinemaScrollY } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-  const rawSceneParallaxY = useTransform(cinemaScrollY, [0, 1], [-10, 10]);
-  const sceneParallaxY = prefersReducedMotion ? 0 : rawSceneParallaxY;
 
   const handleNextScene = useCallback(() => {
     const nextIdx = (activeIndex + 1) % COMMUNITY_SCENES.length;
@@ -93,20 +85,20 @@ export function CommunityScenesSection() {
   return (
     <section
       id="community-scenes"
-      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-12 scroll-mt-24"
+      className="py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6 lg:space-y-8 scroll-mt-24"
     >
       {/* ============================================================= */}
       {/* 1. SECTION HEADER WITH TELEMETRY EYEBROW                      */}
       {/* ============================================================= */}
       <motion.div
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="space-y-3"
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="space-y-2.5"
       >
         {/* Telemetry Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
           <span className="w-2 h-2 rounded-full bg-[#FBBC04] animate-pulse" />
           <span className="font-mono text-xs font-semibold text-[var(--text-secondary)] tracking-wider">
             [ 04 // IN THE BUILD ROOM ]
@@ -114,230 +106,240 @@ export function CommunityScenesSection() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4]" />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="space-y-2 max-w-3xl">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <div className="space-y-1.5 max-w-3xl">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-[var(--text-primary)]">
               Where RVCE builders ship together.
             </h2>
-            <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
               From late-evening open-source code jams to auditorium broadcasts and hands-on lab
-              sprints—explore the visual rhythm of GDG RVCE.
+              sprints—select any scene on the right to inspect it live on stage.
             </p>
           </div>
 
           <div className="hidden sm:inline-flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] bg-[var(--bg-elevated)] px-3 py-2 rounded-xl border border-[var(--border-hairline)] self-start lg:self-auto shrink-0">
-            <Sparkles className="w-3.5 h-3.5 text-[#FBBC04]" />
+            <Sparkles className="w-3.5 h-3.5 text-[var(--accent-yellow-text)]" />
             <span>ORIGINAL VECTOR SUITE // 10 SCENES</span>
           </div>
         </div>
       </motion.div>
 
       {/* ============================================================= */}
-      {/* 2. MAIN EDITORIAL CINEMA FRAME (16:9)                         */}
+      {/* 2. SIDE-BY-SIDE MASTER-DETAIL STUDIO LAYOUT                   */}
+      {/* Left: 16:9 Cinema Stage (col-8) · Right: 10-Scene Rail (col-4)*/}
       {/* ============================================================= */}
       <motion.div
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-        className="relative rounded-2xl sm:rounded-3xl border border-[var(--border-strong)] bg-[var(--bg-elevated)] overflow-hidden shadow-2xl group"
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch"
       >
-        {/* Corner Crosshairs */}
-        <div className="absolute top-3 left-3 text-[11px] font-mono text-white/50 select-none pointer-events-none z-30">
-          +
-        </div>
-        <div className="absolute top-3 right-3 text-[11px] font-mono text-white/50 select-none pointer-events-none z-30">
-          +
-        </div>
-        <div className="absolute bottom-3 left-3 text-[11px] font-mono text-white/50 select-none pointer-events-none z-30">
-          +
-        </div>
-        <div className="absolute bottom-3 right-3 text-[11px] font-mono text-white/50 select-none pointer-events-none z-30">
-          +
-        </div>
-
-        {/* Live Scene Telemetry Header Bar */}
-        <div className="absolute top-0 inset-x-0 h-12 sm:h-14 px-4 sm:px-6 z-30 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <span
-              className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: accentHex }}
-            />
-            <span className="font-mono text-xs sm:text-sm font-bold text-white tracking-wider">
-              {currentScene.code} · {currentScene.venue.toUpperCase()}
-            </span>
+        {/* LEFT COLUMN (lg:col-span-8): 16:9 Editorial Scene Cinema Frame */}
+        <div className="lg:col-span-8 relative rounded-2xl border border-[var(--border-strong)] bg-[#090C10] overflow-hidden shadow-xl group flex flex-col justify-between">
+          {/* Corner Crosshairs */}
+          <div className="absolute top-3 left-3 text-[11px] font-mono text-[#CBD5E1]/70 select-none pointer-events-none z-30">
+            +
+          </div>
+          <div className="absolute top-3 right-3 text-[11px] font-mono text-[#CBD5E1]/70 select-none pointer-events-none z-30">
+            +
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span
-              className={`hidden sm:inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs ${getCategoryBadgeClass(
-                currentScene.googleColor
-              )}`}
-            >
-              {currentScene.category}
-            </span>
-
-            {/* Expand Fullscreen Button (44x44px minimum tap target) */}
-            <button
-              type="button"
-              onClick={() => setIsLightboxOpen(true)}
-              aria-label="Expand scene illustration in fullscreen lightbox"
-              className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/60 hover:bg-black/85 text-white/90 hover:text-white border border-white/20 backdrop-blur-md transition-all duration-200 text-xs font-mono font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Expand Fullscreen ⤢</span>
-            </button>
-          </div>
-        </div>
-
-        {/* 16:9 Cinema Aspect Stage */}
-        <div
-          ref={containerRef}
-          className="relative w-full aspect-[16/9] bg-black cursor-pointer overflow-hidden"
-          onClick={() => setIsLightboxOpen(true)}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentScene.id}
-              initial={
-                prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 1.025 }
-              }
-              animate={{ opacity: 1, scale: 1 }}
-              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.45,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{ y: sceneParallaxY }}
-              className="absolute inset-0 will-change-transform"
-            >
-              <Image
-                src={currentScene.image}
-                alt={currentScene.title}
-                fill
-                priority
-                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+          {/* Live Scene Telemetry Header Bar */}
+          <div className="absolute top-0 inset-x-0 h-12 px-4 sm:px-5 z-30 flex items-center justify-between bg-gradient-to-b from-[#090C10]/90 via-[#090C10]/60 to-transparent">
+            <div className="flex items-center gap-2 min-w-0">
+              <span
+                className="w-2 h-2 rounded-full shrink-0"
+                style={{ backgroundColor: accentHex }}
               />
-            </motion.div>
-          </AnimatePresence>
+              <span className="font-mono text-xs font-bold text-[#F8FAFC] tracking-wider truncate">
+                {currentScene.code} · {currentScene.venue.toUpperCase()}
+              </span>
+            </div>
 
-          {/* Bottom Gradient Overlay for Story & Highlight Badges */}
-          <div className="absolute bottom-0 inset-x-0 p-5 sm:p-8 bg-gradient-to-t from-black/95 via-black/60 to-transparent z-20 pointer-events-none">
-            <div className="space-y-2 pointer-events-auto">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="sm:hidden inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono bg-white/20 text-white backdrop-blur-md">
-                  {currentScene.category}
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-white/70">
-                  <MapPin className="w-3.5 h-3.5 text-[#EA4335]" />
-                  <span>{currentScene.venue}</span>
-                </span>
-              </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span
+                className={`hidden sm:inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs ${getCategoryBadgeClass(
+                  currentScene.googleColor
+                )}`}
+              >
+                {currentScene.category}
+              </span>
 
-              <h3 className="text-xl sm:text-3xl font-display font-bold text-white tracking-tight">
-                {currentScene.title}
-              </h3>
+              {/* Expand Fullscreen Button */}
+              <button
+                type="button"
+                onClick={() => setIsLightboxOpen(true)}
+                aria-label="Expand scene illustration in fullscreen lightbox"
+                className="min-w-[40px] min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#F8FAFC] border border-white/25 backdrop-blur-md transition-all duration-200 text-xs font-mono font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Expand Fullscreen ⤢</span>
+              </button>
+            </div>
+          </div>
 
-              <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed max-w-3xl">
-                {currentScene.caption}
-              </p>
+          {/* 16:9 Cinema Aspect Stage */}
+          <div
+            className="relative w-full aspect-video max-h-[460px] bg-[#090C10] cursor-pointer overflow-hidden"
+            onClick={() => setIsLightboxOpen(true)}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentScene.id}
+                initial={
+                  prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 1.02 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.99 }}
+                transition={{
+                  duration: prefersReducedMotion ? 0 : 0.3,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={currentScene.image}
+                  alt={currentScene.title}
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+                />
+              </motion.div>
+            </AnimatePresence>
 
-              {/* 3 Technical Highlight Tags */}
-              <div className="flex flex-wrap gap-2 pt-1.5">
-                {currentScene.highlights.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-white/10 border border-white/20 text-white/90 backdrop-blur-md"
-                  >
-                    #{tag}
+            {/* High-Contrast Bottom Caption Scrim */}
+            <div className="absolute bottom-0 inset-x-0 p-4 sm:p-6 bg-gradient-to-t from-[#090C10]/95 via-[#090C10]/80 to-transparent z-20 pointer-events-none">
+              <div className="space-y-1.5 pointer-events-auto">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="sm:hidden inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono bg-[#0B0F17]/90 text-[#F8FAFC] border border-white/20">
+                    {currentScene.category}
                   </span>
-                ))}
+                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#CBD5E1]">
+                    <MapPin className="w-3.5 h-3.5 text-[#F87171]" />
+                    <span>{currentScene.venue}</span>
+                  </span>
+                </div>
+
+                <h3 className="text-lg sm:text-2xl font-display font-bold text-[#F8FAFC] tracking-tight">
+                  {currentScene.title}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#CBD5E1] leading-relaxed max-w-2xl line-clamp-2">
+                  {currentScene.caption}
+                </p>
+
+                {/* 3 Technical Highlight Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {currentScene.highlights.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[#0B0F17]/85 border border-white/20 text-[#F8FAFC] backdrop-blur-md"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Bottom 4-Color Accent Border */}
+          <div
+            className="h-1 w-full transition-colors duration-300 shrink-0"
+            style={{ backgroundColor: accentHex }}
+          />
         </div>
 
-        {/* Bottom 4-Color Accent Border */}
-        <div
-          className="h-1 w-full transition-colors duration-300"
-          style={{ backgroundColor: accentHex }}
-        />
+        {/* RIGHT COLUMN (lg:col-span-4): Scrollable 10-Scene Selector Rail */}
+        <div className="lg:col-span-4 flex flex-col rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-elevated)] p-3 shadow-lg max-h-[464px]">
+          <div className="flex items-center justify-between px-1.5 pb-2.5 mb-2 border-b border-[var(--border-hairline)] shrink-0">
+            <span className="font-mono text-[11px] font-bold tracking-wider text-[var(--text-primary)]">
+              SCENE REEL // 10 SCENES
+            </span>
+            <span className="font-mono text-[10px] text-[var(--text-muted)]">
+              {String(activeIndex + 1).padStart(2, '0')} / {COMMUNITY_SCENES.length}
+            </span>
+          </div>
+
+          <div
+            role="listbox"
+            aria-label="Select campus build scene"
+            className="flex-1 overflow-y-auto pr-1 space-y-2"
+          >
+            {COMMUNITY_SCENES.map((scene) => {
+              const isActive = scene.id === activeSceneId;
+              const sceneAccent = getGoogleAccentHex(scene.googleColor);
+
+              return (
+                <button
+                  key={scene.id}
+                  type="button"
+                  role="option"
+                  aria-selected={isActive}
+                  onClick={() => setActiveSceneId(scene.id)}
+                  aria-label={`Switch to ${scene.title}`}
+                  className={`w-full relative group/thumb rounded-xl overflow-hidden border transition-all duration-200 text-left p-2 flex items-center gap-3 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                    isActive
+                      ? 'bg-[var(--bg-subtle)] border-2 shadow-sm'
+                      : 'bg-[var(--bg-canvas)]/70 border-[var(--border-hairline)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)]/50'
+                  }`}
+                  style={isActive ? { borderColor: sceneAccent } : undefined}
+                >
+                  {/* 16:9 Mini-Thumbnail */}
+                  <div className="relative w-20 sm:w-24 aspect-video rounded-lg overflow-hidden bg-[#090C10] shrink-0 border border-[var(--border-hairline)]">
+                    <Image
+                      src={scene.image}
+                      alt={scene.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover/thumb:scale-105"
+                    />
+                    <span className="absolute bottom-1 left-1 px-1 py-0.2 rounded text-[9px] font-mono font-bold bg-[#0B0F17]/90 text-[#F8FAFC] border border-white/20">
+                      {scene.code.replace('SCENE // ', 'S//')}
+                    </span>
+                  </div>
+
+                  {/* Scene Info */}
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <div className="flex items-center justify-between gap-1">
+                      <span
+                        className="text-[10px] font-mono font-bold tracking-wider"
+                        style={{
+                          color:
+                            scene.googleColor === 'yellow'
+                              ? 'var(--accent-yellow-text)'
+                              : scene.googleColor === 'red'
+                              ? 'var(--accent-red-text)'
+                              : scene.googleColor === 'green'
+                              ? 'var(--accent-green-text)'
+                              : 'var(--accent-blue-text)',
+                        }}
+                      >
+                        {scene.code}
+                      </span>
+                      {isActive && (
+                        <span
+                          className="w-2 h-2 rounded-full shrink-0"
+                          style={{ backgroundColor: sceneAccent }}
+                        />
+                      )}
+                    </div>
+                    <p
+                      className="text-xs font-display font-bold text-[var(--text-primary)] truncate"
+                      title={scene.title}
+                    >
+                      {scene.title}
+                    </p>
+                    <p className="text-[10px] font-mono text-[var(--text-muted)] truncate">
+                      {scene.category} · {scene.venue.split(',')[0]}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </motion.div>
-
-      {/* ============================================================= */}
-      {/* 3. INTERACTIVE 6-TILE FILMSTRIP SELECTOR                      */}
-      {/* ============================================================= */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] px-1">
-          <span className="font-semibold tracking-wider">
-            SCENE REEL // SELECT TO INSPECT ARCHITECTURE
-          </span>
-          <span className="hidden sm:inline">
-            CLICK THUMBNAIL TO SWITCH · {COMMUNITY_SCENES.length} SCENES AVAILABLE
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {COMMUNITY_SCENES.map((scene) => {
-            const isActive = scene.id === activeSceneId;
-            const sceneAccent = getGoogleAccentHex(scene.googleColor);
-
-            return (
-              <button
-                key={scene.id}
-                type="button"
-                onClick={() => setActiveSceneId(scene.id)}
-                aria-label={`Switch to ${scene.title}`}
-                className={`relative group/thumb rounded-xl sm:rounded-2xl overflow-hidden border transition-all duration-300 text-left p-1.5 bg-[var(--bg-elevated)] shadow-xs hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
-                  isActive
-                    ? 'border-2 shadow-lg -translate-y-1'
-                    : 'border-[var(--border-hairline)] hover:border-[var(--border-strong)] opacity-85 hover:opacity-100'
-                }`}
-                style={isActive ? { borderColor: sceneAccent } : undefined}
-              >
-                {/* Active Indicator Frame Tag */}
-                {isActive && (
-                  <motion.div
-                    layoutId="active-scene-frame"
-                    className="absolute inset-0 rounded-xl pointer-events-none z-20 border-2"
-                    style={{ borderColor: sceneAccent }}
-                    transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                  />
-                )}
-
-                {/* 16:9 Thumbnail Image */}
-                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-black/60">
-                  <Image
-                    src={scene.image}
-                    alt={scene.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover/thumb:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-
-                  {/* Scene Code Badge */}
-                  <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-black/70 text-white border border-white/20">
-                    {scene.code.replace('SCENE // ', 'S//')}
-                  </span>
-                </div>
-
-                {/* Title & Category Under Thumbnail */}
-                <div className="p-1.5 space-y-0.5">
-                  <p
-                    className="text-xs font-display font-bold text-[var(--text-primary)] truncate"
-                    title={scene.title}
-                  >
-                    {scene.title}
-                  </p>
-                  <p className="text-[10px] font-mono text-[var(--text-muted)] truncate">
-                    {scene.category}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       {/* ============================================================= */}
       {/* 4. FULLSCREEN LIGHTBOX MODAL                                  */}

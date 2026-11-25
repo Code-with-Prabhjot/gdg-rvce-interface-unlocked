@@ -77,15 +77,15 @@ export default function Loading() {
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-20 h-4 rounded-md bg-[var(--border-subtle)]" />
-                <div className="w-12 h-4 rounded-md bg-[var(--border-subtle)]" />
+                <div className="w-20 h-4 rounded-md bg-[var(--bg-subtle)]" />
+                <div className="w-12 h-4 rounded-md bg-[var(--bg-subtle)]" />
               </div>
-              <div className="w-3/4 h-6 rounded-md bg-[var(--border-subtle)]" />
+              <div className="w-3/4 h-6 rounded-md bg-[var(--bg-subtle)]" />
               <div className="w-full h-12 rounded-md bg-[var(--border-hairline)]" />
             </div>
             <div className="pt-4 border-t border-[var(--border-hairline)] flex items-center justify-between">
-              <div className="w-28 h-4 rounded-md bg-[var(--border-subtle)]" />
-              <div className="w-16 h-4 rounded-md bg-[var(--border-subtle)]" />
+              <div className="w-28 h-4 rounded-md bg-[var(--bg-subtle)]" />
+              <div className="w-16 h-4 rounded-md bg-[var(--bg-subtle)]" />
             </div>
           </div>
         ))}

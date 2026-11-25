@@ -42,25 +42,25 @@ const GOOGLE_TIMELINE_COLORS = [
   {
     border: '#4285F4',
     bg: 'rgba(66, 133, 244, 0.12)',
-    textClass: 'text-[#4285F4]',
+    textClass: 'text-[var(--accent-blue-text)]',
     name: 'Blue',
   },
   {
     border: '#EA4335',
     bg: 'rgba(234, 67, 53, 0.12)',
-    textClass: 'text-[#EA4335]',
+    textClass: 'text-[var(--accent-red-text)]',
     name: 'Red',
   },
   {
     border: '#FBBC04',
     bg: 'rgba(251, 188, 4, 0.15)',
-    textClass: 'text-[#B45309] dark:text-[#FBBC04]',
+    textClass: 'text-[var(--accent-yellow-text)]',
     name: 'Yellow',
   },
   {
     border: '#34A853',
     bg: 'rgba(52, 168, 83, 0.12)',
-    textClass: 'text-[#34A853]',
+    textClass: 'text-[var(--accent-green-text)]',
     name: 'Green',
   },
 ];
@@ -493,21 +493,21 @@ export function EventDetailDrawer({
                     {categoryBadge.label}
                   </span>
 
-                  <span className="px-2.5 py-1 rounded-md text-xs font-mono bg-black/70 backdrop-blur-md text-white border border-white/20">
+                  <span className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
                     {event.mode}
                   </span>
                 </div>
 
                 {/* Interactive Schematic / Build Scene Switcher */}
                 {event.sceneImage && (
-                  <div className="absolute top-3.5 right-3.5 z-20 flex items-center p-0.5 rounded-lg bg-black/75 backdrop-blur-md border border-white/20 shadow-md">
+                  <div className="absolute top-3.5 right-3.5 z-20 flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-md">
                     <button
                       type="button"
                       onClick={() => setArtworkMode('schematic')}
                       className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
                         artworkMode === 'schematic'
-                          ? 'bg-white text-black font-bold shadow-xs'
-                          : 'text-white/70 hover:text-white'
+                          ? 'bg-[#FFFFFF] text-[#0F172A] font-bold shadow-xs'
+                          : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                       }`}
                     >
                       Schematic
@@ -517,8 +517,8 @@ export function EventDetailDrawer({
                       onClick={() => setArtworkMode('scene')}
                       className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
                         artworkMode === 'scene'
-                          ? 'bg-white text-black font-bold shadow-xs'
-                          : 'text-white/70 hover:text-white'
+                          ? 'bg-[#FFFFFF] text-[#0F172A] font-bold shadow-xs'
+                          : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                       }`}
                     >
                       Build Scene
@@ -527,14 +527,14 @@ export function EventDetailDrawer({
                 )}
 
                 {/* Status Indicator */}
-                <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-2 text-white">
+                <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-2 text-[#F8FAFC]">
                   {isUpcoming ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#4285F4]/90 backdrop-blur-md text-white border border-white/20">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#4285F4] backdrop-blur-md text-white border border-white/20">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                       Upcoming Session
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#34A853]/90 backdrop-blur-md text-white border border-white/20">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#34A853] backdrop-blur-md text-white border border-white/20">
                       <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                       Past Chapter Recap
                     </span>

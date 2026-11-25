@@ -94,7 +94,7 @@ interface VerticalCollaborationMatrixProps {
 export function VerticalCollaborationMatrix({
   onSelectVertical,
 }: VerticalCollaborationMatrixProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const handleSpotlight = (vertical: TeamVertical) => {
@@ -108,14 +108,14 @@ export function VerticalCollaborationMatrix({
   return (
     <section
       aria-label="Cross-Vertical Collaboration Matrix"
-      className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs mb-8 overflow-hidden transition-all duration-300"
+      className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs mb-4 overflow-hidden transition-all duration-300"
     >
       {/* Collapsible Panel Header */}
-      <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40">
-        <div className="space-y-1 max-w-2xl">
+      <div className="p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/40">
+        <div className="space-y-0.5 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#4285F4] shrink-0" />
-            <span className="text-xs font-mono font-semibold tracking-wider text-[#4285F4] dark:text-[#60A5FA]">
+            <span className="text-xs font-mono font-semibold tracking-wider text-[var(--accent-blue-text)]">
               [ VERTICAL SYNERGY // COLLABORATION MATRIX ]
             </span>
             <span className="text-[var(--text-muted)] text-xs hidden sm:inline">·</span>
@@ -139,9 +139,9 @@ export function VerticalCollaborationMatrix({
               ? 'Collapse cross-vertical collaboration matrix'
               : 'Expand cross-vertical collaboration matrix'
           }
-          className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)] text-xs font-mono font-medium transition-all flex items-center gap-2 shrink-0 self-end sm:self-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+          className="min-h-[40px] px-3.5 py-1.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)] text-xs font-mono font-medium transition-all flex items-center gap-2 shrink-0 self-end sm:self-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
         >
-          <Layers className="w-3.5 h-3.5 text-[#4285F4] shrink-0" aria-hidden="true" />
+          <Layers className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" aria-hidden="true" />
           <span>{isOpen ? 'Collapse Matrix' : 'Expand Matrix'}</span>
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}

@@ -36,20 +36,20 @@ function getAccentConfig(color: GoogleAccent): AccentStyleConfig {
     case 'red':
       return {
         hex: '#EA4335',
-        badgeClass: 'bg-[#EA4335]/10 text-[#EA4335] border-[#EA4335]/30',
+        badgeClass: 'bg-[#EA4335]/10 text-[var(--accent-red-text)] border-[#EA4335]/30',
         ringClass: 'ring-[#EA4335]/30 group-hover:ring-[#EA4335]',
         glowClass: 'shadow-[0_0_12px_rgba(234,67,53,0.15)]',
         hoverBorderClass: 'hover:border-[#EA4335]/50',
-        socialHoverClass: 'hover:text-[#EA4335] hover:border-[#EA4335]',
+        socialHoverClass: 'hover:text-[var(--accent-red-text)] hover:border-[#EA4335]',
       };
     case 'blue':
       return {
         hex: '#4285F4',
-        badgeClass: 'bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/30',
+        badgeClass: 'bg-[#4285F4]/10 text-[var(--accent-blue-text)] border-[#4285F4]/30',
         ringClass: 'ring-[#4285F4]/30 group-hover:ring-[#4285F4]',
         glowClass: 'shadow-[0_0_12px_rgba(66,133,244,0.15)]',
         hoverBorderClass: 'hover:border-[#4285F4]/50',
-        socialHoverClass: 'hover:text-[#4285F4] hover:border-[#4285F4]',
+        socialHoverClass: 'hover:text-[var(--accent-blue-text)] hover:border-[#4285F4]',
       };
     case 'yellow':
       return {
@@ -59,17 +59,17 @@ function getAccentConfig(color: GoogleAccent): AccentStyleConfig {
         ringClass: 'ring-[#FBBC04]/40 group-hover:ring-[#FBBC04]',
         glowClass: 'shadow-[0_0_12px_rgba(251,188,4,0.15)]',
         hoverBorderClass: 'hover:border-[#FBBC04]/50',
-        socialHoverClass: 'hover:text-[#B45309] dark:hover:text-[#FBBC04] hover:border-[#FBBC04]',
+        socialHoverClass: 'hover:text-[var(--accent-yellow-text)] hover:border-[#FBBC04]',
       };
     case 'green':
     default:
       return {
         hex: '#34A853',
-        badgeClass: 'bg-[#34A853]/10 text-[#34A853] border-[#34A853]/30',
+        badgeClass: 'bg-[#34A853]/10 text-[var(--accent-green-text)] border-[#34A853]/30',
         ringClass: 'ring-[#34A853]/30 group-hover:ring-[#34A853]',
         glowClass: 'shadow-[0_0_12px_rgba(52,168,83,0.15)]',
         hoverBorderClass: 'hover:border-[#34A853]/50',
-        socialHoverClass: 'hover:text-[#34A853] hover:border-[#34A853]',
+        socialHoverClass: 'hover:text-[var(--accent-green-text)] hover:border-[#34A853]',
       };
   }
 }
@@ -130,7 +130,7 @@ export function TeamMemberCard({
         delay: prefersReducedMotion ? 0 : Math.min(index * 0.04, 0.4),
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-5 sm:p-6 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[530px] overflow-hidden`}
+      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-4 sm:p-5 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[440px] overflow-hidden`}
     >
       {/* Subtle top indicator bar */}
       <div
@@ -139,7 +139,7 @@ export function TeamMemberCard({
       />
 
       {/* Top Architectural Header Bar */}
-      <div className="flex items-center justify-between gap-2 pb-4 mb-4 border-b border-[var(--border-hairline)]">
+      <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-hairline)]">
         <div className="flex items-center gap-2 min-w-0">
           {/* Quick-Copy Builder ID Badge */}
           <button
@@ -210,36 +210,36 @@ export function TeamMemberCard({
               className="flex-1 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-4">
-                {/* Avatar with Bauhaus Geometric Ring & Interactive Emote Badge */}
-                <div className="flex items-start justify-between gap-4">
-                  <div className="relative shrink-0">
+                {/* Avatar with Bauhaus Geometric Ring & Structured Emote Badge */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-end gap-2 shrink-0">
                     <div
-                      className={`w-24 h-24 rounded-2xl p-1 bg-[var(--bg-subtle)] border border-[var(--border-hairline)] ring-2 ${accent.ringClass} transition-transform duration-300 group-hover:scale-105 overflow-hidden`}
+                      className={`w-20 h-20 rounded-2xl p-1 bg-[var(--bg-subtle)] border border-[var(--border-hairline)] ring-2 ${accent.ringClass} transition-transform duration-300 group-hover:scale-105 overflow-hidden`}
                     >
                       <Image
                         src={member.avatar}
                         alt={`${member.name} Bauhaus portrait`}
-                        width={96}
-                        height={96}
+                        width={80}
+                        height={80}
                         className="w-full h-full object-cover rounded-xl"
                       />
                     </div>
 
-                    {/* Interactive Ephemeral Emote Badge (Clickable 32x32) */}
-                    <div className="absolute -bottom-2 -right-2">
+                    {/* Interactive Ephemeral Emote Badge in dedicated flex slot */}
+                    <div className="relative">
                       <button
                         type="button"
                         onClick={handleEmoteClick}
                         aria-label="Trigger developer emote reaction"
-                        className="relative w-8 h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-md flex items-center justify-center transition-transform duration-200 hover:scale-115 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                        className="relative w-8 h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-sm flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
                         title="Click to trigger developer reaction"
                       >
                         <Image
                           src={member.emoteBadge}
                           alt="Emote badge"
-                          width={24}
-                          height={24}
-                          className="w-5 h-5 object-contain pointer-events-none"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5 object-contain pointer-events-none select-none"
                         />
                       </button>
 
@@ -408,7 +408,16 @@ export function TeamMemberCard({
                         </span>
                         <span
                           className="font-bold shrink-0 ml-2"
-                          style={{ color: accent.hex }}
+                          style={{
+                            color:
+                              member.googleColor === 'yellow'
+                                ? 'var(--accent-yellow-text)'
+                                : member.googleColor === 'red'
+                                ? 'var(--accent-red-text)'
+                                : member.googleColor === 'green'
+                                ? 'var(--accent-green-text)'
+                                : 'var(--accent-blue-text)',
+                          }}
                         >
                           {comp.level}%
                         </span>

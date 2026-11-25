@@ -15,8 +15,8 @@ function getPillarAccentStyles(accent: GoogleAccent) {
         hex: '#4285F4',
         glowBg: 'rgba(66, 133, 244, 0.12)',
         borderColor: 'group-hover:border-[#4285F4]/50',
-        badgeClass: 'bg-[#4285F4]/10 text-[#4285F4] border-[#4285F4]/30',
-        chipHover: 'hover:border-[#4285F4] hover:text-[#4285F4]',
+        badgeClass: 'bg-[#4285F4]/10 text-[var(--accent-blue-text)] border-[#4285F4]/30',
+        chipHover: 'hover:border-[#4285F4] hover:text-[var(--accent-blue-text)]',
         dotColor: 'bg-[#4285F4]',
       };
     case 'red':
@@ -24,8 +24,8 @@ function getPillarAccentStyles(accent: GoogleAccent) {
         hex: '#EA4335',
         glowBg: 'rgba(234, 67, 53, 0.12)',
         borderColor: 'group-hover:border-[#EA4335]/50',
-        badgeClass: 'bg-[#EA4335]/10 text-[#EA4335] border-[#EA4335]/30',
-        chipHover: 'hover:border-[#EA4335] hover:text-[#EA4335]',
+        badgeClass: 'bg-[#EA4335]/10 text-[var(--accent-red-text)] border-[#EA4335]/30',
+        chipHover: 'hover:border-[#EA4335] hover:text-[var(--accent-red-text)]',
         dotColor: 'bg-[#EA4335]',
       };
     case 'yellow':
@@ -33,8 +33,8 @@ function getPillarAccentStyles(accent: GoogleAccent) {
         hex: '#FBBC04',
         glowBg: 'rgba(251, 188, 4, 0.14)',
         borderColor: 'group-hover:border-[#FBBC04]/50',
-        badgeClass: 'bg-[#FBBC04]/20 text-[#111827] dark:text-[#FBBC04] border-[#FBBC04]/40 font-semibold',
-        chipHover: 'hover:border-[#FBBC04] hover:text-[#B45309] dark:hover:text-[#FBBC04]',
+        badgeClass: 'bg-[#FBBC04]/20 text-[var(--accent-yellow-text)] border-[#FBBC04]/40 font-semibold',
+        chipHover: 'hover:border-[#FBBC04] hover:text-[var(--accent-yellow-text)]',
         dotColor: 'bg-[#FBBC04]',
       };
     case 'green':
@@ -42,8 +42,8 @@ function getPillarAccentStyles(accent: GoogleAccent) {
         hex: '#34A853',
         glowBg: 'rgba(52, 168, 83, 0.12)',
         borderColor: 'group-hover:border-[#34A853]/50',
-        badgeClass: 'bg-[#34A853]/10 text-[#34A853] border-[#34A853]/30',
-        chipHover: 'hover:border-[#34A853] hover:text-[#34A853]',
+        badgeClass: 'bg-[#34A853]/10 text-[var(--accent-green-text)] border-[#34A853]/30',
+        chipHover: 'hover:border-[#34A853] hover:text-[var(--accent-green-text)]',
         dotColor: 'bg-[#34A853]',
       };
   }
@@ -169,7 +169,7 @@ function HandsOnPipelineSimulator() {
       </div>
 
       {/* Interactive Visual Schematic SVG */}
-      <div className="w-full h-32 sm:h-36 flex items-center justify-center relative z-10">
+      <div className="w-full h-28 sm:h-32 flex items-center justify-center relative z-10">
         <svg
           viewBox="0 0 540 120"
           fill="none"
@@ -384,7 +384,7 @@ function HandsOnPipelineSimulator() {
 
       {/* Telemetry Footer */}
       <div className="w-full pt-2 border-t border-[var(--border-hairline)] flex items-center justify-between text-[11px] font-mono z-20">
-        <span className="font-semibold text-[#4285F4]">
+        <span className="font-semibold text-[var(--accent-blue-text)]">
           {traceStep === 3
             ? 'STATUS: 200 OK · TRACE: CLOUD_RUN_BLR'
             : traceStep > 0
@@ -453,7 +453,7 @@ function HackathonIsometricSimulator({ emoteBadge }: { emoteBadge?: string }) {
               height={16}
               className="w-4 h-4 object-contain"
             />
-            <span className="font-mono text-[10px] font-bold text-[#EA4335]">
+            <span className="font-mono text-[10px] font-bold text-[var(--accent-red-text)]">
               24H SPRINT
             </span>
           </div>
@@ -461,7 +461,7 @@ function HackathonIsometricSimulator({ emoteBadge }: { emoteBadge?: string }) {
       </div>
 
       {/* Isometric Blueprint Wireframe SVG */}
-      <div className="w-full h-32 sm:h-36 flex items-center justify-center relative z-10">
+      <div className="w-full h-28 sm:h-32 flex items-center justify-center relative z-10">
         <svg
           viewBox="0 0 320 120"
           fill="none"
@@ -582,7 +582,7 @@ function HackathonIsometricSimulator({ emoteBadge }: { emoteBadge?: string }) {
 
       {/* Deliverable Readout Footer */}
       <div className="w-full pt-2 border-t border-[var(--border-hairline)] flex items-center justify-between text-[11px] font-mono z-20">
-        <span className="font-semibold text-[#EA4335]">
+        <span className="font-semibold text-[var(--accent-red-text)]">
           {phase === '00H'
             ? 'PHASE // RFC & Architecture'
             : phase === '12H'
@@ -606,13 +606,31 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
 
   return (
     <div className="w-full rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] p-3 sm:p-4 relative flex flex-col justify-between select-none group/jam">
-      {/* Top Header */}
-      <div className="flex items-center justify-between gap-2 mb-2 z-20">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FBBC04]" />
-          <span className="font-mono text-xs font-bold text-[#111827] dark:text-[#FBBC04]">
-            STEPPED STAIRCASE EXPLORER
-          </span>
+      {/* Top Header with Side-by-Side Step Selector Pills */}
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-2 z-20">
+        <div className="inline-flex items-center p-0.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-2xs">
+          {([
+            { id: 1 as const, label: '01 Syntax', aria: 'Select Step 01: Syntax' },
+            { id: 2 as const, label: '02 Patterns', aria: 'Select Step 02: Patterns' },
+            { id: 3 as const, label: '03 Ship', aria: 'Select Step 03: Ship' },
+          ]).map((step) => {
+            const isSelected = activeStep === step.id;
+            return (
+              <button
+                key={step.id}
+                type="button"
+                onClick={() => setActiveStep(step.id)}
+                aria-label={step.aria}
+                className={`px-2.5 py-1 text-[11px] font-mono font-bold rounded-md min-h-[34px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#FBBC04] text-[#111827] shadow-xs'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                {step.label}
+              </button>
+            );
+          })}
         </div>
 
         {emoteBadge && (
@@ -624,7 +642,7 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
               height={16}
               className="w-4 h-4 object-contain"
             />
-            <span className="font-mono text-[10px] font-bold text-[#111827] dark:text-[#FBBC04]">
+            <span className="font-mono text-[10px] font-bold text-[var(--accent-yellow-text)]">
               STUDY TRACK
             </span>
           </div>
@@ -729,8 +747,8 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
               x="247"
               y="40"
               textAnchor="middle"
-              fill={activeStep === 3 ? '#111827' : '#B45309'}
-              className={activeStep === 3 ? '' : 'dark:fill-[#FBBC04]'}
+              fill={activeStep === 3 ? '#111827' : '#92400E'}
+              className={activeStep === 3 ? '' : 'dark:fill-[#FCD34D]'}
               fontSize="9"
               fontFamily="var(--font-mono)"
               fontWeight="bold"
@@ -773,49 +791,9 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
         </svg>
       </div>
 
-      {/* Accessible Step Buttons for Keyboard Users */}
-      <div className="grid grid-cols-3 gap-1.5 pt-2 z-20">
-        <button
-          type="button"
-          onClick={() => setActiveStep(1)}
-          className={`min-h-[36px] px-2 py-1 text-[11px] font-mono font-bold rounded-lg border transition-all text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] ${
-            activeStep === 1
-              ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
-              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:border-[#FBBC04]/50'
-          }`}
-          aria-label="Select Step 01: Syntax"
-        >
-          01 Syntax
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveStep(2)}
-          className={`min-h-[36px] px-2 py-1 text-[11px] font-mono font-bold rounded-lg border transition-all text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] ${
-            activeStep === 2
-              ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
-              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:border-[#FBBC04]/50'
-          }`}
-          aria-label="Select Step 02: Patterns"
-        >
-          02 Patterns
-        </button>
-        <button
-          type="button"
-          onClick={() => setActiveStep(3)}
-          className={`min-h-[36px] px-2 py-1 text-[11px] font-mono font-bold rounded-lg border transition-all text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] ${
-            activeStep === 3
-              ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
-              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:border-[#FBBC04]/50'
-          }`}
-          aria-label="Select Step 03: Ship"
-        >
-          03 Ship
-        </button>
-      </div>
-
       {/* Engineering Focus Chip Footer */}
-      <div className="w-full pt-2 mt-1 border-t border-[var(--border-hairline)] flex items-center justify-between text-[11px] font-mono z-20">
-        <span className="font-semibold text-[#B45309] dark:text-[#FBBC04]">
+      <div className="w-full pt-2 border-t border-[var(--border-hairline)] flex items-center justify-between text-[11px] font-mono z-20">
+        <span className="font-semibold text-[var(--accent-yellow-text)]">
           {activeStep === 1
             ? 'FOCUS // LANGUAGE SYNTAX & RUNTIME INTERNALS'
             : activeStep === 2
@@ -842,7 +820,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
       {/* Top Controls Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2 z-20">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold text-[#34A853] flex items-center gap-1.5">
+          <span className="font-mono text-xs font-bold text-[var(--accent-green-text)] flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
             <span>GIT GRAPH ENGINE</span>
           </span>
@@ -856,7 +834,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
           <button
             type="button"
             onClick={() => setIsMerged(!isMerged)}
-            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#34A853] ${
+            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#34A853] cursor-pointer ${
               isMerged
                 ? 'bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)]'
                 : 'bg-[#34A853] hover:bg-[#2d9249] text-white hover:shadow-md'
@@ -883,7 +861,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
                   height={16}
                   className="w-4 h-4 object-contain"
                 />
-                <span className="font-mono text-[10px] font-bold text-[#34A853]">
+                <span className="font-mono text-[10px] font-bold text-[var(--accent-green-text)]">
                   LGTM MERGED ✓
                 </span>
               </motion.div>
@@ -896,7 +874,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
                   height={16}
                   className="w-4 h-4 object-contain"
                 />
-                <span className="font-mono text-[10px] font-semibold text-[#34A853]">
+                <span className="font-mono text-[10px] font-semibold text-[var(--accent-green-text)]">
                   PR #42 OPEN
                 </span>
               </div>
@@ -906,7 +884,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
       </div>
 
       {/* Interactive Git Graph Vector SVG */}
-      <div className="w-full h-32 sm:h-36 flex items-center justify-center relative z-10">
+      <div className="w-full h-28 sm:h-32 flex items-center justify-center relative z-10">
         <svg
           viewBox="0 0 540 120"
           fill="none"
@@ -1033,7 +1011,7 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
 
       {/* Telemetry Footer */}
       <div className="w-full pt-2 border-t border-[var(--border-hairline)] flex items-center justify-between text-[11px] font-mono z-20">
-        <span className="font-semibold text-[#34A853]">
+        <span className="font-semibold text-[var(--accent-green-text)]">
           {isMerged
             ? 'GIT // MERGE COMMIT e7b40a9 INGESTED INTO MAIN · STATUS: CLEAN'
             : 'GIT // WORKING TREE DIRTY · COMMIT 8f3c21a ON feat/multimodal'}
@@ -1061,15 +1039,15 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
 
   return (
     <motion.div
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{
-        duration: prefersReducedMotion ? 0 : 0.6,
-        delay: prefersReducedMotion ? 0 : index * 0.12,
+        duration: prefersReducedMotion ? 0 : 0.4,
+        delay: prefersReducedMotion ? 0 : index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`${colSpanClass} flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] ${styles.borderColor} transition-all duration-300 relative overflow-hidden group shadow-xs hover:shadow-lg`}
+      className={`${colSpanClass} flex flex-col justify-between p-5 lg:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] ${styles.borderColor} transition-all duration-300 relative overflow-hidden group shadow-xs hover:shadow-lg`}
     >
       {/* Subtle Radial Glow on Hover */}
       <div
@@ -1078,7 +1056,7 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
       />
 
       {/* Content Container */}
-      <div className="space-y-5 relative z-10">
+      <div className="space-y-4 relative z-10">
         {/* Top Header Row: Index Tag + Pill Badge */}
         <div className="flex items-center justify-between">
           <span className="font-mono text-xs font-bold tracking-wider text-[var(--text-muted)]">
@@ -1100,7 +1078,7 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
 
         {/* Title & Tagline */}
         <div className="space-y-1">
-          <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors">
+          <h3 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors">
             {pillar.title}
           </h3>
           <p className="font-mono text-xs text-[var(--text-muted)]">
@@ -1109,12 +1087,12 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
           {pillar.description}
         </p>
 
         {/* Interactive Curriculum Chips */}
-        <div className="pt-2 flex flex-wrap gap-2">
+        <div className="pt-1 flex flex-wrap gap-1.5">
           {pillar.chips.map((chip, chipIdx) => (
             <span
               key={chipIdx}
@@ -1127,7 +1105,7 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
       </div>
 
       {/* Bottom Technical Spec Bar */}
-      <div className="pt-5 mt-5 border-t border-[var(--border-hairline)] flex items-center justify-between text-xs font-mono text-[var(--text-muted)] relative z-10">
+      <div className="pt-3.5 mt-4 border-t border-[var(--border-hairline)] flex items-center justify-between text-xs font-mono text-[var(--text-muted)] relative z-10">
         <span className="truncate">{pillar.techSpec}</span>
         <span className="shrink-0 text-[10px] text-[var(--text-muted)]">RVCE &apos;26</span>
       </div>
@@ -1156,20 +1134,20 @@ export function BentoPillarsSection() {
   return (
     <section
       id="pillars"
-      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative"
+      className="py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative"
     >
       {/* Section Header */}
       <motion.div
-        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14"
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 lg:mb-8"
       >
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
-            <span className="font-mono text-xs font-semibold text-[#4285F4] tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs">
+            <span className="font-mono text-xs font-semibold text-[var(--accent-blue-text)] tracking-wider">
               [ 01 // ENGINEERING PILLARS ]
             </span>
           </div>
@@ -1180,13 +1158,13 @@ export function BentoPillarsSection() {
           </h2>
 
           {/* Subcopy */}
-          <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed">
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl leading-relaxed">
             How RVCE student builders move from first-principles systems theory to deployed, production-grade open-source repositories and cloud architectures.
           </p>
         </div>
 
         {/* Live Status indicator */}
-        <div className="hidden sm:inline-flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] bg-[var(--bg-elevated)] px-3.5 py-2 rounded-xl border border-[var(--border-hairline)] self-start md:self-auto shadow-2xs">
+        <div className="hidden sm:inline-flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] bg-[var(--bg-elevated)] px-3.5 py-2 rounded-xl border border-[var(--border-hairline)] self-start md:self-auto shadow-2xs shrink-0">
           <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
           <span>ACTIVE SPRINT TRACKS // 2026</span>
         </div>

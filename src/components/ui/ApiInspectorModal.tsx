@@ -87,21 +87,21 @@ function renderJsonValue(valStr: string) {
   let element: React.ReactNode = clean;
 
   if (clean.startsWith('"') && clean.endsWith('"')) {
-    element = <span className="text-[#34A853]">{clean}</span>;
+    element = <span className="text-[#4ADE80]">{clean}</span>;
   } else if (clean === 'true' || clean === 'false') {
-    element = <span className="text-[#EA4335] font-bold">{clean}</span>;
+    element = <span className="text-[#F87171] font-bold">{clean}</span>;
   } else if (clean === 'null') {
-    element = <span className="text-white/40 italic">null</span>;
+    element = <span className="text-[#94A3B8] italic">null</span>;
   } else if (!Number.isNaN(Number(clean)) && clean !== '') {
-    element = <span className="text-[#FBBC04] font-mono">{clean}</span>;
+    element = <span className="text-[#FCD34D] font-mono">{clean}</span>;
   } else {
-    element = <span className="text-white/80">{clean}</span>;
+    element = <span className="text-[#E2E8F0]">{clean}</span>;
   }
 
   return (
     <>
       {element}
-      {hasComma && <span className="text-white/40">,</span>}
+      {hasComma && <span className="text-[#94A3B8]">,</span>}
     </>
   );
 }
@@ -112,12 +112,12 @@ function JsonLineRenderer({ line, index }: { line: string; index: number }) {
     const [, indent, key, rest] = keyMatch;
     return (
       <div className="leading-5 font-mono text-xs hover:bg-white/5 px-2 rounded-xs transition-colors">
-        <span className="text-white/20 select-none mr-3 text-[10px] w-6 inline-block text-right">
+        <span className="text-[#94A3B8] select-none mr-3 text-[10px] w-6 inline-block text-right">
           {index + 1}
         </span>
         <span className="whitespace-pre">{indent}</span>
-        <span className="text-[#4285F4] font-medium">{key}</span>
-        <span className="text-white/60">: </span>
+        <span className="text-[#60A5FA] font-medium">{key}</span>
+        <span className="text-[#CBD5E1]">: </span>
         {renderJsonValue(rest)}
       </div>
     );
@@ -125,10 +125,10 @@ function JsonLineRenderer({ line, index }: { line: string; index: number }) {
 
   return (
     <div className="leading-5 font-mono text-xs hover:bg-white/5 px-2 rounded-xs transition-colors">
-      <span className="text-white/20 select-none mr-3 text-[10px] w-6 inline-block text-right">
+      <span className="text-[#94A3B8] select-none mr-3 text-[10px] w-6 inline-block text-right">
         {index + 1}
       </span>
-      <span className="whitespace-pre text-white/80">{line}</span>
+      <span className="whitespace-pre text-[#E2E8F0]">{line}</span>
     </div>
   );
 }
@@ -314,7 +314,7 @@ export function ApiInspectorModal() {
                       App Router v15
                     </span>
                   </div>
-                  <p className="text-xs text-white/50 font-mono">
+                  <p className="text-xs text-[#94A3B8] font-mono">
                     Stateless Next.js route handlers · Zero PII · Zero tracking
                   </p>
                 </div>
@@ -324,7 +324,7 @@ export function ApiInspectorModal() {
               <button
                 type="button"
                 onClick={close}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-[#CBD5E1] hover:text-[#F8FAFC] hover:bg-white/10 transition-colors cursor-pointer"
                 aria-label="Close API Inspector"
               >
                 <X className="w-5 h-5" />
@@ -333,8 +333,8 @@ export function ApiInspectorModal() {
 
             {/* Presets Bar */}
             <div className="px-5 py-2.5 bg-[#080b11] border-b border-white/10 flex items-center gap-2 overflow-x-auto shrink-0 scrollbar-none">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-white/40 shrink-0 mr-1 flex items-center gap-1">
-                <Code2 className="w-3 h-3 text-[#4285F4]" />
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#94A3B8] shrink-0 mr-1 flex items-center gap-1">
+                <Code2 className="w-3 h-3 text-[#60A5FA]" />
                 Presets:
               </span>
               {PRESETS.map((preset) => {
@@ -347,8 +347,8 @@ export function ApiInspectorModal() {
                     onClick={() => selectPreset(preset)}
                     className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium transition-all shrink-0 cursor-pointer border ${
                       isActive
-                        ? 'bg-white/15 text-white border-white/40 shadow-xs ring-1 ring-white/20'
-                        : 'bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border-white/10'
+                        ? 'bg-white/15 text-[#F8FAFC] border-white/40 shadow-xs ring-1 ring-white/20'
+                        : 'bg-white/5 hover:bg-white/10 text-[#CBD5E1] hover:text-[#F8FAFC] border-white/15'
                     }`}
                     title={preset.description}
                   >
@@ -369,7 +369,7 @@ export function ApiInspectorModal() {
                 <select
                   value={method}
                   onChange={(e) => setMethod(e.target.value as 'GET' | 'POST')}
-                  className="px-3 py-2 bg-[#141b2b] border border-white/15 rounded-lg text-xs font-mono font-bold text-white focus:outline-none focus:border-[#4285F4] cursor-pointer"
+                  className="px-3 py-2 bg-[#141b2b] border border-white/20 rounded-lg text-xs font-mono font-bold text-[#F8FAFC] focus:outline-none focus:border-[#4285F4] cursor-pointer"
                   aria-label="HTTP Method"
                 >
                   <option value="GET">GET</option>
@@ -383,7 +383,7 @@ export function ApiInspectorModal() {
                     value={endpoint}
                     onChange={(e) => setEndpoint(e.target.value)}
                     placeholder="/api/..."
-                    className="w-full px-3.5 py-2 bg-[#141b2b] border border-white/15 rounded-lg text-xs font-mono text-white placeholder-white/30 focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4]"
+                    className="w-full px-3.5 py-2 bg-[#141b2b] border border-white/20 rounded-lg text-xs font-mono text-[#F8FAFC] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#4285F4] focus:ring-1 focus:ring-[#4285F4]"
                     aria-label="API Route URL"
                   />
                 </div>
@@ -534,13 +534,13 @@ export function ApiInspectorModal() {
             </div>
 
             {/* Compliance Footer */}
-            <div className="px-5 py-2.5 bg-[#0e1420] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-white/40 shrink-0">
+            <div className="px-5 py-2.5 bg-[#0e1420] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#94A3B8] shrink-0">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#34A853]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#4ADE80]" />
                 <span>Zero Tracking · Zero RSVP Storage · Fictional Sample Content Only</span>
               </div>
-              <div className="hidden sm:flex items-center gap-1.5 text-white/30">
-                <kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px]">
+              <div className="hidden sm:flex items-center gap-1.5 text-[#CBD5E1]">
+                <kbd className="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[10px]">
                   ESC
                 </kbd>
                 <span>to close</span>

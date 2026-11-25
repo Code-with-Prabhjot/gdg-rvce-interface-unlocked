@@ -279,14 +279,14 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
               const shortLabel = `${SHORT_MONTH_NAMES[parseInt(m, 10) - 1]} ${y}`;
               const isActive = mKey === activeMonthKey;
 
-              return (
+                return (
                 <button
                   key={mKey}
                   type="button"
                   onClick={() => setActiveMonthKey(mKey)}
                   className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all whitespace-nowrap cursor-pointer ${
                     isActive
-                      ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] shadow-xs'
+                      ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] shadow-xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
                   }`}
                 >
@@ -358,7 +358,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
                   <span
                     className={`font-mono text-xs font-bold px-1.5 py-0.5 rounded ${
                       hasEvents
-                        ? 'bg-[var(--text-primary)] text-[var(--bg-canvas)] shadow-2xs'
+                        ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] shadow-2xs'
                         : isCurrentMonth
                         ? 'text-[var(--text-secondary)]'
                         : 'text-[var(--text-muted)]/50'
@@ -368,7 +368,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
                   </span>
 
                   {hasEvents && (
-                    <span className="text-[10px] font-mono font-bold text-[#4285F4]">
+                    <span className="text-[10px] font-mono font-bold text-[var(--accent-blue-text)]">
                       {cell.events.length} {cell.events.length === 1 ? 'EVT' : 'EVTS'}
                     </span>
                   )}
