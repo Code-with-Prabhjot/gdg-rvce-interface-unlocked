@@ -1060,8 +1060,16 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
   const styles = getPillarAccentStyles(pillar.accent);
   const prefersReducedMotion = useReducedMotion();
 
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+  };
+
   return (
     <motion.div
+      onPointerMove={handlePointerMove}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
@@ -1070,7 +1078,7 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
         delay: prefersReducedMotion ? 0 : index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`${colSpanClass} flex flex-col justify-between p-5 lg:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] ${styles.borderColor} transition-all duration-300 relative overflow-hidden group shadow-xs hover:shadow-lg`}
+      className={`${colSpanClass} blueprint-spotlight flex flex-col justify-between p-5 lg:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] ${styles.borderColor} transition-all duration-300 relative overflow-hidden group shadow-xs hover:shadow-lg`}
     >
       {/* Subtle Radial Glow on Hover */}
       <div
@@ -1194,7 +1202,10 @@ export function BentoPillarsSection() {
       </motion.div>
 
       {/* Asymmetric 12-Column Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
+      <div
+        data-tour="bento-simulators"
+        className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6"
+      >
         {PILLARS_DATA.map((pillar, idx) => (
           <BentoTile
             key={pillar.id}

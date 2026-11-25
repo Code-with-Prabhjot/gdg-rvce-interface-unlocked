@@ -4,10 +4,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Command, Menu, X, ArrowUpRight, KeyRound, LogOut } from 'lucide-react';
+import { Sun, Moon, Command, Menu, X, ArrowUpRight, KeyRound, LogOut, Compass } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
+import { useGuidedTour } from '@/context/GuidedTourContext';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -20,6 +21,7 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { open: openCommandPalette } = useCommandPalette();
   const { session, isHydrated, openModal: openDemoAuthModal, signOut } = useDemoAuth();
+  const { isOpen: isTourOpen, startTour } = useGuidedTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
 
@@ -160,7 +162,23 @@ export function Navbar() {
         </nav>
 
         {/* Right Desktop Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Guided Tour Pill Button */}
+          <button
+            type="button"
+            onClick={() => startTour(0)}
+            aria-pressed={isTourOpen}
+            aria-label="Start Interactive Guided Tour"
+            className={`hidden md:inline-flex min-h-[36px] items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              isTourOpen
+                ? 'bg-[#4285F4]/15 border-[#4285F4] text-[var(--accent-blue-text)]'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5 shrink-0 text-[#4285F4]" />
+            <span>Guided Tour</span>
+          </button>
+
           {/* Command Palette Trigger */}
           <button
             type="button"
@@ -169,7 +187,7 @@ export function Navbar() {
             aria-label="Open Command Palette"
           >
             <Command className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />
-            <span className="hidden lg:inline text-[var(--text-muted)]">Search or jump</span>
+            <span className="hidden xl:inline text-[var(--text-muted)]">Search or jump</span>
             <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
               {isMac ? '⌘K' : 'Ctrl K'}
             </kbd>
@@ -302,6 +320,18 @@ export function Navbar() {
               })}
 
               <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    startTour(0);
+                  }}
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] min-h-[44px]"
+                >
+                  <Compass className="w-4 h-4 text-[#4285F4]" />
+                  <span>Start Guided Tour</span>
+                </button>
+
                 {isHydrated && session ? (
                   <div className="flex items-center gap-2">
                     <button

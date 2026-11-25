@@ -8,6 +8,8 @@ import { ApiInspectorProvider } from '@/context/ApiInspectorContext';
 import { SavedEventsProvider } from '@/context/SavedEventsContext';
 import { XRayProvider } from '@/context/XRayContext';
 import { DemoAuthProvider } from '@/context/DemoAuthContext';
+import { GuidedTourProvider } from '@/context/GuidedTourContext';
+import { ShortcutsProvider } from '@/context/ShortcutsContext';
 import { ScrollProgressBar } from '@/components/layout/ScrollProgressBar';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -17,6 +19,8 @@ import { ApiInspectorModal } from '@/components/ui/ApiInspectorModal';
 import { DemoAuthModal } from '@/components/ui/DemoAuthModal';
 import { ArchitecturalBootLoader } from '@/components/ui/ArchitecturalBootLoader';
 import { BlueprintXRayOverlay } from '@/components/ui/BlueprintXRayOverlay';
+import { GuidedTourOverlay } from '@/components/ui/GuidedTourOverlay';
+import { ShortcutsModal } from '@/components/ui/ShortcutsModal';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -95,34 +99,44 @@ export default function RootLayout({
                 <DevTerminalProvider>
                   <ApiInspectorProvider>
                     <SavedEventsProvider>
-                      {/* Visual Top Scroll Indicator */}
-                      <ScrollProgressBar />
+                      <GuidedTourProvider>
+                        <ShortcutsProvider>
+                          {/* Visual Top Scroll Indicator */}
+                          <ScrollProgressBar />
 
-                      {/* Global Sticky Navigation */}
-                      <Navbar />
+                          {/* Global Sticky Navigation */}
+                          <Navbar />
 
-                      {/* Main Application Routes Viewport */}
-                      <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
-                        {children}
-                      </main>
+                          {/* Main Application Routes Viewport */}
+                          <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
+                            {children}
+                          </main>
 
-                      {/* Global Architectural Footer */}
-                      <Footer />
+                          {/* Global Architectural Footer */}
+                          <Footer />
 
-                      {/* Global Command Palette Overlay */}
-                      <CommandPalette />
+                          {/* Global Command Palette Overlay */}
+                          <CommandPalette />
 
-                      {/* Signature Developer Interactive CLI Terminal Drawer */}
-                      <DevTerminalModal />
+                          {/* Signature Developer Interactive CLI Terminal Drawer */}
+                          <DevTerminalModal />
 
-                      {/* Live Backend & API Inspector Drawer */}
-                      <ApiInspectorModal />
+                          {/* Live Backend & API Inspector Drawer */}
+                          <ApiInspectorModal />
 
-                      {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
-                      <DemoAuthModal />
+                          {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
+                          <DemoAuthModal />
 
-                      {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
-                      <BlueprintXRayOverlay />
+                          {/* Global Keyboard Shortcuts Cheat-Sheet Modal */}
+                          <ShortcutsModal />
+
+                          {/* Cross-Route Interactive Guided Tour Overlay */}
+                          <GuidedTourOverlay />
+
+                          {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
+                          <BlueprintXRayOverlay />
+                        </ShortcutsProvider>
+                      </GuidedTourProvider>
                     </SavedEventsProvider>
                   </ApiInspectorProvider>
                 </DevTerminalProvider>

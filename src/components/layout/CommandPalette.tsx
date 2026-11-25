@@ -16,6 +16,8 @@ import {
   ArrowRight,
   CornerDownLeft,
   KeyRound,
+  Compass,
+  Keyboard,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTheme } from '@/context/ThemeContext';
@@ -24,6 +26,8 @@ import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useXRay } from '@/context/XRayContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
+import { useGuidedTour } from '@/context/GuidedTourContext';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 interface CommandItem {
   id: string;
@@ -41,6 +45,8 @@ export function CommandPalette() {
   const { open: openApiInspector } = useApiInspector();
   const { isXRayActive, toggleXRay } = useXRay();
   const { session, openModal: openDemoAuthModal } = useDemoAuth();
+  const { startTour } = useGuidedTour();
+  const { open: openShortcuts } = useShortcuts();
   const router = useRouter();
   const { theme, toggleTheme, setTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -223,6 +229,36 @@ export function CommandPalette() {
         skipFocusRestoreRef.current = true;
         close({ skipFocusRestore: true });
         openApiInspector();
+      },
+    },
+    {
+      id: 'action-guided-tour',
+      title: 'Start Interactive Guided Tour',
+      subtitle: '6-step cross-route architectural walkthrough across /, /events, and /team',
+      category: 'Community',
+      icon: Compass,
+      accentColor: '#4285F4',
+      run: () => {
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
+        setTimeout(() => {
+          startTour(0);
+        }, 40);
+      },
+    },
+    {
+      id: 'action-shortcuts-modal',
+      title: 'Keyboard Shortcuts Cheat-Sheet ( ? )',
+      subtitle: 'Inspect global power-user keycaps (⌘K, ~, Shift+X, ?, /)',
+      category: 'Community',
+      icon: Keyboard,
+      accentColor: '#FBBC04',
+      run: () => {
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
+        setTimeout(() => {
+          openShortcuts();
+        }, 40);
       },
     },
     {

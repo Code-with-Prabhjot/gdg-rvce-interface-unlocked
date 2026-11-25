@@ -135,9 +135,10 @@ export function KineticPrismStage() {
   return (
     <div
       ref={containerRef}
+      data-tour="webgl-prism"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[400px] sm:min-h-[430px] lg:h-[470px] max-h-[490px] max-w-2xl mx-auto rounded-3xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden select-none border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/75 backdrop-blur-md shadow-2xl transition-all duration-300 group"
+      className="relative w-full min-h-[455px] sm:min-h-[465px] lg:h-[470px] lg:max-h-[490px] max-w-2xl mx-auto rounded-3xl p-4 sm:p-5 flex flex-col justify-between overflow-hidden select-none border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/75 backdrop-blur-md shadow-2xl transition-all duration-300 group"
       style={{ perspective: 1200 }}
     >
       {/* 3D Tilted Wrapper */}
@@ -169,29 +170,32 @@ export function KineticPrismStage() {
         {/* LAYER 2 (MID): Architectural Coordinate Frame + HUD Ctrls  */}
         {/* ========================================================= */}
         <div
-          className="relative pointer-events-none flex items-center justify-between font-mono text-[10px] sm:text-[11px] text-[var(--text-muted)] tracking-wider z-20"
+          className="relative pointer-events-none flex items-center justify-between gap-2 font-mono text-[10px] sm:text-[11px] text-[var(--text-muted)] tracking-wider z-20"
           style={{ transform: 'translateZ(18px)' }}
         >
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <span className="text-[var(--accent-blue-text)] font-bold text-sm">+</span>
-            <span>SYS // STAGE_3D</span>
+            <span>
+              <span className="hidden sm:inline">SYS // </span>STAGE_3D
+            </span>
           </div>
 
           {/* HUD Coordinate Readout */}
-          <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] backdrop-blur-xs text-[var(--text-secondary)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] backdrop-blur-xs text-[var(--text-secondary)] whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse shrink-0" />
             <span>
               {`X: ${String(hudCoords.x).padStart(3, '0')} // Y: ${String(hudCoords.y).padStart(3, '0')}`}
             </span>
           </div>
 
           {/* HUD Micro-Controls (Wireframe + Reset) */}
-          <div className="flex items-center gap-1.5 pointer-events-auto">
+          <div className="flex items-center gap-1.5 pointer-events-auto shrink-0">
             <button
+              type="button"
               onClick={toggleWireframe}
               aria-pressed={wireframeMode}
               aria-label={wireframeMode ? 'Disable wireframe mode' : 'Enable wireframe mode'}
-              className={`min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold border transition-all duration-200 ${
+              className={`min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold border transition-all duration-200 cursor-pointer ${
                 wireframeMode
                   ? 'bg-[#4285F4]/15 border-[#4285F4]/50 text-[var(--accent-blue-text)]'
                   : 'bg-[var(--bg-subtle)]/90 border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)]'
@@ -206,9 +210,10 @@ export function KineticPrismStage() {
             </button>
 
             <button
+              type="button"
               onClick={resetView}
               aria-label="Reset 3D view to default angle"
-              className="min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-all duration-200"
+              className="min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-all duration-200 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Reset</span>
@@ -220,7 +225,7 @@ export function KineticPrismStage() {
         {/* LAYER 3 (CENTERPIECE): 3D WebGL < > Monolith OR CSS Fallback */}
         {/* ========================================================= */}
         <div
-          className="relative flex-1 flex items-center justify-center my-1"
+          className="relative flex-1 min-h-[195px] sm:min-h-[215px] flex items-center justify-center my-1.5"
           style={{ transform: 'translateZ(46px)' }}
         >
           {/* 3D WebGL Canvas — mounted over center area */}
@@ -312,7 +317,8 @@ export function KineticPrismStage() {
           {/* Corner Domain Pills — always visible, z-30 above WebGL */}
           {/* Orbiting Domain Pill 1: AI & Gemini (Top-Left) */}
           <motion.div
-            className="absolute -top-1 left-0 sm:-top-2 sm:left-2 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
+            data-prism-pill="top-left"
+            className="absolute top-1 left-0 sm:top-1.5 sm:left-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
             animate={prefersReducedMotion ? {} : { y: [-2, 2, -2] }}
             transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
           >
@@ -322,7 +328,8 @@ export function KineticPrismStage() {
 
           {/* Orbiting Domain Pill 2: Cloud & Infra (Top-Right) */}
           <motion.div
-            className="absolute -top-1 right-0 sm:-top-2 sm:right-2 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
+            data-prism-pill="top-right"
+            className="absolute top-1 right-0 sm:top-1.5 sm:right-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
             animate={prefersReducedMotion ? {} : { y: [2, -2, 2] }}
             transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
           >
@@ -332,7 +339,8 @@ export function KineticPrismStage() {
 
           {/* Orbiting Domain Pill 3: Web & Systems (Bottom-Left) */}
           <motion.div
-            className="absolute -bottom-1 left-0 sm:-bottom-2 sm:left-2 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
+            data-prism-pill="bottom-left"
+            className="absolute bottom-1 left-0 sm:bottom-1.5 sm:left-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
             animate={prefersReducedMotion ? {} : { y: [2, -2, 2] }}
             transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
           >
@@ -342,7 +350,8 @@ export function KineticPrismStage() {
 
           {/* Orbiting Domain Pill 4: Android & Kotlin (Bottom-Right) */}
           <motion.div
-            className="absolute -bottom-1 right-0 sm:-bottom-2 sm:right-2 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
+            data-prism-pill="bottom-right"
+            className="absolute bottom-1 right-0 sm:bottom-1.5 sm:right-1.5 px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-md flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] whitespace-nowrap z-30 pointer-events-none"
             animate={prefersReducedMotion ? {} : { y: [-2, 2, -2] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }}
           >
@@ -354,10 +363,11 @@ export function KineticPrismStage() {
         {/* Interaction hint — above the countdown dock */}
         {showWebGL && (
           <div
-            className="relative flex justify-center z-10 pointer-events-none"
+            data-prism-hint="true"
+            className="relative flex justify-center py-1 z-10 pointer-events-none"
             style={{ transform: 'translateZ(50px)' }}
           >
-            <span className="font-mono text-[10px] text-[var(--text-muted)]/60 tracking-widest uppercase">
+            <span className="font-mono text-[10px] text-[var(--text-muted)]/75 tracking-widest uppercase">
               DRAG TO ORBIT 3D · &lt; &gt;
             </span>
           </div>

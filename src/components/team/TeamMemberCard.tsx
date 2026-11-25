@@ -121,9 +121,17 @@ export function TeamMemberCard({
     }, 750);
   };
 
+  const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (prefersReducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+  };
+
   return (
     <motion.article
       layout
+      onPointerMove={handlePointerMove}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
@@ -133,7 +141,7 @@ export function TeamMemberCard({
         ease: [0.16, 1, 0.3, 1],
       }}
       onClick={() => onInspectMember?.(member)}
-      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-4 sm:p-5 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[440px] overflow-hidden ${
+      className={`group blueprint-spotlight relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-4 sm:p-5 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[440px] overflow-hidden ${
         onInspectMember ? 'cursor-pointer' : ''
       }`}
     >

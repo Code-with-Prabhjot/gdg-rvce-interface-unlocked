@@ -129,6 +129,7 @@ export function CommunityScenesSection() {
       {/* Left: 16:9 Cinema Stage (col-8) · Right: 10-Scene Rail (col-4)*/}
       {/* ============================================================= */}
       <motion.div
+        data-tour="community-scenes"
         initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.05 }}

@@ -63,6 +63,13 @@ export function EventDirectoryCard({
   const displayImage =
     viewType === 'scene' && event.sceneImage ? event.sceneImage : event.coverImage;
 
+  const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (prefersReducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+  };
+
   // =========================================================================
   // 1. GRID CARD MODE
   // =========================================================================
@@ -70,6 +77,7 @@ export function EventDirectoryCard({
     return (
       <motion.article
         layout
+        onPointerMove={handlePointerMove}
         initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
@@ -79,7 +87,7 @@ export function EventDirectoryCard({
           ease: [0.16, 1, 0.3, 1],
         }}
         onClick={() => onSelectEvent(event.slug)}
-        className="group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer"
+        className="group blueprint-spotlight relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer"
       >
         <div>
           {/* Cover Artwork Container (16:9) with smooth hover zoom */}
@@ -280,6 +288,7 @@ export function EventDirectoryCard({
   return (
     <motion.article
       layout
+      onPointerMove={handlePointerMove}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.98 }}
@@ -289,7 +298,7 @@ export function EventDirectoryCard({
         ease: [0.16, 1, 0.3, 1],
       }}
       onClick={() => onSelectEvent(event.slug)}
-      className="group relative flex flex-col md:flex-row items-stretch md:items-center justify-between p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md gap-4 overflow-hidden pl-5 sm:pl-6"
+      className="group blueprint-spotlight relative flex flex-col md:flex-row items-stretch md:items-center justify-between p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md gap-4 overflow-hidden pl-5 sm:pl-6"
     >
       {/* Left Google-colour accent stripe (4px) */}
       <div

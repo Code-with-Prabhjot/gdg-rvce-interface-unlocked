@@ -124,6 +124,7 @@ export function EventsFilterBar({
   return (
     <div
       id="events-filter-bar"
+      data-tour="events-controls"
       className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs p-3.5 sm:p-4 space-y-3 mb-6"
     >
       {/* ============================================================= */}

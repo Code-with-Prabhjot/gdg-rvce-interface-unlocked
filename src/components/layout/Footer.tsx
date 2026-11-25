@@ -2,18 +2,20 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Terminal, Heart, Info, X } from 'lucide-react';
+import { MapPin, Terminal, Heart, Info, X, HelpCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useXRay } from '@/context/XRayContext';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
   const { toggle: toggleTerminal } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
   const { isXRayActive, toggleXRay } = useXRay();
+  const { open: openShortcuts } = useShortcuts();
 
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
@@ -137,7 +139,10 @@ export function Footer() {
               </a>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-2">
+            <div
+              data-tour="diagnostic-tools"
+              className="pt-2 flex flex-wrap items-center gap-2"
+            >
               <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)]">
                 <Terminal className="w-3 h-3 text-[var(--accent-green-text)]" />
                 Next.js 15 App Router
@@ -197,6 +202,18 @@ export function Footer() {
                 <kbd className="text-[9px] px-1 py-0.2 bg-[var(--bg-elevated)] border border-[var(--border-hairline)] rounded text-[var(--text-muted)] font-mono">
                   ~
                 </kbd>
+              </button>
+
+              {/* Global Keyboard Shortcuts Cheat-Sheet Trigger */}
+              <button
+                type="button"
+                onClick={openShortcuts}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--accent-blue-text)] border border-[var(--border-hairline)] hover:border-[#4285F4]/50 transition-all cursor-pointer shadow-2xs active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                aria-label="Open Keyboard Shortcuts Cheat-Sheet"
+                title="Keyboard Shortcuts Cheat-Sheet (?)"
+              >
+                <HelpCircle className="w-3 h-3 text-[#FBBC04]" />
+                <kbd className="text-[10px] font-mono font-bold">?</kbd>
               </button>
             </div>
           </div>

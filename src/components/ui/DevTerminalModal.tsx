@@ -10,6 +10,8 @@ import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useXRay } from '@/context/XRayContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
+import { useGuidedTour } from '@/context/GuidedTourContext';
+import { useShortcuts } from '@/context/ShortcutsContext';
 import { EVENTS_DATA } from '@/data/gdgData';
 
 interface HistoryItem {
@@ -25,6 +27,8 @@ export function DevTerminalModal() {
   const { theme, toggleTheme, setTheme } = useTheme();
   const { isXRayActive, toggleXRay } = useXRay();
   const { session, openModal: openDemoAuthModal } = useDemoAuth();
+  const { startTour } = useGuidedTour();
+  const { open: openShortcuts } = useShortcuts();
   const router = useRouter();
   const [, startTransition] = useTransition();
   const skipFocusRestoreRef = useRef(false);
@@ -165,6 +169,14 @@ export function DevTerminalModal() {
                 <div>
                   <span className="text-[#4ADE80] font-bold">celebrate</span>
                   <span className="text-[#CBD5E1]"> - Fire Google 4-colour confetti</span>
+                </div>
+                <div>
+                  <span className="text-[#60A5FA] font-bold">tour</span>
+                  <span className="text-[#CBD5E1]"> - Start Interactive Guided Tour (6 stops)</span>
+                </div>
+                <div>
+                  <span className="text-[#FCD34D] font-bold">shortcuts</span>
+                  <span className="text-[#CBD5E1]"> - Open Keyboard Shortcuts Cheat-Sheet (?)</span>
                 </div>
                 <div>
                   <span className="text-[#F8FAFC] font-bold">clear</span>
@@ -483,6 +495,49 @@ export function DevTerminalModal() {
         break;
       }
 
+      case 'tour': {
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <div className="space-y-1 text-xs font-mono">
+              <p className="text-[#60A5FA] font-bold">
+                Launching 6-Step Cross-Route Interactive Guided Tour...
+              </p>
+              <p className="text-white/70">
+                Use ← / → to step through landmarks across /, /events, and /team.
+              </p>
+            </div>
+          ),
+        });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
+        setTimeout(() => {
+          close({ skipFocusRestore: true });
+          startTour(0);
+        }, 250);
+        break;
+      }
+
+      case 'shortcuts': {
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <p className="text-[#FCD34D] text-xs font-mono">
+              Opening Keyboard Shortcuts Cheat-Sheet (?) ...
+            </p>
+          ),
+        });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
+        setTimeout(() => {
+          close({ skipFocusRestore: true });
+          openShortcuts();
+        }, 250);
+        break;
+      }
+
       case 'clear': {
         setHistory([]);
         setInputVal('');
@@ -534,7 +589,7 @@ export function DevTerminalModal() {
     }
   };
 
-  const quickChips = ['help', 'auth', 'xray', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
+  const quickChips = ['help', 'tour', 'shortcuts', 'auth', 'xray', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
 
   return (
     <AnimatePresence>

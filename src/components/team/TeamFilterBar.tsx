@@ -115,6 +115,7 @@ export function TeamFilterBar({
   return (
     <div
       id="team-filter-bar"
+      data-tour="team-topology"
       className="w-full rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-3 sm:p-4 shadow-xs mb-6 space-y-2.5"
     >
       {/* ============================================================= */}
