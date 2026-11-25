@@ -15,6 +15,7 @@ import {
 } from './TeamFilterBar';
 import { TeamMemberCard } from './TeamMemberCard';
 import { ChapterTopologyView } from './ChapterTopologyView';
+import { BuilderDetailDrawer } from './BuilderDetailDrawer';
 import { TeamCultureStrip } from './TeamCultureStrip';
 import { BuilderWorkflowStrip } from './BuilderWorkflowStrip';
 import { useApiInspector } from '@/context/ApiInspectorContext';
@@ -27,6 +28,7 @@ export function TeamDirectoryClient() {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
   const [inspectAll, setInspectAll] = useState<boolean>(false);
   const [flippedOverrides, setFlippedOverrides] = useState<Record<string, boolean>>({});
+  const [selectedDrawerMemberId, setSelectedDrawerMemberId] = useState<string | null>(null);
 
   // Phase 19: Live /api/team Query Mode & Latency Telemetry
   const [dataSourceMode, setDataSourceMode] = useState<DataSourceMode>('static');
@@ -176,6 +178,11 @@ export function TeamDirectoryClient() {
 
   // Which builders to display
   const displayedMembers = dataSourceMode === 'live' ? liveBuilders : filteredStaticMembers;
+
+  const selectedDrawerMember = useMemo(() => {
+    if (!selectedDrawerMemberId) return null;
+    return TEAM_DATA.find((m) => m.id === selectedDrawerMemberId) || null;
+  }, [selectedDrawerMemberId]);
 
   const hasActiveFilters =
     selectedVertical !== 'All Builders' ||
@@ -360,6 +367,7 @@ export function TeamDirectoryClient() {
                           onToggleFlip={() => handleToggleCardFlip(member.id)}
                           index={index}
                           onSelectSkill={(skill) => setSelectedSkill(skill)}
+                          onInspectMember={(m) => setSelectedDrawerMemberId(m.id)}
                         />
                       );
                     })}
@@ -384,7 +392,14 @@ export function TeamDirectoryClient() {
               }}
               className="w-full"
             >
-              <ChapterTopologyView />
+              <ChapterTopologyView
+                filteredMembers={displayedMembers}
+                allMembers={TEAM_DATA}
+                activeVertical={selectedVertical}
+                activeSkill={selectedSkill}
+                searchQuery={debouncedSearchQuery}
+                onInspectMember={(m) => setSelectedDrawerMemberId(m.id)}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -395,6 +410,16 @@ export function TeamDirectoryClient() {
 
       {/* 6. Architectural Builder Workflow Strip */}
       <BuilderWorkflowStrip />
+
+      {/* 7. Slide-Over Builder Detail Drawer */}
+      <BuilderDetailDrawer
+        member={selectedDrawerMember}
+        isOpen={!!selectedDrawerMember}
+        membersList={displayedMembers.length > 0 ? displayedMembers : TEAM_DATA}
+        onClose={() => setSelectedDrawerMemberId(null)}
+        onSelectMember={(memberId) => setSelectedDrawerMemberId(memberId)}
+        onSelectSkill={(skill) => setSelectedSkill(skill)}
+      />
     </div>
   );
 }

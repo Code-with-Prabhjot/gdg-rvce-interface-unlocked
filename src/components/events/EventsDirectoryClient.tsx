@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RotateCcw } from 'lucide-react';
 import {
@@ -20,6 +20,7 @@ import {
   ModeFilter,
   ViewMode,
   DataSourceMode,
+  EventSortOrder,
 } from './EventsFilterBar';
 import { EventDirectoryCard } from './EventDirectoryCard';
 import { EventsCalendarView } from './EventsCalendarView';
@@ -30,10 +31,10 @@ import { useApiInspector } from '@/context/ApiInspectorContext';
 import { downloadBundleIcs } from '@/utils/calendarExport';
 
 export function EventsDirectoryClient() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { savedSlugs } = useSavedEvents();
   const { openWithPreset } = useApiInspector();
+  const [sortOrder, setSortOrder] = useState<EventSortOrder>('asc');
 
   // Read initial URL params
   const paramStatus = searchParams.get('status');
@@ -94,7 +95,7 @@ export function EventsDirectoryClient() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // URL Query Synchronization helper
+  // URL Query Synchronization helper (uses window.history.replaceState to avoid router transition flicker)
   const syncUrlParams = useCallback(
     (
       newStatus: StatusFilter,
@@ -102,6 +103,7 @@ export function EventsDirectoryClient() {
       newMode: ModeFilter,
       newEventSlug: string | null
     ) => {
+      if (typeof window === 'undefined') return;
       const params = new URLSearchParams();
       if (newStatus !== 'All') params.set('status', newStatus);
       if (newTrack !== 'All') params.set('track', newTrack);
@@ -110,12 +112,13 @@ export function EventsDirectoryClient() {
 
       const queryString = params.toString();
       const targetUrl = queryString ? `/events?${queryString}` : '/events';
-      router.replace(targetUrl, { scroll: false });
+      window.history.replaceState(null, '', targetUrl);
     },
-    [router]
+    []
   );
 
-  // Sync external URL changes (e.g. browser back/forward buttons)
+  // Sync external URL changes (e.g. Next.js Link navigations or browser back/forward)
+  const searchParamsKey = searchParams.toString();
   useEffect(() => {
     const curStatus = searchParams.get('status');
     if (curStatus) {
@@ -123,10 +126,23 @@ export function EventsDirectoryClient() {
       else if (curStatus.toLowerCase() === 'past') setStatusFilter('Past');
     }
     const curEvent = searchParams.get('event');
-    if (curEvent !== selectedEventSlug) {
-      setSelectedEventSlug(curEvent || null);
+    if (curEvent && EVENTS_DATA.some((e) => e.slug === curEvent)) {
+      setSelectedEventSlug(curEvent);
     }
-  }, [searchParams, selectedEventSlug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParamsKey]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const curEvent = params.get('event');
+      setSelectedEventSlug(
+        curEvent && EVENTS_DATA.some((e) => e.slug === curEvent) ? curEvent : null
+      );
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Execute real fetch against /api/events when in Live API mode
   useEffect(() => {
@@ -211,10 +227,13 @@ export function EventsDirectoryClient() {
     syncUrlParams(statusFilter, trackFilter, mode, selectedEventSlug);
   };
 
-  const handleSelectEvent = (slug: string) => {
-    setSelectedEventSlug(slug);
-    syncUrlParams(statusFilter, trackFilter, modeFilter, slug);
-  };
+  const handleSelectEvent = useCallback(
+    (slug: string) => {
+      setSelectedEventSlug(slug);
+      syncUrlParams(statusFilter, trackFilter, modeFilter, slug);
+    },
+    [syncUrlParams, statusFilter, trackFilter, modeFilter]
+  );
 
   const handleResetFilters = () => {
     setStatusFilter('All');
@@ -287,16 +306,30 @@ export function EventsDirectoryClient() {
     });
   }, [statusFilter, trackFilter, modeFilter, searchQuery]);
 
-  // Final filtered list based on Active Data Source Mode + Personal Saved Sprints
+  // Final filtered & chronologically sorted list based on Active Data Source Mode + Saved Sprints
   const filteredEvents = useMemo(() => {
     const baseList = dataSourceMode === 'live' ? liveEvents : staticFilteredEvents;
+    const savedFiltered = onlySaved
+      ? baseList.filter((ev) => savedSlugs.includes(ev.slug))
+      : [...baseList];
 
-    if (onlySaved) {
-      return baseList.filter((ev) => savedSlugs.includes(ev.slug));
-    }
-
-    return baseList;
-  }, [dataSourceMode, liveEvents, staticFilteredEvents, onlySaved, savedSlugs]);
+    // Upcoming is strictly ascending (soonest sprint / fewest days remaining first).
+    // All Sessions & Past Recaps obey the Chronological / Latest First toggle.
+    const direction = statusFilter === 'Upcoming' ? 1 : sortOrder === 'asc' ? 1 : -1;
+    return savedFiltered.sort(
+      (a, b) =>
+        (new Date(a.isoStart).getTime() - new Date(b.isoStart).getTime()) *
+        direction
+    );
+  }, [
+    dataSourceMode,
+    liveEvents,
+    staticFilteredEvents,
+    onlySaved,
+    savedSlugs,
+    statusFilter,
+    sortOrder,
+  ]);
 
   // Export multi-session bundle .ics
   const handleExportSavedBundle = useCallback(() => {
@@ -341,6 +374,8 @@ export function EventsDirectoryClient() {
         onModeChange={handleModeChange}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        sortOrder={sortOrder}
+        onSortOrderChange={setSortOrder}
         onResetFilters={handleResetFilters}
         hasActiveFilters={hasActiveFilters}
         totalResultsCount={filteredEvents.length}

@@ -652,34 +652,59 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
       {/* Stepped Geometric Staircase Vector SVG */}
       <div className="w-full h-28 sm:h-32 flex items-center justify-center relative z-10">
         <svg
-          viewBox="0 0 320 120"
+          viewBox="0 0 540 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full max-w-[320px] transition-transform duration-500 group-hover:scale-[1.02]"
+          className="w-full h-full max-w-[500px] transition-transform duration-500 group-hover:scale-[1.02]"
           aria-hidden="true"
         >
+          {/* Ascending Connector Paths (Rendered BEFORE step rects so lines never cross over step boxes or text) */}
+          <path
+            d="M115 76 L115 54 L196 54"
+            fill="none"
+            stroke="#FBBC04"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray={activeStep >= 2 ? 'none' : '4 4'}
+            className="transition-all duration-300"
+          />
+          <path
+            d="M275 46 L275 26 L366 26"
+            fill="none"
+            stroke="#FBBC04"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray={activeStep === 3 ? 'none' : '4 4'}
+            className="transition-all duration-300"
+          />
+
           {/* Step 1 */}
           <g
-            className="cursor-pointer transition-transform duration-200 hover:opacity-90"
+            className="cursor-pointer transition-opacity duration-200 hover:opacity-95"
             onClick={() => setActiveStep(1)}
           >
             <rect
-              x="24"
-              y="78"
-              width="76"
-              height="32"
+              x="50"
+              y="76"
+              width="130"
+              height="34"
               rx="4"
-              fill={activeStep === 1 ? '#FBBC04' : 'var(--bg-elevated)'}
               stroke="#FBBC04"
               strokeWidth={activeStep === 1 ? '2' : '1.5'}
-              className="transition-colors duration-200"
+              className={`transition-colors duration-200 ${
+                activeStep === 1
+                  ? 'fill-[#FBBC04]'
+                  : 'fill-[#FFFFFF] dark:fill-[#0F141D]'
+              }`}
             />
             <text
-              x="62"
-              y="98"
+              x="115"
+              y="97"
               textAnchor="middle"
               fill={activeStep === 1 ? '#111827' : 'var(--text-primary)'}
-              fontSize="9"
+              fontSize="10"
               fontFamily="var(--font-mono)"
               fontWeight="bold"
             >
@@ -689,37 +714,40 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
 
           {/* Step 2 */}
           <g
-            className="cursor-pointer transition-transform duration-200 hover:opacity-90"
+            className="cursor-pointer transition-opacity duration-200 hover:opacity-95"
             onClick={() => setActiveStep(2)}
           >
             <rect
-              x="108"
-              y="48"
-              width="82"
-              height="62"
+              x="196"
+              y="46"
+              width="158"
+              height="64"
               rx="4"
-              fill={activeStep === 2 ? '#FBBC04' : 'var(--bg-elevated)'}
               stroke="#FBBC04"
               strokeWidth={activeStep === 2 ? '2' : '1.5'}
-              className="transition-colors duration-200"
+              className={`transition-colors duration-200 ${
+                activeStep === 2
+                  ? 'fill-[#FBBC04]'
+                  : 'fill-[#FFFFFF] dark:fill-[#0F141D]'
+              }`}
             />
             <text
-              x="149"
-              y="68"
+              x="275"
+              y="72"
               textAnchor="middle"
               fill={activeStep === 2 ? '#111827' : 'var(--text-primary)'}
-              fontSize="9"
+              fontSize="10"
               fontFamily="var(--font-mono)"
               fontWeight="bold"
             >
               02 // PATTERNS
             </text>
             <text
-              x="149"
-              y="82"
+              x="275"
+              y="88"
               textAnchor="middle"
               fill={activeStep === 2 ? '#111827' : 'var(--text-muted)'}
-              fontSize="8"
+              fontSize="8.5"
               fontFamily="var(--font-mono)"
               fontWeight={activeStep === 2 ? '600' : 'normal'}
             >
@@ -729,38 +757,41 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
 
           {/* Step 3 */}
           <g
-            className="cursor-pointer transition-transform duration-200 hover:opacity-90"
+            className="cursor-pointer transition-opacity duration-200 hover:opacity-95"
             onClick={() => setActiveStep(3)}
           >
             <rect
-              x="198"
-              y="18"
-              width="98"
-              height="92"
+              x="366"
+              y="16"
+              width="124"
+              height="94"
               rx="4"
-              fill={activeStep === 3 ? '#FBBC04' : 'rgba(251,188,4,0.12)'}
               stroke="#FBBC04"
               strokeWidth={activeStep === 3 ? '2.5' : '1.5'}
-              className="transition-colors duration-200"
+              className={`transition-colors duration-200 ${
+                activeStep === 3
+                  ? 'fill-[#FBBC04]'
+                  : 'fill-[#FFFFFF] dark:fill-[#0F141D]'
+              }`}
             />
             <text
-              x="247"
-              y="40"
+              x="428"
+              y="54"
               textAnchor="middle"
               fill={activeStep === 3 ? '#111827' : '#92400E'}
               className={activeStep === 3 ? '' : 'dark:fill-[#FCD34D]'}
-              fontSize="9"
+              fontSize="10"
               fontFamily="var(--font-mono)"
               fontWeight="bold"
             >
               03 // SHIP
             </text>
             <text
-              x="247"
-              y="56"
+              x="428"
+              y="72"
               textAnchor="middle"
               fill={activeStep === 3 ? '#111827' : 'var(--text-secondary)'}
-              fontSize="8"
+              fontSize="8.5"
               fontFamily="var(--font-mono)"
               fontWeight={activeStep === 3 ? '600' : 'normal'}
             >
@@ -768,22 +799,14 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
             </text>
           </g>
 
-          {/* Ascending Path Line */}
-          <path
-            d="M62 78 L62 62 L149 62 L149 32 L247 32"
-            fill="none"
-            stroke="#FBBC04"
-            strokeWidth="2"
-            strokeDasharray={activeStep === 3 ? 'none' : '3 3'}
-            className="transition-all duration-300"
-          />
-
-          {/* Checkpoint Nodes */}
-          <circle cx="62" cy="78" r={activeStep === 1 ? '4' : '3'} fill="#FBBC04" />
-          <circle cx="149" cy="48" r={activeStep === 2 ? '4' : '3'} fill="#FBBC04" />
+          {/* Checkpoint & Junction Nodes */}
+          <circle cx="115" cy="76" r={activeStep === 1 ? '4' : '3'} fill="#FBBC04" />
+          <circle cx="196" cy="54" r="3" fill="#FBBC04" />
+          <circle cx="275" cy="46" r={activeStep === 2 ? '4' : '3'} fill="#FBBC04" />
+          <circle cx="366" cy="26" r="3" fill="#FBBC04" />
           <circle
-            cx="247"
-            cy="18"
+            cx="428"
+            cy="16"
             r={activeStep === 3 ? '5' : '4'}
             fill="#FBBC04"
             className={activeStep === 3 ? 'animate-pulse' : ''}

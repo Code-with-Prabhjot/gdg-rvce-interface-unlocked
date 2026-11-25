@@ -43,6 +43,7 @@ export function CommandPalette() {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const skipFocusRestoreRef = useRef(false);
   const [, startTransition] = useTransition();
 
   // Keyboard shortcut listener for Cmd+K / Ctrl+K
@@ -53,7 +54,7 @@ export function CommandPalette() {
         toggle();
       } else if (e.key === 'Escape' && isOpen) {
         e.preventDefault();
-        close();
+        close({ skipFocusRestore: skipFocusRestoreRef.current });
       }
     };
 
@@ -64,6 +65,7 @@ export function CommandPalette() {
   // Focus input on open
   useEffect(() => {
     if (isOpen) {
+      skipFocusRestoreRef.current = false;
       setQuery('');
       setSelectedIndex(0);
       setTimeout(() => {
@@ -91,8 +93,12 @@ export function CommandPalette() {
       icon: Home,
       accentColor: '#4285F4',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         startTransition(() => router.push('/'));
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       },
     },
     {
@@ -103,8 +109,12 @@ export function CommandPalette() {
       icon: Calendar,
       accentColor: '#EA4335',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         startTransition(() => router.push('/events'));
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       },
     },
     {
@@ -115,8 +125,12 @@ export function CommandPalette() {
       icon: Users,
       accentColor: '#34A853',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         startTransition(() => router.push('/team'));
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       },
     },
     {
@@ -165,7 +179,8 @@ export function CommandPalette() {
       icon: Layers,
       accentColor: '#4285F4',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         toggleXRay();
       },
     },
@@ -189,7 +204,8 @@ export function CommandPalette() {
       icon: Terminal,
       accentColor: '#34A853',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         openTerminal();
       },
     },
@@ -201,7 +217,8 @@ export function CommandPalette() {
       icon: Terminal,
       accentColor: '#4285F4',
       run: () => {
-        close();
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
         openApiInspector();
       },
     },
@@ -244,7 +261,7 @@ export function CommandPalette() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={close}
+            onClick={() => close({ skipFocusRestore: skipFocusRestoreRef.current })}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             aria-hidden="true"
           />

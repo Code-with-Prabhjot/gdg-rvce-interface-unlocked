@@ -105,6 +105,7 @@ export function EventDetailDrawer({
   const prefersReducedMotion = useReducedMotion();
   const drawerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const bodyScrollRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const { openWithPreset } = useApiInspector();
   const { isSaved, toggleSave } = useSavedEvents();
@@ -121,7 +122,7 @@ export function EventDetailDrawer({
   const [checkedPrereqs, setCheckedPrereqs] = useState<Set<number>>(new Set());
   const [artworkMode, setArtworkMode] = useState<'schematic' | 'scene'>('schematic');
 
-  // Reset transient state when event changes
+  // Reset transient state & scroll body cleanly when event changes
   useEffect(() => {
     setCopiedLink(false);
     setCalendarDownloaded(false);
@@ -132,6 +133,9 @@ export function EventDetailDrawer({
     setServerLatencyMs(null);
     setCheckedPrereqs(new Set());
     setArtworkMode('schematic');
+    if (bodyScrollRef.current) {
+      bodyScrollRef.current.scrollTop = 0;
+    }
   }, [event?.id]);
 
   // Stepper calculations
@@ -153,23 +157,34 @@ export function EventDetailDrawer({
     }
   }, [hasNext, currentIndex, filteredEvents, onSelectEvent]);
 
-  // Keyboard navigation & Accessibility Focus Trap
+  // Keep latest stepper/close refs so keydown listener never tears down focus on stepping
+  const navRefs = useRef({ hasPrev, hasNext, handlePrev, handleNext, onClose });
+  navRefs.current = { hasPrev, hasNext, handlePrev, handleNext, onClose };
+
+  // Save & restore trigger focus strictly on open/close transitions
   useEffect(() => {
     if (!isOpen) return;
 
-    // Save previous active element to restore upon close
-    previousActiveElement.current = document.activeElement as HTMLElement;
-
-    // Focus close button initially
+    previousActiveElement.current = document.activeElement as HTMLElement | null;
     const timer = setTimeout(() => {
       closeButtonRef.current?.focus();
     }, 50);
+
+    return () => {
+      clearTimeout(timer);
+      previousActiveElement.current?.focus({ preventScroll: true });
+    };
+  }, [isOpen]);
+
+  // Keyboard navigation & Accessibility Focus Trap
+  useEffect(() => {
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       // Escape to close
       if (e.key === 'Escape') {
         e.preventDefault();
-        onClose();
+        navRefs.current.onClose();
         return;
       }
 
@@ -182,12 +197,12 @@ export function EventDetailDrawer({
           target.isContentEditable);
 
       if (!isInput) {
-        if (e.key === 'ArrowLeft' && hasPrev) {
+        if (e.key === 'ArrowLeft' && navRefs.current.hasPrev) {
           e.preventDefault();
-          handlePrev();
-        } else if (e.key === 'ArrowRight' && hasNext) {
+          navRefs.current.handlePrev();
+        } else if (e.key === 'ArrowRight' && navRefs.current.hasNext) {
           e.preventDefault();
-          handleNext();
+          navRefs.current.handleNext();
         }
       }
 
@@ -213,11 +228,9 @@ export function EventDetailDrawer({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('keydown', handleKeyDown);
-      previousActiveElement.current?.focus();
     };
-  }, [isOpen, hasPrev, hasNext, handlePrev, handleNext, onClose]);
+  }, [isOpen]);
 
   // Lock body scroll while drawer is open
   useEffect(() => {
@@ -436,35 +449,42 @@ export function EventDetailDrawer({
             {/* ========================================================= */}
             {/* 2. DRAWER SCROLLABLE CONTENT BODY                         */}
             {/* ========================================================= */}
-            <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-7 custom-scrollbar">
+            <div
+              ref={bodyScrollRef}
+              className="flex-1 overflow-y-auto p-5 sm:p-7 custom-scrollbar"
+            >
+              <motion.div
+                key={event.id}
+                initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0.55 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.16, ease: 'easeOut' }}
+                className="space-y-7"
+              >
               {/* Cover Artwork Container (16:9) with Corner Crosshairs & Scene Switcher */}
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--border-hairline)] bg-[var(--bg-subtle)] shadow-xs select-none">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={artworkMode === 'scene' && event.sceneImage ? 'scene' : 'schematic'}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={
-                        artworkMode === 'scene' && event.sceneImage
-                          ? event.sceneImage
-                          : event.coverImage
-                      }
-                      alt={
-                        artworkMode === 'scene'
-                          ? `${event.title} build scene`
-                          : event.title
-                      }
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                <motion.div
+                  key={`${event.id}-${artworkMode === 'scene' && event.sceneImage ? 'scene' : 'schematic'}`}
+                  initial={{ opacity: 0.4 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.16 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={
+                      artworkMode === 'scene' && event.sceneImage
+                        ? event.sceneImage
+                        : event.coverImage
+                    }
+                    alt={
+                      artworkMode === 'scene'
+                        ? `${event.title} build scene`
+                        : event.title
+                    }
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
 
                 {/* Corner Crosshairs */}
@@ -936,84 +956,129 @@ export function EventDetailDrawer({
               )}
 
               {/* ======================================================= */}
-              {/* 5. INTERACTIVE DEVELOPER READINESS CHECKLIST            */}
+              {/* 5. UPCOMING READINESS CHECKLIST vs PAST TAKEAWAYS       */}
               {/* ======================================================= */}
-              {event.prerequisites && event.prerequisites.length > 0 && (
-                <div className="space-y-3 p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
-                        DEVELOPER READINESS CHECKLIST
+              {isUpcoming ? (
+                event.prerequisites &&
+                event.prerequisites.length > 0 && (
+                  <div className="space-y-3 p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
+                    <div className="flex items-center justify-between gap-2">
+                      <div>
+                        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                          DEVELOPER READINESS CHECKLIST
+                        </span>
+                        <p className="text-xs text-[var(--text-secondary)]">
+                          Click items to verify your environment setup
+                        </p>
+                      </div>
+
+                      <span
+                        className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full border transition-all shrink-0 ${
+                          allPrereqsReady
+                            ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                            : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)]'
+                        }`}
+                      >
+                        Ready: {readyPrereqs} / {totalPrereqs} items checked
                       </span>
-                      <p className="text-xs text-[var(--text-secondary)]">
-                        Click items to verify your environment setup
-                      </p>
                     </div>
 
-                    <span
-                      className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full border transition-all ${
-                        allPrereqsReady
-                          ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
-                          : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)]'
-                      }`}
-                    >
-                      Ready: {readyPrereqs} / {totalPrereqs} items checked
+                    {/* Progress Bar */}
+                    <div className="w-full h-1.5 rounded-full bg-[var(--bg-elevated)] overflow-hidden border border-[var(--border-hairline)]">
+                      <div
+                        className="h-full transition-all duration-300 rounded-full"
+                        style={{
+                          width: `${(readyPrereqs / totalPrereqs) * 100}%`,
+                          backgroundColor: allPrereqsReady ? '#34A853' : '#4285F4',
+                        }}
+                      />
+                    </div>
+
+                    {/* Checklist Items */}
+                    <div className="space-y-2 pt-1">
+                      {event.prerequisites.map((req, idx) => {
+                        const isChecked = checkedPrereqs.has(idx);
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => togglePrereq(idx)}
+                            className={`w-full text-left p-3 rounded-xl border flex items-start gap-3 transition-all cursor-pointer ${
+                              isChecked
+                                ? 'bg-[#34A853]/10 border-[#34A853]/40 text-[var(--text-primary)]'
+                                : 'bg-[var(--bg-elevated)] border-[var(--border-hairline)] hover:border-[var(--border-strong)] text-[var(--text-secondary)]'
+                            }`}
+                          >
+                            <div
+                              className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                                isChecked
+                                  ? 'bg-[#34A853] border-[#34A853] text-white'
+                                  : 'border-[var(--border-strong)] bg-transparent'
+                              }`}
+                            >
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            <span
+                              className={`text-xs sm:text-sm leading-snug ${
+                                isChecked ? 'line-through opacity-85' : ''
+                              }`}
+                            >
+                              {req}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {allPrereqsReady && (
+                      <div className="p-2.5 rounded-xl bg-[#34A853]/15 border border-[#34A853]/30 text-xs font-mono text-[#34A853] font-bold flex items-center gap-2">
+                        <Sparkles className="w-4 h-4" />
+                        <span>Ready for build sprint! All prerequisites verified.</span>
+                      </div>
+                    )}
+                  </div>
+                )
+              ) : (
+                /* Past Event: Clean Non-Clickable Session Takeaways & Covered Topics */
+                <div className="space-y-3 p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                        KEY SESSION TAKEAWAYS &amp; TOPICS COVERED
+                      </span>
+                      <p className="text-xs text-[var(--text-secondary)]">
+                        Core concepts, live demonstrations &amp; archived technical highlights
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-[#34A853] shrink-0">
+                      ARCHIVED
                     </span>
                   </div>
 
-                  {/* Progress Bar */}
-                  <div className="w-full h-1.5 rounded-full bg-[var(--bg-elevated)] overflow-hidden border border-[var(--border-hairline)]">
-                    <div
-                      className="h-full transition-all duration-300 rounded-full"
-                      style={{
-                        width: `${(readyPrereqs / totalPrereqs) * 100}%`,
-                        backgroundColor: allPrereqsReady ? '#34A853' : '#4285F4',
-                      }}
-                    />
-                  </div>
-
-                  {/* Checklist Items */}
-                  <div className="space-y-2 pt-1">
-                    {event.prerequisites.map((req, idx) => {
-                      const isChecked = checkedPrereqs.has(idx);
+                  <ul className="space-y-2.5 pt-1">
+                    {(event.takeaways && event.takeaways.length > 0
+                      ? event.takeaways
+                      : event.agenda.map((item) => item.topic)
+                    ).map((topic, idx) => {
+                      const dotColor =
+                        GOOGLE_TIMELINE_COLORS[idx % GOOGLE_TIMELINE_COLORS.length].border;
                       return (
-                        <button
+                        <li
                           key={idx}
-                          type="button"
-                          onClick={() => togglePrereq(idx)}
-                          className={`w-full text-left p-3 rounded-xl border flex items-start gap-3 transition-all cursor-pointer ${
-                            isChecked
-                              ? 'bg-[#34A853]/10 border-[#34A853]/40 text-[var(--text-primary)]'
-                              : 'bg-[var(--bg-elevated)] border-[var(--border-hairline)] hover:border-[var(--border-strong)] text-[var(--text-secondary)]'
-                          }`}
+                          className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] flex items-start gap-3"
                         >
-                          <div
-                            className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                              isChecked
-                                ? 'bg-[#34A853] border-[#34A853] text-white'
-                                : 'border-[var(--border-strong)] bg-transparent'
-                            }`}
-                          >
-                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
-                          </div>
                           <span
-                            className={`text-xs sm:text-sm leading-snug ${
-                              isChecked ? 'line-through opacity-85' : ''
-                            }`}
-                          >
-                            {req}
+                            className="w-2.5 h-2.5 rounded-full shrink-0 mt-1.5"
+                            style={{ backgroundColor: dotColor }}
+                            aria-hidden="true"
+                          />
+                          <span className="text-xs sm:text-sm text-[var(--text-primary)] leading-snug">
+                            {topic}
                           </span>
-                        </button>
+                        </li>
                       );
                     })}
-                  </div>
-
-                  {allPrereqsReady && (
-                    <div className="p-2.5 rounded-xl bg-[#34A853]/15 border border-[#34A853]/30 text-xs font-mono text-[#34A853] font-bold flex items-center gap-2">
-                      <Sparkles className="w-4 h-4" />
-                      <span>Ready for build sprint! All prerequisites verified.</span>
-                    </div>
-                  )}
+                  </ul>
                 </div>
               )}
 
@@ -1035,6 +1100,7 @@ export function EventDetailDrawer({
                   ))}
                 </div>
               </div>
+              </motion.div>
             </div>
 
             {/* ========================================================= */}

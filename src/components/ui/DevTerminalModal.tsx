@@ -19,12 +19,23 @@ interface HistoryItem {
 }
 
 export function DevTerminalModal() {
-  const { isOpen, close } = useDevTerminal();
+  const { isOpen, close, markSkipFocusRestore } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
   const { theme, toggleTheme, setTheme } = useTheme();
   const { isXRayActive, toggleXRay } = useXRay();
   const router = useRouter();
   const [, startTransition] = useTransition();
+  const skipFocusRestoreRef = useRef(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      skipFocusRestoreRef.current = false;
+    }
+  }, [isOpen]);
+
+  const handleCloseTerminal = () => {
+    close({ skipFocusRestore: skipFocusRestoreRef.current });
+  };
 
   const [inputVal, setInputVal] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([
@@ -179,8 +190,10 @@ export function DevTerminalModal() {
             </div>
           ),
         });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         setTimeout(() => {
-          close();
+          close({ skipFocusRestore: true });
           openApiInspector();
         }, 300);
         break;
@@ -239,9 +252,14 @@ export function DevTerminalModal() {
             </div>
           ),
         });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         startTransition(() => {
           router.push('/events');
         });
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         break;
       }
 
@@ -255,9 +273,14 @@ export function DevTerminalModal() {
             </p>
           ),
         });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         startTransition(() => {
           router.push('/team');
         });
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         break;
       }
 
@@ -271,9 +294,14 @@ export function DevTerminalModal() {
             </p>
           ),
         });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         startTransition(() => {
           router.push('/');
         });
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         break;
       }
 
@@ -356,6 +384,8 @@ export function DevTerminalModal() {
       }
 
       case 'boot': {
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new Event('gdg:replay-boot'));
         }
@@ -368,12 +398,14 @@ export function DevTerminalModal() {
             </p>
           ),
         });
-        close();
+        close({ skipFocusRestore: true });
         break;
       }
 
       case 'xray': {
         const nextState = !isXRayActive;
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
         toggleXRay();
         newItems.push({
           id: `res-${Date.now()}`,
@@ -411,7 +443,7 @@ export function DevTerminalModal() {
         });
         if (nextState) {
           setTimeout(() => {
-            close();
+            close({ skipFocusRestore: true });
           }, 600);
         }
         break;
@@ -464,7 +496,7 @@ export function DevTerminalModal() {
       }
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      close();
+      handleCloseTerminal();
     }
   };
 
@@ -479,7 +511,7 @@ export function DevTerminalModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={close}
+            onClick={handleCloseTerminal}
             className="fixed inset-0 bg-black/70 backdrop-blur-md"
             aria-hidden="true"
           />
@@ -501,7 +533,7 @@ export function DevTerminalModal() {
                 {/* 3-Dot Status Buttons (Official Google Palette) */}
                 <button
                   type="button"
-                  onClick={close}
+                  onClick={handleCloseTerminal}
                   className="w-3 h-3 rounded-full bg-[#EA4335] hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center group"
                   aria-label="Close terminal"
                   title="Close (ESC)"
@@ -539,7 +571,7 @@ export function DevTerminalModal() {
                 </kbd>
                 <button
                   type="button"
-                  onClick={close}
+                  onClick={handleCloseTerminal}
                   className="p-1 rounded-md text-[#CBD5E1] hover:text-[#F8FAFC] hover:bg-white/10 transition-colors cursor-pointer"
                   aria-label="Close terminal"
                 >

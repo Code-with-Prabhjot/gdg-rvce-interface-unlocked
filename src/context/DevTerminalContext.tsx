@@ -5,30 +5,45 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 interface DevTerminalContextType {
   isOpen: boolean;
   open: () => void;
-  close: () => void;
+  close: (options?: { skipFocusRestore?: boolean }) => void;
   toggle: () => void;
+  markSkipFocusRestore: () => void;
 }
 
 const DevTerminalContext = createContext<DevTerminalContextType | undefined>(undefined);
 
 export function DevTerminalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const triggerElementRef = useRef<HTMLElement | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const skipFocusRestoreRef = useRef<boolean>(false);
 
   const open = useCallback(() => {
+    skipFocusRestoreRef.current = false;
     // Record active element before opening to restore focus on exit
     if (typeof document !== 'undefined') {
-      triggerElementRef.current = document.activeElement as HTMLElement | null;
+      previousFocusRef.current = document.activeElement as HTMLElement | null;
     }
     setIsOpen(true);
   }, []);
 
-  const close = useCallback(() => {
+  const markSkipFocusRestore = useCallback(() => {
+    skipFocusRestoreRef.current = true;
+  }, []);
+
+  const close = useCallback((options?: { skipFocusRestore?: boolean }) => {
+    if (options?.skipFocusRestore) {
+      skipFocusRestoreRef.current = true;
+    }
     setIsOpen(false);
-    // Smoothly restore focus to pre-terminal focus target
-    if (triggerElementRef.current && typeof triggerElementRef.current.focus === 'function') {
+    // Smoothly restore focus to pre-terminal focus target unless navigation/feature took over
+    if (
+      !skipFocusRestoreRef.current &&
+      previousFocusRef.current &&
+      typeof previousFocusRef.current.focus === 'function'
+    ) {
+      const target = previousFocusRef.current;
       setTimeout(() => {
-        triggerElementRef.current?.focus();
+        target.focus({ preventScroll: true });
       }, 50);
     }
   }, []);
@@ -69,7 +84,7 @@ export function DevTerminalProvider({ children }: { children: React.ReactNode })
   }, [isOpen, toggle, close]);
 
   return (
-    <DevTerminalContext.Provider value={{ isOpen, open, close, toggle }}>
+    <DevTerminalContext.Provider value={{ isOpen, open, close, toggle, markSkipFocusRestore }}>
       {children}
     </DevTerminalContext.Provider>
   );

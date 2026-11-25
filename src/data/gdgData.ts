@@ -91,6 +91,7 @@ export interface GDGEvent {
   speaker: EventSpeaker;
   agenda: EventAgendaItem[];
   prerequisites: string[];
+  takeaways?: string[];
   tags: string[];
   subtitle?: string;
   displayDate?: string;
@@ -664,6 +665,12 @@ export const EVENTS_DATA: GDGEvent[] = [
       },
     ],
     tags: ['TensorFlow Lite', 'Edge AI', 'Quantization', 'Python'],
+    takeaways: [
+      'Model pruning & post-training 8-bit integer quantization with zero accuracy loss',
+      'TFLite Micro hardware flashing on Raspberry Pi & ESP32 targets (<20ms inference)',
+      'Continuous I2C/SPI sensor frame streaming & power-draw benchmarking',
+      'Live hardware proof-of-concept showcase & edge latency validation',
+    ],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
   },
@@ -733,6 +740,12 @@ export const EVENTS_DATA: GDGEvent[] = [
       },
     ],
     tags: ['Git', 'GitHub Actions', 'CI/CD', 'Open Source'],
+    takeaways: [
+      'Git object database internals: blobs, trees, SHA-1 commit DAGs & index states',
+      'Interactive rebasing, commit squashing & clean upstream conflict resolution',
+      'Automated GitHub Actions CI pipelines, semantic releases & changelogs',
+      'Turborepo monorepo tooling & upstream pull-request review standards',
+    ],
     badgeText: 'ARCHIVED WORKSHOP',
     registrationStatus: 'concluded',
   },
@@ -802,6 +815,12 @@ export const EVENTS_DATA: GDGEvent[] = [
       },
     ],
     tags: ['Design Systems', 'Figma', 'Tokens', 'Tailwind CSS'],
+    takeaways: [
+      'Design token taxonomy across semantic spacing, color & elevation scales',
+      'Automated Figma variables export into Tailwind CSS v4 theme tokens',
+      'WCAG AAA perceptual contrast math & fluid typographic scaling',
+      'Accessible keyboard-navigable React UI primitives (dialogs, tabs, switches)',
+    ],
     badgeText: 'ARCHIVED MASTERCLASS',
     registrationStatus: 'concluded',
   },
@@ -871,10 +890,21 @@ export const EVENTS_DATA: GDGEvent[] = [
       },
     ],
     tags: ['Keynote', 'Architecture', 'AI', 'Cloud', 'Android'],
+    takeaways: [
+      'Multi-disciplinary systems roadmap across AI, Cloud, Web & Android',
+      'Live code demos: Gemini APIs, Jetpack Compose, Next.js 15 & Cloud Run',
+      'Campus Open Source Guild launch & MIT-licensed student repositories',
+      'Five student builder lightning talks & live architecture walkthroughs',
+    ],
     badgeText: 'ANNUAL KEYNOTE',
     registrationStatus: 'concluded',
   },
 ];
+
+// Guarantee strict chronological ordering (isoStart ascending)
+EVENTS_DATA.sort(
+  (a, b) => new Date(a.isoStart).getTime() - new Date(b.isoStart).getTime()
+);
 
 // -----------------------------------------------------------------------------
 // 6. RECAP DATA (For "DevFest Campus Warmup '26")

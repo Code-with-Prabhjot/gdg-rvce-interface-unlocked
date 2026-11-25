@@ -39,28 +39,28 @@
   <text x="70" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="2">GDG ON CAMPUS RVCE // ARCHITECTURAL SYSTEM SPEC</text>
   <text x="1130" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" text-anchor="end" letter-spacing="2">12.9237° N, 77.4987° E</text>
 
-  <!-- Left Content Column -->
-  <g transform="translate(80, 180)">
+  <!-- Left Content Column (Strictly bounded to x <= 700 for clean clearance) -->
+  <g transform="translate(84, 170)">
     <!-- Category Pill -->
-    <rect x="0" y="0" width="140" height="34" rx="17" fill="#34A853" fill-opacity="0.18" stroke="#34A853" stroke-width="1.5"/>
-    <circle cx="16" cy="17" r="5" fill="#34A853"/>
-    <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">CODE LAB SESSION</text>
+    <rect x="0" y="0" width="204" height="34" rx="17" fill="#34A853" fill-opacity="0.18" stroke="#34A853" stroke-width="1.5"/>
+    <circle cx="18" cy="17" r="5" fill="#34A853"/>
+    <text x="34" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">CODE LAB SESSION</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Modern Android &amp; Compose</text>
+    <text x="0" y="88" font-family="sans-serif" font-size="42" font-weight="800" fill="#FFFFFF" letter-spacing="-0.8"><tspan x="0" dy="0">Modern Android &amp;</tspan><tspan x="0" dy="48">Compose</tspan></text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">Declarative UI Engineering with Kotlin &amp; Material 3</text>
+    <text x="0" y="182" font-family="sans-serif" font-size="20" font-weight="500" fill="#94A3B8"><tspan x="0" dy="0">Declarative UI Engineering with Kotlin</tspan><tspan x="0" dy="28">&amp; Material 3</tspan></text>
 
     <!-- Meta specs -->
-    <g transform="translate(0, 220)">
-      <rect x="0" y="0" width="220" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <g transform="translate(0, 260)">
+      <rect x="0" y="0" width="250" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
       <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">MOBILE // JETPACK COMPOSE</text>
     </g>
   </g>
 
-  <!-- Right Visual Feature (SVG Custom Art) -->
-  <g transform="translate(680, 140)">
+  <!-- Right Visual Feature (Shifted cleanly right around x = 945-965) -->
+  <g transform="translate(765, 165) scale(0.90)">
     
       <!-- Phone Wireframe Frame -->
       <rect x="120" y="20" width="180" height="320" rx="24" fill="#0A0D12" stroke="#34A853" stroke-width="3"/>
@@ -74,7 +74,7 @@
   </g>
 
   <!-- Bottom Brand Signature -->
-  <g transform="translate(80, 580)">
+  <g transform="translate(84, 580)">
     <!-- GDG Chevron Icon Mini -->
     <path d="M0 8L8 0L0 -8" stroke="#EA4335" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M0 -8L-8 0L0 8" stroke="#4285F4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>

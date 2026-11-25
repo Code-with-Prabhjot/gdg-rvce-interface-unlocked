@@ -639,7 +639,68 @@ Object.entries(emotes).forEach(([filename, svgContent]) => {
 // ==========================================
 // 3. EVENT COVERS (8 items, 1200x675 16:9)
 // ==========================================
-const createCoverSvg = ({ title, subtitle, accentColor, category, tagText, visualElements }) => `
+const escapeXml = (str) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const wrapCoverLines = (text, maxChars) => {
+  const words = text.trim().split(/\s+/);
+  const lines = [];
+  let current = '';
+  for (const word of words) {
+    if (!current) {
+      current = word;
+    } else if ((current + ' ' + word).length <= maxChars) {
+      current += ' ' + word;
+    } else {
+      lines.push(current);
+      current = word;
+    }
+  }
+  if (current) lines.push(current);
+  return lines.slice(0, 2);
+};
+
+const createCoverSvg = ({
+  title,
+  subtitle,
+  accentColor,
+  category,
+  tagText,
+  visualElements,
+  visualTransform = 'translate(780, 165) scale(0.90)',
+}) => {
+  const categoryUpper = category.toUpperCase();
+  const categoryPillWidth = Math.max(168, Math.round(categoryUpper.length * 9.5 + 52));
+  const tagBoxWidth = Math.max(240, Math.round(tagText.length * 8.4 + 40));
+
+  const titleLines = wrapCoverLines(title, 20);
+  const subtitleLines = wrapCoverLines(subtitle, 38);
+
+  const titleStartY = titleLines.length > 1 ? 88 : 96;
+  const subtitleStartY = titleLines.length > 1 ? 182 : 144;
+  const metaOffsetY =
+    titleLines.length > 1
+      ? subtitleLines.length > 1
+        ? 260
+        : 236
+      : subtitleLines.length > 1
+      ? 226
+      : 204;
+
+  const titleTspans = titleLines
+    .map(
+      (line, idx) =>
+        `<tspan x="0" dy="${idx === 0 ? 0 : 48}">${escapeXml(line)}</tspan>`
+    )
+    .join('');
+
+  const subtitleTspans = subtitleLines
+    .map(
+      (line, idx) =>
+        `<tspan x="0" dy="${idx === 0 ? 0 : 28}">${escapeXml(line)}</tspan>`
+    )
+    .join('');
+
+  return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200px" height="675px" fill="none">
   <defs>
     <!-- Background Gradient -->
@@ -681,33 +742,33 @@ const createCoverSvg = ({ title, subtitle, accentColor, category, tagText, visua
   <text x="70" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="2">GDG ON CAMPUS RVCE // ARCHITECTURAL SYSTEM SPEC</text>
   <text x="1130" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" text-anchor="end" letter-spacing="2">12.9237° N, 77.4987° E</text>
 
-  <!-- Left Content Column -->
-  <g transform="translate(80, 180)">
+  <!-- Left Content Column (Strictly bounded to x <= 700 for clean clearance) -->
+  <g transform="translate(84, 170)">
     <!-- Category Pill -->
-    <rect x="0" y="0" width="140" height="34" rx="17" fill="${accentColor}" fill-opacity="0.18" stroke="${accentColor}" stroke-width="1.5"/>
-    <circle cx="16" cy="17" r="5" fill="${accentColor}"/>
-    <text x="32" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">${category.toUpperCase()}</text>
+    <rect x="0" y="0" width="${categoryPillWidth}" height="34" rx="17" fill="${accentColor}" fill-opacity="0.18" stroke="${accentColor}" stroke-width="1.5"/>
+    <circle cx="18" cy="17" r="5" fill="${accentColor}"/>
+    <text x="34" y="22" font-family="sans-serif" font-size="13" font-weight="bold" fill="#F8FAFC" letter-spacing="1">${escapeXml(categoryUpper)}</text>
 
     <!-- Main Title -->
-    <text x="0" y="100" font-family="sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">${title.replace(/&/g, '&amp;')}</text>
+    <text x="0" y="${titleStartY}" font-family="sans-serif" font-size="42" font-weight="800" fill="#FFFFFF" letter-spacing="-0.8">${titleTspans}</text>
     
     <!-- Subtitle -->
-    <text x="0" y="150" font-family="sans-serif" font-size="22" font-weight="500" fill="#94A3B8">${subtitle.replace(/&/g, '&amp;')}</text>
+    <text x="0" y="${subtitleStartY}" font-family="sans-serif" font-size="20" font-weight="500" fill="#94A3B8">${subtitleTspans}</text>
 
     <!-- Meta specs -->
-    <g transform="translate(0, 220)">
-      <rect x="0" y="0" width="220" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">${tagText.replace(/&/g, '&amp;')}</text>
+    <g transform="translate(0, ${metaOffsetY})">
+      <rect x="0" y="0" width="${tagBoxWidth}" height="42" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <text x="16" y="26" font-family="monospace" font-size="13" fill="#E2E8F0">${escapeXml(tagText)}</text>
     </g>
   </g>
 
-  <!-- Right Visual Feature (SVG Custom Art) -->
-  <g transform="translate(680, 140)">
+  <!-- Right Visual Feature (Shifted cleanly right around x = 945-965) -->
+  <g transform="${visualTransform}">
     ${visualElements}
   </g>
 
   <!-- Bottom Brand Signature -->
-  <g transform="translate(80, 580)">
+  <g transform="translate(84, 580)">
     <!-- GDG Chevron Icon Mini -->
     <path d="M0 8L8 0L0 -8" stroke="${GOOGLE_COLORS.red}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M0 -8L-8 0L0 8" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -716,6 +777,7 @@ const createCoverSvg = ({ title, subtitle, accentColor, category, tagText, visua
   </g>
 </svg>
 `;
+};
 
 const covers = {
   'hackathon-neural.svg': createCoverSvg({
@@ -724,6 +786,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.red,
     category: 'Flagship Hackathon',
     tagText: 'TRACK // APPLIED AI & GENAI',
+    visualTransform: 'translate(800, 185) scale(0.76)',
     visualElements: `
       <!-- Isometric Circuit Matrix -->
       <polygon points="200,60 400,160 200,260 0,160" fill="rgba(234,67,53,0.12)" stroke="${GOOGLE_COLORS.red}" stroke-width="2"/>
@@ -749,6 +812,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.blue,
     category: 'Deep-Dive Workshop',
     tagText: 'INFRA // GKE & CLOUD RUN',
+    visualTransform: 'translate(780, 175) scale(0.90)',
     visualElements: `
       <!-- Hexagonal Cloud Pods -->
       <g stroke="${GOOGLE_COLORS.blue}" stroke-width="2" fill="rgba(66,133,244,0.12)">
@@ -771,6 +835,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.green,
     category: 'Code Lab Session',
     tagText: 'MOBILE // JETPACK COMPOSE',
+    visualTransform: 'translate(765, 165) scale(0.90)',
     visualElements: `
       <!-- Phone Wireframe Frame -->
       <rect x="120" y="20" width="180" height="320" rx="24" fill="#0A0D12" stroke="${GOOGLE_COLORS.green}" stroke-width="3"/>
@@ -789,6 +854,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.green,
     category: 'Community Jam',
     tagText: 'COLLAB // GITHUB & WORKFLOWS',
+    visualTransform: 'translate(810, 165) scale(0.90)',
     visualElements: `
       <!-- Git Branch DAG Tree -->
       <line x1="80" y1="40" x2="80" y2="300" stroke="#64748B" stroke-width="4"/>
@@ -808,6 +874,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.blue,
     category: 'Flagship Masterclass',
     tagText: 'RESEARCH // GEMINI 1.5 PRO & FLASH',
+    visualTransform: 'translate(775, 175) scale(0.88)',
     visualElements: `
       <!-- Converging Vector Beams -->
       <polygon points="200,40 340,280 60,280" fill="none" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
@@ -830,6 +897,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.yellow,
     category: 'Engineering Clinic',
     tagText: 'PERF // LIGHTHOUSE 100 & INP',
+    visualTransform: 'translate(775, 165) scale(0.90)',
     visualElements: `
       <!-- Speedometer Arc -->
       <path d="M80 220 A 120 120 0 0 1 320 220" stroke="rgba(255,255,255,0.15)" stroke-width="20" stroke-linecap="round" fill="none"/>
@@ -849,6 +917,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.red,
     category: 'Design Engineering',
     tagText: 'UI/UX // FIGMA TO NEXT.JS',
+    visualTransform: 'translate(790, 195) scale(0.92)',
     visualElements: `
       <!-- Color Palette Swatches -->
       <g transform="translate(60, 60)">
@@ -868,6 +937,7 @@ const covers = {
     accentColor: GOOGLE_COLORS.yellow,
     category: 'Annual Celebration',
     tagText: 'ANNUAL // GDG CAMPUS NETWORK',
+    visualTransform: 'translate(775, 175) scale(0.90)',
     visualElements: `
       <!-- Confetti & Celebration Radiance -->
       <circle cx="200" cy="160" r="100" fill="none" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2" stroke-dasharray="6 6"/>

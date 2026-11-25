@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Sparkles,
   ChevronLeft,
@@ -13,13 +13,24 @@ import {
   Palette,
   Users,
   Compass,
+  Maximize2,
 } from 'lucide-react';
 import {
   TEAM_DATA,
+  GDGTeamMember,
   TeamVertical,
   GoogleAccent,
 } from '@/data/gdgData';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
+
+export interface ChapterTopologyViewProps {
+  filteredMembers?: GDGTeamMember[];
+  allMembers?: GDGTeamMember[];
+  activeVertical?: string;
+  activeSkill?: string;
+  searchQuery?: string;
+  onInspectMember?: (member: GDGTeamMember) => void;
+}
 
 interface AccentVisualConfig {
   hex: string;
@@ -218,14 +229,49 @@ const BUILDER_LEAF_POSITIONS: BuilderLeafPos[] = [
   },
 ];
 
-export function ChapterTopologyView() {
+export function ChapterTopologyView({
+  filteredMembers,
+  allMembers = TEAM_DATA,
+  activeVertical: filterVertical,
+  activeSkill,
+  searchQuery,
+  onInspectMember,
+}: ChapterTopologyViewProps) {
   const [selectedMemberId, setSelectedMemberId] = useState<string>('builder-01');
   const prefersReducedMotion = useReducedMotion();
   const rawSvgId = useId();
   const svgId = rawSvgId.replace(/:/g, '');
 
+  const effectiveFiltered = useMemo(
+    () => filteredMembers ?? allMembers,
+    [filteredMembers, allMembers]
+  );
+
+  const filteredIdSet = useMemo(
+    () => new Set(effectiveFiltered.map((m) => m.id)),
+    [effectiveFiltered]
+  );
+
+  const hasActiveFilter = Boolean(
+    (filterVertical && filterVertical !== 'All Builders') ||
+      (activeSkill && activeSkill !== 'All Stacks') ||
+      (searchQuery && searchQuery.trim().length > 0)
+  );
+
+  // Automatically jump to the first matching builder whenever filters exclude current selection
+  useEffect(() => {
+    if (
+      effectiveFiltered.length > 0 &&
+      !effectiveFiltered.some((m) => m.id === selectedMemberId)
+    ) {
+      setSelectedMemberId(effectiveFiltered[0].id);
+    }
+  }, [effectiveFiltered, selectedMemberId]);
+
   const selectedMember =
-    TEAM_DATA.find((m) => m.id === selectedMemberId) ?? TEAM_DATA[0];
+    allMembers.find((m) => m.id === selectedMemberId) ??
+    effectiveFiltered[0] ??
+    allMembers[0];
   const selectedAccent = getAccentVisual(selectedMember.googleColor);
 
   const selectedLeaf = BUILDER_LEAF_POSITIONS.find(
@@ -233,16 +279,20 @@ export function ChapterTopologyView() {
   );
   const activeVertical = selectedLeaf?.parentVertical ?? selectedMember.vertical;
 
+  const cycleList = effectiveFiltered.length > 0 ? effectiveFiltered : allMembers;
+
   const handlePrevMember = () => {
-    const currentIndex = TEAM_DATA.findIndex((m) => m.id === selectedMember.id);
-    const prevIndex = (currentIndex - 1 + TEAM_DATA.length) % TEAM_DATA.length;
-    setSelectedMemberId(TEAM_DATA[prevIndex].id);
+    const currentIndex = cycleList.findIndex((m) => m.id === selectedMember.id);
+    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+    const prevIndex = (safeIndex - 1 + cycleList.length) % cycleList.length;
+    setSelectedMemberId(cycleList[prevIndex].id);
   };
 
   const handleNextMember = () => {
-    const currentIndex = TEAM_DATA.findIndex((m) => m.id === selectedMember.id);
-    const nextIndex = (currentIndex + 1) % TEAM_DATA.length;
-    setSelectedMemberId(TEAM_DATA[nextIndex].id);
+    const currentIndex = cycleList.findIndex((m) => m.id === selectedMember.id);
+    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+    const nextIndex = (safeIndex + 1) % cycleList.length;
+    setSelectedMemberId(cycleList[nextIndex].id);
   };
 
   return (
@@ -282,6 +332,11 @@ export function ChapterTopologyView() {
               </span>
             </div>
             <div className="flex items-center gap-2 text-[11px] font-mono text-[var(--text-secondary)]">
+              {hasActiveFilter && (
+                <span className="px-2 py-0.5 rounded-full bg-[#4285F4]/10 text-[var(--accent-blue-text)] border border-[#4285F4]/30 font-semibold">
+                  {effectiveFiltered.length} matching
+                </span>
+              )}
               <span className="hidden sm:inline">CENTRAL CORE</span>
               <span className="text-[var(--text-muted)]">➔</span>
               <span className="font-semibold" style={{ color: selectedAccent.hex }}>
@@ -349,11 +404,47 @@ export function ChapterTopologyView() {
               {/* 2. Vertical Cluster to Builder Leaf Paths */}
               {BUILDER_LEAF_POSITIONS.map((leaf) => {
                 const isSelectedBuilder = leaf.memberId === selectedMember.id;
+                const isVerticalPeer =
+                  leaf.parentVertical === activeVertical && !isSelectedBuilder;
+                const isMatching = filteredIdSet.has(leaf.memberId);
                 const parentCluster = VERTICAL_CLUSTERS.find(
                   (c) => c.vertical === leaf.parentVertical
                 );
                 const clusterHex = parentCluster?.hex ?? '#4285F4';
                 const leafPathId = `leaf-path-${leaf.memberId}-${svgId}`;
+
+                const strokeColor =
+                  isSelectedBuilder || isVerticalPeer
+                    ? clusterHex
+                    : isMatching && hasActiveFilter
+                    ? clusterHex
+                    : 'var(--border-strong)';
+
+                const strokeWidth = isSelectedBuilder
+                  ? 2.5
+                  : isVerticalPeer
+                  ? 1.75
+                  : isMatching && hasActiveFilter
+                  ? 1.5
+                  : 1.2;
+
+                const strokeDasharray = isSelectedBuilder
+                  ? 'none'
+                  : isVerticalPeer
+                  ? '6 3'
+                  : '3 3';
+
+                const strokeOpacity = isSelectedBuilder
+                  ? 1
+                  : isVerticalPeer
+                  ? isMatching
+                    ? 0.78
+                    : 0.35
+                  : hasActiveFilter
+                  ? isMatching
+                    ? 0.65
+                    : 0.16
+                  : 0.35;
 
                 return (
                   <g key={leaf.memberId}>
@@ -361,12 +452,16 @@ export function ChapterTopologyView() {
                     <path
                       id={leafPathId}
                       d={leaf.clusterPathD}
-                      stroke={isSelectedBuilder ? clusterHex : 'var(--border-strong)'}
-                      strokeWidth={isSelectedBuilder ? 2.5 : 1.2}
-                      strokeDasharray={isSelectedBuilder ? 'none' : '3 3'}
-                      strokeOpacity={isSelectedBuilder ? 1 : 0.35}
+                      stroke={strokeColor}
+                      strokeWidth={strokeWidth}
+                      strokeDasharray={strokeDasharray}
+                      strokeOpacity={strokeOpacity}
                       fill="none"
-                      filter={isSelectedBuilder ? `url(#circuit-glow-${svgId})` : undefined}
+                      filter={
+                        isSelectedBuilder || (isVerticalPeer && isMatching)
+                          ? `url(#circuit-glow-${svgId})`
+                          : undefined
+                      }
                     />
 
                     {/* Active Builder Signal Flow Pulse */}
@@ -384,9 +479,21 @@ export function ChapterTopologyView() {
                     <circle
                       cx={leaf.x}
                       cy={leaf.y}
-                      r={isSelectedBuilder ? 5 : 3}
-                      fill={isSelectedBuilder ? clusterHex : 'var(--border-strong)'}
-                      opacity={isSelectedBuilder ? 0.9 : 0.5}
+                      r={isSelectedBuilder ? 5 : isVerticalPeer ? 4 : 3}
+                      fill={
+                        isSelectedBuilder || isVerticalPeer
+                          ? clusterHex
+                          : 'var(--border-strong)'
+                      }
+                      opacity={
+                        isSelectedBuilder
+                          ? 0.95
+                          : isVerticalPeer
+                          ? 0.75
+                          : hasActiveFilter && !isMatching
+                          ? 0.2
+                          : 0.5
+                      }
                     />
                   </g>
                 );
@@ -470,9 +577,13 @@ export function ChapterTopologyView() {
 
             {/* 10 BUILDER LEAF NODES (Clickable Bauhaus Portraits) */}
             {BUILDER_LEAF_POSITIONS.map((leaf) => {
-              const member = TEAM_DATA.find((m) => m.id === leaf.memberId);
+              const member = allMembers.find((m) => m.id === leaf.memberId);
               if (!member) return null;
               const isSelected = member.id === selectedMember.id;
+              const isVerticalPeer =
+                leaf.parentVertical === activeVertical && !isSelected;
+              const isMatching = filteredIdSet.has(member.id);
+              const isDimmed = hasActiveFilter && !isMatching;
               const memberAccent = getAccentVisual(member.googleColor);
 
               return (
@@ -490,14 +601,24 @@ export function ChapterTopologyView() {
                     onClick={() => setSelectedMemberId(member.id)}
                     aria-label={`Inspect ${member.name}, ${member.role}`}
                     aria-pressed={isSelected}
-                    className={`group relative min-w-[48px] min-h-[48px] p-0.5 rounded-2xl flex items-center justify-center transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                    className={`group relative min-w-[48px] min-h-[48px] p-0.5 rounded-2xl flex items-center justify-center transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer ${
                       isSelected
                         ? 'scale-115 ring-2 ring-offset-2 ring-offset-[var(--bg-elevated)]'
+                        : isDimmed
+                        ? 'opacity-30 grayscale hover:opacity-65 hover:grayscale-0 hover:scale-105'
+                        : isVerticalPeer
+                        ? 'scale-105 ring-2 ring-offset-1 ring-offset-[var(--bg-elevated)]'
+                        : hasActiveFilter && isMatching
+                        ? 'ring-2 ring-offset-1 ring-offset-[var(--bg-elevated)] hover:scale-105'
                         : 'hover:scale-105'
                     }`}
                     style={{
                       boxShadow: isSelected
-                        ? `0 0 18px ${memberAccent.hex}60`
+                        ? `0 0 18px ${memberAccent.hex}65`
+                        : isVerticalPeer && !isDimmed
+                        ? `0 0 12px ${memberAccent.hex}40`
+                        : hasActiveFilter && isMatching
+                        ? `0 0 10px ${memberAccent.hex}35`
                         : undefined,
                     }}
                   >
@@ -515,12 +636,29 @@ export function ChapterTopologyView() {
                       />
                     )}
 
+                    {/* Subtle Co-Builder / Filter Match Indicator Ring */}
+                    {!isSelected &&
+                      ((isVerticalPeer && !isDimmed) ||
+                        (hasActiveFilter && isMatching)) && (
+                        <div
+                          className="absolute inset-0 rounded-2xl -m-0.5 pointer-events-none"
+                          style={{
+                            border: `1.5px ${isVerticalPeer ? 'dashed' : 'solid'} ${
+                              memberAccent.hex
+                            }`,
+                            opacity: 0.75,
+                          }}
+                        />
+                      )}
+
                     {/* Circular Bauhaus Portrait Card */}
                     <div
                       className="w-12 h-12 rounded-xl bg-[var(--bg-subtle)] border overflow-hidden p-0.5"
                       style={{
                         borderColor: isSelected
                           ? memberAccent.hex
+                          : isVerticalPeer && !isDimmed
+                          ? `${memberAccent.hex}99`
                           : 'var(--border-hairline)',
                       }}
                     >
@@ -588,7 +726,7 @@ export function ChapterTopologyView() {
             {/* Vertical Groups */}
             <div className="space-y-4">
               {VERTICAL_CLUSTERS.map((cluster) => {
-                const clusterMembers = TEAM_DATA.filter(
+                const clusterMembers = allMembers.filter(
                   (m) => m.vertical === cluster.vertical
                 );
                 const isCurrentActiveVertical =
@@ -627,6 +765,8 @@ export function ChapterTopologyView() {
                     <div className="grid grid-cols-2 gap-2">
                       {clusterMembers.map((member) => {
                         const isSelected = member.id === selectedMember.id;
+                        const isDimmed =
+                          hasActiveFilter && !filteredIdSet.has(member.id);
                         const memberVisual = getAccentVisual(member.googleColor);
                         return (
                           <button
@@ -638,6 +778,8 @@ export function ChapterTopologyView() {
                             className={`min-h-[52px] p-2 rounded-xl text-left flex items-center gap-2 border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                               isSelected
                                 ? 'bg-[var(--bg-elevated)] border-current shadow-xs'
+                                : isDimmed
+                                ? 'bg-[var(--bg-subtle)] border-[var(--border-hairline)] opacity-35 grayscale'
                                 : 'bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
                             }`}
                             style={{
@@ -698,34 +840,51 @@ export function ChapterTopologyView() {
           />
 
           <div className="p-5 sm:p-6 space-y-5">
-            {/* Inspector Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[var(--border-hairline)]">
+            {/* Inspector Header with Top-Level Prev / Next Builder Controls */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--border-hairline)]">
               <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-primary)]">
-                <Sparkles className="w-4 h-4" style={{ color: selectedAccent.hex }} />
-                <span>BUILDER SPEC INSPECTOR</span>
+                <Sparkles className="w-4 h-4 shrink-0" style={{ color: selectedAccent.hex }} />
+                <span>BUILDER SPEC</span>
               </div>
-              <span className="font-mono text-[10px] text-[var(--text-muted)]">
-                {selectedMember.id.replace('builder-', 'DEV // ')}
-              </span>
+
+              <div className="flex items-center gap-1.5">
+                <span className="font-mono text-[10px] text-[var(--text-muted)] mr-1">
+                  {selectedMember.id.replace('builder-', 'DEV // ')}
+                </span>
+                <button
+                  type="button"
+                  onClick={handlePrevMember}
+                  aria-label="Previous builder"
+                  className="min-h-[36px] px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-strong)] text-[11px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] transition-all flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5 shrink-0" />
+                  <span>Prev</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextMember}
+                  aria-label="Next builder"
+                  className="min-h-[36px] px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-strong)] text-[11px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] transition-all flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+                </button>
+              </div>
             </div>
 
-            {/* Animated Profile & Spec Container */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedMember.id}
-                initial={
-                  prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }
-                }
-                animate={{ opacity: 1, y: 0 }}
-                exit={
-                  prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -10 }
-                }
-                transition={{
-                  duration: prefersReducedMotion ? 0 : 0.25,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="space-y-4"
-              >
+            {/* Animated Profile & Spec Container (No blank-frame mode="wait" gap) */}
+            <motion.div
+              key={selectedMember.id}
+              initial={
+                prefersReducedMotion ? { opacity: 1 } : { opacity: 0.4, y: 6 }
+              }
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.16,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="space-y-4"
+            >
                 {/* Avatar & Vertical Identity */}
                 <div className="flex items-start gap-4">
                   <div className="relative shrink-0">
@@ -928,31 +1087,25 @@ export function ChapterTopologyView() {
                   </div>
                 </div>
               </motion.div>
-            </AnimatePresence>
           </div>
 
-          {/* Quick Step Buttons Footer */}
-          <div className="p-4 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)] flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={handlePrevMember}
-              aria-label="Inspect previous builder"
-              className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-            >
-              <ChevronLeft className="w-4 h-4 shrink-0" />
-              <span>Prev Builder</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleNextMember}
-              aria-label="Inspect next builder"
-              className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] transition-all flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-            >
-              <span>Next Builder</span>
-              <ChevronRight className="w-4 h-4 shrink-0" />
-            </button>
-          </div>
+          {/* Expand Full Spec Drawer Footer */}
+          {onInspectMember && (
+            <div className="p-4 border-t border-[var(--border-hairline)] bg-[var(--bg-subtle)] flex items-center justify-between gap-3">
+              <span className="text-[11px] font-mono text-[var(--text-muted)]">
+                {cycleList.length} {cycleList.length === 1 ? 'builder' : 'builders'} in scope
+              </span>
+              <button
+                type="button"
+                onClick={() => onInspectMember(selectedMember)}
+                aria-label={`Inspect full spec drawer for ${selectedMember.name}`}
+                className="min-h-[40px] px-4 py-2 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white text-xs font-mono font-semibold transition-all shadow-xs flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <Maximize2 className="w-3.5 h-3.5 shrink-0" />
+                <span>Expand Full Spec →</span>
+              </button>
+            </div>
+          )}
         </aside>
       </div>
     </div>

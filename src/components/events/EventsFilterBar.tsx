@@ -23,6 +23,7 @@ export type TrackFilter = 'All' | EventCategory;
 export type ModeFilter = 'All' | DeliveryMode;
 export type ViewMode = 'grid' | 'list' | 'calendar';
 export type DataSourceMode = 'static' | 'live';
+export type EventSortOrder = 'asc' | 'desc';
 
 export interface EventsFilterBarProps {
   searchQuery: string;
@@ -35,6 +36,8 @@ export interface EventsFilterBarProps {
   onModeChange: (mode: ModeFilter) => void;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  sortOrder: EventSortOrder;
+  onSortOrderChange: (order: EventSortOrder) => void;
   onResetFilters: () => void;
   hasActiveFilters: boolean;
   totalResultsCount: number;
@@ -87,6 +90,8 @@ export function EventsFilterBar({
   onModeChange,
   viewMode,
   onViewModeChange,
+  sortOrder,
+  onSortOrderChange,
   onResetFilters,
   hasActiveFilters,
   totalResultsCount,
@@ -470,8 +475,41 @@ export function EventsFilterBar({
           })}
         </div>
 
-        {/* Right Side: Telemetry count & Clear All Filters button */}
-        <div className="flex items-center justify-between md:justify-end gap-3 text-xs font-mono">
+        {/* Right Side: Sort Toggle (All / Past), Telemetry count & Clear All Filters button */}
+        <div className="flex flex-wrap items-center justify-between md:justify-end gap-2.5 text-xs font-mono">
+          {(statusFilter === 'All' || statusFilter === 'Past') && (
+            <div
+              role="group"
+              aria-label="Sort sessions chronologically"
+              className="inline-flex items-center p-0.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-hairline)]"
+            >
+              <button
+                type="button"
+                onClick={() => onSortOrderChange('asc')}
+                aria-pressed={sortOrder === 'asc'}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
+                  sortOrder === 'asc'
+                    ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold border border-[var(--border-strong)] shadow-2xs'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+                }`}
+              >
+                Earliest First
+              </button>
+              <button
+                type="button"
+                onClick={() => onSortOrderChange('desc')}
+                aria-pressed={sortOrder === 'desc'}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
+                  sortOrder === 'desc'
+                    ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold border border-[var(--border-strong)] shadow-2xs'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
+                }`}
+              >
+                Latest First
+              </button>
+            </div>
+          )}
+
           <span className="text-[var(--text-muted)] whitespace-nowrap">
             {totalResultsCount} {totalResultsCount === 1 ? 'session' : 'sessions'}
           </span>

@@ -13,6 +13,7 @@ interface TeamMemberCardProps {
   onToggleFlip: () => void;
   index: number;
   onSelectSkill?: (skill: string) => void;
+  onInspectMember?: (member: GDGTeamMember) => void;
 }
 
 interface AccentStyleConfig {
@@ -80,6 +81,7 @@ export function TeamMemberCard({
   onToggleFlip,
   index,
   onSelectSkill,
+  onInspectMember,
 }: TeamMemberCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const accent = getAccentConfig(member.googleColor);
@@ -130,7 +132,10 @@ export function TeamMemberCard({
         delay: prefersReducedMotion ? 0 : Math.min(index * 0.04, 0.4),
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-4 sm:p-5 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[440px] overflow-hidden`}
+      onClick={() => onInspectMember?.(member)}
+      className={`group relative flex flex-col justify-between rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] ${accent.hoverBorderClass} p-4 sm:p-5 shadow-xs hover:shadow-xl transition-all duration-300 min-h-[440px] overflow-hidden ${
+        onInspectMember ? 'cursor-pointer' : ''
+      }`}
     >
       {/* Subtle top indicator bar */}
       <div
@@ -172,7 +177,10 @@ export function TeamMemberCard({
         <div className="flex items-center">
           <button
             type="button"
-            onClick={onToggleFlip}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFlip();
+            }}
             aria-label={
               isFlipped
                 ? `Show profile for ${member.name}`
@@ -462,6 +470,7 @@ export function TeamMemberCard({
             href={member.links.github}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             aria-label={`${member.name} sample GitHub profile`}
             className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
@@ -473,6 +482,7 @@ export function TeamMemberCard({
             href={member.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             aria-label={`${member.name} sample LinkedIn profile`}
             className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
@@ -485,6 +495,7 @@ export function TeamMemberCard({
               href={member.links.website}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               aria-label={`${member.name} sample portfolio website`}
               className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
             >
