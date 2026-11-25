@@ -28,9 +28,9 @@ const TRACK_LEGEND = [
     color: '#FBBC04',
     label: 'Yellow',
     dotBg: 'bg-[#FBBC04]',
-    tagBg: 'bg-[#FBBC04]/15',
-    tagBorder: 'border-[#FBBC04]/40',
-    tagText: 'text-[var(--accent-yellow-text)]',
+    tagBg: 'bg-amber-500/12 dark:bg-[#FBBC04]/12',
+    tagBorder: 'border-amber-600/30 dark:border-[#FBBC04]/35',
+    tagText: 'text-[#92400E] dark:text-[#FCD34D]',
   },
   {
     track: 'Tech Talk',

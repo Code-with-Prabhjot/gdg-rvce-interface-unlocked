@@ -12,6 +12,7 @@ interface EventDirectoryCardProps {
   viewMode: 'grid' | 'list';
   onSelectEvent: (slug: string) => void;
   index: number;
+  isSpotlight?: boolean;
 }
 
 function getCategoryBadgeData(category: EventCategory) {
@@ -53,6 +54,7 @@ export function EventDirectoryCard({
   viewMode,
   onSelectEvent,
   index,
+  isSpotlight = false,
 }: EventDirectoryCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const { isSaved, toggleSave } = useSavedEvents();
@@ -113,6 +115,11 @@ export function EventDirectoryCard({
               </span>
 
               <div className="flex items-center gap-2">
+                {isSpotlight && (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#FBBC04] text-[#111827] border border-[#FBBC04] shadow-xs">
+                    ★ CHAPTER SPOTLIGHT
+                  </span>
+                )}
                 {/* Diagram / Scene Toggle */}
                 {event.sceneImage && (
                   <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs">
@@ -351,6 +358,12 @@ export function EventDirectoryCard({
             <span className={`w-1 h-1 rounded-full ${categoryData.dotClass}`} />
             {event.category}
           </span>
+
+          {isSpotlight && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#FBBC04] text-[#111827] border border-[#FBBC04] shadow-xs">
+              ★ CHAPTER SPOTLIGHT
+            </span>
+          )}
 
           {/* Mode Pill */}
           <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-[var(--text-secondary)]">

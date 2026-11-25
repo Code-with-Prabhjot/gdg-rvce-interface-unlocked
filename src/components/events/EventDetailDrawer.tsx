@@ -32,6 +32,10 @@ import { generateBrandedQrDataUrl } from '@/utils/qrGenerator';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useSavedEvents } from '@/context/SavedEventsContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
+import {
+  useIssuedPasses,
+  IssuedSamplePass,
+} from '@/context/IssuedPassesContext';
 
 interface EventDetailDrawerProps {
   event: GDGEvent | null;
@@ -118,6 +122,12 @@ export function EventDetailDrawer({
   const { openWithPreset } = useApiInspector();
   const { isSaved, toggleSave } = useSavedEvents();
   const { session } = useDemoAuth();
+  const {
+    isHydrated,
+    getPassForEvent,
+    saveIssuedPass,
+    revokePassForEvent,
+  } = useIssuedPasses();
   const isEventSaved = event ? isSaved(event.slug) : false;
 
   // Local interactive state
@@ -125,6 +135,7 @@ export function EventDetailDrawer({
   const [calendarDownloaded, setCalendarDownloaded] = useState(false);
   const [passDownloaded, setPassDownloaded] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [savedPass, setSavedPass] = useState<IssuedSamplePass | null>(null);
   const [isIssuingPass, setIsIssuingPass] = useState(false);
   const [serverPassId, setServerPassId] = useState<string | null>(null);
   const [serverLatencyMs, setServerLatencyMs] = useState<number | null>(null);
@@ -145,6 +156,7 @@ export function EventDetailDrawer({
     setCalendarDownloaded(false);
     setPassDownloaded(false);
     setIsRegistered(false);
+    setSavedPass(null);
     setIsIssuingPass(false);
     setServerPassId(null);
     setServerLatencyMs(null);
@@ -156,6 +168,15 @@ export function EventDetailDrawer({
       bodyScrollRef.current.scrollTop = 0;
     }
   }, [event?.id]);
+
+  useEffect(() => {
+    if (!isOpen || !isHydrated || !event || event.status !== 'Upcoming') return;
+    const existingPass = getPassForEvent(event.slug);
+    if (!existingPass) return;
+    setSavedPass(existingPass);
+    setIsRegistered(true);
+    setServerPassId(existingPass.passId);
+  }, [isOpen, isHydrated, event, getPassForEvent]);
 
   // Automatic URL Query Verification when opened via QR scan (?event=...&passId=...&verify=1)
   useEffect(() => {
@@ -401,6 +422,8 @@ export function EventDetailDrawer({
     if (!event) return;
     setIsIssuingPass(true);
     const startTime = performance.now();
+    let issuedPassId: string | null = null;
+    let issuedSignature = '';
 
     try {
       const res = await fetch('/api/pass/verify', {
@@ -412,6 +435,11 @@ export function EventDetailDrawer({
       const elapsed = Number((performance.now() - startTime).toFixed(1));
 
       if (res.ok && json.data?.passId) {
+        issuedPassId = json.data.passId;
+        issuedSignature =
+          typeof json.data.signature === 'string'
+            ? json.data.signature
+            : `sha256:sample-${json.data.passId}`;
         setServerPassId(json.data.passId);
         setServerLatencyMs(
           typeof json.meta?.executionMs === 'number'
@@ -419,15 +447,37 @@ export function EventDetailDrawer({
             : elapsed
         );
       } else {
-        setServerPassId(`RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`);
+        issuedPassId = `RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`;
+        issuedSignature = `sha256:sample-${issuedPassId}`;
+        setServerPassId(issuedPassId);
         setServerLatencyMs(elapsed);
       }
     } catch {
-      setServerPassId(`RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`);
+      issuedPassId = `RVCE-GDG-2026-${event.slug.slice(0, 6).toUpperCase()}`;
+      issuedSignature = `sha256:sample-${issuedPassId}`;
+      setServerPassId(issuedPassId);
       setServerLatencyMs(null);
     } finally {
       setIsIssuingPass(false);
       setIsRegistered(true);
+
+      if (issuedPassId) {
+        const pass: IssuedSamplePass = {
+          passId: issuedPassId,
+          eventSlug: event.slug,
+          eventTitle: event.title,
+          category: event.category,
+          date: event.date,
+          time: event.time,
+          venue: event.venue,
+          holderName: session?.displayName || 'Sample Builder',
+          holderId: session?.demoId || 'RVCE-GDG-2026',
+          signature: issuedSignature,
+          issuedAt: new Date().toISOString(),
+        };
+        saveIssuedPass(pass);
+        setSavedPass(pass);
+      }
 
       if (!prefersReducedMotion) {
         try {
@@ -442,7 +492,18 @@ export function EventDetailDrawer({
         }
       }
     }
-  }, [event, prefersReducedMotion]);
+  }, [event, prefersReducedMotion, session, saveIssuedPass]);
+
+  const handleReissue = useCallback(() => {
+    if (!event) return;
+    revokePassForEvent(event.slug);
+    setSavedPass(null);
+    setIsRegistered(false);
+    setServerPassId(null);
+    setServerLatencyMs(null);
+    setQrPreviewDataUrl(null);
+    void handleRegister();
+  }, [event, revokePassForEvent, handleRegister]);
 
   // Toggle prerequisite checklist item
   const togglePrereq = useCallback((idx: number) => {
@@ -893,28 +954,6 @@ export function EventDetailDrawer({
                       </button>
                     )}
 
-                    {/* Secondary CTA: Add to Calendar (.ics) */}
-                    <button
-                      type="button"
-                      onClick={handleDownloadCalendar}
-                      className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-mono text-sm font-semibold transition-all border cursor-pointer ${
-                        calendarDownloaded
-                          ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/50'
-                          : 'bg-[var(--bg-subtle)] text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]/80 border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
-                      }`}
-                    >
-                      {calendarDownloaded ? (
-                        <>
-                          <Check className="w-4 h-4 text-[#34A853]" />
-                          <span>.ics Downloaded!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Download className="w-4 h-4 text-[#4285F4]" />
-                          <span>Add to Calendar (.ics)</span>
-                        </>
-                      )}
-                    </button>
                   </div>
 
                   {/* Inline Sample Developer Pass Confirmation Card */}
@@ -953,7 +992,7 @@ export function EventDetailDrawer({
                             )}
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#34A853]/15 text-[#34A853] font-bold border border-[#34A853]/30">
                               <ShieldCheck className="w-3.5 h-3.5" />
-                              CONFIRMED
+                              CONFIRMED · SAVED IN PASSPORT ✓
                             </span>
                           </div>
                         </div>
@@ -965,12 +1004,14 @@ export function EventDetailDrawer({
                               <p className="text-xs font-mono text-[var(--text-muted)]">
                                 SESSION ATTENDEE PASS //
                               </p>
-                              {session && (
+                              {(session || savedPass) && (
                                 <span
                                   className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white"
-                                  style={{ backgroundColor: session.badgeColor }}
+                                  style={{
+                                    backgroundColor: session?.badgeColor || '#4285F4',
+                                  }}
                                 >
-                                  HOLDER: {session.demoId}
+                                  HOLDER: {savedPass?.holderId || session?.demoId}
                                 </span>
                               )}
                             </div>
@@ -1005,6 +1046,9 @@ export function EventDetailDrawer({
                             </div>
                             <span className="text-[10px] font-mono text-[var(--text-muted)] text-center max-w-[152px] leading-tight">
                               Scan with phone camera to verify pass URL
+                            </span>
+                            <span className="text-[9px] font-mono text-[var(--text-muted)]/70 text-center max-w-[168px] leading-tight">
+                              Encodes current host URL · Live-verifiable on Vercel deployment
                             </span>
                           </div>
                         </div>
@@ -1075,25 +1119,33 @@ export function EventDetailDrawer({
                             <button
                               type="button"
                               onClick={handleDownloadCalendar}
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#4285F4] text-white hover:bg-[#3367D6] transition-all cursor-pointer"
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
+                                calendarDownloaded
+                                  ? 'bg-[#34A853]/15 text-[#34A853] border border-[#34A853]/40'
+                                  : 'bg-[#4285F4] text-white hover:bg-[#3367D6]'
+                              }`}
                             >
-                              <Download className="w-3 h-3" />
-                              <span>Add to Calendar (.ics)</span>
+                              {calendarDownloaded ? (
+                                <Check className="w-3 h-3" />
+                              ) : (
+                                <Download className="w-3 h-3" />
+                              )}
+                              <span>
+                                {calendarDownloaded
+                                  ? '.ics Downloaded!'
+                                  : 'Add to Calendar (.ics)'}
+                              </span>
                             </button>
 
                             <button
                               type="button"
-                              onClick={() => {
-                                setIsRegistered(false);
-                                setServerPassId(null);
-                                setServerLatencyMs(null);
-                                setQrPreviewDataUrl(null);
-                              }}
-                              title="Reset registration pass"
-                              className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all cursor-pointer"
-                              aria-label="Reset pass"
+                              onClick={handleReissue}
+                              disabled={isIssuingPass}
+                              title="Revoke and re-issue sample pass"
+                              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[#EA4335] bg-[var(--bg-elevated)] hover:bg-[#EA4335]/10 border border-[var(--border-hairline)] hover:border-[#EA4335]/40 transition-all cursor-pointer disabled:opacity-60"
                             >
-                              <RotateCcw className="w-3.5 h-3.5" />
+                              <RotateCcw className="w-3 h-3" />
+                              <span>Re-issue</span>
                             </button>
                           </div>
                         </div>

@@ -231,7 +231,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={openDemoAuthModal}
-                title={`Signed in as ${session.displayName} (${session.demoId}) — Click to switch demo persona`}
+                title={`Signed in as ${session.displayName} (${session.demoId}) — Click to open My Builder Passport`}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition-colors cursor-pointer whitespace-nowrap"
               >
                 <span
@@ -336,6 +336,7 @@ export function Navbar() {
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
+                      aria-label="Open My Builder Passport"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         openDemoAuthModal();

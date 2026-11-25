@@ -68,9 +68,8 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     name: 'Certification Study Jam',
     badgeLabel: 'STUDY JAM',
     accentHex: '#FBBC04',
-    // MUST pair with #111827 dark ink on solid yellow fills for >7:1 WCAG AAA contrast
-    pillBg: 'bg-[#FBBC04]',
-    pillText: 'text-[#111827] font-bold',
+    pillBg: 'bg-amber-500/12 border border-amber-600/30 dark:bg-[#FBBC04]/12 dark:border-[#FBBC04]/35',
+    pillText: 'text-[#92400E] dark:text-[#FCD34D] font-semibold',
     cadence: 'Multi-Week · Structured Cohort',
     handsOnRatio: '65% Practical Labs',
     handsOnPercentage: 65,
@@ -202,7 +201,7 @@ export function TrackFormatComparator({
                         >
                           <span
                             className={`w-1.5 h-1.5 rounded-full ${
-                              track.category === 'Study Jam' ? 'bg-[#111827]' : 'bg-white'
+                              track.category === 'Study Jam' ? 'bg-[#92400E] dark:bg-[#FCD34D]' : 'bg-white'
                             }`}
                           />
                           {track.badgeLabel}

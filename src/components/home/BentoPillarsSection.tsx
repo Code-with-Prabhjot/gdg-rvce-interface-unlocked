@@ -33,7 +33,7 @@ function getPillarAccentStyles(accent: GoogleAccent) {
         hex: '#FBBC04',
         glowBg: 'rgba(251, 188, 4, 0.14)',
         borderColor: 'group-hover:border-[#FBBC04]/50',
-        badgeClass: 'bg-[#FBBC04]/20 text-[var(--accent-yellow-text)] border-[#FBBC04]/40 font-semibold',
+        badgeClass: 'bg-amber-500/12 border-amber-600/30 text-[#92400E] dark:bg-[#FBBC04]/12 dark:border-[#FBBC04]/35 dark:text-[#FCD34D] font-semibold',
         chipHover: 'hover:border-[#FBBC04] hover:text-[var(--accent-yellow-text)]',
         dotColor: 'bg-[#FBBC04]',
       };

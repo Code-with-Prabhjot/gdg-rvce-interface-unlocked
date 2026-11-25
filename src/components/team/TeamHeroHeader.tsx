@@ -43,7 +43,7 @@ const VERTICAL_MAPPINGS: VerticalMapping[] = [
     colorName: 'Google Yellow',
     colorHex: '#FBBC04',
     dotBg: 'bg-[#FBBC04]',
-    tagClass: 'bg-[#FBBC04] text-[#111827] font-semibold border-[#FBBC04]',
+    tagClass: 'bg-amber-500/12 border-amber-600/30 text-[#92400E] dark:bg-[#FBBC04]/12 dark:border-[#FBBC04]/35 dark:text-[#FCD34D] font-semibold',
     description: 'Design tokens, Bauhaus geometry & WCAG AAA contrast',
   },
   {

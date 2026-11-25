@@ -89,10 +89,15 @@ const COLLABORATION_PAIRS: SynergyPairing[] = [
 
 interface VerticalCollaborationMatrixProps {
   onSelectVertical: (vertical: TeamVertical) => void;
+  activeVertical?: string;
 }
+
+const YELLOW_TAG_CLASS =
+  'bg-amber-500/12 border-amber-600/30 text-[#92400E] dark:bg-[#FBBC04]/12 dark:border-[#FBBC04]/35 dark:text-[#FCD34D]';
 
 export function VerticalCollaborationMatrix({
   onSelectVertical,
+  activeVertical,
 }: VerticalCollaborationMatrixProps) {
   const [isOpen, setIsOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -179,6 +184,7 @@ export function VerticalCollaborationMatrix({
                   // Handle WCAG AAA contrast on yellow tags
                   const isYellowA = pair.colorA === '#FBBC04';
                   const isYellowB = pair.colorB === '#FBBC04';
+                  const isActive = activeVertical === pair.spotlightVertical;
 
                   return (
                     <motion.div
@@ -204,14 +210,10 @@ export function VerticalCollaborationMatrix({
                         {/* Dual Vertical Badges */}
                         <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
                           <span
-                            className="px-2 py-0.5 rounded font-medium border"
+                            className={`px-2 py-0.5 rounded font-medium border ${isYellowA ? YELLOW_TAG_CLASS : ''}`}
                             style={
                               isYellowA
-                                ? {
-                                    backgroundColor: '#FBBC04',
-                                    color: '#111827',
-                                    borderColor: '#FBBC04',
-                                  }
+                                ? undefined
                                 : {
                                     backgroundColor: `${pair.colorA}15`,
                                     color: pair.colorA,
@@ -223,14 +225,10 @@ export function VerticalCollaborationMatrix({
                           </span>
                           <span className="text-[var(--text-muted)] font-bold">+</span>
                           <span
-                            className="px-2 py-0.5 rounded font-medium border"
+                            className={`px-2 py-0.5 rounded font-medium border ${isYellowB ? YELLOW_TAG_CLASS : ''}`}
                             style={
                               isYellowB
-                                ? {
-                                    backgroundColor: '#FBBC04',
-                                    color: '#111827',
-                                    borderColor: '#FBBC04',
-                                  }
+                                ? undefined
                                 : {
                                     backgroundColor: `${pair.colorB}15`,
                                     color: pair.colorB,
@@ -287,10 +285,20 @@ export function VerticalCollaborationMatrix({
                           type="button"
                           onClick={() => handleSpotlight(pair.spotlightVertical)}
                           aria-label={`Spotlight ${pair.spotlightVertical} builders in roster`}
-                          className="w-full min-h-[38px] px-3 py-1.5 rounded-lg bg-[var(--bg-elevated)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-strong)] hover:border-[#4285F4] text-xs font-mono font-medium transition-all flex items-center justify-between group/btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                          className={`w-full min-h-[38px] px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all flex items-center justify-between group/btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                            isActive
+                              ? 'border-[#4285F4] bg-[#4285F4] text-white'
+                              : 'border-[var(--border-strong)] bg-[var(--bg-subtle)] text-[var(--text-primary)] hover:border-[#4285F4] hover:bg-[#4285F4] hover:text-white'
+                          }`}
                         >
                           <span className="flex items-center gap-1.5">
-                            <Sparkles className="w-3 h-3 text-[#4285F4] group-hover/btn:text-white transition-colors" />
+                            <Sparkles
+                              className={`w-3 h-3 transition-colors ${
+                                isActive
+                                  ? 'text-white'
+                                  : 'text-[#4285F4] group-hover/btn:text-white'
+                              }`}
+                            />
                             <span>Spotlight {pair.spotlightVertical}</span>
                           </span>
                           <ArrowRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-1" />

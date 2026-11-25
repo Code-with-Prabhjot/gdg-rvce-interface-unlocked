@@ -2,6 +2,20 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
+export interface DemoAttendedSession {
+  sessionId: string;
+  title: string;
+  date: string;
+  trackBadge: string;
+  badgeColor: string;
+}
+
+export interface DemoContribution {
+  contributionId: string;
+  title: string;
+  kind: string;
+}
+
 export interface DemoSession {
   sessionToken: string;
   demoId: string;
@@ -10,13 +24,27 @@ export interface DemoSession {
   vertical: string;
   permissions: string[];
   badgeColor: string;
+  attendedSessions: DemoAttendedSession[];
+  contributions: DemoContribution[];
+  featuredEventSlug: string;
   disclaimer: string;
 }
 
 const SESSION_STORAGE_KEY = 'gdg-rvce-demo-session';
 const SPOTLIGHT_STORAGE_KEY = 'gdg-rvce-demo-spotlight';
+const FEATURED_EVENT_STORAGE_KEY = 'gdg-rvce-featured-event';
 const DEFAULT_SPOTLIGHT_NOTICE =
   '2026/2027 Campus Build Cycle Open — Sample developer passes include live QR verification.';
+const DEFAULT_FEATURED_EVENT_SLUG = 'gemini-multimodal-buildathon';
+
+function canCustomizeSpotlight(session: DemoSession | null): boolean {
+  return Boolean(
+    session &&
+      (session.demoId === 'RVCE-DEV-2026' ||
+        session.demoId === 'RVCE-WEB-2026' ||
+        session.permissions.includes('chapter.banner.customize'))
+  );
+}
 
 interface DemoAuthContextType {
   session: DemoSession | null;
@@ -32,6 +60,9 @@ interface DemoAuthContextType {
   spotlightNotice: string;
   setSpotlightNotice: (notice: string) => void;
   resetSpotlightNotice: () => void;
+  featuredEventSlug: string;
+  setFeaturedEventSlug: (slug: string) => void;
+  resetFeaturedEventSlug: () => void;
   isMaintainerBarDismissed: boolean;
   dismissMaintainerBar: () => void;
   restoreMaintainerBar: () => void;
@@ -44,6 +75,9 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [spotlightNotice, setSpotlightNoticeState] = useState(DEFAULT_SPOTLIGHT_NOTICE);
+  const [featuredEventSlug, setFeaturedEventSlugState] = useState(
+    DEFAULT_FEATURED_EVENT_SLUG
+  );
   const [isMaintainerBarDismissed, setIsMaintainerBarDismissed] = useState(false);
 
   // Hydrate strictly from sessionStorage on the client (zero PII, session-scoped only)
@@ -59,6 +93,10 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
       const rawSpotlight = sessionStorage.getItem(SPOTLIGHT_STORAGE_KEY);
       if (rawSpotlight && rawSpotlight.trim().length > 0) {
         setSpotlightNoticeState(rawSpotlight);
+      }
+      const rawFeatured = localStorage.getItem(FEATURED_EVENT_STORAGE_KEY);
+      if (rawFeatured && rawFeatured.trim().length > 0) {
+        setFeaturedEventSlugState(rawFeatured.trim());
       }
     } catch {
       // Ignore storage access failures in restricted environments
@@ -100,6 +138,16 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
         vertical: json.data.vertical,
         permissions: Array.isArray(json.data.permissions) ? json.data.permissions : [],
         badgeColor: json.data.badgeColor || '#4285F4',
+        attendedSessions: Array.isArray(json.data.attendedSessions)
+          ? json.data.attendedSessions
+          : [],
+        contributions: Array.isArray(json.data.contributions)
+          ? json.data.contributions
+          : [],
+        featuredEventSlug:
+          typeof json.data.featuredEventSlug === 'string'
+            ? json.data.featuredEventSlug
+            : DEFAULT_FEATURED_EVENT_SLUG,
         disclaimer: json.data.disclaimer,
       };
 
@@ -108,6 +156,12 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(nextSession));
+        const storedFeatured = localStorage.getItem(FEATURED_EVENT_STORAGE_KEY);
+        if (!storedFeatured && canCustomizeSpotlight(nextSession)) {
+          const seeded = nextSession.featuredEventSlug || DEFAULT_FEATURED_EVENT_SLUG;
+          setFeaturedEventSlugState(seeded);
+          localStorage.setItem(FEATURED_EVENT_STORAGE_KEY, seeded);
+        }
       } catch {
         // Ignore sessionStorage failures
       }
@@ -151,6 +205,29 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const setFeaturedEventSlug = useCallback(
+    (slug: string) => {
+      if (!slug || !canCustomizeSpotlight(session)) return;
+      setFeaturedEventSlugState(slug);
+      try {
+        localStorage.setItem(FEATURED_EVENT_STORAGE_KEY, slug);
+      } catch {
+        // Ignore
+      }
+    },
+    [session]
+  );
+
+  const resetFeaturedEventSlug = useCallback(() => {
+    const fallback = session?.featuredEventSlug || DEFAULT_FEATURED_EVENT_SLUG;
+    setFeaturedEventSlugState(fallback);
+    try {
+      localStorage.setItem(FEATURED_EVENT_STORAGE_KEY, fallback);
+    } catch {
+      // Ignore
+    }
+  }, [session]);
+
   const dismissMaintainerBar = useCallback(() => {
     setIsMaintainerBarDismissed(true);
   }, []);
@@ -159,12 +236,7 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
     setIsMaintainerBarDismissed(false);
   }, []);
 
-  const isMaintainerRole = Boolean(
-    session &&
-      (session.demoId === 'RVCE-DEV-2026' ||
-        session.demoId === 'RVCE-WEB-2026' ||
-        session.permissions.includes('chapter.banner.customize'))
-  );
+  const isMaintainerRole = canCustomizeSpotlight(session);
 
   return (
     <DemoAuthContext.Provider
@@ -180,6 +252,9 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
         spotlightNotice,
         setSpotlightNotice,
         resetSpotlightNotice,
+        featuredEventSlug,
+        setFeaturedEventSlug,
+        resetFeaturedEventSlug,
         isMaintainerBarDismissed,
         dismissMaintainerBar,
         restoreMaintainerBar,

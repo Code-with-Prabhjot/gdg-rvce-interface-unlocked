@@ -8,6 +8,7 @@ import { ApiInspectorProvider } from '@/context/ApiInspectorContext';
 import { SavedEventsProvider } from '@/context/SavedEventsContext';
 import { XRayProvider } from '@/context/XRayContext';
 import { DemoAuthProvider } from '@/context/DemoAuthContext';
+import { IssuedPassesProvider } from '@/context/IssuedPassesContext';
 import { GuidedTourProvider } from '@/context/GuidedTourContext';
 import { ShortcutsProvider } from '@/context/ShortcutsContext';
 import { ScrollProgressBar } from '@/components/layout/ScrollProgressBar';
@@ -93,56 +94,58 @@ export default function RootLayout({
           {/* Sub-Second Architectural < > Prism Boot Sequence */}
           <ArchitecturalBootLoader />
 
-          <XRayProvider>
-            <DemoAuthProvider>
-              <CommandPaletteProvider>
-                <DevTerminalProvider>
-                  <ApiInspectorProvider>
-                    <SavedEventsProvider>
-                      <GuidedTourProvider>
-                        <ShortcutsProvider>
-                          {/* Visual Top Scroll Indicator */}
-                          <ScrollProgressBar />
+            <XRayProvider>
+              <IssuedPassesProvider>
+                <DemoAuthProvider>
+                  <CommandPaletteProvider>
+                    <DevTerminalProvider>
+                      <ApiInspectorProvider>
+                        <SavedEventsProvider>
+                          <GuidedTourProvider>
+                            <ShortcutsProvider>
+                              {/* Visual Top Scroll Indicator */}
+                              <ScrollProgressBar />
 
-                          {/* Global Sticky Navigation */}
-                          <Navbar />
+                              {/* Global Sticky Navigation */}
+                              <Navbar />
 
-                          {/* Main Application Routes Viewport */}
-                          <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
-                            {children}
-                          </main>
+                              {/* Main Application Routes Viewport */}
+                              <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
+                                {children}
+                              </main>
 
-                          {/* Global Architectural Footer */}
-                          <Footer />
+                              {/* Global Architectural Footer */}
+                              <Footer />
 
-                          {/* Global Command Palette Overlay */}
-                          <CommandPalette />
+                              {/* Global Command Palette Overlay */}
+                              <CommandPalette />
 
-                          {/* Signature Developer Interactive CLI Terminal Drawer */}
-                          <DevTerminalModal />
+                              {/* Signature Developer Interactive CLI Terminal Drawer */}
+                              <DevTerminalModal />
 
-                          {/* Live Backend & API Inspector Drawer */}
-                          <ApiInspectorModal />
+                              {/* Live Backend & API Inspector Drawer */}
+                              <ApiInspectorModal />
 
-                          {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
-                          <DemoAuthModal />
+                              {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
+                              <DemoAuthModal />
 
-                          {/* Global Keyboard Shortcuts Cheat-Sheet Modal */}
-                          <ShortcutsModal />
+                              {/* Global Keyboard Shortcuts Cheat-Sheet Modal */}
+                              <ShortcutsModal />
 
-                          {/* Cross-Route Interactive Guided Tour Overlay */}
-                          <GuidedTourOverlay />
+                              {/* Cross-Route Interactive Guided Tour Overlay */}
+                              <GuidedTourOverlay />
 
-                          {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
-                          <BlueprintXRayOverlay />
-                        </ShortcutsProvider>
-                      </GuidedTourProvider>
-                    </SavedEventsProvider>
-                  </ApiInspectorProvider>
-                </DevTerminalProvider>
-              </CommandPaletteProvider>
-            </DemoAuthProvider>
-          </XRayProvider>
+                              {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
+                              <BlueprintXRayOverlay />
+                            </ShortcutsProvider>
+                          </GuidedTourProvider>
+                        </SavedEventsProvider>
+                      </ApiInspectorProvider>
+                    </DevTerminalProvider>
+                  </CommandPaletteProvider>
+                </DemoAuthProvider>
+              </IssuedPassesProvider>
+            </XRayProvider>
         </ThemeProvider>
       </body>
     </html>

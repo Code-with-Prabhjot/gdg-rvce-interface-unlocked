@@ -28,6 +28,7 @@ import { EventsSceneStrip } from './EventsSceneStrip';
 import { EventDetailDrawer } from './EventDetailDrawer';
 import { useSavedEvents } from '@/context/SavedEventsContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 import { downloadBundleIcs } from '@/utils/calendarExport';
 import { MaintainerPreviewBar } from '@/components/ui/MaintainerPreviewBar';
 
@@ -35,6 +36,7 @@ export function EventsDirectoryClient() {
   const searchParams = useSearchParams();
   const { savedSlugs } = useSavedEvents();
   const { openWithPreset } = useApiInspector();
+  const { featuredEventSlug } = useDemoAuth();
   const [sortOrder, setSortOrder] = useState<EventSortOrder>('asc');
 
   // Read initial URL params
@@ -460,6 +462,7 @@ export function EventsDirectoryClient() {
                     viewMode="grid"
                     onSelectEvent={handleSelectEvent}
                     index={idx}
+                    isSpotlight={event.slug === featuredEventSlug}
                   />
                 ))}
               </motion.div>
@@ -478,6 +481,7 @@ export function EventsDirectoryClient() {
                     viewMode="list"
                     onSelectEvent={handleSelectEvent}
                     index={idx}
+                    isSpotlight={event.slug === featuredEventSlug}
                   />
                 ))}
               </motion.div>

@@ -241,7 +241,10 @@ export function TeamDirectoryClient() {
       <TeamHeroHeader />
 
       {/* 2. Interactive Cross-Vertical Collaboration Matrix */}
-      <VerticalCollaborationMatrix onSelectVertical={handleSelectVerticalFromMatrix} />
+      <VerticalCollaborationMatrix
+        onSelectVertical={handleSelectVerticalFromMatrix}
+        activeVertical={selectedVertical}
+      />
 
       {/* 3. Interactive Filter Bar with Segmented View Switcher & Live API Mode */}
       <TeamFilterBar

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Check, RotateCcw, X, PencilLine } from 'lucide-react';
+import { Sparkles, Check, RotateCcw, X, PencilLine, Star } from 'lucide-react';
 import { useDemoAuth } from '@/context/DemoAuthContext';
+import { EVENTS_DATA } from '@/data/gdgData';
 
 interface MaintainerPreviewBarProps {
   surfaceLabel: 'Events Directory' | 'Chapter Team';
@@ -16,6 +17,9 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
     spotlightNotice,
     setSpotlightNotice,
     resetSpotlightNotice,
+    featuredEventSlug,
+    setFeaturedEventSlug,
+    resetFeaturedEventSlug,
     isMaintainerBarDismissed,
     dismissMaintainerBar,
   } = useDemoAuth();
@@ -27,6 +31,8 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
   useEffect(() => {
     setDraftNotice(spotlightNotice);
   }, [spotlightNotice]);
+
+  const upcomingEvents = EVENTS_DATA.filter((event) => event.status === 'Upcoming');
 
   if (!isHydrated || !session || !isMaintainerRole || isMaintainerBarDismissed) {
     return null;
@@ -150,6 +156,39 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
             <X className="w-4 h-4" />
           </button>
         </div>
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-[var(--border-hairline)] flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <Star className="w-4 h-4 text-[#FBBC04] shrink-0" />
+          <label
+            htmlFor="chapter-spotlight-event"
+            className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] shrink-0"
+          >
+            CHAPTER SPOTLIGHT EVENT
+          </label>
+          <select
+            id="chapter-spotlight-event"
+            value={featuredEventSlug}
+            onChange={(e) => setFeaturedEventSlug(e.target.value)}
+            className="min-w-0 flex-1 px-3 py-2 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-none cursor-pointer"
+          >
+            {upcomingEvents.map((event) => (
+              <option key={event.slug} value={event.slug}>
+                {event.title} · {event.date}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button
+          type="button"
+          onClick={resetFeaturedEventSlug}
+          title="Reset chapter spotlight to this persona's default"
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold text-[var(--text-secondary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer shrink-0"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          <span>Reset Spotlight</span>
+        </button>
       </div>
     </aside>
   );
