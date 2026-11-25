@@ -122,7 +122,7 @@ export function LearningTracksExplorer() {
         <div
           role="tablist"
           aria-label="Engineering Learning Tracks"
-          className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 select-none"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 select-none"
         >
           {LEARNING_TRACKS.map((track) => {
             const isActive = track.id === activeTrackId;

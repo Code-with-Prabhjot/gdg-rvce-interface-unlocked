@@ -3,6 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
+  --breakpoint-xs: 400px;
+
   --font-display: var(--font-display), 'Space Grotesk', -apple-system, sans-serif;
   --font-sans: var(--font-sans), 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-mono: var(--font-mono), 'JetBrains Mono', monospace;

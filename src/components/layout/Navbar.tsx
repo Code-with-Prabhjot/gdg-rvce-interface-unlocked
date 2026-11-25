@@ -169,7 +169,7 @@ export function Navbar() {
             onClick={() => startTour(0)}
             aria-pressed={isTourOpen}
             aria-label="Start Interactive Guided Tour"
-            className={`hidden md:inline-flex min-h-[36px] items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`hidden lg:inline-flex min-h-[36px] items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               isTourOpen
                 ? 'bg-[#4285F4]/15 border-[#4285F4] text-[var(--accent-blue-text)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
@@ -227,7 +227,7 @@ export function Navbar() {
 
           {/* Subtle Demo Sign-In Pill / Active Role Badge */}
           {isHydrated && session ? (
-            <div className="hidden sm:inline-flex items-center rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] overflow-hidden min-h-[36px] shadow-2xs">
+            <div className="hidden lg:inline-flex items-center rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] overflow-hidden min-h-[36px] shadow-2xs">
               <button
                 type="button"
                 onClick={openDemoAuthModal}
@@ -258,7 +258,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={openDemoAuthModal}
-              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[36px] rounded-lg text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[36px] rounded-lg text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               aria-label="Open Chapter Demo Sign-In"
             >
               <KeyRound className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
@@ -269,7 +269,7 @@ export function Navbar() {
           {/* Primary CTA Button */}
           <Link
             href="/events"
-            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
+            className="hidden lg:inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
           >
             <span>Explore Events</span>
             <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
@@ -279,7 +279,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-hairline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="lg:hidden p-2 rounded-lg text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-hairline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle navigation menu"
           >
@@ -296,7 +296,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
-            className="md:hidden border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] overflow-hidden"
+            className="lg:hidden border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] overflow-hidden"
           >
             <div className="px-4 py-4 space-y-2">
               {NAV_LINKS.map((link) => {
