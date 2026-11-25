@@ -178,3 +178,15 @@ body {
     transform: none !important;
   }
 }
+
+/* Native top-layer modal dialog scroll containment & backdrop */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+}

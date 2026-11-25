@@ -29,6 +29,7 @@ import { EventDetailDrawer } from './EventDetailDrawer';
 import { useSavedEvents } from '@/context/SavedEventsContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { downloadBundleIcs } from '@/utils/calendarExport';
+import { MaintainerPreviewBar } from '@/components/ui/MaintainerPreviewBar';
 
 export function EventsDirectoryClient() {
   const searchParams = useSearchParams();
@@ -41,6 +42,16 @@ export function EventsDirectoryClient() {
   const paramTrack = searchParams.get('track');
   const paramMode = searchParams.get('mode');
   const paramEvent = searchParams.get('event');
+  const paramPassId = searchParams.get('passId');
+  const paramVerify = searchParams.get('verify');
+
+  const [qrVerifyParams, setQrVerifyParams] = useState<{
+    passId: string | null;
+    autoVerify: boolean;
+  }>(() => ({
+    passId: paramPassId,
+    autoVerify: paramVerify === '1',
+  }));
 
   // State initialization with URL param hydration
   const [statusFilter, setStatusFilter] = useState<StatusFilter>(() => {
@@ -126,8 +137,14 @@ export function EventsDirectoryClient() {
       else if (curStatus.toLowerCase() === 'past') setStatusFilter('Past');
     }
     const curEvent = searchParams.get('event');
+    const curPassId = searchParams.get('passId');
+    const curVerify = searchParams.get('verify');
     if (curEvent && EVENTS_DATA.some((e) => e.slug === curEvent)) {
       setSelectedEventSlug(curEvent);
+      setQrVerifyParams({
+        passId: curPassId,
+        autoVerify: curVerify === '1',
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParamsKey]);
@@ -136,9 +153,15 @@ export function EventsDirectoryClient() {
     const handlePopState = () => {
       const params = new URLSearchParams(window.location.search);
       const curEvent = params.get('event');
+      const curPassId = params.get('passId');
+      const curVerify = params.get('verify');
       setSelectedEventSlug(
         curEvent && EVENTS_DATA.some((e) => e.slug === curEvent) ? curEvent : null
       );
+      setQrVerifyParams({
+        passId: curPassId,
+        autoVerify: curVerify === '1',
+      });
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -208,6 +231,7 @@ export function EventsDirectoryClient() {
 
   const handleCloseDrawer = useCallback(() => {
     setSelectedEventSlug(null);
+    setQrVerifyParams({ passId: null, autoVerify: false });
     syncUrlParams(statusFilter, trackFilter, modeFilter, null);
   }, [syncUrlParams, statusFilter, trackFilter, modeFilter]);
 
@@ -230,6 +254,7 @@ export function EventsDirectoryClient() {
   const handleSelectEvent = useCallback(
     (slug: string) => {
       setSelectedEventSlug(slug);
+      setQrVerifyParams({ passId: null, autoVerify: false });
       syncUrlParams(statusFilter, trackFilter, modeFilter, slug);
     },
     [syncUrlParams, statusFilter, trackFilter, modeFilter]
@@ -347,6 +372,9 @@ export function EventsDirectoryClient() {
 
   return (
     <div className="w-full">
+      {/* 0. Role-Based Chapter Maintainer Preview Bar (Phase 23) */}
+      <MaintainerPreviewBar surfaceLabel="Events Directory" />
+
       {/* ============================================================= */}
       {/* 1. ARCHITECTURAL HERO HEADER                                  */}
       {/* ============================================================= */}
@@ -529,6 +557,8 @@ export function EventsDirectoryClient() {
         filteredEvents={filteredEvents}
         onClose={handleCloseDrawer}
         onSelectEvent={handleSelectEvent}
+        initialPassId={qrVerifyParams.passId}
+        autoVerify={qrVerifyParams.autoVerify}
       />
     </div>
   );

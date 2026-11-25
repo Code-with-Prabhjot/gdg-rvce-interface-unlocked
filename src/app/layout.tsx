@@ -7,12 +7,14 @@ import { DevTerminalProvider } from '@/context/DevTerminalContext';
 import { ApiInspectorProvider } from '@/context/ApiInspectorContext';
 import { SavedEventsProvider } from '@/context/SavedEventsContext';
 import { XRayProvider } from '@/context/XRayContext';
+import { DemoAuthProvider } from '@/context/DemoAuthContext';
 import { ScrollProgressBar } from '@/components/layout/ScrollProgressBar';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { CommandPalette } from '@/components/layout/CommandPalette';
 import { DevTerminalModal } from '@/components/ui/DevTerminalModal';
 import { ApiInspectorModal } from '@/components/ui/ApiInspectorModal';
+import { DemoAuthModal } from '@/components/ui/DemoAuthModal';
 import { ArchitecturalBootLoader } from '@/components/ui/ArchitecturalBootLoader';
 import { BlueprintXRayOverlay } from '@/components/ui/BlueprintXRayOverlay';
 
@@ -88,39 +90,44 @@ export default function RootLayout({
           <ArchitecturalBootLoader />
 
           <XRayProvider>
-            <CommandPaletteProvider>
-              <DevTerminalProvider>
-                <ApiInspectorProvider>
-                  <SavedEventsProvider>
-                    {/* Visual Top Scroll Indicator */}
-                    <ScrollProgressBar />
+            <DemoAuthProvider>
+              <CommandPaletteProvider>
+                <DevTerminalProvider>
+                  <ApiInspectorProvider>
+                    <SavedEventsProvider>
+                      {/* Visual Top Scroll Indicator */}
+                      <ScrollProgressBar />
 
-                    {/* Global Sticky Navigation */}
-                    <Navbar />
+                      {/* Global Sticky Navigation */}
+                      <Navbar />
 
-                    {/* Main Application Routes Viewport */}
-                    <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
-                      {children}
-                    </main>
+                      {/* Main Application Routes Viewport */}
+                      <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
+                        {children}
+                      </main>
 
-                    {/* Global Architectural Footer */}
-                    <Footer />
+                      {/* Global Architectural Footer */}
+                      <Footer />
 
-                    {/* Global Command Palette Overlay */}
-                    <CommandPalette />
+                      {/* Global Command Palette Overlay */}
+                      <CommandPalette />
 
-                    {/* Signature Developer Interactive CLI Terminal Drawer */}
-                    <DevTerminalModal />
+                      {/* Signature Developer Interactive CLI Terminal Drawer */}
+                      <DevTerminalModal />
 
-                    {/* Live Backend & API Inspector Drawer */}
-                    <ApiInspectorModal />
+                      {/* Live Backend & API Inspector Drawer */}
+                      <ApiInspectorModal />
 
-                    {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
-                    <BlueprintXRayOverlay />
-                  </SavedEventsProvider>
-                </ApiInspectorProvider>
-              </DevTerminalProvider>
-            </CommandPaletteProvider>
+                      {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
+                      <DemoAuthModal />
+
+                      {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
+                      <BlueprintXRayOverlay />
+                    </SavedEventsProvider>
+                  </ApiInspectorProvider>
+                </DevTerminalProvider>
+              </CommandPaletteProvider>
+            </DemoAuthProvider>
           </XRayProvider>
         </ThemeProvider>
       </body>

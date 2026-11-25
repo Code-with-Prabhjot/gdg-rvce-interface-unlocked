@@ -159,13 +159,14 @@ export async function GET(request: Request) {
     );
   }
 
-  const { passId: expectedPassId } = generatePassSignature(matchedEvent.slug);
+  const { hash, passId: expectedPassId } = generatePassSignature(matchedEvent.slug);
   const isMatch = passId.trim().toUpperCase() === expectedPassId;
 
   const verificationResult = {
     verified: isMatch,
     passId: passId.trim().toUpperCase(),
     expectedPassId,
+    signature: isMatch ? `sha256:${hash}` : null,
     eventSlug: matchedEvent.slug,
     eventTitle: matchedEvent.title,
     date: matchedEvent.date,

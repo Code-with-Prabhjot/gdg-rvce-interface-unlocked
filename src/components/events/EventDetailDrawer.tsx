@@ -21,13 +21,17 @@ import {
   RotateCcw,
   Terminal,
   Bookmark,
+  ShieldAlert,
+  QrCode,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
 import { downloadEventIcs } from '@/utils/calendarExport';
 import { downloadSamplePassPng } from '@/utils/passExport';
+import { generateBrandedQrDataUrl } from '@/utils/qrGenerator';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useSavedEvents } from '@/context/SavedEventsContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 
 interface EventDetailDrawerProps {
   event: GDGEvent | null;
@@ -35,6 +39,8 @@ interface EventDetailDrawerProps {
   filteredEvents: GDGEvent[];
   onClose: () => void;
   onSelectEvent: (slug: string) => void;
+  initialPassId?: string | null;
+  autoVerify?: boolean;
 }
 
 // 4 official Google colours for timeline and badges
@@ -101,6 +107,8 @@ export function EventDetailDrawer({
   filteredEvents,
   onClose,
   onSelectEvent,
+  initialPassId = null,
+  autoVerify = false,
 }: EventDetailDrawerProps) {
   const prefersReducedMotion = useReducedMotion();
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -109,6 +117,7 @@ export function EventDetailDrawer({
   const previousActiveElement = useRef<HTMLElement | null>(null);
   const { openWithPreset } = useApiInspector();
   const { isSaved, toggleSave } = useSavedEvents();
+  const { session } = useDemoAuth();
   const isEventSaved = event ? isSaved(event.slug) : false;
 
   // Local interactive state
@@ -119,6 +128,14 @@ export function EventDetailDrawer({
   const [isIssuingPass, setIsIssuingPass] = useState(false);
   const [serverPassId, setServerPassId] = useState<string | null>(null);
   const [serverLatencyMs, setServerLatencyMs] = useState<number | null>(null);
+  const [qrPreviewDataUrl, setQrPreviewDataUrl] = useState<string | null>(null);
+  const [qrVerifyState, setQrVerifyState] = useState<{
+    status: 'idle' | 'loading' | 'verified' | 'invalid';
+    passId?: string;
+    signaturePrefix?: string;
+    reason?: string;
+    latencyMs?: number;
+  }>({ status: 'idle' });
   const [checkedPrereqs, setCheckedPrereqs] = useState<Set<number>>(new Set());
   const [artworkMode, setArtworkMode] = useState<'schematic' | 'scene'>('schematic');
 
@@ -131,12 +148,112 @@ export function EventDetailDrawer({
     setIsIssuingPass(false);
     setServerPassId(null);
     setServerLatencyMs(null);
+    setQrPreviewDataUrl(null);
+    setQrVerifyState({ status: 'idle' });
     setCheckedPrereqs(new Set());
     setArtworkMode('schematic');
     if (bodyScrollRef.current) {
       bodyScrollRef.current.scrollTop = 0;
     }
   }, [event?.id]);
+
+  // Automatic URL Query Verification when opened via QR scan (?event=...&passId=...&verify=1)
+  useEffect(() => {
+    if (!isOpen || !event || !autoVerify || !initialPassId) {
+      setQrVerifyState({ status: 'idle' });
+      return;
+    }
+
+    let isCancelled = false;
+    setQrVerifyState({ status: 'loading', passId: initialPassId });
+
+    const startTime = performance.now();
+    const verifyEndpoint = `/api/pass/verify?slug=${encodeURIComponent(
+      event.slug
+    )}&passId=${encodeURIComponent(initialPassId)}`;
+
+    fetch(verifyEndpoint)
+      .then(async (res) => {
+        const json = await res.json();
+        return { ok: res.ok, json };
+      })
+      .then(({ ok, json }) => {
+        if (isCancelled) return;
+        const elapsed = Number((performance.now() - startTime).toFixed(1));
+        const latencyMs =
+          typeof json.meta?.executionMs === 'number' ? json.meta.executionMs : elapsed;
+
+        if (ok && json.data?.verified === true) {
+          const fullSig =
+            typeof json.data?.signature === 'string'
+              ? json.data.signature
+              : 'sha256:verified';
+          setQrVerifyState({
+            status: 'verified',
+            passId: json.data.passId || initialPassId,
+            signaturePrefix: fullSig.slice(0, 22),
+            reason: json.data.matchReason,
+            latencyMs,
+          });
+        } else {
+          setQrVerifyState({
+            status: 'invalid',
+            passId: json.data?.passId || initialPassId,
+            reason:
+              json.data?.matchReason ||
+              json.data?.reason ||
+              'Pass ID does not match cryptographic signature for this event.',
+            latencyMs,
+          });
+        }
+      })
+      .catch(() => {
+        if (isCancelled) return;
+        setQrVerifyState({
+          status: 'invalid',
+          passId: initialPassId,
+          reason: 'Unable to reach /api/pass/verify verification endpoint.',
+        });
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [isOpen, event, autoVerify, initialPassId]);
+
+  // Generate live inline scannable QR code data URL when pass is issued
+  useEffect(() => {
+    if (!isRegistered || !event) {
+      setQrPreviewDataUrl(null);
+      return;
+    }
+
+    let isCancelled = false;
+    const activePassId = serverPassId || 'RVCE-GDG-2026-DEV';
+    const origin =
+      typeof window !== 'undefined'
+        ? window.location.origin
+        : 'https://gdg-rvce-interface-unlocked.vercel.app';
+    const verifyUrl = `${origin}/events?event=${encodeURIComponent(
+      event.slug
+    )}&passId=${encodeURIComponent(activePassId)}&verify=1`;
+
+    generateBrandedQrDataUrl(verifyUrl, 136)
+      .then((dataUrl) => {
+        if (!isCancelled) {
+          setQrPreviewDataUrl(dataUrl);
+        }
+      })
+      .catch(() => {
+        if (!isCancelled) {
+          setQrPreviewDataUrl(null);
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [isRegistered, event, serverPassId]);
 
   // Stepper calculations
   const currentIndex = event
@@ -267,13 +384,17 @@ export function EventDetailDrawer({
     setTimeout(() => setCalendarDownloaded(false), 3000);
   }, [event]);
 
-  // Handle client-side PNG sample pass download
-  const handleDownloadPass = useCallback(() => {
+  // Handle client-side PNG sample pass download with embedded scannable QR code
+  const handleDownloadPass = useCallback(async () => {
     if (!event) return;
-    downloadSamplePassPng(event, serverPassId || undefined);
+    await downloadSamplePassPng(
+      event,
+      serverPassId || undefined,
+      session?.demoId
+    );
     setPassDownloaded(true);
     setTimeout(() => setPassDownloaded(false), 3000);
-  }, [event, serverPassId]);
+  }, [event, serverPassId, session?.demoId]);
 
   // Handle real stateless sample pass issuance via POST /api/pass/verify
   const handleRegister = useCallback(async () => {
@@ -652,6 +773,98 @@ export function EventDetailDrawer({
               </div>
 
               {/* ======================================================= */}
+              {/* 2.5 AUTOMATIC QR SCAN VERIFICATION BANNER (?verify=1)   */}
+              {/* ======================================================= */}
+              {qrVerifyState.status !== 'idle' && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`p-4 rounded-2xl border-2 space-y-2 ${
+                    qrVerifyState.status === 'verified'
+                      ? 'bg-[#34A853]/12 border-[#34A853] text-[var(--text-primary)]'
+                      : qrVerifyState.status === 'invalid'
+                        ? 'bg-[#EA4335]/12 border-[#EA4335] text-[var(--text-primary)]'
+                        : 'bg-[#4285F4]/10 border-[#4285F4]/40 text-[var(--text-primary)]'
+                  }`}
+                >
+                  {qrVerifyState.status === 'loading' ? (
+                    <div className="flex items-center gap-2.5 text-xs font-mono font-semibold text-[#4285F4]">
+                      <div className="w-4 h-4 border-2 border-[#4285F4]/30 border-t-[#4285F4] rounded-full animate-spin shrink-0" />
+                      <span>Verifying QR Pass Signature via GET /api/pass/verify...</span>
+                    </div>
+                  ) : qrVerifyState.status === 'verified' ? (
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#34A853] text-white shrink-0">
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                          </span>
+                          <span className="text-xs sm:text-sm font-mono font-bold text-[#166534] dark:text-[#4ADE80] tracking-wide">
+                            QR PASS CRYPTOGRAPHICALLY VERIFIED ✓
+                          </span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#34A853]/15 text-[#166534] dark:text-[#4ADE80] border border-[#34A853]/40">
+                          Verified via /api/pass/verify
+                          {typeof qrVerifyState.latencyMs === 'number'
+                            ? ` · ${qrVerifyState.latencyMs}ms`
+                            : ''}
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-secondary)]">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <span>
+                            PASS ID:{' '}
+                            <strong className="text-[var(--text-primary)]">
+                              {qrVerifyState.passId}
+                            </strong>
+                          </span>
+                          {qrVerifyState.signaturePrefix && (
+                            <span>
+                              SIG:{' '}
+                              <strong className="text-[var(--text-primary)]">
+                                {qrVerifyState.signaturePrefix}…
+                              </strong>
+                            </span>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openWithPreset({
+                              method: 'GET',
+                              endpoint: `/api/pass/verify?slug=${encodeURIComponent(
+                                event.slug
+                              )}&passId=${encodeURIComponent(qrVerifyState.passId || '')}`,
+                            })
+                          }
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono font-semibold bg-[var(--bg-elevated)] border border-[#34A853]/40 text-[#166534] dark:text-[#4ADE80] hover:bg-[#34A853]/10 transition-colors cursor-pointer"
+                        >
+                          <Terminal className="w-3 h-3" />
+                          <span>Inspect Verify API</span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#EA4335] text-white shrink-0">
+                          <ShieldAlert className="w-3.5 h-3.5" />
+                        </span>
+                        <span className="text-xs sm:text-sm font-mono font-bold text-[#C5221F] dark:text-[#F87171] tracking-wide">
+                          PASS SIGNATURE MISMATCH — INVALID TOKEN
+                        </span>
+                      </div>
+                      <p className="text-xs font-mono text-[var(--text-secondary)]">
+                        Token <strong className="text-[var(--text-primary)]">{qrVerifyState.passId}</strong>:{' '}
+                        {qrVerifyState.reason}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ======================================================= */}
               {/* 3. INTERACTIVE ACTION BAR (Upcoming vs. Past)           */}
               {/* ======================================================= */}
               {isUpcoming ? (
@@ -745,18 +958,54 @@ export function EventDetailDrawer({
                           </div>
                         </div>
 
-                        {/* Pass Details */}
-                        <div className="space-y-2">
-                          <p className="text-xs font-mono text-[var(--text-muted)]">
-                            SESSION ATTENDEE PASS //
-                          </p>
-                          <h3 className="text-base sm:text-lg font-display font-bold text-[var(--text-primary)]">
-                            {event.title}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs font-mono text-[var(--text-secondary)]">
-                            <span>📅 {event.date}</span>
-                            <span>⏰ {event.time}</span>
-                            <span>📍 {event.venue}</span>
+                        {/* Pass Details + Live Scannable QR Code Preview */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div className="space-y-2 min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="text-xs font-mono text-[var(--text-muted)]">
+                                SESSION ATTENDEE PASS //
+                              </p>
+                              {session && (
+                                <span
+                                  className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white"
+                                  style={{ backgroundColor: session.badgeColor }}
+                                >
+                                  HOLDER: {session.demoId}
+                                </span>
+                              )}
+                            </div>
+                            <h3 className="text-base sm:text-lg font-display font-bold text-[var(--text-primary)]">
+                              {event.title}
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs font-mono text-[var(--text-secondary)]">
+                              <span>📅 {event.date}</span>
+                              <span>⏰ {event.time}</span>
+                              <span>📍 {event.venue}</span>
+                            </div>
+                          </div>
+
+                          {/* Real Phone-Scannable 4-Colour GDG QR Code Preview */}
+                          <div className="flex flex-col items-center gap-1.5 shrink-0 self-start sm:self-center">
+                            <div className="w-[144px] h-[144px] rounded-xl bg-[#FFFFFF] p-1 border border-[var(--border-hairline)] shadow-sm flex items-center justify-center">
+                              {qrPreviewDataUrl ? (
+                                <Image
+                                  src={qrPreviewDataUrl}
+                                  alt={`Scannable QR pass code for ${event.title}`}
+                                  width={136}
+                                  height={136}
+                                  unoptimized
+                                  className="w-[136px] h-[136px] rounded-lg block"
+                                />
+                              ) : (
+                                <div className="flex flex-col items-center gap-1 text-[#475569] text-[10px] font-mono">
+                                  <QrCode className="w-6 h-6 text-[#4285F4] animate-pulse" />
+                                  <span>Generating QR...</span>
+                                </div>
+                              )}
+                            </div>
+                            <span className="text-[10px] font-mono text-[var(--text-muted)] text-center max-w-[152px] leading-tight">
+                              Scan with phone camera to verify pass URL
+                            </span>
                           </div>
                         </div>
 
@@ -818,7 +1067,7 @@ export function EventDetailDrawer({
                               ) : (
                                 <>
                                   <Download className="w-3.5 h-3.5 text-[#4285F4]" />
-                                  <span>Download Pass (.png)</span>
+                                  <span>Download Sample Pass (.png)</span>
                                 </>
                               )}
                             </button>
@@ -829,7 +1078,7 @@ export function EventDetailDrawer({
                               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#4285F4] text-white hover:bg-[#3367D6] transition-all cursor-pointer"
                             >
                               <Download className="w-3 h-3" />
-                              <span>Export .ics</span>
+                              <span>Add to Calendar (.ics)</span>
                             </button>
 
                             <button
@@ -838,6 +1087,7 @@ export function EventDetailDrawer({
                                 setIsRegistered(false);
                                 setServerPassId(null);
                                 setServerLatencyMs(null);
+                                setQrPreviewDataUrl(null);
                               }}
                               title="Reset registration pass"
                               className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all cursor-pointer"

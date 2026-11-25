@@ -14,6 +14,7 @@
  */
 
 import { GDGEvent, EventCategory } from '@/data/gdgData';
+import { renderBrandedQrToCanvas } from '@/utils/qrGenerator';
 
 /**
  * Helper to draw a rounded rectangle path on canvas
@@ -141,76 +142,6 @@ function drawGdgChevrons(
 }
 
 /**
- * Draw decorative pseudo-QR matrix pattern in 4 Google colors
- */
-function drawDecorativeQrMatrix(
-  ctx: CanvasRenderingContext2D,
-  startX: number,
-  startY: number,
-  size: number
-) {
-  ctx.save();
-  // Draw background card for QR
-  drawRoundedRect(ctx, startX - 8, startY - 8, size + 16, size + 16, 12);
-  ctx.fillStyle = '#06080C';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  const cols = 9;
-  const rows = 9;
-  const cellSize = size / cols;
-  const colors = ['#4285F4', '#EA4335', '#FBBC04', '#34A853', '#FFFFFF', '#64748B'];
-
-  // Seeded pattern for deterministic rendering
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      // Finder patterns in corners
-      const isTopLeft = r < 3 && c < 3;
-      const isTopRight = r < 3 && c >= cols - 3;
-      const isBottomLeft = r >= rows - 3 && c < 3;
-
-      const px = startX + c * cellSize + 2;
-      const py = startY + r * cellSize + 2;
-      const pw = cellSize - 4;
-      const ph = cellSize - 4;
-
-      if (isTopLeft || isTopRight || isBottomLeft) {
-        // Outline box
-        if (
-          r === 0 ||
-          r === 2 ||
-          r === rows - 3 ||
-          r === rows - 1 ||
-          c === 0 ||
-          c === 2 ||
-          c === cols - 3 ||
-          c === cols - 1
-        ) {
-          ctx.fillStyle = '#FFFFFF';
-        } else {
-          ctx.fillStyle = '#4285F4';
-        }
-        drawRoundedRect(ctx, px, py, pw, ph, 2);
-        ctx.fill();
-      } else {
-        // Data modules with Google accent highlights
-        const hash = (r * 7 + c * 13 + (r ^ c)) % 17;
-        if (hash % 2 === 0) {
-          const colorIdx = (r + c * 3) % colors.length;
-          ctx.fillStyle = colors[colorIdx];
-          drawRoundedRect(ctx, px, py, pw, ph, 2);
-          ctx.fill();
-        }
-      }
-    }
-  }
-
-  ctx.restore();
-}
-
-/**
  * Get category badge color styling
  */
 function getCategoryColors(category: EventCategory) {
@@ -228,10 +159,26 @@ function getCategoryColors(category: EventCategory) {
 }
 
 /**
- * Downloads a high-resolution 1200x630 architectural PNG pass for the given session.
+ * Downloads a high-resolution 1200x630 architectural PNG pass for the given session,
+ * embedding a genuine phone-scannable 4-colour GDG QR code pointing to the live
+ * verification route.
  */
-export function downloadSamplePassPng(event: GDGEvent, passId?: string): void {
+export async function downloadSamplePassPng(
+  event: GDGEvent,
+  passId?: string,
+  holderTag?: string
+): Promise<void> {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const resolvedPassId = passId || 'RVCE-GDG-2026-DEV';
+  const resolvedHolder = (holderTag || 'SAMPLE BUILDER').toUpperCase();
+  const origin = window.location.origin || 'https://gdg-rvce-interface-unlocked.vercel.app';
+  const verifyUrl = `${origin}/events?event=${encodeURIComponent(
+    event.slug
+  )}&passId=${encodeURIComponent(resolvedPassId)}&verify=1`;
+
+  // Generate real standards-compliant scannable QR canvas before painting ticket
+  const qrCanvas = await renderBrandedQrToCanvas(verifyUrl, 200);
 
   const width = 1200;
   const height = 630;
@@ -475,11 +422,11 @@ export function downloadSamplePassPng(event: GDGEvent, passId?: string): void {
   ctx.restore();
 
   // -------------------------------------------------------------
-  // 8. RIGHT TICKET STUB (AUTHENTICATION MATRIX & TOKEN)
+  // 8. RIGHT TICKET STUB (AUTHENTICATION MATRIX, SCANNABLE QR & TOKEN)
   // -------------------------------------------------------------
   const stubContentX = stubX + 42;
-  const qrSize = 180;
-  const qrY = 110;
+  const qrCardSize = 188;
+  const qrY = 96;
 
   // Stub Header Eyebrow
   ctx.font = 'bold 11px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
@@ -488,52 +435,67 @@ export function downloadSamplePassPng(event: GDGEvent, passId?: string): void {
 
   ctx.font = '500 10px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
   ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-  ctx.fillText('OFFICIAL STUB VERIFICATION', stubContentX, 76);
+  ctx.fillText('SCAN QR TO AUTO-VERIFY', stubContentX, 76);
 
-  // Decorative QR Code
-  drawDecorativeQrMatrix(ctx, stubContentX, qrY, qrSize);
+  // High-contrast white quiet-zone rounded-xl frame for phone-scannable QR
+  ctx.save();
+  drawRoundedRect(ctx, stubContentX, qrY, qrCardSize, qrCardSize, 14);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.drawImage(qrCanvas, stubContentX + 6, qrY + 6, qrCardSize - 12, qrCardSize - 12);
+  ctx.restore();
 
   // Fictional Sample Token
-  const tokenY = qrY + qrSize + 40;
+  const tokenY = qrY + qrCardSize + 30;
   ctx.font = 'bold 10px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
   ctx.fillText('AUTHENTICATION TOKEN', stubContentX, tokenY);
 
   ctx.font = 'bold 15px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
   ctx.fillStyle = '#4285F4';
-  ctx.fillText(passId || 'RVCE-GDG-2026-DEV', stubContentX, tokenY + 22);
+  ctx.fillText(resolvedPassId, stubContentX, tokenY + 21, 224);
 
-  // Stub Metadata Fields
-  const stubInfoY = tokenY + 54;
+  // Stub Metadata Fields including active Demo Holder ID
+  const stubInfoY = tokenY + 52;
   const stubItems = [
+    { label: 'HOLDER ID', value: resolvedHolder, color: '#FBBC04' },
     { label: 'STATUS', value: 'CONFIRMED ✓', color: '#34A853' },
     { label: 'ACCESS', value: 'ALL-ACCESS PASS', color: '#FFFFFF' },
     { label: 'CHALLENGE', value: 'INTERFACE UNLOCKED', color: 'rgba(255, 255, 255, 0.7)' },
   ];
 
   stubItems.forEach((item, i) => {
-    const iy = stubInfoY + i * 36;
+    const iy = stubInfoY + i * 38;
     ctx.font = 'bold 9px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
     ctx.fillText(item.label, stubContentX, iy);
 
     ctx.font = 'bold 12px "JetBrains Mono", ui-monospace, Menlo, Monaco, monospace';
     ctx.fillStyle = item.color;
-    ctx.fillText(item.value, stubContentX, iy + 16);
+    ctx.fillText(item.value, stubContentX, iy + 15, 224);
   });
 
   // -------------------------------------------------------------
   // 9. CONVERT CANVAS TO PNG BLOB & TRIGGER DOWNLOAD
   // -------------------------------------------------------------
-  canvas.toBlob((blob) => {
-    if (!blob) return;
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${event.slug}-gdg-rvce-pass.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }, 'image/png');
+  await new Promise<void>((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        resolve();
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${event.slug}-gdg-rvce-pass.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      resolve();
+    }, 'image/png');
+  });
 }

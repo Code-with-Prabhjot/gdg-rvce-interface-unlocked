@@ -19,6 +19,7 @@ import { BuilderDetailDrawer } from './BuilderDetailDrawer';
 import { TeamCultureStrip } from './TeamCultureStrip';
 import { BuilderWorkflowStrip } from './BuilderWorkflowStrip';
 import { useApiInspector } from '@/context/ApiInspectorContext';
+import { MaintainerPreviewBar } from '@/components/ui/MaintainerPreviewBar';
 
 export function TeamDirectoryClient() {
   const [viewMode, setViewMode] = useState<TeamViewMode>('grid');
@@ -233,6 +234,9 @@ export function TeamDirectoryClient() {
 
   return (
     <div className="w-full">
+      {/* 0. Role-Based Chapter Maintainer Preview Bar (Phase 23) */}
+      <MaintainerPreviewBar surfaceLabel="Chapter Team" />
+
       {/* 1. Hero Header */}
       <TeamHeroHeader />
 

@@ -15,6 +15,7 @@ import {
   Layers,
   ArrowRight,
   CornerDownLeft,
+  KeyRound,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useTheme } from '@/context/ThemeContext';
@@ -22,6 +23,7 @@ import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useXRay } from '@/context/XRayContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 
 interface CommandItem {
   id: string;
@@ -38,6 +40,7 @@ export function CommandPalette() {
   const { open: openTerminal } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
   const { isXRayActive, toggleXRay } = useXRay();
+  const { session, openModal: openDemoAuthModal } = useDemoAuth();
   const router = useRouter();
   const { theme, toggleTheme, setTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -220,6 +223,23 @@ export function CommandPalette() {
         skipFocusRestoreRef.current = true;
         close({ skipFocusRestore: true });
         openApiInspector();
+      },
+    },
+    {
+      id: 'action-demo-auth',
+      title: 'Open Chapter Demo Sign-In',
+      subtitle: session
+        ? `Signed in as ${session.displayName} (${session.role}) — switch or sign out`
+        : 'Sign in with fictional Demo IDs (RVCE-DEV-2026, RVCE-WEB-2026, RVCE-STU-2026)',
+      category: 'Community',
+      icon: KeyRound,
+      accentColor: '#EA4335',
+      run: () => {
+        skipFocusRestoreRef.current = true;
+        close({ skipFocusRestore: true });
+        setTimeout(() => {
+          openDemoAuthModal();
+        }, 40);
       },
     },
   ];

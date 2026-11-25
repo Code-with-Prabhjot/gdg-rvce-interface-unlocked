@@ -4,9 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Command, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Sun, Moon, Command, Menu, X, ArrowUpRight, KeyRound, LogOut } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -18,8 +19,19 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { open: openCommandPalette } = useCommandPalette();
+  const { session, isHydrated, openModal: openDemoAuthModal, signOut } = useDemoAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
+
+  const shortDisplayName = session
+    ? (() => {
+        const parts = session.displayName.trim().split(/\s+/);
+        if (parts.length > 1) {
+          return `${parts[0]} ${parts[1][0]}.`;
+        }
+        return parts[0];
+      })()
+    : '';
 
   // Ephemeral Theme Mode Telemetry Toast state
   const [themeToast, setThemeToast] = useState<{ mode: 'light' | 'dark' } | null>(null);
@@ -195,6 +207,47 @@ export function Navbar() {
             </AnimatePresence>
           </button>
 
+          {/* Subtle Demo Sign-In Pill / Active Role Badge */}
+          {isHydrated && session ? (
+            <div className="hidden sm:inline-flex items-center rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-strong)] overflow-hidden min-h-[36px] shadow-2xs">
+              <button
+                type="button"
+                onClick={openDemoAuthModal}
+                title={`Signed in as ${session.displayName} (${session.demoId}) — Click to switch demo persona`}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] transition-colors cursor-pointer whitespace-nowrap"
+              >
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{ backgroundColor: session.badgeColor }}
+                />
+                <span>{shortDisplayName}</span>
+                <span className="text-[var(--text-muted)]">·</span>
+                <span className="text-[11px]" style={{ color: session.badgeColor }}>
+                  {session.role}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={signOut}
+                aria-label="Sign out of demo session"
+                title="Sign out"
+                className="px-2 py-1.5 min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[#EA4335] hover:bg-[var(--bg-subtle)] border-l border-[var(--border-hairline)] transition-colors cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={openDemoAuthModal}
+              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[36px] rounded-lg text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              aria-label="Open Chapter Demo Sign-In"
+            >
+              <KeyRound className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
+              <span>Demo Sign-In</span>
+            </button>
+          )}
+
           {/* Primary CTA Button */}
           <Link
             href="/events"
@@ -249,6 +302,50 @@ export function Navbar() {
               })}
 
               <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-col gap-2">
+                {isHydrated && session ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openDemoAuthModal();
+                      }}
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-strong)] min-h-[44px]"
+                    >
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: session.badgeColor }}
+                      />
+                      <span>
+                        {shortDisplayName} · {session.role}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      aria-label="Sign out of demo session"
+                      className="px-4 py-3 rounded-xl text-xs font-mono font-semibold text-[#EA4335] bg-[#EA4335]/10 border border-[#EA4335]/30 min-h-[44px]"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openDemoAuthModal();
+                    }}
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] min-h-[44px]"
+                  >
+                    <KeyRound className="w-4 h-4 text-[#4285F4]" />
+                    <span>Chapter Demo Sign-In</span>
+                  </button>
+                )}
+
                 <Link
                   href="/events"
                   className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm min-h-[44px]"

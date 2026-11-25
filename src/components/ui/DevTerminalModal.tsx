@@ -9,6 +9,7 @@ import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useXRay } from '@/context/XRayContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 import { EVENTS_DATA } from '@/data/gdgData';
 
 interface HistoryItem {
@@ -23,6 +24,7 @@ export function DevTerminalModal() {
   const { open: openApiInspector } = useApiInspector();
   const { theme, toggleTheme, setTheme } = useTheme();
   const { isXRayActive, toggleXRay } = useXRay();
+  const { session, openModal: openDemoAuthModal } = useDemoAuth();
   const router = useRouter();
   const [, startTransition] = useTransition();
   const skipFocusRestoreRef = useRef(false);
@@ -133,6 +135,10 @@ export function DevTerminalModal() {
                   <span className="text-[#CBD5E1]"> - Open Live Backend API Inspector (/api)</span>
                 </div>
                 <div>
+                  <span className="text-[#F87171] font-bold">auth / login</span>
+                  <span className="text-[#CBD5E1]"> - Open Chapter Demo Sign-In modal</span>
+                </div>
+                <div>
                   <span className="text-[#F87171] font-bold">events</span>
                   <span className="text-[#CBD5E1]"> - List sprints &amp; jump to /events</span>
                 </div>
@@ -196,6 +202,34 @@ export function DevTerminalModal() {
           close({ skipFocusRestore: true });
           openApiInspector();
         }, 300);
+        break;
+      }
+
+      case 'auth':
+      case 'login': {
+        newItems.push({
+          id: `res-${Date.now()}`,
+          type: 'response',
+          output: (
+            <div className="space-y-1.5 text-xs font-mono">
+              <div className="flex items-center gap-2 text-[#F87171] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#EA4335] animate-pulse" />
+                <span>Launching Chapter Demo Sign-In Modal...</span>
+              </div>
+              <p className="text-white/70">
+                {session
+                  ? `Active demo session: ${session.displayName} (${session.demoId} · ${session.role}).`
+                  : 'Select a fictional Demo ID (RVCE-DEV-2026, RVCE-WEB-2026, RVCE-STU-2026) via POST /api/auth/demo.'}
+              </p>
+            </div>
+          ),
+        });
+        skipFocusRestoreRef.current = true;
+        markSkipFocusRestore();
+        setTimeout(() => {
+          close({ skipFocusRestore: true });
+          openDemoAuthModal();
+        }, 250);
         break;
       }
 
@@ -500,7 +534,7 @@ export function DevTerminalModal() {
     }
   };
 
-  const quickChips = ['help', 'xray', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
+  const quickChips = ['help', 'auth', 'xray', 'api', 'events', 'boot', 'team', 'theme', 'stack', 'celebrate'];
 
   return (
     <AnimatePresence>
