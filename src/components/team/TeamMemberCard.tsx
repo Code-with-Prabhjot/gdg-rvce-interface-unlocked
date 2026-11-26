@@ -152,21 +152,21 @@ export function TeamMemberCard({
 
       {/* Top Architectural Header Bar */}
       <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-hairline)]">
-        <div className="flex items-center gap-1.5 min-w-0">
+        <div className="flex flex-wrap items-center gap-1.5 min-w-0">
           {/* Quick-Copy Builder ID Badge */}
           <button
             type="button"
             onClick={handleCopyId}
             title={`Click to copy sample builder handle (@gdg-rvce/${member.id})`}
             aria-label={`Copy handle for ${member.name}`}
-            className={`font-mono text-[11px] font-semibold tracking-wider px-2 py-0.5 rounded whitespace-nowrap shrink-0 transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`min-h-[44px] md:min-h-0 font-mono text-[11px] font-semibold tracking-wider px-2 py-0.5 rounded whitespace-nowrap shrink-0 transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               copiedId
-                ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
             }`}
           >
             {copiedId ? (
-              <span className="flex items-center gap-1 font-bold text-[#34A853]">
+              <span className="flex items-center gap-1 font-bold text-[var(--accent-green-text)]">
                 <Check className="w-3 h-3" aria-hidden="true" />
                 <span>COPIED ✓</span>
               </span>
@@ -174,8 +174,7 @@ export function TeamMemberCard({
               <span>{devIdTag}</span>
             )}
           </button>
-          <span className="text-[var(--text-muted)] text-[10px]">·</span>
-          <span className="font-mono text-[10px] text-[var(--text-secondary)] px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] truncate max-w-[96px]">
+          <span className="font-mono text-[10px] text-[var(--text-secondary)] px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] whitespace-nowrap">
             {member.yearAndBranch}
           </span>
         </div>
@@ -246,7 +245,7 @@ export function TeamMemberCard({
                         type="button"
                         onClick={handleEmoteClick}
                         aria-label="Trigger developer emote reaction"
-                        className="relative w-8 h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-sm flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                        className="relative min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 w-11 h-11 md:w-8 md:h-8 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] p-1 shadow-sm flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
                         title="Click to trigger developer reaction"
                       >
                         <Image
@@ -309,7 +308,7 @@ export function TeamMemberCard({
 
                 {/* Name & Specific Role */}
                 <div className="space-y-1">
-                  <h2 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] tracking-tight group-hover:text-[#4285F4] transition-colors">
+                  <h2 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)] tracking-tight group-hover:text-[var(--accent-blue-text)] transition-colors">
                     {member.name}
                   </h2>
                   <p className="text-xs font-mono font-medium text-[var(--text-secondary)]">
@@ -335,7 +334,7 @@ export function TeamMemberCard({
                     }}
                     aria-label={`Filter builders by ${skill}`}
                     title={`Filter directory by ${skill}`}
-                    className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] hover:bg-[#4285F4]/10 border border-[var(--border-hairline)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    className="min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[10px] font-mono bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#4285F4] hover:bg-[#4285F4]/10 border border-[var(--border-hairline)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   >
                     {skill}
                   </button>
@@ -358,7 +357,19 @@ export function TeamMemberCard({
                 {/* Spec Sheet Header */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-primary)]">
-                    <Sparkles className="w-3.5 h-3.5" style={{ color: accent.hex }} />
+                    <Sparkles
+                      className="w-3.5 h-3.5"
+                      style={{
+                        color:
+                          member.googleColor === 'yellow'
+                            ? 'var(--accent-yellow-text)'
+                            : member.googleColor === 'red'
+                              ? 'var(--accent-red-text)'
+                              : member.googleColor === 'green'
+                                ? 'var(--accent-green-text)'
+                                : 'var(--accent-blue-text)',
+                      }}
+                    />
                     <span>BUILDER SPEC</span>
                   </div>
                   <span

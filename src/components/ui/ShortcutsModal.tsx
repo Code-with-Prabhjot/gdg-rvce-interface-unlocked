@@ -151,18 +151,18 @@ export function ShortcutsModal() {
         <div className="px-5 sm:px-6 py-4 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/50 flex items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-xl bg-[#4285F4]/12 border border-[#4285F4]/30 flex items-center justify-center shrink-0">
-              <Keyboard className="w-5 h-5 text-[#4285F4]" />
+              <Keyboard className="w-5 h-5 text-[var(--accent-blue-text)]" />
             </div>
             <div className="min-w-0">
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[var(--accent-blue-text)] block">
                 KEYCAP MATRIX // GDG RVCE POWER CONTROLS
               </span>
-              <h1
+              <h2
                 id="shortcuts-modal-title"
                 className="text-lg font-display font-bold text-[var(--text-primary)] truncate"
               >
                 Keyboard Shortcuts Cheat-Sheet
-              </h1>
+              </h2>
             </div>
           </div>
 

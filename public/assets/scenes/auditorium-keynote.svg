@@ -108,16 +108,16 @@
 
       <!-- Large GDG Emblem on Stage Screen -->
       <g transform="translate(400, 200)">
-        <path d="M40 0L10 35L40 70" stroke="#EA4335" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M40 0L10 35" stroke="#EA4335" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M10 35L40 70" stroke="#4285F4" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M90 0L120 35L90 70" stroke="#34A853" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M90 0L120 35" stroke="#34A853" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M120 35L90 70" stroke="#FBBC04" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
 
       <!-- Keynote Title & Architecture Diagram on Screen -->
       <g transform="translate(560, 185)">
         <text x="0" y="24" font-family="sans-serif" font-size="28" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">MULTI-AGENT ARCHITECTURE</text>
-        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="500" fill="#94A3B8">Engineering Resilient Open Systems with Gemini 1.5 &amp; Cloud</text>
+        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="500" fill="#94A3B8">Engineering Resilient Open Systems with Gemini 2.5 &amp; Cloud</text>
         <!-- Mini Topology Diagram on Slide -->
         <g transform="translate(0, 75)">
           <rect x="0" y="0" width="130" height="42" rx="8" fill="#1E293B" stroke="#4285F4" stroke-width="1.5"/>
@@ -134,9 +134,10 @@
           <text x="410" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="#34A853" text-anchor="middle">CLOUD EDGE</text>
         </g>
       </g>
-      <!-- Slide Lower Telemetry Strip -->
+      <!-- Slide Lower Telemetry Strip (speaker label shifted clear to x >= 635 right of lectern/speaker silhouettes) -->
       <rect x="330" y="375" width="740" height="24" rx="6" fill="#111827"/>
-      <text x="345" y="391" font-family="monospace" font-size="10" fill="#64748B">SESSION // 01 · KEYNOTE SPEAKER: DR. ANANYA RAO · RVCE CAMPUS IEM HALL</text>
+      <text x="345" y="391" font-family="monospace" font-size="10" fill="#64748B">SESSION // 01</text>
+      <text x="635" y="391" font-family="monospace" font-size="10" fill="#94A3B8">KEYNOTE SPEAKER: DR. ANANYA RAO · RVCE CAMPUS IEM HALL</text>
     </g>
 
     <!-- Angled Stage Spotlight Cones -->
@@ -506,14 +507,5 @@
         </g>
     </g>
 
-    <!-- Top Left & Right Architectural Telemetry Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="#4285F4"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 01 // AUDITORIUM KEYNOTE BROADCAST</text>
-    </g>
-    <g transform="translate(1000, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="325" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">IEM AUDITORIUM · RVCE BENGALURU</text>
-    </g>
+
   </svg>

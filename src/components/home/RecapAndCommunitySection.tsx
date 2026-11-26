@@ -120,9 +120,9 @@ export function RecapAndCommunitySection() {
                     <button
                       type="button"
                       onClick={() => setRecapVisualMode('schematic')}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`min-h-[44px] md:min-h-0 px-2.5 md:px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         recapVisualMode === 'schematic'
-                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          ? 'bg-[#1D4ED8] text-white shadow-xs'
                           : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                       }`}
                     >
@@ -131,9 +131,9 @@ export function RecapAndCommunitySection() {
                     <button
                       type="button"
                       onClick={() => setRecapVisualMode('scene')}
-                      className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`min-h-[44px] md:min-h-0 min-w-[44px] md:min-w-0 px-2.5 md:px-2 py-0.5 rounded text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         recapVisualMode === 'scene'
-                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          ? 'bg-[#1D4ED8] text-white shadow-xs'
                           : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                       }`}
                     >
@@ -162,7 +162,7 @@ export function RecapAndCommunitySection() {
 
                 {/* High-Contrast Bottom Overlay Gradient */}
                 <div className="absolute bottom-0 inset-x-0 p-3.5 bg-gradient-to-t from-[#090C10]/95 via-[#090C10]/75 to-transparent text-[#F8FAFC]">
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-[#4285F4] text-white">
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-[#1D4ED8] text-white">
                     INAUGURAL KEYNOTE
                   </span>
                   <p className="text-sm font-display font-bold mt-1 text-[#F8FAFC]">
@@ -249,15 +249,23 @@ export function RecapAndCommunitySection() {
             className="lg:col-span-7 flex flex-col justify-between space-y-4"
           >
             {/* Interactive Tab Buttons with layoutId Indicator */}
-            <div className="flex flex-wrap gap-2 p-1.5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
+            <div
+              role="tablist"
+              aria-label="Event recap highlights"
+              className="flex flex-wrap gap-2 p-1.5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]"
+            >
               {RECAP_DATA.tabs.map((tab) => {
                 const isActive = tab.id === activeTabId;
                 return (
                   <button
                     key={tab.id}
+                    id={`recap-tab-${tab.id}`}
                     type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`recap-panel-${tab.id}`}
                     onClick={() => setActiveTabId(tab.id)}
-                    className="relative flex-1 min-w-[130px] py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 text-center cursor-pointer select-none focus:outline-hidden"
+                    className="relative flex-1 min-w-[130px] min-h-[44px] md:min-h-0 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 text-center cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   >
                     {/* Active sliding pill indicator */}
                     {isActive && (
@@ -286,7 +294,12 @@ export function RecapAndCommunitySection() {
             </div>
 
             {/* Crossfading Tab Panel Content */}
-            <div className="flex-1 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+            <div
+              id={`recap-panel-${currentTab.id}`}
+              role="tabpanel"
+              aria-labelledby={`recap-tab-${currentTab.id}`}
+              className="flex-1 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-5 sm:p-6 shadow-xs flex flex-col justify-between"
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentTab.id}
@@ -433,11 +446,11 @@ export function RecapAndCommunitySection() {
 
           {/* Dual CTAs */}
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full sm:w-auto">
-            {/* Primary CTA: Browse All Events (Google Blue #4285F4) */}
+            {/* Primary CTA: Browse All Events */}
             <MagneticWrapper maxOffset={6} className="w-full sm:w-auto">
               <Link
                 href="/events"
-                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all duration-200 shadow-md hover:shadow-lg group"
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] transition-all duration-200 shadow-md hover:shadow-lg group"
               >
                 <span>Browse All Events</span>
                 <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />

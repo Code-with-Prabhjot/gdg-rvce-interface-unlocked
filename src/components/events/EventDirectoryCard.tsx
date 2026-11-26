@@ -20,28 +20,28 @@ function getCategoryBadgeData(category: EventCategory) {
   switch (category) {
     case 'Hackathon':
       return {
-        pillClass: 'bg-[#EA4335]/15 text-[var(--accent-red-text)] border border-[#EA4335]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-red-text)] border border-[#EA4335]/45 shadow-sm backdrop-blur-md',
         accentHex: '#EA4335',
         dotClass: 'bg-[var(--accent-red-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-red-text)]',
       };
     case 'Workshop':
       return {
-        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-blue-text)] border border-[#4285F4]/45 shadow-sm backdrop-blur-md',
         accentHex: '#4285F4',
         dotClass: 'bg-[var(--accent-blue-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-blue-text)]',
       };
     case 'Study Jam':
       return {
-        pillClass: 'bg-amber-500/15 text-[var(--accent-yellow-text)] border border-amber-500/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-yellow-text)] border border-amber-500/45 shadow-sm backdrop-blur-md',
         accentHex: '#FBBC04',
         dotClass: 'bg-[var(--accent-yellow-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-yellow-text)]',
       };
     case 'Tech Talk':
       return {
-        pillClass: 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-green-text)] border border-[#34A853]/45 shadow-sm backdrop-blur-md',
         accentHex: '#34A853',
         dotClass: 'bg-[var(--accent-green-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-green-text)]',
@@ -107,7 +107,7 @@ export function EventDirectoryCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
             {/* Top Badges Row */}
-            <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10">
+            <div className="absolute top-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 z-10">
               {/* Google-colour category pill */}
               <span
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs ${categoryData.pillClass}`}
@@ -116,7 +116,7 @@ export function EventDirectoryCard({
                 {event.category}
               </span>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1.5">
                 {isSpotlight && (
                   <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#FBBC04] text-[#111827] border border-[#FBBC04] shadow-xs">
                     ★ CHAPTER SPOTLIGHT
@@ -131,7 +131,7 @@ export function EventDirectoryCard({
                         e.stopPropagation();
                         setViewType('cover');
                       }}
-                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`min-h-[44px] md:min-h-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         viewType === 'cover'
                           ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
                           : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -145,9 +145,9 @@ export function EventDirectoryCard({
                         e.stopPropagation();
                         setViewType('scene');
                       }}
-                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`min-h-[44px] md:min-h-0 min-w-[44px] md:min-w-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                         viewType === 'scene'
-                          ? 'bg-[#4285F4] text-white shadow-xs'
+                          ? 'bg-[#1D4ED8] text-white shadow-xs'
                           : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                       }`}
                     >
@@ -178,7 +178,7 @@ export function EventDirectoryCard({
                   aria-label={saved ? 'Remove from saved sprints' : 'Save sprint locally'}
                   aria-pressed={saved}
                   title={saved ? 'Saved in personal schedule' : 'Save sprint locally'}
-                  className={`min-w-[28px] min-h-[28px] p-1.5 rounded-md backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center ${
+                  className={`min-w-[44px] min-h-[44px] md:min-w-[32px] md:min-h-[32px] p-1.5 rounded-md backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center ${
                     saved
                       ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
                       : 'bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#CBD5E1] hover:text-[#F8FAFC] border-white/20'
@@ -228,11 +228,11 @@ export function EventDirectoryCard({
 
             {/* Space Grotesk Title + 2-line Summary */}
             <div className="space-y-1.5">
-              <h3
+              <h2
                 className={`text-lg font-display font-bold text-[var(--text-primary)] transition-colors line-clamp-2 ${categoryData.hoverTextClass}`}
               >
                 {event.title}
-              </h3>
+              </h2>
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
                 {event.summary || event.description}
               </p>
@@ -281,7 +281,7 @@ export function EventDirectoryCard({
               e.stopPropagation();
               onSelectEvent(event.slug);
             }}
-            className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap cursor-pointer ${
+            className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline transition-all group/btn shrink-0 min-h-[44px] md:min-h-[36px] whitespace-nowrap cursor-pointer ${
               issuedPass
                 ? 'text-[var(--accent-green-text)]'
                 : 'text-[var(--accent-blue-text)]'
@@ -376,20 +376,20 @@ export function EventDirectoryCard({
           {/* Mode Pill */}
           <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-[var(--text-secondary)]">
             {event.mode === 'Online' ? (
-              <Video className="w-3 h-3 text-[#34A853]" />
+              <Video className="w-3 h-3 text-[var(--accent-green-text)]" />
             ) : (
-              <MapPin className="w-3 h-3 text-[#EA4335]" />
+              <MapPin className="w-3 h-3 text-[var(--accent-red-text)]" />
             )}
             {event.mode}
           </span>
         </div>
 
         {/* Space Grotesk Title */}
-        <h3
+        <h2
           className={`text-base sm:text-lg font-display font-bold text-[var(--text-primary)] transition-colors line-clamp-1 ${categoryData.hoverTextClass}`}
         >
           {event.title}
-        </h3>
+        </h2>
 
         {/* Venue & Speaker metadata */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[var(--text-muted)] font-mono">
@@ -425,7 +425,7 @@ export function EventDirectoryCard({
           aria-label={saved ? 'Remove from saved sprints' : 'Save sprint locally'}
           aria-pressed={saved}
           title={saved ? 'Saved in personal schedule' : 'Save sprint locally'}
-          className={`min-w-[40px] min-h-[40px] p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+          className={`min-w-[44px] min-h-[44px] md:min-w-[40px] md:min-h-[40px] p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
             saved
               ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
               : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
@@ -440,10 +440,10 @@ export function EventDirectoryCard({
             e.stopPropagation();
             onSelectEvent(event.slug);
           }}
-          className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold border transition-all duration-200 shadow-2xs hover:shadow-md group/btn min-h-[40px] whitespace-nowrap ${
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold border transition-all duration-200 shadow-2xs hover:shadow-md group/btn min-h-[44px] md:min-h-[40px] whitespace-nowrap ${
             issuedPass
               ? 'bg-[var(--bg-subtle)] text-[var(--accent-green-text)] border-[var(--border-hairline)] font-semibold'
-              : 'bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#4285F4]'
+              : 'bg-[var(--bg-subtle)] hover:bg-[#1D4ED8] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#1D4ED8]'
           }`}
         >
           <span>

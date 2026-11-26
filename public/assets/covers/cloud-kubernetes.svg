@@ -31,16 +31,14 @@
   <circle cx="1020" cy="220" r="280" fill="#4285F4" fill-opacity="0.16" filter="url(#softGlow)"/>
   <circle cx="200" cy="500" r="200" fill="#4285F4" fill-opacity="0.08" filter="url(#softGlow)"/>
 
-  <!-- Architectural Frame & Tech Coordinates -->
-  <rect x="40" y="40" width="1120" height="595" rx="16" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-  <line x1="40" y1="90" x2="1160" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-  
-  <!-- Technical Coordinate Badges -->
-  <text x="70" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="2">GDG ON CAMPUS RVCE // ARCHITECTURAL SYSTEM SPEC</text>
-  <text x="1130" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" text-anchor="end" letter-spacing="2">12.9237° N, 77.4987° E</text>
+  <!-- Architectural Frame (clean top & bottom 64px corner margins for UI overlays) -->
+  <rect x="40" y="40" width="1120" height="595" rx="16" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+
+  <!-- Technical Spec Subheader (Safely inside body safe-zone below top overlay pills) -->
+  <text x="84" y="132" font-family="monospace" font-size="11" font-weight="600" fill="#94A3B8" letter-spacing="1.5">GDG ON CAMPUS RVCE // SYSTEM SPEC · 12.9237° N, 77.4987° E</text>
 
   <!-- Left Content Column (Strictly bounded to x <= 700 for clean clearance) -->
-  <g transform="translate(84, 170)">
+  <g transform="translate(84, 152)">
     <!-- Category Pill -->
     <rect x="0" y="0" width="223" height="34" rx="17" fill="#4285F4" fill-opacity="0.18" stroke="#4285F4" stroke-width="1.5"/>
     <circle cx="18" cy="17" r="5" fill="#4285F4"/>
@@ -77,12 +75,15 @@
     
   </g>
 
-  <!-- Bottom Brand Signature -->
-  <g transform="translate(84, 580)">
-    <!-- GDG Chevron Icon Mini -->
-    <path d="M0 8L8 0L0 -8" stroke="#EA4335" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M0 -8L-8 0L0 8" stroke="#4285F4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="24" y="4" font-family="sans-serif" font-size="14" font-weight="700" fill="#E2E8F0">GDG RVCE</text>
-    <text x="142" y="4" font-family="sans-serif" font-size="14" fill="#64748B">— Bengaluru Developer Community</text>
+  <!-- Brand Signature (Separated 4-colour chevrons, clear of bottom 64px corner margins) -->
+  <g transform="translate(84, 514)">
+    <!-- Left chevron (Red & Blue) -->
+    <path d="M9 -8L0 0" stroke="#EA4335" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M0 0L9 8" stroke="#4285F4" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right chevron (Green & Yellow) -->
+    <path d="M16 -8L25 0" stroke="#34A853" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M25 0L16 8" stroke="#FBBC04" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="38" y="4" font-family="sans-serif" font-size="14" font-weight="700" fill="#E2E8F0">GDG RVCE</text>
+    <text x="118" y="4" font-family="sans-serif" font-size="13" fill="#94A3B8">— Bengaluru Developer Community</text>
   </g>
 </svg>

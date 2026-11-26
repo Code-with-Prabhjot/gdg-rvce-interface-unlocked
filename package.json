@@ -10,16 +10,13 @@
     "assets:build": "node scripts/generate-visual-assets.mjs"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
     "canvas-confetti": "^1.9.4",
-    "clsx": "^2.1.1",
     "framer-motion": "^14.14.0",
     "lucide-react": "^1.78.0",
     "next": "15.5.29",
     "qrcode": "^1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "tailwind-merge": "^3.7.1",
     "three": "^0.187.0"
   },
   "devDependencies": {
@@ -33,7 +30,6 @@
     "@types/three": "^0.187.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.29",
-    "playwright-core": "^1.65.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

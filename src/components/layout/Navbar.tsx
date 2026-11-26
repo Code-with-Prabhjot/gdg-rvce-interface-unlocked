@@ -35,31 +35,29 @@ export function Navbar() {
       })()
     : '';
 
-  // Ephemeral Theme Mode Telemetry Toast state
+  // Ephemeral Theme Mode Telemetry Toast state (only shown on explicit user toggle)
   const [themeToast, setThemeToast] = useState<{ mode: 'light' | 'dark' } | null>(null);
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const isInitialMount = useRef(true);
 
-  // Trigger telemetry pill for 1.4s on theme changes
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
+  const handleToggleTheme = () => {
+    const nextMode = theme === 'dark' ? 'light' : 'dark';
+    toggleTheme();
     if (toastTimerRef.current) {
       clearTimeout(toastTimerRef.current);
     }
-    setThemeToast({ mode: theme });
+    setThemeToast({ mode: nextMode });
     toastTimerRef.current = setTimeout(() => {
       setThemeToast(null);
     }, 1400);
+  };
 
+  useEffect(() => {
     return () => {
       if (toastTimerRef.current) {
         clearTimeout(toastTimerRef.current);
       }
     };
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -72,13 +70,23 @@ export function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // Lock body scroll while mobile menu drawer is open
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [mobileMenuOpen]);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-hairline)] bg-[var(--bg-canvas)]/85 backdrop-blur-md transition-colors duration-200 relative">
+    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-hairline)] bg-[var(--bg-canvas)]/85 backdrop-blur-md transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] rounded-lg p-1 -ml-1 transition-transform"
+          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] rounded-lg p-1 -ml-1 min-h-[44px] transition-transform"
           aria-label="GDG on Campus RV College of Engineering — Home"
         >
           {/* Official GDG < > Mark */}
@@ -142,6 +150,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={isActive ? 'page' : undefined}
                 className={`relative px-4 py-1.5 text-sm font-medium transition-colors duration-150 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                   isActive
                     ? 'text-[var(--text-primary)] font-semibold'
@@ -183,7 +192,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={openCommandPalette}
-            className="min-h-[36px] inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--text-secondary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
+            className="min-h-[44px] min-w-[44px] lg:min-h-[36px] lg:min-w-0 inline-flex items-center justify-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[var(--text-secondary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
             aria-label="Open Command Palette"
           >
             <Command className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />
@@ -196,8 +205,8 @@ export function Navbar() {
           {/* Theme Switcher */}
           <button
             type="button"
-            onClick={toggleTheme}
-            className="min-w-[36px] min-h-[36px] p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+            onClick={handleToggleTheme}
+            className="min-w-[44px] min-h-[44px] lg:min-w-[36px] lg:min-h-[36px] p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
             aria-label={`Toggle color theme. Current theme is ${theme}`}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -237,7 +246,19 @@ export function Navbar() {
                 />
                 <span>Sample Persona</span>
                 <span className="text-[var(--text-muted)]">·</span>
-                <span className="text-[11px]" style={{ color: session.badgeColor }}>
+                <span
+                  className="text-[11px]"
+                  style={{
+                    color:
+                      session.badgeColor === '#EA4335'
+                        ? 'var(--accent-red-text)'
+                        : session.badgeColor === '#34A853'
+                        ? 'var(--accent-green-text)'
+                        : session.badgeColor === '#FBBC04'
+                        ? 'var(--accent-yellow-text)'
+                        : 'var(--accent-blue-text)',
+                  }}
+                >
                   {shortDisplayName}
                 </span>
               </span>
@@ -246,7 +267,7 @@ export function Navbar() {
                 onClick={signOut}
                 aria-label="Exit sample persona"
                 title="Exit Sample Persona"
-                className="min-h-[36px] min-w-[36px] p-2 rounded-lg text-[#EA4335] hover:text-white bg-[#EA4335]/10 hover:bg-[#EA4335] border border-[#EA4335]/30 transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                className="min-h-[36px] min-w-[36px] p-2 rounded-lg text-[var(--accent-red-text)] hover:text-white bg-[#EA4335]/10 hover:bg-[#C5221F] border border-[#EA4335]/30 transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5 shrink-0" />
               </button>
@@ -256,7 +277,7 @@ export function Navbar() {
           {/* Primary CTA Button */}
           <Link
             href="/events"
-            className="hidden lg:inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
+            className="hidden lg:inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] shadow-sm hover:shadow transition-all duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
           >
             <span>Explore Events</span>
             <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
@@ -292,6 +313,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium min-h-[44px] transition-colors ${
                       isActive
                         ? 'bg-[var(--bg-subtle)] text-[var(--text-primary)] font-semibold border border-[var(--border-strong)]'
@@ -336,7 +358,7 @@ export function Navbar() {
                       onClick={signOut}
                       aria-label="Exit sample persona"
                       title="Exit Sample Persona"
-                      className="min-w-[44px] min-h-[44px] p-2 rounded-xl text-[#EA4335] bg-[#EA4335]/10 border border-[#EA4335]/30 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                      className="min-w-[44px] min-h-[44px] p-2 rounded-xl text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#C5221F] hover:text-white border border-[#EA4335]/30 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
                     >
                       <LogOut className="w-4 h-4" />
                     </button>
@@ -345,7 +367,7 @@ export function Navbar() {
 
                 <Link
                   href="/events"
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm min-h-[44px]"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] shadow-sm min-h-[44px]"
                 >
                   <span>Explore Events</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -359,11 +381,11 @@ export function Navbar() {
       <AnimatePresence>
         {themeToast && (
           <motion.div
-            initial={{ opacity: 0, y: -6 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
+            exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute top-full mt-2 right-4 z-50 pointer-events-none"
+            className="fixed bottom-5 right-4 z-50 pointer-events-none"
             role="status"
             aria-live="polite"
           >

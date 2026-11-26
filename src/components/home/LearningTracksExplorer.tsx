@@ -15,7 +15,7 @@ function getTrackAccentStyles(accent: GoogleAccent) {
         border: 'border-[#EA4335]',
         borderGlow: 'hover:border-[#EA4335]/70 shadow-[0_0_20px_rgba(234,67,53,0.12)]',
         bgPill: 'bg-[#EA4335]/10 text-[var(--accent-red-text)] border-[#EA4335]/30',
-        activePill: 'bg-[#EA4335] text-white',
+        activePill: 'bg-[#C5221F] text-white',
         activeTabBorder: 'border-[#EA4335]',
         cardHover: 'hover:border-[#EA4335]/50 hover:shadow-[0_4px_24px_rgba(234,67,53,0.1)]',
         stepColor: 'text-[var(--accent-red-text)]',
@@ -28,7 +28,7 @@ function getTrackAccentStyles(accent: GoogleAccent) {
         border: 'border-[#4285F4]',
         borderGlow: 'hover:border-[#4285F4]/70 shadow-[0_0_20px_rgba(66,133,244,0.12)]',
         bgPill: 'bg-[#4285F4]/10 text-[var(--accent-blue-text)] border-[#4285F4]/30',
-        activePill: 'bg-[#4285F4] text-white',
+        activePill: 'bg-[#1D4ED8] text-white',
         activeTabBorder: 'border-[#4285F4]',
         cardHover: 'hover:border-[#4285F4]/50 hover:shadow-[0_4px_24px_rgba(66,133,244,0.1)]',
         stepColor: 'text-[var(--accent-blue-text)]',
@@ -54,7 +54,7 @@ function getTrackAccentStyles(accent: GoogleAccent) {
         border: 'border-[#34A853]',
         borderGlow: 'hover:border-[#34A853]/70 shadow-[0_0_20px_rgba(52,168,83,0.12)]',
         bgPill: 'bg-[#34A853]/10 text-[var(--accent-green-text)] border-[#34A853]/30',
-        activePill: 'bg-[#34A853] text-white',
+        activePill: 'bg-[#15803D] text-white',
         activeTabBorder: 'border-[#34A853]',
         cardHover: 'hover:border-[#34A853]/50 hover:shadow-[0_4px_24px_rgba(52,168,83,0.1)]',
         stepColor: 'text-[var(--accent-green-text)]',
@@ -249,7 +249,7 @@ export function LearningTracksExplorer() {
             {/* Tools & Frameworks Pills */}
             <div className="flex flex-wrap items-center gap-1.5 relative z-10">
               <span className="font-mono text-[11px] text-[var(--text-muted)] mr-1 flex items-center gap-1.5 whitespace-nowrap">
-                <Sparkles className="w-3.5 h-3.5 shrink-0" style={{ color: activeTrack.accentHex }} />
+                <Sparkles className="w-3.5 h-3.5 shrink-0" style={{ color: styles.hex === '#FBBC04' ? 'var(--accent-yellow-text)' : styles.hex === '#EA4335' ? 'var(--accent-red-text)' : styles.hex === '#34A853' ? 'var(--accent-green-text)' : 'var(--accent-blue-text)' }} />
                 CORE TOOLCHAIN:
               </span>
               {activeTrack.tools.map((tool, idx) => (
@@ -313,7 +313,7 @@ export function LearningTracksExplorer() {
                         <div className="flex items-center gap-1.5">
                           <CheckCircle2
                             className="w-3.5 h-3.5 shrink-0"
-                            style={{ color: activeTrack.accentHex }}
+                            style={{ color: styles.hex === '#FBBC04' ? 'var(--accent-yellow-text)' : styles.hex === '#EA4335' ? 'var(--accent-red-text)' : styles.hex === '#34A853' ? 'var(--accent-green-text)' : 'var(--accent-blue-text)' }}
                           />
                           <span>Phase {sIdx + 1} of 4</span>
                         </div>

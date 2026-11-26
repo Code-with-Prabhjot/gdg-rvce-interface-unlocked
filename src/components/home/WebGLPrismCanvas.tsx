@@ -99,7 +99,7 @@ interface SceneState {
   keyLight: THREE.DirectionalLight;
   rimLights: THREE.PointLight[];
   ambientLight: THREE.AmbientLight;
-  clock: THREE.Clock;
+  timer: THREE.Timer;
   isDragging: boolean;
   prevPointer: { x: number; y: number };
   rotVelX: number;
@@ -448,12 +448,13 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
     // ── Interaction state ──
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
     const state: SceneState = {
       renderer, scene, camera, chevronGroup, satelliteGroup,
       floorMaterial, armMaterials, edgeLines, satellites, orbitalRings,
-      keyLight, rimLights, ambientLight, clock,
+      keyLight, rimLights, ambientLight, timer,
       isDragging: false,
       prevPointer: { x: 0, y: 0 },
       rotVelX: 0, rotVelY: 0,
@@ -468,9 +469,10 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
 
     sceneRef.current = state;
 
-    // Apply initial theme
+    // Apply initial theme and wireframe state
     const isDark = themeRef.current === 'dark';
     updateThemeLighting(state, isDark);
+    updateWireframeEdges(state, wireframeModeRef.current);
 
     // ── Resize handling ──
     const handleResize = () => {
@@ -499,6 +501,7 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
       state.prevPointer = { x: e.clientX, y: e.clientY };
       state.rotVelX = 0;
       state.rotVelY = 0;
+      renderer.domElement.style.cursor = 'grabbing';
     };
     const onPointerMove = (e: PointerEvent) => {
       if (state.isDragging) {
@@ -530,9 +533,11 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
     };
     const onPointerUp = () => {
       state.isDragging = false;
+      renderer.domElement.style.cursor = 'grab';
     };
 
     const el = renderer.domElement;
+    el.style.cursor = 'grab';
     el.addEventListener('pointerdown', onPointerDown);
     el.addEventListener('pointermove', onPointerMove);
     el.addEventListener('pointerup', onPointerUp);
@@ -541,24 +546,19 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
     // ── Render loop ──
     const HERO_ROT_X = 0.12;
     const HERO_ROT_Y = -0.28;
+    const targetScaleVec = new THREE.Vector3();
 
     const animate = () => {
       animFrameRef.current = requestAnimationFrame(animate);
 
       if (!isInViewRef.current) return;
 
-      const dt = state.clock.getDelta();
-      const elapsed = state.clock.getElapsedTime();
+      state.timer.update();
+      const dt = Math.min(state.timer.getDelta(), 0.1);
+      const elapsed = state.timer.getElapsed();
 
       // Update floor shader time
       state.floorMaterial.uniforms.uTime.value = elapsed;
-
-      // Theme sync (every frame is cheap — just comparisons)
-      const curDark = themeRef.current === 'dark';
-      updateThemeLighting(state, curDark);
-
-      // Wireframe edges sync
-      updateWireframeEdges(state, wireframeModeRef.current);
 
       // ── Rotation: either reset animation or drag/idle ──
       if (state.resetAnimating) {
@@ -590,8 +590,10 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
       const targetRightScale = state.hoveredChevron === 'right' ? 1.04 : 1.0;
       const hoverLerp = 1 - Math.pow(0.01, dt);
 
-      leftGroup.scale.lerp(new THREE.Vector3(targetLeftScale, targetLeftScale, targetLeftScale), hoverLerp);
-      rightGroup.scale.lerp(new THREE.Vector3(targetRightScale, targetRightScale, targetRightScale), hoverLerp);
+      targetScaleVec.set(targetLeftScale, targetLeftScale, targetLeftScale);
+      leftGroup.scale.lerp(targetScaleVec, hoverLerp);
+      targetScaleVec.set(targetRightScale, targetRightScale, targetRightScale);
+      rightGroup.scale.lerp(targetScaleVec, hoverLerp);
 
       // Emissive boost on hover
       const leftEmissive = state.hoveredChevron === 'left' ? 0.15 : 0;
@@ -685,6 +687,7 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
       });
 
       renderer.dispose();
+      state.timer.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
@@ -718,7 +721,7 @@ export function WebGLPrismCanvas({ wireframeMode, resetTrigger, reducedMotion }:
     const s = sceneRef.current;
     if (!s || resetTrigger === 0) return;
     s.resetAnimating = true;
-    s.resetStart = s.clock.getElapsedTime();
+    s.resetStart = s.timer.getElapsed();
     s.resetFromX = s.targetRotX;
     s.resetFromY = s.targetRotY;
     s.rotVelX = 0;

@@ -141,7 +141,7 @@ export function TeamCultureStrip() {
 
                 {/* Title & Subtitle */}
                 <div className="space-y-0.5">
-                  <h3 className="text-sm font-display font-bold text-[var(--text-primary)] group-hover:text-[#4285F4] transition-colors">
+                  <h3 className="text-sm font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-blue-text)] transition-colors">
                     {item.title}
                   </h3>
                   <div

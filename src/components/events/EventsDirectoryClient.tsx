@@ -117,11 +117,20 @@ export function EventsDirectoryClient() {
       newEventSlug: string | null
     ) => {
       if (typeof window === 'undefined') return;
+      const existing = new URLSearchParams(window.location.search);
       const params = new URLSearchParams();
       if (newStatus !== 'All') params.set('status', newStatus);
       if (newTrack !== 'All') params.set('track', newTrack);
       if (newMode !== 'All') params.set('mode', newMode);
-      if (newEventSlug) params.set('event', newEventSlug);
+      if (newEventSlug) {
+        params.set('event', newEventSlug);
+        if (existing.get('event') === newEventSlug) {
+          const curPassId = existing.get('passId');
+          const curVerify = existing.get('verify');
+          if (curPassId) params.set('passId', curPassId);
+          if (curVerify) params.set('verify', curVerify);
+        }
+      }
 
       const queryString = params.toString();
       const targetUrl = queryString ? `/events?${queryString}` : '/events';
@@ -134,10 +143,29 @@ export function EventsDirectoryClient() {
   const searchParamsKey = searchParams.toString();
   useEffect(() => {
     const curStatus = searchParams.get('status');
-    if (curStatus) {
-      if (curStatus.toLowerCase() === 'upcoming') setStatusFilter('Upcoming');
-      else if (curStatus.toLowerCase() === 'past') setStatusFilter('Past');
+    if (curStatus?.toLowerCase() === 'upcoming') setStatusFilter('Upcoming');
+    else if (curStatus?.toLowerCase() === 'past') setStatusFilter('Past');
+    else setStatusFilter('All');
+
+    const curTrack = searchParams.get('track');
+    if (
+      curTrack === 'Workshop' ||
+      curTrack === 'Hackathon' ||
+      curTrack === 'Study Jam' ||
+      curTrack === 'Tech Talk'
+    ) {
+      setTrackFilter(curTrack);
+    } else {
+      setTrackFilter('All');
     }
+
+    const curMode = searchParams.get('mode');
+    if (curMode === 'In-Person' || curMode === 'Online' || curMode === 'Hybrid') {
+      setModeFilter(curMode);
+    } else {
+      setModeFilter('All');
+    }
+
     const curEvent = searchParams.get('event');
     const curPassId = searchParams.get('passId');
     const curVerify = searchParams.get('verify');
@@ -147,6 +175,9 @@ export function EventsDirectoryClient() {
         passId: curPassId,
         autoVerify: curVerify === '1',
       });
+    } else if (!curEvent) {
+      setSelectedEventSlug(null);
+      setQrVerifyParams({ passId: null, autoVerify: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParamsKey]);
@@ -268,6 +299,7 @@ export function EventsDirectoryClient() {
     setModeFilter('All');
     setSearchQuery('');
     setOnlySaved(false);
+    setSortOrder('asc');
     syncUrlParams('All', 'All', 'All', selectedEventSlug);
   };
 
@@ -522,11 +554,11 @@ export function EventsDirectoryClient() {
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-xs font-mono text-[var(--text-muted)]">
                   <span>QUERY // ZERO_MATCHES</span>
                 </div>
-                <h3 className="text-2xl font-display font-bold text-[var(--text-primary)]">
+                <h2 className="text-2xl font-display font-bold text-[var(--text-primary)]">
                   {onlySaved
                     ? 'No saved sprints yet'
                     : 'No matching sessions found'}
-                </h3>
+                </h2>
                 <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
                   {onlySaved
                     ? 'Bookmark sessions using the bookmark icon on any session card or drawer to build your personal sprint schedule.'
@@ -537,7 +569,7 @@ export function EventsDirectoryClient() {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-mono font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-all shadow-md hover:shadow-lg cursor-pointer"
+                className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl text-sm font-mono font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] transition-all shadow-md hover:shadow-lg cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Reset All Filters</span>

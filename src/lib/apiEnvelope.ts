@@ -54,7 +54,6 @@ export function createApiResponse<T>(
     meta: {
       ...meta,
       architecture: 'Next.js 15 App Router (Route Handlers)',
-      environment: process.env.NODE_ENV || 'production',
     },
     data,
   };

@@ -26,6 +26,8 @@
 }
 
 :root {
+  color-scheme: light;
+
   /* Google Core Semantic Tokens */
   --google-blue: #4285F4;
   --google-red: #EA4335;
@@ -46,7 +48,7 @@
 
   /* High-contrast accessible text tokens for Google 4-colours on Light surfaces */
   --accent-blue-text: #1A56DB;
-  --accent-red-text: #C5221F;
+  --accent-red-text: #A50E0E;
   --accent-yellow-text: #92400E;
   --accent-green-text: #166534;
 
@@ -55,6 +57,8 @@
 
 html.dark,
 [data-theme="dark"] {
+  color-scheme: dark;
+
   /* Dark Mode ("Obsidian IDE") Tokens */
   --bg-canvas: #0A0D12;
   --bg-elevated: #121721;
@@ -81,6 +85,7 @@ html.dark,
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -219,4 +224,28 @@ dialog::backdrop {
     display: none !important;
     background: none !important;
   }
+}
+
+/* Explicit 4-stop Google gradient utilities (avoids Tailwind consecutive via-* overwrite) */
+.gdg-4color-bar {
+  background: linear-gradient(90deg, #2563EB 0%, #DC2626 33%, #D97706 66%, #15803D 100%);
+}
+
+html.dark .gdg-4color-bar,
+[data-theme="dark"] .gdg-4color-bar,
+.gdg-dark-surface .gdg-4color-bar {
+  background: linear-gradient(90deg, #4285F4 0%, #EA4335 33%, #FBBC04 66%, #34A853 100%);
+}
+
+.gdg-4color-text {
+  background-image: linear-gradient(90deg, #1D4ED8 0%, #C5221F 33%, #B45309 66%, #15803D 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+html.dark .gdg-4color-text,
+[data-theme="dark"] .gdg-4color-text,
+.gdg-dark-surface .gdg-4color-text {
+  background-image: linear-gradient(90deg, #4285F4 0%, #EA4335 33%, #FBBC04 66%, #34A853 100%);
 }

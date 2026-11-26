@@ -413,14 +413,5 @@
       </g>
     </g>
 
-    <!-- Architectural HUD Overlays -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="#EA4335"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 02 // 24-HOUR HACKATHON BUILD TABLE</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CSE SYSTEMS LAB · ACTIVE CODE CRUCIBLE</text>
-    </g>
+
   </svg>

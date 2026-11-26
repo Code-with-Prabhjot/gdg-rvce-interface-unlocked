@@ -168,62 +168,73 @@ export function ApiInspectorModal() {
     }
   }, [isOpen, contextMethod, contextEndpoint, contextBody]);
 
-  // Execute request
-  const handleSend = useCallback(async () => {
-    setIsLoading(true);
-    const start = performance.now();
+  // Execute request (optional override eliminates stale state closures when firing presets)
+  const handleSend = useCallback(
+    async (override?: { method: 'GET' | 'POST'; endpoint: string; bodyText?: string }) => {
+      const targetMethod = override?.method ?? method;
+      const targetEndpoint = override?.endpoint ?? endpoint;
+      const targetBody = override?.bodyText !== undefined ? override.bodyText : bodyText;
 
-    try {
-      const options: RequestInit = {
-        method,
-        headers: {
-          Accept: 'application/json',
-          ...(method === 'POST' ? { 'Content-Type': 'application/json' } : {}),
-        },
-        ...(method === 'POST' && bodyText ? { body: bodyText } : {}),
-      };
+      setIsLoading(true);
+      const start = performance.now();
 
-      const res = await fetch(endpoint, options);
-      const text = await res.text();
-      const roundTrip = Number((performance.now() - start).toFixed(1));
-
-      let parsed: unknown = text;
       try {
-        parsed = JSON.parse(text);
-      } catch {
-        // Leave as string if not JSON
-      }
+        const options: RequestInit = {
+          method: targetMethod,
+          headers: {
+            Accept: 'application/json',
+            ...(targetMethod === 'POST' ? { 'Content-Type': 'application/json' } : {}),
+          },
+          ...(targetMethod === 'POST' && targetBody ? { body: targetBody } : {}),
+        };
 
-      setResponseState({
-        status: res.status,
-        statusText: res.statusText || (res.ok ? 'OK' : 'Error'),
-        data: parsed,
-        latencyMs: roundTrip,
-        payloadBytes: new Blob([text]).size,
-      });
-    } catch (err: unknown) {
-      const roundTrip = Number((performance.now() - start).toFixed(1));
-      setResponseState({
-        status: 500,
-        statusText: 'Network Error',
-        data: {
-          error: err instanceof Error ? err.message : 'Failed to fetch endpoint',
-        },
-        latencyMs: roundTrip,
-        payloadBytes: 0,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [method, endpoint, bodyText]);
+        const res = await fetch(targetEndpoint, options);
+        const text = await res.text();
+        const roundTrip = Number((performance.now() - start).toFixed(1));
+
+        let parsed: unknown = text;
+        try {
+          parsed = JSON.parse(text);
+        } catch {
+          // Leave as string if not JSON
+        }
+
+        setResponseState({
+          status: res.status,
+          statusText: res.statusText || (res.ok ? 'OK' : 'Error'),
+          data: parsed,
+          latencyMs: roundTrip,
+          payloadBytes: new Blob([text]).size,
+        });
+      } catch (err: unknown) {
+        const roundTrip = Number((performance.now() - start).toFixed(1));
+        setResponseState({
+          status: 500,
+          statusText: 'Network Error',
+          data: {
+            error: err instanceof Error ? err.message : 'Failed to fetch endpoint',
+          },
+          latencyMs: roundTrip,
+          payloadBytes: 0,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [method, endpoint, bodyText]
+  );
 
   // Auto-send request on initial open if not yet executed
   useEffect(() => {
     if (isOpen && !prevIsOpen.current) {
-      handleSend();
+      handleSend({
+        method: contextMethod,
+        endpoint: contextEndpoint,
+        bodyText: contextBody,
+      });
     }
     prevIsOpen.current = isOpen;
-  }, [isOpen, handleSend]);
+  }, [isOpen, handleSend, contextMethod, contextEndpoint, contextBody]);
 
   // Keyboard shortcut listener for Escape
   useEffect(() => {
@@ -239,13 +250,15 @@ export function ApiInspectorModal() {
   }, [isOpen, close]);
 
   const selectPreset = (preset: ApiInspectorPreset) => {
+    const nextBody = preset.defaultBody || '';
     setMethod(preset.method);
     setEndpoint(preset.endpoint);
-    setBodyText(preset.defaultBody || '');
-    // Auto-fire preset
-    setTimeout(() => {
-      handleSend();
-    }, 50);
+    setBodyText(nextBody);
+    handleSend({
+      method: preset.method,
+      endpoint: preset.endpoint,
+      bodyText: nextBody,
+    });
   };
 
   const handleCopyResponse = () => {
@@ -261,7 +274,9 @@ export function ApiInspectorModal() {
 
   const handleCopyCurl = () => {
     const origin =
-      typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+      typeof window !== 'undefined'
+        ? window.location.origin
+        : 'https://gdg-rvce-interface-unlocked.vercel.app';
     let curl = `curl -X ${method} "${origin}${endpoint}" \\\n  -H "Accept: application/json"`;
     if (method === 'POST' && bodyText) {
       curl += ` \\\n  -H "Content-Type: application/json" \\\n  -d '${bodyText.replace(/\n/g, '')}'`;
@@ -298,7 +313,7 @@ export function ApiInspectorModal() {
             {/* Modal Header */}
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-[#0e1420] shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#4285F4]/15 border border-[#4285F4]/30 flex items-center justify-center text-[#4285F4]">
+                <div className="w-8 h-8 rounded-lg bg-[#4285F4]/15 border border-[#4285F4]/30 flex items-center justify-center text-[#60A5FA]">
                   <Terminal className="w-4 h-4" />
                 </div>
                 <div>
@@ -309,8 +324,8 @@ export function ApiInspectorModal() {
                     >
                       GDG RVCE Live Backend &amp; API Inspector
                     </h2>
-                    <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#34A853]/15 text-[#34A853] border border-[#34A853]/30 font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+                    <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#34A853]/15 text-[#4ADE80] border border-[#34A853]/30 font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4ADE80] animate-pulse" />
                       App Router v15
                     </span>
                   </div>
@@ -332,7 +347,7 @@ export function ApiInspectorModal() {
             </div>
 
             {/* Presets Bar */}
-            <div className="px-5 py-2.5 bg-[#080b11] border-b border-white/10 flex items-center gap-2 overflow-x-auto shrink-0 scrollbar-none">
+            <div className="px-5 py-2.5 bg-[#080b11] border-b border-white/10 flex flex-wrap items-center gap-2 shrink-0">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#94A3B8] shrink-0 mr-1 flex items-center gap-1">
                 <Code2 className="w-3 h-3 text-[#60A5FA]" />
                 Presets:
@@ -345,7 +360,7 @@ export function ApiInspectorModal() {
                     key={preset.id}
                     type="button"
                     onClick={() => selectPreset(preset)}
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium transition-all shrink-0 cursor-pointer border ${
+                    className={`min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium transition-all shrink-0 cursor-pointer border ${
                       isActive
                         ? 'bg-white/15 text-[#F8FAFC] border-white/40 shadow-xs ring-1 ring-white/20'
                         : 'bg-white/5 hover:bg-white/10 text-[#CBD5E1] hover:text-[#F8FAFC] border-white/15'
@@ -391,9 +406,9 @@ export function ApiInspectorModal() {
                 {/* Send Button */}
                 <button
                   type="button"
-                  onClick={handleSend}
+                  onClick={() => handleSend()}
                   disabled={isLoading}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#4285F4] hover:bg-[#3367D6] active:scale-95 disabled:opacity-50 text-white font-mono text-xs font-bold rounded-lg transition-all cursor-pointer shadow-md shrink-0"
+                  className="min-h-[44px] md:min-h-0 inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#1D4ED8] hover:bg-[#1E40AF] active:scale-95 disabled:opacity-50 text-white font-mono text-xs font-bold rounded-lg transition-all cursor-pointer shadow-md shrink-0"
                 >
                   {isLoading ? (
                     <>
@@ -421,7 +436,7 @@ export function ApiInspectorModal() {
                     onChange={(e) => setBodyText(e.target.value)}
                     rows={3}
                     placeholder='{ "slug": "gemini-multimodal-buildathon" }'
-                    className="w-full px-3 py-2 bg-[#141b2b] border border-white/15 rounded-lg text-xs font-mono text-[#FBBC04] focus:outline-none focus:border-[#4285F4] resize-none"
+                    className="w-full px-3 py-2 bg-[#141b2b] border border-white/15 rounded-lg text-xs font-mono text-[#FCD34D] focus:outline-none focus:border-[#4285F4] resize-none"
                     aria-label="Request Payload Body"
                   />
                 </div>
@@ -436,13 +451,13 @@ export function ApiInspectorModal() {
                   <span
                     className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-bold border ${
                       responseState.status < 400
-                        ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
-                        : 'bg-[#EA4335]/15 text-[#EA4335] border-[#EA4335]/40'
+                        ? 'bg-[#34A853]/15 text-[#4ADE80] border-[#34A853]/40'
+                        : 'bg-[#EA4335]/15 text-[#F87171] border-[#EA4335]/40'
                     }`}
                   >
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        responseState.status < 400 ? 'bg-[#34A853]' : 'bg-[#EA4335]'
+                        responseState.status < 400 ? 'bg-[#4ADE80]' : 'bg-[#F87171]'
                       }`}
                     />
                     {responseState.status} {responseState.statusText}
@@ -454,7 +469,7 @@ export function ApiInspectorModal() {
                 {/* Latency */}
                 {responseState.latencyMs !== null && (
                   <span className="text-white/60 flex items-center gap-1">
-                    <Activity className="w-3.5 h-3.5 text-[#4285F4]" />
+                    <Activity className="w-3.5 h-3.5 text-[#60A5FA]" />
                     <span>{responseState.latencyMs} ms</span>
                   </span>
                 )}
@@ -472,13 +487,13 @@ export function ApiInspectorModal() {
                 <button
                   type="button"
                   onClick={handleCopyCurl}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 transition-colors cursor-pointer"
+                  className="min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 transition-colors cursor-pointer"
                   title="Copy cURL command"
                 >
                   {copiedCurl ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                      <span className="text-[#34A853] font-bold">cURL Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[#4ADE80]" />
+                      <span className="text-[#4ADE80] font-bold">cURL Copied ✓</span>
                     </>
                   ) : (
                     <>
@@ -492,13 +507,13 @@ export function ApiInspectorModal() {
                   type="button"
                   onClick={handleCopyResponse}
                   disabled={!responseState.data}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 transition-colors cursor-pointer disabled:opacity-40"
+                  className="min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 transition-colors cursor-pointer disabled:opacity-40"
                   title="Copy JSON Response"
                 >
                   {copiedResponse ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                      <span className="text-[#34A853] font-bold">Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[#4ADE80]" />
+                      <span className="text-[#4ADE80] font-bold">Copied ✓</span>
                     </>
                   ) : (
                     <>

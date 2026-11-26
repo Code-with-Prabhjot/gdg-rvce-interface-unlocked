@@ -582,7 +582,7 @@ export function EventDetailDrawer({
                   aria-label={isEventSaved ? 'Remove from saved sprints' : 'Save sprint locally'}
                   aria-pressed={isEventSaved}
                   title={isEventSaved ? 'Saved in personal schedule' : 'Save sprint locally'}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[34px] px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer ${
                     isEventSaved
                       ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] font-bold shadow-xs'
                       : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
@@ -598,16 +598,16 @@ export function EventDetailDrawer({
                   type="button"
                   onClick={handleCopyLink}
                   aria-label="Copy session link to clipboard"
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border ${
+                  className={`inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[34px] px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer ${
                     copiedLink
-                      ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                      ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                       : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
                   }`}
                 >
                   {copiedLink ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                      <span className="text-[#34A853] font-semibold">Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[var(--accent-green-text)]" />
+                      <span className="text-[var(--accent-green-text)] font-semibold">Copied ✓</span>
                     </>
                   ) : (
                     <>
@@ -729,12 +729,12 @@ export function EventDetailDrawer({
                 {/* Status Indicator */}
                 <div className="absolute bottom-3.5 left-3.5 z-20 flex items-center gap-2 text-[#F8FAFC]">
                   {isUpcoming ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#4285F4] backdrop-blur-md text-white border border-white/20">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#1D4ED8] backdrop-blur-md text-white border border-white/20">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                       Upcoming Session
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#34A853] backdrop-blur-md text-white border border-white/20">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#15803D] backdrop-blur-md text-white border border-white/20">
                       <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                       Past Chapter Recap
                     </span>
@@ -747,7 +747,7 @@ export function EventDetailDrawer({
                 <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
                   <span>GDG RVCE</span>
                   <span>{'//'}</span>
-                  <span className="text-[#4285F4]">{event.category}</span>
+                  <span className="text-[var(--accent-blue-text)]">{event.category}</span>
                 </div>
                 <h2
                   id="drawer-event-title"
@@ -769,7 +769,7 @@ export function EventDetailDrawer({
                 {/* Cell 1: Date */}
                 <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] space-y-1">
                   <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                    <Calendar className="w-3.5 h-3.5 text-[#4285F4]" />
+                    <Calendar className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                     <span>Session Date</span>
                   </div>
                   <p className="text-sm font-bold text-[var(--text-primary)]">
@@ -780,7 +780,7 @@ export function EventDetailDrawer({
                 {/* Cell 2: Time */}
                 <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] space-y-1">
                   <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
-                    <Clock className="w-3.5 h-3.5 text-[#EA4335]" />
+                    <Clock className="w-3.5 h-3.5 text-[var(--accent-red-text)]" />
                     <span>Time Window</span>
                   </div>
                   <p className="text-sm font-bold text-[var(--text-primary)]">
@@ -792,9 +792,9 @@ export function EventDetailDrawer({
                 <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] space-y-1">
                   <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
                     {event.mode === 'Online' ? (
-                      <Video className="w-3.5 h-3.5 text-[#34A853]" />
+                      <Video className="w-3.5 h-3.5 text-[var(--accent-green-text)]" />
                     ) : (
-                      <MapPin className="w-3.5 h-3.5 text-[#FBBC04]" />
+                      <MapPin className="w-3.5 h-3.5 text-[var(--accent-yellow-text)]" />
                     )}
                     <span>Venue &amp; Mode</span>
                   </div>
@@ -847,7 +847,7 @@ export function EventDetailDrawer({
                   }`}
                 >
                   {qrVerifyState.status === 'loading' ? (
-                    <div className="flex items-center gap-2.5 text-xs font-mono font-semibold text-[#4285F4]">
+                    <div className="flex items-center gap-2.5 text-xs font-mono font-semibold text-[var(--accent-blue-text)]">
                       <div className="w-4 h-4 border-2 border-[#4285F4]/30 border-t-[#4285F4] rounded-full animate-spin shrink-0" />
                       <span>Verifying QR Pass Signature via GET /api/pass/verify...</span>
                     </div>
@@ -855,7 +855,7 @@ export function EventDetailDrawer({
                     <div className="space-y-2">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#34A853] text-white shrink-0">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#15803D] text-white shrink-0">
                             <ShieldCheck className="w-3.5 h-3.5" />
                           </span>
                           <span className="text-xs sm:text-sm font-mono font-bold text-[#166534] dark:text-[#4ADE80] tracking-wide">
@@ -907,7 +907,7 @@ export function EventDetailDrawer({
                   ) : (
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#EA4335] text-white shrink-0">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#C5221F] text-white shrink-0">
                           <ShieldAlert className="w-3.5 h-3.5" />
                         </span>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#C5221F] dark:text-[#F87171] tracking-wide">
@@ -936,7 +936,7 @@ export function EventDetailDrawer({
                         type="button"
                         onClick={handleRegister}
                         disabled={isIssuingPass}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] active:scale-[0.98] disabled:opacity-75 transition-all shadow-md hover:shadow-lg cursor-pointer"
+                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] active:scale-[0.98] disabled:opacity-75 transition-all shadow-md hover:shadow-lg cursor-pointer"
                       >
                         {isIssuingPass ? (
                           <>
@@ -959,7 +959,7 @@ export function EventDetailDrawer({
                         rel="noopener noreferrer"
                         aria-label="Official Event Registration Portal ↗"
                         title="Opens the official GDG RVCE chapter registration portal in a new tab"
-                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#34A853] hover:brightness-95 active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#15803D] hover:bg-[#166534] active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
                       >
                         <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
                         <span>Official Event Registration Portal ↗</span>
@@ -981,16 +981,16 @@ export function EventDetailDrawer({
                         {/* Architectural Pass Header */}
                         <div className="flex items-center justify-between pb-3 border-b border-dashed border-[var(--border-strong)]">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-[#4285F4] text-white flex items-center justify-center font-mono font-bold text-xs shadow-xs">
+                            <div className="w-8 h-8 rounded-lg bg-[#1D4ED8] text-white flex items-center justify-center font-mono font-bold text-xs shadow-xs">
                               &lt;&gt;
                             </div>
                             <div>
-                              <span className="text-[10px] font-mono uppercase tracking-widest text-[#4285F4] font-bold block">
+                              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent-blue-text)] font-bold block">
                                 OFFICIAL SAMPLE PASS
                               </span>
-                              <h4 className="text-xs font-mono font-bold text-[var(--text-primary)]">
+                              <p className="text-xs font-mono font-bold text-[var(--text-primary)]">
                                 GDG on Campus RV College of Engineering
-                              </h4>
+                              </p>
                             </div>
                           </div>
 
@@ -1002,7 +1002,7 @@ export function EventDetailDrawer({
                                 <span>{serverLatencyMs}ms</span>
                               </span>
                             )}
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#34A853]/15 text-[#34A853] font-bold border border-[#34A853]/30">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono bg-[#34A853]/15 text-[var(--accent-green-text)] font-bold border border-[#34A853]/30">
                               <ShieldCheck className="w-3.5 h-3.5" />
                               CONFIRMED · SAVED IN PASSPORT ✓
                             </span>
@@ -1020,7 +1020,12 @@ export function EventDetailDrawer({
                                 <span
                                   className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white"
                                   style={{
-                                    backgroundColor: session?.badgeColor || '#4285F4',
+                                    backgroundColor:
+                                      session?.badgeColor === '#EA4335'
+                                        ? '#C5221F'
+                                        : session?.badgeColor === '#34A853'
+                                          ? '#15803D'
+                                          : '#1D4ED8',
                                   }}
                                 >
                                   HOLDER: {savedPass?.holderId || session?.demoId}
@@ -1059,7 +1064,7 @@ export function EventDetailDrawer({
                             <span className="text-[10px] font-mono text-[var(--text-muted)] text-center max-w-[152px] leading-tight">
                               Scan with phone camera to verify pass URL
                             </span>
-                            <span className="text-[9px] font-mono text-[var(--text-muted)]/70 text-center max-w-[168px] leading-tight">
+                            <span className="text-[10px] font-mono text-[var(--text-secondary)] text-center max-w-[168px] leading-tight">
                               Encodes current host URL · Live-verifiable on Vercel deployment
                             </span>
                           </div>
@@ -1078,7 +1083,7 @@ export function EventDetailDrawer({
                                 </span>
                               )}
                             </div>
-                            <span className="text-xs font-mono font-bold text-[#4285F4] tracking-wider block">
+                            <span className="text-xs font-mono font-bold text-[var(--accent-blue-text)] tracking-wider block">
                               {serverPassId || 'RVCE-GDG-2026-DEV'}
                             </span>
                           </div>
@@ -1098,7 +1103,7 @@ export function EventDetailDrawer({
                                   ),
                                 });
                               }}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[#4285F4] border border-[#4285F4]/30 hover:border-[#4285F4]/60 transition-all cursor-pointer shadow-2xs"
+                              className="inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[34px] px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/30 hover:border-[#4285F4]/60 transition-all cursor-pointer shadow-2xs"
                               title="Inspect this real POST issuance in the API Drawer"
                             >
                               <Terminal className="w-3.5 h-3.5" />
@@ -1109,20 +1114,20 @@ export function EventDetailDrawer({
                             <button
                               type="button"
                               onClick={handleDownloadPass}
-                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer border ${
+                              className={`inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[34px] px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer border ${
                                 passDownloaded
-                                  ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/50 shadow-xs'
+                                  ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/50 shadow-xs'
                                   : 'bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
                               }`}
                             >
                               {passDownloaded ? (
                                 <>
-                                  <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                                  <span className="text-[#34A853] font-bold">Pass Saved ✓</span>
+                                  <Check className="w-3.5 h-3.5 text-[var(--accent-green-text)]" />
+                                  <span className="text-[var(--accent-green-text)] font-bold">Pass Saved ✓</span>
                                 </>
                               ) : (
                                 <>
-                                  <Download className="w-3.5 h-3.5 text-[#4285F4]" />
+                                  <Download className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                                   <span>Download Sample Pass (.png)</span>
                                 </>
                               )}
@@ -1131,10 +1136,10 @@ export function EventDetailDrawer({
                             <button
                               type="button"
                               onClick={handleDownloadCalendar}
-                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
+                              className={`inline-flex items-center gap-1.5 min-h-[44px] md:min-h-[34px] px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
                                 calendarDownloaded
-                                  ? 'bg-[#34A853]/15 text-[#34A853] border border-[#34A853]/40'
-                                  : 'bg-[#4285F4] text-white hover:bg-[#3367D6]'
+                                  ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/40'
+                                  : 'bg-[#1D4ED8] text-white hover:bg-[#1E40AF]'
                               }`}
                             >
                               {calendarDownloaded ? (
@@ -1154,7 +1159,7 @@ export function EventDetailDrawer({
                               onClick={handleReissue}
                               disabled={isIssuingPass}
                               title="Revoke and re-issue sample pass"
-                              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[#EA4335] bg-[var(--bg-elevated)] hover:bg-[#EA4335]/10 border border-[var(--border-hairline)] hover:border-[#EA4335]/40 transition-all cursor-pointer disabled:opacity-60"
+                              className="inline-flex items-center gap-1 min-h-[44px] md:min-h-[34px] px-2.5 py-1.5 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-red-text)] bg-[var(--bg-elevated)] hover:bg-[#EA4335]/10 border border-[var(--border-hairline)] hover:border-[#EA4335]/40 transition-all cursor-pointer disabled:opacity-60"
                             >
                               <RotateCcw className="w-3 h-3" />
                               <span>Re-issue</span>
@@ -1188,7 +1193,7 @@ export function EventDetailDrawer({
                 <div className="p-4 sm:p-5 rounded-2xl bg-[#34A853]/10 border border-[#34A853]/30 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#34A853]" />
-                    <span className="text-xs font-mono font-bold tracking-wider text-[#34A853] uppercase">
+                    <span className="text-xs font-mono font-bold tracking-wider text-[var(--accent-green-text)] uppercase">
                       ARCHIVE RECAP VERIFIED
                     </span>
                   </div>
@@ -1213,9 +1218,9 @@ export function EventDetailDrawer({
               {/* SESSION OVERVIEW                                        */}
               {/* ======================================================= */}
               <div className="space-y-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
                   SESSION OVERVIEW
-                </span>
+                </h3>
                 <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
                   {event.description}
                 </p>
@@ -1227,9 +1232,9 @@ export function EventDetailDrawer({
               {event.agenda && event.agenda.length > 0 && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                    <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
                       SESSION AGENDA TIMELINE
-                    </span>
+                    </h3>
                     <span className="text-[11px] font-mono text-[var(--text-muted)]">
                       {event.agenda.length} STEPS
                     </span>
@@ -1291,9 +1296,9 @@ export function EventDetailDrawer({
                   <div className="space-y-3 p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
                     <div className="flex items-center justify-between gap-2">
                       <div>
-                        <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                        <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
                           DEVELOPER READINESS CHECKLIST
-                        </span>
+                        </h3>
                         <p className="text-xs text-[var(--text-secondary)]">
                           Click items to verify your environment setup
                         </p>
@@ -1302,7 +1307,7 @@ export function EventDetailDrawer({
                       <span
                         className={`text-xs font-mono font-bold px-2.5 py-1 rounded-full border transition-all shrink-0 ${
                           allPrereqsReady
-                            ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                            ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                             : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)]'
                         }`}
                       >
@@ -1339,7 +1344,7 @@ export function EventDetailDrawer({
                             <div
                               className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
                                 isChecked
-                                  ? 'bg-[#34A853] border-[#34A853] text-white'
+                                  ? 'bg-[#15803D] border-[#15803D] text-white'
                                   : 'border-[var(--border-strong)] bg-transparent'
                               }`}
                             >
@@ -1358,7 +1363,7 @@ export function EventDetailDrawer({
                     </div>
 
                     {allPrereqsReady && (
-                      <div className="p-2.5 rounded-xl bg-[#34A853]/15 border border-[#34A853]/30 text-xs font-mono text-[#34A853] font-bold flex items-center gap-2">
+                      <div className="p-2.5 rounded-xl bg-[#34A853]/15 border border-[#34A853]/30 text-xs font-mono text-[var(--accent-green-text)] font-bold flex items-center gap-2">
                         <Sparkles className="w-4 h-4" />
                         <span>Ready for build sprint! All prerequisites verified.</span>
                       </div>
@@ -1370,14 +1375,14 @@ export function EventDetailDrawer({
                 <div className="space-y-3 p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)]">
                   <div className="flex items-center justify-between gap-2">
                     <div>
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                      <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
                         KEY SESSION TAKEAWAYS &amp; TOPICS COVERED
-                      </span>
+                      </h3>
                       <p className="text-xs text-[var(--text-secondary)]">
                         Core concepts, live demonstrations &amp; archived technical highlights
                       </p>
                     </div>
-                    <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-[#34A853] shrink-0">
+                    <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-[var(--accent-green-text)] shrink-0">
                       ARCHIVED
                     </span>
                   </div>

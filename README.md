@@ -35,8 +35,9 @@ Rather than recycling generic corporate SaaS templates or superficial glassmorph
      - **Yellow (`#FBBC04`):** Study jams, community keynotes, and sprint badges. Critically, to eliminate low-contrast accessibility failures, yellow fills are universally mapped to `#111827` dark ink, securing **>7:1 WCAG AAA** contrast.
      - **Green (`#34A853`):** Open-source builds, CI/CD telemetry, verified pass badges, and Git status indicators.
    - Explicit independence disclaimer in the global footer: *"GDG on Campus RVCE is an independent student developer community and is not an official Google product."*
-3. **Stateless Next.js Backend & Challenge Ground-Rule Integrity:**
-   - **Exact Route Scope:** Exclusively the 3 mandated pages (`/` Home, `/events` Events & Sprints, `/team` Core Team) plus `not-found.tsx` under `src/app/`, alongside 4 stateless Route Handlers (`/api/chapter`, `/api/events`, `/api/team`, `/api/pass/verify`).
+3. **Stateless Next.js Backend, Security & Challenge Ground-Rule Integrity:**
+   - **Exact Route Scope:** Exclusively the 3 user-facing pages (`/` Home, `/events` Events & Sprints, `/team` Core Team) plus `not-found.tsx`, `loading.tsx`, App Router metadata routes (`robots.ts`, `sitemap.ts`, `manifest.ts`, `opengraph-image.tsx`, `twitter-image.tsx`, `icon.svg`, `apple-icon.tsx`, multi-res `< >` `favicon.ico`), and 5 stateless Route Handlers (`/api/chapter`, `/api/events`, `/api/team`, `/api/pass/verify`, `/api/auth/demo`).
+   - **HTTP Security & Technical SEO:** Strict security response headers (`Content-Security-Policy` with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`), unique canonical URLs, OpenGraph PNG cards, and zero internal environment leaks.
    - **Zero Prohibited Trackers:** Strictly no analytics counters, no RSVP / interest counters (`"X people going"`), no attendee rosters, no live comment feeds, and no chat widgets.
    - **100% Fictional Data:** All speakers, agenda schedules, and team specs are curated fictional samples.
 
@@ -51,8 +52,8 @@ The following 10 high-resolution production screenshots showcase the flagship us
 | ![01-home-hero-dark](public/screenshots/01-home-hero-dark.png)<br><sub>**01. Home Page Hero (Obsidian IDE Dark Mode)**<br>Kinetic Split Hero, 3D GDG `< >` Prism Stage, HTML5 Constellation Canvas, and Live Countdown HUD.</sub> | ![02-home-bento-simulators-light](public/screenshots/02-home-bento-simulators-light.png)<br><sub>**02. Bento Simulators & Tracks (Daylight Blueprint Light Mode)**<br>4-Pillar Architectural Bento Grid with live interactive simulators (Gemini Prompt, Cloud Run Trace, Compose Slot, Edge SSR) and Learning Tracks Explorer.</sub> |
 | **Editorial Community Scenes & Filmstrip** | **Events Directory with Live API Mode** |
 | ![03-home-community-scenes](public/screenshots/03-home-community-scenes.png)<br><sub>**03. 10-Scene Editorial Community Cinema Frame & Filmstrip (Dark Mode)**<br>In the Build Room cinema frame, interactive 10-tile filmstrip, multi-layered SVG scenes, and full-resolution lightbox viewer.</sub> | ![04-events-directory-live-api](public/screenshots/04-events-directory-live-api.png)<br><sub>**04. Events Directory with Live `/api/events` Mode**<br>Live API query mode active with `200 OK` latency telemetry, 4-Track Format Comparator, and real-time `/` search filter bar.</sub> |
-| **Events Calendar Matrix View** | **Deep-Dive Event Detail & Pass Drawer** |
-| ![05-events-calendar-matrix](public/screenshots/05-events-calendar-matrix.png)<br><sub>**05. Events Calendar Matrix View (Dark Mode)**<br>Full monthly grid with colour-coded Google track session pills, status badges, and interactive day schedule inspection.</sub> | ![06-event-detail-pass-drawer](public/screenshots/06-event-detail-pass-drawer.png)<br><sub>**06. Event Detail Drawer & Cryptographic Pass Issuance**<br>Slide-over drawer with issued cryptographic pass (`RVCE-GDG-2026-BC5395`), `.ics` / `.png` pass downloads, and 4-colour agenda timeline.</sub> |
+| **Events Calendar Matrix View** | **Deep-Dive Event Detail & QR Pass** |
+| ![05-events-calendar-matrix](public/screenshots/05-events-calendar-matrix.png)<br><sub>**05. Events Calendar Matrix View (Dark Mode)**<br>Full monthly grid with colour-coded Google track session pills, auto-month jump on filter changes, and interactive schedule inspection.</sub> | ![06-event-detail-qr-pass](public/screenshots/06-event-detail-qr-pass.png)<br><sub>**06. Event Detail Drawer & Verified QR Sample Pass**<br>Slide-over drawer with issued cryptographic sample pass (`RVCE-GDG-2026-BC5395`), verified QR matrix, `.ics` / `.png` downloads, and 4-colour agenda timeline.</sub> |
 | **Team Roster & Builder Spec Sheets** | **Chapter Circuit Topology Node Graph** |
 | ![07-team-roster-spec](public/screenshots/07-team-roster-spec.png)<br><sub>**07. Core Team Roster & Builder Spec Back Face**<br>Skill-chip filtering, Bauhaus developer portraits, and card flipped to its technical Builder Spec with animated competency bars.</sub> | ![08-team-circuit-topology](public/screenshots/08-team-circuit-topology.png)<br><sub>**08. Interactive Chapter Circuit Topology View**<br>Central GDG `< >` Core Hub circuit node graph, reactive connection pulses, department clustering, and Live Builder Inspector.</sub> |
 | **Live Backend API Inspector & X-Ray Diagnostics** | **Mobile Responsive Layout Verification** |
@@ -113,11 +114,12 @@ The following 10 high-resolution production screenshots showcase the flagship us
 * **Open Build Workflow Cadence Strip:** Four-step engineering workflow documenting how RVCE student contributors propose, prototype, review, and ship open-source software.
 
 ### 4. Backend API & Developer Diagnostic Tools
-* **Stateless Next.js Route Handlers:**
+* **Stateless Next.js Route Handlers (5 Endpoints):**
   - `GET /api/chapter` — Chapter identity, GPS coordinates, social profiles, and design token manifest.
   - `GET /api/events` — Queryable event catalog supporting `status`, `track`, `mode`, `q`, and `slug` filters.
   - `GET /api/team` — Queryable team directory supporting `vertical`, `skill`, and `q` filters.
-  - `POST /api/pass/verify` — Cryptographic sample pass generator verifying event slugs and issuing stateless pass payloads.
+  - `GET / POST /api/pass/verify` — Cryptographic sample pass generator verifying event slugs and issuing stateless pass payloads.
+  - `POST /api/auth/demo` — Stateless sample member persona session issuer for testing drawer & pass workflows (zero PII stored).
 * **Live Backend API Inspector (`ApiInspectorModal`):** Slide-over diagnostic console accessible from the Footer `API // 200 OK` button, featuring presets, custom request execution, and syntax-highlighted JSON telemetry.
 * **`⌘K` / `Ctrl+K` Command Palette:** Fuzzy command execution for rapid page navigation, theme toggling, quick search, and confetti celebrations.
 * **`` ` `` / `~` Interactive Developer CLI Terminal:** Drop-down technical terminal executing commands (`help`, `clear`, `theme`, `events`, `team`, `coords`, `status`).
@@ -132,12 +134,14 @@ The following 10 high-resolution production screenshots showcase the flagship us
 
 | Layer | Technology | Purpose |
 |---|---|---|
-| **Framework** | **Next.js 15.5 (App Router)** | Server Components, static site pre-rendering, route-level metadata, Route Handlers |
+| **Framework** | **Next.js 15.5 (App Router)** | Server Components, metadata/OG image generation, security headers, 5 Route Handlers |
 | **Library** | **React 19.1** | Modern hook architecture, concurrent UI transitions |
 | **Language** | **TypeScript 5** | Strict type safety, strict interface contracts for all data structures |
-| **Styling** | **Tailwind CSS v4** | CSS variables, container queries, high-performance styling engine |
+| **Styling** | **Tailwind CSS v4** | Semantic WCAG AA/AAA tokens, 4-stop gradients, responsive container utilities |
+| **3D / WebGL** | **Three.js 0.187** | Interactive 3D chevron prism stage (`THREE.Timer`) with wireframe diagnostics |
 | **Motion** | **Framer Motion 14** | Spring physics, layout animations, gestures, and drawer transitions |
-| **Icons** | **Lucide React & Phosphor Icons** | Clean, accessible developer and system iconography |
+| **Icons** | **Lucide React** | Clean, accessible developer and system iconography |
+| **QR & Exports** | **qrcode 1.5** | Verified event sample pass QR matrices, `.png` cards & RFC 5545 `.ics` export |
 | **Visual Assets** | **Node.js SVG Asset Studio** | 51 bespoke vector assets generated via `scripts/generate-visual-assets.mjs` |
 | **Effects** | **Canvas Confetti** | Google 4-colour particle celebrations |
 
@@ -191,9 +195,10 @@ npm run start
   - [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) by Florian Karsten (SIL Open Font License)
   - [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) by Tokotype (SIL Open Font License)
   - [JetBrains Mono](https://www.jetbrains.com/lp/mono/) by JetBrains (Apache License 2.0)
-* **Iconography:**
+* **Iconography & Utilities:**
   - [Lucide Icons](https://lucide.dev/) (ISC License)
-  - [Phosphor Icons](https://phosphoricons.com/) (MIT License)
+  - [Three.js](https://threejs.org/) (MIT License)
+  - [qrcode](https://github.com/soldair/node-qrcode) (MIT License)
 * **Animation & Visuals:**
   - [Framer Motion](https://www.framer.com/motion/) by Framer (MIT License)
   - [Canvas Confetti](https://github.com/catdad/canvas-confetti) by Kiril Vatev (ISC License)

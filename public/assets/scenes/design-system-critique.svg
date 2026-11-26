@@ -291,14 +291,5 @@
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="370" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="#4285F4"/>
-      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 07 // UI/UX DESIGN SYSTEMS CRITIQUE</text>
-    </g>
-    <g transform="translate(930, 45)">
-      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DESIGN STUDIO LAB · TOKENS, RULERS &amp; BREAKPOINTS</text>
-    </g>
+
   </svg>

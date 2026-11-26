@@ -84,6 +84,7 @@ interface VerticalClusterDef {
   shortLabel: string;
   accent: GoogleAccent;
   hex: string;
+  textColor: string;
   icon: React.ElementType;
   pos: { x: number; y: number };
   hubPathD: string;
@@ -96,6 +97,7 @@ const VERTICAL_CLUSTERS: VerticalClusterDef[] = [
     shortLabel: 'Core Lead',
     accent: 'red',
     hex: '#EA4335',
+    textColor: 'var(--accent-red-text)',
     icon: Compass,
     pos: { x: 400, y: 130 },
     hubPathD: 'M 400 275 L 400 130',
@@ -106,6 +108,7 @@ const VERTICAL_CLUSTERS: VerticalClusterDef[] = [
     shortLabel: 'Web & Cloud',
     accent: 'blue',
     hex: '#4285F4',
+    textColor: 'var(--accent-blue-text)',
     icon: Cloud,
     pos: { x: 190, y: 180 },
     hubPathD: 'M 400 275 C 320 275, 250 220, 190 180',
@@ -116,6 +119,7 @@ const VERTICAL_CLUSTERS: VerticalClusterDef[] = [
     shortLabel: 'AI & ML',
     accent: 'green',
     hex: '#34A853',
+    textColor: 'var(--accent-green-text)',
     icon: Cpu,
     pos: { x: 610, y: 180 },
     hubPathD: 'M 400 275 C 480 275, 550 220, 610 180',
@@ -126,6 +130,7 @@ const VERTICAL_CLUSTERS: VerticalClusterDef[] = [
     shortLabel: 'Design & UX',
     accent: 'yellow',
     hex: '#FBBC04',
+    textColor: 'var(--accent-yellow-text)',
     icon: Palette,
     pos: { x: 220, y: 410 },
     hubPathD: 'M 400 275 C 320 275, 260 360, 220 410',
@@ -136,6 +141,7 @@ const VERTICAL_CLUSTERS: VerticalClusterDef[] = [
     shortLabel: 'Community',
     accent: 'green',
     hex: '#34A853',
+    textColor: 'var(--accent-green-text)',
     icon: Users,
     pos: { x: 580, y: 410 },
     hubPathD: 'M 400 275 C 480 275, 540 360, 580 410',
@@ -559,12 +565,12 @@ export function ChapterTopologyView({
                   >
                     <IconComp
                       className="w-3.5 h-3.5 shrink-0"
-                      style={{ color: cluster.hex }}
+                      style={{ color: cluster.textColor }}
                     />
                     <span
                       className="font-mono text-[10px] font-bold tracking-tight whitespace-nowrap"
                       style={{
-                        color: isActive ? cluster.hex : 'var(--text-primary)',
+                        color: isActive ? cluster.textColor : 'var(--text-primary)',
                       }}
                     >
                       {cluster.shortLabel}
@@ -690,7 +696,7 @@ export function ChapterTopologyView({
                         {member.name}
                       </span>
                       <span className="text-[var(--text-muted)]"> · </span>
-                      <span style={{ color: memberAccent.hex }}>{member.vertical}</span>
+                      <span className={memberAccent.textClass}>{member.vertical}</span>
                     </div>
                   </button>
                 </div>
@@ -750,11 +756,11 @@ export function ChapterTopologyView({
                     <div className="flex items-center gap-2 pb-2 mb-2 border-b border-[var(--border-hairline)]">
                       <IconComponent
                         className="w-4 h-4 shrink-0"
-                        style={{ color: cluster.hex }}
+                        style={{ color: cluster.textColor }}
                       />
                       <span
                         className="text-xs font-mono font-bold tracking-tight"
-                        style={{ color: cluster.hex }}
+                        style={{ color: cluster.textColor }}
                       >
                         {cluster.label}
                       </span>
@@ -924,9 +930,9 @@ export function ChapterTopologyView({
                     >
                       {selectedMember.vertical}
                     </span>
-                    <h3 className="text-xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
+                    <h2 className="text-xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
                       {selectedMember.name}
-                    </h3>
+                    </h2>
                     <p className="text-xs font-mono font-medium text-[var(--text-secondary)]">
                       {selectedMember.role}
                     </p>
@@ -1107,7 +1113,7 @@ export function ChapterTopologyView({
                 type="button"
                 onClick={() => onInspectMember(selectedMember)}
                 aria-label={`Inspect full spec drawer for ${selectedMember.name}`}
-                className="min-h-[40px] px-4 py-2 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white text-xs font-mono font-semibold transition-all shadow-xs flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-h-[44px] md:min-h-[40px] px-4 py-2 rounded-xl bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-xs font-mono font-semibold transition-all shadow-xs flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
                 <Maximize2 className="w-3.5 h-3.5 shrink-0" />
                 <span>Expand Full Spec →</span>

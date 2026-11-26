@@ -159,7 +159,7 @@ export function TeamFilterBar({
                   onClick={() => onInspectQuery(liveTelemetry.endpoint)}
                   aria-label="Inspect query in API Inspector"
                   title="Inspect real /api/team response payload"
-                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                  className="ml-1 min-h-[44px] md:min-h-[28px] inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 >
                   <Terminal className="w-3 h-3 shrink-0" />
                   <span>Inspect</span>
@@ -183,7 +183,7 @@ export function TeamFilterBar({
             type="button"
             onClick={() => onDataSourceModeChange('static')}
             aria-pressed={dataSourceMode === 'static'}
-            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`relative min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               dataSourceMode === 'static'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -196,7 +196,7 @@ export function TeamFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <Zap className="w-3 h-3 text-[#4285F4] shrink-0" />
+            <Zap className="w-3 h-3 text-[var(--accent-blue-text)] shrink-0" />
             <span>Static Edge</span>
           </button>
 
@@ -204,7 +204,7 @@ export function TeamFilterBar({
             type="button"
             onClick={() => onDataSourceModeChange('live')}
             aria-pressed={dataSourceMode === 'live'}
-            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`relative min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               dataSourceMode === 'live'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -217,7 +217,7 @@ export function TeamFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <Activity className="w-3 h-3 text-[#34A853] shrink-0" />
+            <Activity className="w-3 h-3 text-[var(--accent-green-text)] shrink-0" />
             <span>Live /api/team</span>
           </button>
         </div>
@@ -275,7 +275,7 @@ export function TeamFilterBar({
               onClick={() => onViewModeChange('grid')}
               aria-pressed={viewMode === 'grid'}
               aria-label="Switch to Roster Grid view"
-              className={`relative min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              className={`relative min-h-[44px] md:min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                 viewMode === 'grid'
                   ? 'text-[var(--text-primary)] font-semibold'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -304,7 +304,7 @@ export function TeamFilterBar({
               onClick={() => onViewModeChange('topology')}
               aria-pressed={viewMode === 'topology'}
               aria-label="Switch to Chapter Topology circuit view"
-              className={`relative min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              className={`relative min-h-[44px] md:min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                 viewMode === 'topology'
                   ? 'text-[var(--text-primary)] font-semibold'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -339,10 +339,10 @@ export function TeamFilterBar({
                 ? 'Show builder profiles for all cards'
                 : 'Inspect technical builder specs for all cards'
             }
-            className={`min-h-[42px] px-3.5 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all flex items-center justify-center gap-2 border cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`min-h-[44px] md:min-h-[42px] px-3.5 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all flex items-center justify-center gap-2 border cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               inspectAll
-                ? 'bg-[#4285F4] text-white border-[#4285F4] shadow-sm hover:bg-[#3367D6]'
-                : 'bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[#4285F4] hover:text-[#4285F4]'
+                ? 'bg-[#1D4ED8] text-white border-[#1D4ED8] shadow-sm hover:bg-[#1E40AF]'
+                : 'bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[#4285F4] hover:text-[var(--accent-blue-text)]'
             }`}
           >
             {inspectAll ? (
@@ -366,7 +366,7 @@ export function TeamFilterBar({
               type="button"
               onClick={onResetFilters}
               aria-label="Reset all search queries and active filters"
-              className="min-h-[42px] px-3 py-2 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[#EA4335]/40 text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335]"
+              className="min-h-[44px] md:min-h-[42px] px-3 py-2 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--accent-red-text)] border border-[var(--border-hairline)] hover:border-[#EA4335]/40 text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335]"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Filters</span>
@@ -391,7 +391,7 @@ export function TeamFilterBar({
               role="tab"
               aria-selected={isActive}
               onClick={() => onSelectVertical(tab.id)}
-              className={`relative min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors shrink-0 flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              className={`relative min-h-[44px] md:min-h-[36px] px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-colors shrink-0 flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                 isActive
                   ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-semibold shadow-xs'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]/70 border border-transparent'
@@ -433,9 +433,9 @@ export function TeamFilterBar({
               type="button"
               onClick={() => onSelectSkill(chip.id === 'All Stacks' ? '' : chip.id)}
               aria-pressed={isActive}
-              className={`min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-mono transition-all shrink-0 whitespace-nowrap cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+              className={`min-h-[44px] md:min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-mono transition-all shrink-0 whitespace-nowrap cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                 isActive
-                  ? 'bg-[#4285F4] text-white border-[#4285F4] font-semibold shadow-xs'
+                  ? 'bg-[#1D4ED8] text-white border-[#1D4ED8] font-semibold shadow-xs'
                   : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]'
               }`}
             >
@@ -447,7 +447,7 @@ export function TeamFilterBar({
         {/* Custom skill chip if selected from a builder card and not in predefined list */}
         {selectedSkill && !isPredefinedSkill && (
           <div className="flex items-center gap-1 shrink-0">
-            <span className="min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-mono bg-[#4285F4] text-white border border-[#4285F4] font-semibold shadow-xs flex items-center gap-1.5 whitespace-nowrap">
+            <span className="min-h-[44px] md:min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-mono bg-[#1D4ED8] text-white border border-[#1D4ED8] font-semibold shadow-xs flex items-center gap-1.5 whitespace-nowrap">
               <span>{selectedSkill}</span>
               <button
                 type="button"

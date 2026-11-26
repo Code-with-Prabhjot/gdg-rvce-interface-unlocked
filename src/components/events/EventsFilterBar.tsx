@@ -168,7 +168,7 @@ export function EventsFilterBar({
                   onClick={() => onInspectQuery(liveTelemetry.endpoint)}
                   aria-label="Inspect query in API Inspector"
                   title="Inspect real query response payload"
-                  className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer"
+                  className="ml-1 min-h-[44px] md:min-h-[28px] inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-[#4285F4]/10 hover:bg-[#4285F4]/20 text-[var(--accent-blue-text)] border border-[#4285F4]/25 transition-all shrink-0 cursor-pointer"
                 >
                   <Terminal className="w-3 h-3 shrink-0" />
                   <span>Inspect</span>
@@ -192,7 +192,7 @@ export function EventsFilterBar({
             type="button"
             onClick={() => onDataSourceModeChange('static')}
             aria-pressed={dataSourceMode === 'static'}
-            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+            className={`relative min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               dataSourceMode === 'static'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -205,7 +205,7 @@ export function EventsFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <Zap className="w-3 h-3 text-[#4285F4] shrink-0" />
+            <Zap className="w-3 h-3 text-[var(--accent-blue-text)] shrink-0" />
             <span>Static Edge</span>
           </button>
 
@@ -213,7 +213,7 @@ export function EventsFilterBar({
             type="button"
             onClick={() => onDataSourceModeChange('live')}
             aria-pressed={dataSourceMode === 'live'}
-            className={`relative min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+            className={`relative min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               dataSourceMode === 'live'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -226,7 +226,7 @@ export function EventsFilterBar({
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
-            <Server className="w-3 h-3 text-[#34A853] shrink-0" />
+            <Server className="w-3 h-3 text-[var(--accent-green-text)] shrink-0" />
             <span>Live API</span>
           </button>
         </div>
@@ -245,7 +245,7 @@ export function EventsFilterBar({
                 key={option.id}
                 type="button"
                 onClick={() => onStatusChange(option.id)}
-                className={`relative min-h-[38px] sm:min-h-[36px] inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+                className={`relative min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-0 inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'text-[var(--text-primary)] font-semibold'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -274,9 +274,9 @@ export function EventsFilterBar({
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search sessions, speakers, tech tags, venues... (Press '/' to focus)"
+              placeholder="Search sessions, tags, venues... (/)"
               aria-label="Search events"
-              className="w-full min-h-[42px] pl-10 pr-20 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
+              className="w-full min-h-[44px] pl-10 pr-20 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-hidden text-xs sm:text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-all font-sans"
             />
 
             {/* Clear Button & Shortcut Badge */}
@@ -288,7 +288,7 @@ export function EventsFilterBar({
                     onSearchChange('');
                     searchInputRef.current?.focus();
                   }}
-                  className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] inline-flex items-center justify-center p-1 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
                   aria-label="Clear search query"
                 >
                   <X className="w-4 h-4 shrink-0" />
@@ -309,7 +309,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('grid')}
             aria-label="Switch to grid view"
             title="Grid View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+            className={`relative min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'grid'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -331,7 +331,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('list')}
             aria-label="Switch to schedule list view"
             title="Schedule List View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+            className={`relative min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'list'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -353,7 +353,7 @@ export function EventsFilterBar({
             onClick={() => onViewModeChange('calendar')}
             aria-label="Calendar Matrix View"
             title="Calendar Matrix View"
-            className={`relative min-h-[40px] sm:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
+            className={`relative min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors z-10 whitespace-nowrap cursor-pointer ${
               viewMode === 'calendar'
                 ? 'text-[var(--text-primary)] font-semibold'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -384,7 +384,7 @@ export function EventsFilterBar({
             onClick={() => onOnlySavedChange(!onlySaved)}
             aria-pressed={onlySaved}
             aria-label={onlySaved ? 'Show all sessions' : 'Filter by saved sessions'}
-            className={`min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+            className={`min-h-[44px] md:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
               onlySaved
                 ? 'bg-[#FBBC04] text-[#111827] font-bold shadow-xs border border-[#FBBC04]'
                 : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -414,7 +414,7 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onExportSavedBundle}
-              className="min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-xl text-xs font-mono font-semibold bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all shadow-xs hover:shadow-md whitespace-nowrap cursor-pointer"
+              className="min-h-[44px] md:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-xl text-xs font-mono font-semibold bg-[#1D4ED8] hover:bg-[#1E40AF] text-white transition-all shadow-xs hover:shadow-md whitespace-nowrap cursor-pointer"
             >
               <Download className="w-3.5 h-3.5 shrink-0" />
               <span>Export Saved Schedule (.ics)</span>
@@ -434,7 +434,7 @@ export function EventsFilterBar({
                 key={track.id}
                 type="button"
                 onClick={() => onTrackChange(track.id)}
-                className={`min-h-[34px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
                     ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -464,7 +464,7 @@ export function EventsFilterBar({
                 key={mode.id}
                 type="button"
                 onClick={() => onModeChange(mode.id)}
-                className={`min-h-[34px] inline-flex items-center justify-center px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center px-2.5 py-1 rounded-lg text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                   isSelected
                     ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] font-bold shadow-xs'
                     : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)]/80 border border-[var(--border-hairline)]'
@@ -488,7 +488,7 @@ export function EventsFilterBar({
                 type="button"
                 onClick={() => onSortOrderChange('asc')}
                 aria-pressed={sortOrder === 'asc'}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[44px] md:min-h-[30px] px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
                   sortOrder === 'asc'
                     ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold border border-[var(--border-strong)] shadow-2xs'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -500,7 +500,7 @@ export function EventsFilterBar({
                 type="button"
                 onClick={() => onSortOrderChange('desc')}
                 aria-pressed={sortOrder === 'desc'}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`min-h-[44px] md:min-h-[30px] px-2.5 py-1 rounded-md text-[11px] font-mono transition-all whitespace-nowrap cursor-pointer ${
                   sortOrder === 'desc'
                     ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] font-bold border border-[var(--border-strong)] shadow-2xs'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
@@ -519,7 +519,7 @@ export function EventsFilterBar({
             <button
               type="button"
               onClick={onResetFilters}
-              className="min-h-[34px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/25 whitespace-nowrap cursor-pointer"
+              className="min-h-[44px] md:min-h-[34px] inline-flex items-center justify-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 px-2.5 py-1 rounded-lg transition-colors border border-[#EA4335]/25 whitespace-nowrap cursor-pointer"
             >
               <RotateCcw className="w-3 h-3 shrink-0" />
               <span>Clear filters</span>

@@ -32,6 +32,7 @@ export function ArchitecturalBootLoader() {
     setStatusMessage('INIT // GDG_RVCE_PORTAL');
 
     const startTime = performance.now();
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
     const interval = setInterval(() => {
       const elapsed = performance.now() - startTime;
@@ -48,13 +49,16 @@ export function ArchitecturalBootLoader() {
 
       if (elapsed >= BOOT_DURATION_MS) {
         clearInterval(interval);
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           dismissBoot();
         }, 80);
       }
     }, 24);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [prefersReducedMotion, dismissBoot]);
 
   // Initial check on mount
@@ -63,21 +67,27 @@ export function ArchitecturalBootLoader() {
       return;
     }
 
+    let cleanup: (() => void) | undefined;
     try {
       const alreadySeen = sessionStorage.getItem(SESSION_STORAGE_KEY);
       if (!alreadySeen) {
-        startBootSequence();
+        cleanup = startBootSequence();
       }
     } catch {
       // Fallback
-      startBootSequence();
+      cleanup = startBootSequence();
     }
+
+    return () => cleanup?.();
   }, [prefersReducedMotion, startBootSequence]);
 
   // Listen for replay-boot event dispatched by CLI or evaluator
   useEffect(() => {
+    let replayCleanup: (() => void) | undefined;
+
     const handleReplay = () => {
-      startBootSequence();
+      replayCleanup?.();
+      replayCleanup = startBootSequence();
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -90,6 +100,7 @@ export function ArchitecturalBootLoader() {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      replayCleanup?.();
       window.removeEventListener('gdg:replay-boot', handleReplay);
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -100,6 +111,9 @@ export function ArchitecturalBootLoader() {
       {isVisible && (
         <motion.div
           key="architectural-boot-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="GDG RVCE Architectural Boot Sequence"
           initial={{ opacity: 1, y: 0 }}
           exit={{
             y: '-100%',
@@ -109,42 +123,41 @@ export function ArchitecturalBootLoader() {
             },
           }}
           className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-[var(--bg-canvas)] text-[var(--text-primary)] select-none overflow-hidden"
-          aria-hidden="true"
         >
           {/* Subtle Architectural Blueprint Grid Background */}
-          <div className="absolute inset-0 bg-blueprint-grid opacity-35 pointer-events-none" />
+          <div className="absolute inset-0 bg-blueprint-grid opacity-35 pointer-events-none" aria-hidden="true" />
 
           {/* Vignette Depth Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-canvas)]/60 via-transparent to-[var(--bg-canvas)]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-canvas)]/60 via-transparent to-[var(--bg-canvas)]/90 pointer-events-none" aria-hidden="true" />
 
           {/* Corner Coordinate & Telemetry Ticks */}
-          <div className="absolute top-6 left-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider flex items-center gap-2">
+          <div aria-hidden="true" className="absolute top-6 left-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#4285F4] animate-ping" />
             <span>12.9237° N · 77.4987° E</span>
           </div>
 
-          <div className="absolute top-6 right-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider hidden sm:flex items-center gap-2">
+          <div aria-hidden="true" className="absolute top-6 right-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider hidden sm:flex items-center gap-2">
             <span>CAMPUS // RVCE_BENGALURU</span>
-            <span className="text-[#34A853]">●</span>
+            <span className="text-[var(--accent-green-text)]">●</span>
           </div>
 
-          <div className="absolute bottom-6 left-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider hidden sm:flex items-center gap-2">
-            <span className="text-[#FBBC04]">▲</span>
+          <div aria-hidden="true" className="absolute bottom-6 left-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider hidden sm:flex items-center gap-2">
+            <span className="text-[var(--accent-yellow-text)]">▲</span>
             <span>GDG_RVCE // INTERFACE_UNLOCKED</span>
           </div>
 
-          <div className="absolute bottom-6 right-6 font-mono text-[10px] text-[var(--text-muted)] tracking-wider">
+          <div className="absolute bottom-6 right-6 z-20 font-mono text-[10px] text-[var(--text-muted)] tracking-wider">
             <button
               type="button"
               onClick={dismissBoot}
-              className="px-2.5 py-1 rounded-md border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/80 hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+              className="min-h-[44px] min-w-[44px] md:min-h-0 px-3 py-1.5 rounded-md border border-[var(--border-hairline)] bg-[var(--bg-elevated)]/80 hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
             >
               SKIP [ESC]
             </button>
           </div>
 
           {/* Center Stage: GDG < > Emblem & Progress Choreography */}
-          <div className="relative z-10 flex flex-col items-center justify-center space-y-6 px-4">
+          <div aria-hidden="true" className="relative z-10 flex flex-col items-center justify-center space-y-6 px-4">
             {/* The Official GDG Chevron Mark animating left & right brackets */}
             <div className="relative w-32 h-16 sm:w-40 sm:h-20 flex items-center justify-center">
               <svg

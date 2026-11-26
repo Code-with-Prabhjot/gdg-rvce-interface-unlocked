@@ -71,48 +71,46 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* 120ms - 360ms: Three Masked Display Lines */}
-            <div className="space-y-0.5 sm:space-y-1">
+            {/* 120ms - 360ms: Three Masked Display Lines in one semantic <h1> */}
+            <h1 className="space-y-0.5 sm:space-y-1 text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]">
               {/* Line 1: "Engineering the" */}
-              <div className="overflow-hidden py-0.5">
-                <motion.h1
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
                   initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                   animate={{ y: '0%' }}
                   transition={maskTransition(0.08)}
-                  className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]"
+                  className="block"
                 >
                   Engineering the
-                </motion.h1>
-              </div>
+                </motion.span>
+              </span>
 
               {/* Line 2: "open web at" */}
-              <div className="overflow-hidden py-0.5">
-                <motion.h2
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
                   initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                   animate={{ y: '0%' }}
                   transition={maskTransition(0.16)}
-                  className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]"
+                  className="block"
                 >
                   open web at
-                </motion.h2>
-              </div>
+                </motion.span>
+              </span>
 
               {/* Line 3: "GDG RVCE." + Google Spectrum Bar */}
-              <div className="overflow-hidden py-0.5">
-                <div className="relative inline-block">
-                  <motion.h2
+              <span className="block overflow-hidden py-0.5">
+                <span className="relative inline-block">
+                  <motion.span
                     initial={prefersReducedMotion ? { y: '0%' } : { y: '105%' }}
                     animate={{ y: '0%' }}
                     transition={maskTransition(0.24)}
-                    className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight leading-[1.06]"
+                    className="inline-block gdg-4color-text"
                   >
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-[#DC2626] via-[#D97706] to-[#15803D] dark:from-[#4285F4] dark:via-[#EA4335] dark:via-[#FBBC04] dark:to-[#34A853]">
-                      GDG RVCE.
-                    </span>
-                  </motion.h2>
+                    GDG RVCE.
+                  </motion.span>
 
                   {/* 4px Segmented 4-Colour Spectrum Bar */}
-                  <motion.div
+                  <motion.span
                     initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{
@@ -123,14 +121,14 @@ export function HeroSection() {
                     style={{ transformOrigin: 'left' }}
                     className="h-1 w-full mt-2 rounded-full overflow-hidden flex shadow-xs"
                   >
-                    <div className="w-1/4 h-full bg-[#4285F4]" />
-                    <div className="w-1/4 h-full bg-[#EA4335]" />
-                    <div className="w-1/4 h-full bg-[#FBBC04]" />
-                    <div className="w-1/4 h-full bg-[#34A853]" />
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+                    <span className="w-1/4 h-full bg-[#4285F4]" />
+                    <span className="w-1/4 h-full bg-[#EA4335]" />
+                    <span className="w-1/4 h-full bg-[#FBBC04]" />
+                    <span className="w-1/4 h-full bg-[#34A853]" />
+                  </motion.span>
+                </span>
+              </span>
+            </h1>
 
             {/* Crisp 2-Line Mission Statement */}
             <motion.p
@@ -152,7 +150,7 @@ export function HeroSection() {
               <MagneticWrapper maxOffset={6}>
                 <Link
                   href="/events"
-                  className="group inline-flex items-center justify-center gap-2.5 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-[#4285F4] hover:bg-[#3367D6] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
+                  className="group inline-flex items-center justify-center gap-2.5 px-5 py-3 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4]"
                 >
                   <span>Explore Events</span>
                   <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />

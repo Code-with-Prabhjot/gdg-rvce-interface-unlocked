@@ -6,6 +6,33 @@ export const metadata: Metadata = {
   title: 'Team | GDG on Campus RVCE',
   description:
     'Meet the student builders, systems engineers, and open-source contributors leading GDG on Campus RV College of Engineering (GDG RVCE).',
+  alternates: {
+    canonical: '/team',
+  },
+  openGraph: {
+    title: 'Team & Builders | GDG on Campus RV College of Engineering',
+    description:
+      'Meet the student builders, systems engineers, and open-source contributors leading GDG on Campus RV College of Engineering (GDG RVCE).',
+    url: '/team',
+    siteName: 'GDG on Campus RV College of Engineering',
+    type: 'website',
+    locale: 'en_IN',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'GDG on Campus RV College of Engineering — Core Team',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Team & Builders | GDG on Campus RV College of Engineering',
+    description:
+      'Meet the student builders, systems engineers, and open-source contributors leading GDG RVCE.',
+    images: ['/twitter-image'],
+  },
 };
 
 function TeamDirectorySkeleton() {

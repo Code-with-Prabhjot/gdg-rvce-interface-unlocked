@@ -16,27 +16,27 @@ function getCategoryBadgeStyles(eventType: GDGEvent['eventType'] | string) {
   switch (eventType) {
     case 'Hackathon':
       return {
-        pillClass: 'bg-[#EA4335]/15 text-[var(--accent-red-text)] border border-[#EA4335]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-red-text)] border border-[#EA4335]/45 shadow-sm backdrop-blur-md',
         dotClass: 'bg-[var(--accent-red-text)]',
       };
     case 'Workshop':
       return {
-        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-blue-text)] border border-[#4285F4]/45 shadow-sm backdrop-blur-md',
         dotClass: 'bg-[var(--accent-blue-text)]',
       };
     case 'Study Jam':
       return {
-        pillClass: 'bg-amber-500/15 text-[var(--accent-yellow-text)] border border-amber-500/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-yellow-text)] border border-amber-500/45 shadow-sm backdrop-blur-md',
         dotClass: 'bg-[var(--accent-yellow-text)]',
       };
     case 'Tech Talk':
       return {
-        pillClass: 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-green-text)] border border-[#34A853]/45 shadow-sm backdrop-blur-md',
         dotClass: 'bg-[var(--accent-green-text)]',
       };
     default:
       return {
-        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        pillClass: 'bg-[#FFFFFF]/95 dark:bg-[#0B0F17]/90 text-[var(--accent-blue-text)] border border-[#4285F4]/45 shadow-sm backdrop-blur-md',
         dotClass: 'bg-[var(--accent-blue-text)]',
       };
   }
@@ -126,7 +126,7 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('cover');
                     }}
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                    className={`min-h-[44px] md:min-h-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                       viewType === 'cover'
                         ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
                         : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -141,9 +141,9 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('scene');
                     }}
-                    className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                    className={`min-h-[44px] md:min-h-0 min-w-[44px] md:min-w-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
                       viewType === 'scene'
-                        ? 'bg-[#4285F4] text-white shadow-xs'
+                        ? 'bg-[#1D4ED8] text-white shadow-xs'
                         : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
                     }`}
                   >
@@ -160,7 +160,7 @@ function EventCard({ event, index }: EventCardProps) {
           </div>
 
           {/* Bottom Banner Accent Strip */}
-          <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853] opacity-60 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute bottom-0 inset-x-0 h-[2px] gdg-4color-bar opacity-60 group-hover:opacity-100 transition-opacity" />
         </div>
 
         {/* Card Body */}
@@ -236,7 +236,7 @@ function EventCard({ event, index }: EventCardProps) {
         {/* Direct Action Link */}
         <Link
           href={`/events?event=${event.slug}`}
-          className={`inline-flex items-center gap-1 text-xs sm:text-sm font-semibold hover:underline transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0 ${
+          className={`inline-flex items-center gap-1 text-xs sm:text-sm font-semibold hover:underline transition-all group/btn whitespace-nowrap min-h-[44px] md:min-h-[36px] shrink-0 ${
             issuedPass
               ? 'text-[var(--accent-green-text)]'
               : 'text-[var(--accent-blue-text)]'

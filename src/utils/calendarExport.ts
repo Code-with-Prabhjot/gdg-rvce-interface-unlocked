@@ -40,6 +40,40 @@ function escapeIcsText(text: string): string {
 }
 
 /**
+ * Folds an RFC 5545 iCalendar content line so no line exceeds 75 UTF-8 octets.
+ * Continuation lines begin with a single space character.
+ */
+function foldIcsLine(line: string): string {
+  const encoder = new TextEncoder();
+  if (encoder.encode(line).length <= 75) return line;
+
+  const chunks: string[] = [];
+  let currentChunk = '';
+  let currentBytes = 0;
+
+  for (const ch of line) {
+    const chBytes = encoder.encode(ch).length;
+    const limit = chunks.length === 0 ? 75 : 74; // Continuation lines prepend 1-byte space
+    if (currentBytes + chBytes > limit && currentChunk.length > 0) {
+      chunks.push(chunks.length === 0 ? currentChunk : ` ${currentChunk}`);
+      currentChunk = ch;
+      currentBytes = chBytes;
+    } else {
+      currentChunk += ch;
+      currentBytes += chBytes;
+    }
+  }
+  if (currentChunk.length > 0) {
+    chunks.push(chunks.length === 0 ? currentChunk : ` ${currentChunk}`);
+  }
+  return chunks.join('\r\n');
+}
+
+function serializeIcsLines(lines: string[]): string {
+  return lines.map(foldIcsLine).join('\r\n');
+}
+
+/**
  * Builds RFC 5545 VEVENT block lines for a single GDG RVCE event.
  */
 function buildVEventLines(event: GDGEvent, dtStamp: string): string[] {
@@ -149,7 +183,7 @@ export function downloadEventIcs(event: GDGEvent): void {
     'END:VCALENDAR',
   ];
 
-  triggerIcsDownload(icsLines.join('\r\n'), `${event.slug}-gdg-rvce.ics`);
+  triggerIcsDownload(serializeIcsLines(icsLines), `${event.slug}-gdg-rvce.ics`);
 }
 
 /**
@@ -181,5 +215,5 @@ export function downloadBundleIcs(events: GDGEvent[]): void {
     'END:VCALENDAR',
   ];
 
-  triggerIcsDownload(icsLines.join('\r\n'), 'gdg-rvce-saved-schedule.ics');
+  triggerIcsDownload(serializeIcsLines(icsLines), 'gdg-rvce-saved-schedule.ics');
 }

@@ -18,8 +18,10 @@ export interface SynergyPairing {
   id: string;
   verticalA: TeamVertical;
   colorA: string;
+  textColorA: string;
   verticalB: TeamVertical;
   colorB: string;
+  textColorB: string;
   title: string;
   tagline: string;
   description: string;
@@ -33,12 +35,14 @@ const COLLABORATION_PAIRS: SynergyPairing[] = [
     id: 'ai-web',
     verticalA: 'AI & ML',
     colorA: '#34A853',
+    textColorA: 'var(--accent-green-text)',
     verticalB: 'Web & Cloud',
     colorB: '#4285F4',
+    textColorB: 'var(--accent-blue-text)',
     title: 'Full-Stack Gemini Agents',
     tagline: 'Multimodal Streaming & Edge Cloud Run',
     description:
-      'Pairing multimodal Gemini 1.5 pipelines with scalable Cloud Run and Next.js interfaces for sub-second function calling.',
+      'Pairing multimodal Gemini 2.5 pipelines with scalable Cloud Run and Next.js interfaces for sub-second function calling.',
     deliverables: ['Streaming RPC', 'SSE Handlers', 'Cloud Run Canary'],
     icon: Cpu,
     spotlightVertical: 'AI & ML',
@@ -47,8 +51,10 @@ const COLLABORATION_PAIRS: SynergyPairing[] = [
     id: 'design-web',
     verticalA: 'Design & UX',
     colorA: '#FBBC04',
+    textColorA: 'var(--accent-yellow-text)',
     verticalB: 'Web & Cloud',
     colorB: '#4285F4',
+    textColorB: 'var(--accent-blue-text)',
     title: 'Accessible Design Systems',
     tagline: 'Figma Tokens to WCAG AAA Primitives',
     description:
@@ -61,8 +67,10 @@ const COLLABORATION_PAIRS: SynergyPairing[] = [
     id: 'core-community',
     verticalA: 'Core Lead',
     colorA: '#EA4335',
+    textColorA: 'var(--accent-red-text)',
     verticalB: 'Community & Events',
     colorB: '#34A853',
+    textColorB: 'var(--accent-green-text)',
     title: '24-Hour Campus Sprints',
     tagline: 'Rapid Buildathons & Mentorship Logistics',
     description:
@@ -75,8 +83,10 @@ const COLLABORATION_PAIRS: SynergyPairing[] = [
     id: 'ai-design',
     verticalA: 'AI & ML',
     colorA: '#34A853',
+    textColorA: 'var(--accent-green-text)',
     verticalB: 'Design & UX',
     colorB: '#FBBC04',
+    textColorB: 'var(--accent-yellow-text)',
     title: 'Human-Centered AI Interfaces',
     tagline: 'Transparent Streaming & Kinetic Feedback',
     description:
@@ -144,7 +154,7 @@ export function VerticalCollaborationMatrix({
               ? 'Collapse cross-vertical collaboration matrix'
               : 'Expand cross-vertical collaboration matrix'
           }
-          className="min-h-[40px] px-3.5 py-1.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)] text-xs font-mono font-medium transition-all flex items-center gap-2 shrink-0 self-end sm:self-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+          className="min-h-[44px] md:min-h-[40px] px-3.5 py-1.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)] text-xs font-mono font-medium transition-all flex items-center gap-2 shrink-0 self-end sm:self-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
         >
           <Layers className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" aria-hidden="true" />
           <span>{isOpen ? 'Collapse Matrix' : 'Expand Matrix'}</span>
@@ -216,7 +226,7 @@ export function VerticalCollaborationMatrix({
                                 ? undefined
                                 : {
                                     backgroundColor: `${pair.colorA}15`,
-                                    color: pair.colorA,
+                                    color: pair.textColorA,
                                     borderColor: `${pair.colorA}35`,
                                   }
                             }
@@ -231,7 +241,7 @@ export function VerticalCollaborationMatrix({
                                 ? undefined
                                 : {
                                     backgroundColor: `${pair.colorB}15`,
-                                    color: pair.colorB,
+                                    color: pair.textColorB,
                                     borderColor: `${pair.colorB}35`,
                                   }
                             }
@@ -247,14 +257,14 @@ export function VerticalCollaborationMatrix({
                               className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border border-[var(--border-hairline)]"
                               style={{
                                 backgroundColor: `${pair.colorA}15`,
-                                color: isYellowA ? '#B45309' : pair.colorA,
+                                color: pair.textColorA,
                               }}
                             >
                               <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                             </div>
-                            <h3 className="text-sm font-display font-bold text-[var(--text-primary)] leading-tight group-hover:text-[#4285F4] transition-colors">
+                            <h2 className="text-sm font-display font-bold text-[var(--text-primary)] leading-tight group-hover:text-[var(--accent-blue-text)] transition-colors">
                               {pair.title}
-                            </h3>
+                            </h2>
                           </div>
                           <p className="text-[11px] font-mono text-[var(--text-muted)]">
                             {pair.tagline}
@@ -285,10 +295,10 @@ export function VerticalCollaborationMatrix({
                           type="button"
                           onClick={() => handleSpotlight(pair.spotlightVertical)}
                           aria-label={`Spotlight ${pair.spotlightVertical} builders in roster`}
-                          className={`w-full min-h-[38px] px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all flex items-center justify-between group/btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                          className={`w-full min-h-[44px] md:min-h-[38px] px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-all flex items-center justify-between group/btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                             isActive
-                              ? 'border-[#4285F4] bg-[#4285F4] text-white'
-                              : 'border-[var(--border-strong)] bg-[var(--bg-subtle)] text-[var(--text-primary)] hover:border-[#4285F4] hover:bg-[#4285F4] hover:text-white'
+                              ? 'border-[#1D4ED8] bg-[#1D4ED8] text-white'
+                              : 'border-[var(--border-strong)] bg-[var(--bg-subtle)] text-[var(--text-primary)] hover:border-[#1D4ED8] hover:bg-[#1D4ED8] hover:text-white'
                           }`}
                         >
                           <span className="flex items-center gap-1.5">
@@ -296,7 +306,7 @@ export function VerticalCollaborationMatrix({
                               className={`w-3 h-3 transition-colors ${
                                 isActive
                                   ? 'text-white'
-                                  : 'text-[#4285F4] group-hover/btn:text-white'
+                                  : 'text-[var(--accent-blue-text)] group-hover/btn:text-white'
                               }`}
                             />
                             <span>Spotlight {pair.spotlightVertical}</span>

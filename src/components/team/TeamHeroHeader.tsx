@@ -62,7 +62,7 @@ export function TeamHeroHeader() {
   return (
     <header className="relative w-full overflow-hidden rounded-3xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] shadow-xs mb-5 sm:mb-6">
       {/* Google 4-colour top accent rule */}
-      <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853] z-10" />
+      <div className="absolute top-0 inset-x-0 h-[3px] gdg-4color-bar z-10" />
 
       {/* Blueprint grid background */}
       <div className="absolute inset-0 bg-blueprint-grid opacity-60 dark:opacity-40 pointer-events-none" />

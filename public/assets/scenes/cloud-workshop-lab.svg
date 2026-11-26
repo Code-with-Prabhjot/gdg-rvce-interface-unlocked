@@ -56,7 +56,7 @@
 
         <!-- Gemini API Node -->
         <rect x="420" y="16" width="130" height="56" rx="8" fill="#1E293B" stroke="#4285F4" stroke-width="2"/>
-        <text x="485" y="40" font-family="monospace" font-size="10" font-weight="bold" fill="#FBBC04" text-anchor="middle">GEMINI 1.5</text>
+        <text x="485" y="40" font-family="monospace" font-size="10" font-weight="bold" fill="#FBBC04" text-anchor="middle">GEMINI 2.5</text>
         <text x="485" y="58" font-family="monospace" font-size="8" fill="#94A3B8" text-anchor="middle">FUNCTION MESH</text>
       </g>
 
@@ -210,14 +210,5 @@
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="#34A853"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 04 // HANDS-ON CLOUD &amp; AI SYSTEMS LAB</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">ROOM 304 · KOTLIN &amp; CLOUD SYSTEMS LAB</text>
-    </g>
+
   </svg>

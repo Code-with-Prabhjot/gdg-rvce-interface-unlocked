@@ -298,7 +298,7 @@ export function BuilderDetailDrawer({
                     onClick={handleNext}
                     disabled={!hasNext}
                     aria-label="Next builder"
-                    className="min-h-[36px] px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    className="min-h-[44px] md:min-h-[36px] px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] text-xs font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   >
                     <span className="hidden sm:inline">Next</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -310,16 +310,16 @@ export function BuilderDetailDrawer({
                   type="button"
                   onClick={handleCopyHandle}
                   aria-label="Copy sample builder handle"
-                  className={`min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                  className={`min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all border cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                     copiedHandle
-                      ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                      ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                       : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
                   }`}
                 >
                   {copiedHandle ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                      <span className="hidden sm:inline text-[#34A853] font-semibold">Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[var(--accent-green-text)]" />
+                      <span className="hidden sm:inline text-[var(--accent-green-text)] font-semibold">Copied ✓</span>
                     </>
                   ) : (
                     <>
@@ -600,16 +600,16 @@ export function BuilderDetailDrawer({
                       type="button"
                       onClick={handleCopyHandle}
                       aria-label="Copy sample handle"
-                      className={`min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                      className={`min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                         copiedHandle
-                          ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
+                          ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                           : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]'
                       }`}
                     >
                       {copiedHandle ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-[#34A853]" />
-                          <span className="text-[#34A853] font-semibold">Copied ✓</span>
+                          <Check className="w-3.5 h-3.5 text-[var(--accent-green-text)]" />
+                          <span className="text-[var(--accent-green-text)] font-semibold">Copied ✓</span>
                         </>
                       ) : (
                         <>
@@ -622,7 +622,7 @@ export function BuilderDetailDrawer({
 
                   <div className="space-y-1.5">
                     <p className="text-xs font-mono text-[var(--text-primary)]">
-                      <span className="text-[var(--text-muted)]">CHAT // </span>@gdg-rvce/{member.id}
+                      <span className="text-[var(--text-muted)]">HANDLE // </span>@gdg-rvce/{member.id}
                     </p>
                     <p className="text-xs font-mono text-[var(--text-primary)] break-all">
                       <span className="text-[var(--text-muted)]">GITHUB // </span>github.com/gdg-rvce-sample/{member.id}

@@ -117,9 +117,9 @@ function HandsOnPipelineSimulator() {
           <button
             type="button"
             onClick={() => setProtocol('REST')}
-            className={`px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[36px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[44px] md:min-h-[36px] min-w-[44px] md:min-w-0 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               protocol === 'REST'
-                ? 'bg-[#4285F4] text-white shadow-xs'
+                ? 'bg-[#1D4ED8] text-white shadow-xs'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
             }`}
             aria-label="Select REST protocol for trace"
@@ -129,9 +129,9 @@ function HandsOnPipelineSimulator() {
           <button
             type="button"
             onClick={() => setProtocol('SSE')}
-            className={`px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[36px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[44px] md:min-h-[36px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               protocol === 'SSE'
-                ? 'bg-[#4285F4] text-white shadow-xs'
+                ? 'bg-[#1D4ED8] text-white shadow-xs'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
             }`}
             aria-label="Select SSE Stream protocol for trace"
@@ -146,7 +146,7 @@ function HandsOnPipelineSimulator() {
             <button
               type="button"
               onClick={handleReset}
-              className="px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all min-h-[36px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              className="px-2.5 py-1.5 text-xs font-mono font-medium rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all min-h-[44px] md:min-h-[36px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               aria-label="Reset Cloud Run Trace Simulator"
             >
               <span>Reset</span>
@@ -156,10 +156,10 @@ function HandsOnPipelineSimulator() {
             type="button"
             onClick={handleRunTrace}
             disabled={isRunning}
-            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] ${
+            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[44px] md:min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4285F4] ${
               isRunning
-                ? 'bg-[#4285F4]/70 text-white cursor-wait'
-                : 'bg-[#4285F4] hover:bg-[#3367D6] text-white hover:shadow-md'
+                ? 'bg-[#1D4ED8]/75 text-white cursor-wait'
+                : 'bg-[#1D4ED8] hover:bg-[#1E40AF] text-white hover:shadow-md'
             }`}
             aria-label="Run Cloud Run Request Pipeline Trace"
           >
@@ -423,7 +423,7 @@ function HackathonIsometricSimulator({ emoteBadge }: { emoteBadge?: string }) {
                 key={p}
                 type="button"
                 onClick={() => setPhase(p)}
-                className={`relative px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[36px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335] ${
+                className={`relative px-2.5 py-1 text-[11px] font-mono font-semibold rounded-md min-h-[44px] md:min-h-[36px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335] ${
                   isSelected
                     ? 'text-white'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -433,7 +433,7 @@ function HackathonIsometricSimulator({ emoteBadge }: { emoteBadge?: string }) {
                 {isSelected && (
                   <motion.div
                     layoutId="hackathon-phase-pill"
-                    className="absolute inset-0 rounded-md bg-[#EA4335] shadow-xs"
+                    className="absolute inset-0 rounded-md bg-[#C5221F] shadow-xs"
                     transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                   />
                 )}
@@ -621,7 +621,7 @@ function SteppedLearningStaircaseSimulator({ emoteBadge }: { emoteBadge?: string
                 type="button"
                 onClick={() => setActiveStep(step.id)}
                 aria-label={step.aria}
-                className={`px-2.5 py-1 text-[11px] font-mono font-bold rounded-md min-h-[34px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] cursor-pointer ${
+                className={`px-2.5 py-1 text-[11px] font-mono font-bold rounded-md min-h-[44px] md:min-h-[34px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FBBC04] cursor-pointer ${
                   isSelected
                     ? 'bg-[#FBBC04] text-[#111827] shadow-xs'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -857,10 +857,10 @@ function GitBranchMergeSimulator({ emoteBadge }: { emoteBadge?: string }) {
           <button
             type="button"
             onClick={() => setIsMerged(!isMerged)}
-            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#34A853] cursor-pointer ${
+            className={`px-3 py-1.5 text-xs font-mono font-bold rounded-lg transition-all min-h-[44px] md:min-h-[36px] flex items-center gap-1.5 shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#34A853] cursor-pointer ${
               isMerged
                 ? 'bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] text-[var(--text-primary)] border border-[var(--border-strong)]'
-                : 'bg-[#34A853] hover:bg-[#2d9249] text-white hover:shadow-md'
+                : 'bg-[#15803D] hover:bg-[#166534] text-white hover:shadow-md'
             }`}
             aria-label={isMerged ? 'Reset branch simulator' : 'Merge PR into main branch'}
           >
@@ -1072,7 +1072,7 @@ function BentoTile({ pillar, colSpanClass, index }: BentoTileProps) {
       onPointerMove={handlePointerMove}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={{ once: true, amount: 0 }}
       transition={{
         duration: prefersReducedMotion ? 0 : 0.4,
         delay: prefersReducedMotion ? 0 : index * 0.08,
@@ -1171,7 +1171,7 @@ export function BentoPillarsSection() {
       <motion.div
         initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.05 }}
+        viewport={{ once: true, amount: 0 }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 lg:mb-8"
       >

@@ -63,7 +63,14 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
           <div className="flex flex-wrap items-center gap-2">
             <span
               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold text-white uppercase tracking-wider"
-              style={{ backgroundColor: session.badgeColor }}
+              style={{
+                backgroundColor:
+                  session.badgeColor === '#EA4335'
+                    ? '#C5221F'
+                    : session.badgeColor === '#34A853'
+                      ? '#15803D'
+                      : '#1D4ED8',
+              }}
             >
               <Sparkles className="w-3 h-3" />
               Chapter Maintainer Preview
@@ -79,13 +86,13 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
           {!isEditing ? (
             <div className="flex flex-wrap items-center gap-2.5">
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-medium leading-snug">
-                <span className="font-mono text-[11px] text-[#4285F4] font-bold mr-1.5">
+                <span className="font-mono text-[11px] text-[var(--accent-blue-text)] font-bold mr-1.5">
                   SPOTLIGHT NOTICE:
                 </span>
                 {spotlightNotice}
               </p>
               {justSaved && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-[#34A853]">
+                <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-[var(--accent-green-text)]">
                   <Check className="w-3.5 h-3.5" />
                   Updated live
                 </span>
@@ -99,12 +106,12 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
                 onChange={(e) => setDraftNotice(e.target.value)}
                 maxLength={140}
                 aria-label="Customize chapter spotlight notice"
-                className="flex-1 px-3 py-2 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-none"
+                className="flex-1 min-h-[44px] px-3 py-2 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-strong)] focus:border-[#4285F4] focus:outline-none"
               />
               <div className="flex items-center gap-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-colors cursor-pointer"
+                  className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] transition-colors cursor-pointer"
                 >
                   <Check className="w-3.5 h-3.5" />
                   <span>Apply</span>
@@ -115,7 +122,7 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
                     setDraftNotice(spotlightNotice);
                     setIsEditing(false);
                   }}
-                  className="px-3 py-2 rounded-xl text-xs font-mono text-[var(--text-secondary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
+                  className="min-h-[44px] px-3 py-2 rounded-xl text-xs font-mono text-[var(--text-secondary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -130,9 +137,9 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
               >
-                <PencilLine className="w-3.5 h-3.5 text-[#4285F4]" />
+                <PencilLine className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                 <span>Customize Notice</span>
               </button>
               <button
@@ -140,7 +147,7 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
                 onClick={resetSpotlightNotice}
                 title="Reset spotlight notice to default"
                 aria-label="Reset spotlight notice"
-                className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-colors cursor-pointer"
+                className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] inline-flex items-center justify-center p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
@@ -151,7 +158,7 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
             onClick={dismissMaintainerBar}
             aria-label="Dismiss maintainer preview bar"
             title="Dismiss maintainer preview bar"
-            className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-colors cursor-pointer"
+            className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] inline-flex items-center justify-center p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -160,7 +167,7 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
 
       <div className="mt-4 pt-3 border-t border-[var(--border-hairline)] flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <Star className="w-4 h-4 text-[#FBBC04] shrink-0" />
+          <Star className="w-4 h-4 text-[var(--accent-yellow-text)] shrink-0" />
           <label
             htmlFor="chapter-spotlight-event"
             className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] shrink-0"
@@ -184,7 +191,7 @@ export function MaintainerPreviewBar({ surfaceLabel }: MaintainerPreviewBarProps
           type="button"
           onClick={resetFeaturedEventSlug}
           title="Reset chapter spotlight to this persona's default"
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold text-[var(--text-secondary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer shrink-0"
+          className="min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold text-[var(--text-secondary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors cursor-pointer shrink-0"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Spotlight</span>

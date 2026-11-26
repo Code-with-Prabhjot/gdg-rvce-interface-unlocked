@@ -734,16 +734,14 @@ const createCoverSvg = ({
   <circle cx="1020" cy="220" r="280" fill="${accentColor}" fill-opacity="0.16" filter="url(#softGlow)"/>
   <circle cx="200" cy="500" r="200" fill="${GOOGLE_COLORS.blue}" fill-opacity="0.08" filter="url(#softGlow)"/>
 
-  <!-- Architectural Frame & Tech Coordinates -->
-  <rect x="40" y="40" width="1120" height="595" rx="16" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-  <line x1="40" y1="90" x2="1160" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-  
-  <!-- Technical Coordinate Badges -->
-  <text x="70" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="2">GDG ON CAMPUS RVCE // ARCHITECTURAL SYSTEM SPEC</text>
-  <text x="1130" y="72" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" text-anchor="end" letter-spacing="2">12.9237° N, 77.4987° E</text>
+  <!-- Architectural Frame (clean top & bottom 64px corner margins for UI overlays) -->
+  <rect x="40" y="40" width="1120" height="595" rx="16" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+
+  <!-- Technical Spec Subheader (Safely inside body safe-zone below top overlay pills) -->
+  <text x="84" y="132" font-family="monospace" font-size="11" font-weight="600" fill="#94A3B8" letter-spacing="1.5">GDG ON CAMPUS RVCE // SYSTEM SPEC · 12.9237° N, 77.4987° E</text>
 
   <!-- Left Content Column (Strictly bounded to x <= 700 for clean clearance) -->
-  <g transform="translate(84, 170)">
+  <g transform="translate(84, 152)">
     <!-- Category Pill -->
     <rect x="0" y="0" width="${categoryPillWidth}" height="34" rx="17" fill="${accentColor}" fill-opacity="0.18" stroke="${accentColor}" stroke-width="1.5"/>
     <circle cx="18" cy="17" r="5" fill="${accentColor}"/>
@@ -767,13 +765,16 @@ const createCoverSvg = ({
     ${visualElements}
   </g>
 
-  <!-- Bottom Brand Signature -->
-  <g transform="translate(84, 580)">
-    <!-- GDG Chevron Icon Mini -->
-    <path d="M0 8L8 0L0 -8" stroke="${GOOGLE_COLORS.red}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M0 -8L-8 0L0 8" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="24" y="4" font-family="sans-serif" font-size="14" font-weight="700" fill="#E2E8F0">GDG RVCE</text>
-    <text x="142" y="4" font-family="sans-serif" font-size="14" fill="#64748B">— Bengaluru Developer Community</text>
+  <!-- Brand Signature (Separated 4-colour chevrons, clear of bottom 64px corner margins) -->
+  <g transform="translate(84, 514)">
+    <!-- Left chevron (Red & Blue) -->
+    <path d="M9 -8L0 0" stroke="${GOOGLE_COLORS.red}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M0 0L9 8" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right chevron (Green & Yellow) -->
+    <path d="M16 -8L25 0" stroke="${GOOGLE_COLORS.green}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M25 0L16 8" stroke="${GOOGLE_COLORS.yellow}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="38" y="4" font-family="sans-serif" font-size="14" font-weight="700" fill="#E2E8F0">GDG RVCE</text>
+    <text x="118" y="4" font-family="sans-serif" font-size="13" fill="#94A3B8">— Bengaluru Developer Community</text>
   </g>
 </svg>
 `;
@@ -873,7 +874,7 @@ const covers = {
     subtitle: 'Audio, Vision, Code & Real-Time Function Calling',
     accentColor: GOOGLE_COLORS.blue,
     category: 'Flagship Masterclass',
-    tagText: 'RESEARCH // GEMINI 1.5 PRO & FLASH',
+    tagText: 'RESEARCH // GEMINI 2.5 PRO & FLASH',
     visualTransform: 'translate(775, 175) scale(0.88)',
     visualElements: `
       <!-- Converging Vector Beams -->
@@ -1140,16 +1141,16 @@ const scenes = {
 
       <!-- Large GDG Emblem on Stage Screen -->
       <g transform="translate(400, 200)">
-        <path d="M40 0L10 35L40 70" stroke="${GOOGLE_COLORS.red}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M40 0L10 35" stroke="${GOOGLE_COLORS.red}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M10 35L40 70" stroke="${GOOGLE_COLORS.blue}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M90 0L120 35L90 70" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M90 0L120 35" stroke="${GOOGLE_COLORS.green}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M120 35L90 70" stroke="${GOOGLE_COLORS.yellow}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
 
       <!-- Keynote Title & Architecture Diagram on Screen -->
       <g transform="translate(560, 185)">
         <text x="0" y="24" font-family="sans-serif" font-size="28" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">MULTI-AGENT ARCHITECTURE</text>
-        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="500" fill="#94A3B8">Engineering Resilient Open Systems with Gemini 1.5 &amp; Cloud</text>
+        <text x="0" y="52" font-family="sans-serif" font-size="16" font-weight="500" fill="#94A3B8">Engineering Resilient Open Systems with Gemini 2.5 &amp; Cloud</text>
         <!-- Mini Topology Diagram on Slide -->
         <g transform="translate(0, 75)">
           <rect x="0" y="0" width="130" height="42" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="1.5"/>
@@ -1166,9 +1167,10 @@ const scenes = {
           <text x="410" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="${GOOGLE_COLORS.green}" text-anchor="middle">CLOUD EDGE</text>
         </g>
       </g>
-      <!-- Slide Lower Telemetry Strip -->
+      <!-- Slide Lower Telemetry Strip (speaker label shifted clear to x >= 635 right of lectern/speaker silhouettes) -->
       <rect x="330" y="375" width="740" height="24" rx="6" fill="#111827"/>
-      <text x="345" y="391" font-family="monospace" font-size="10" fill="#64748B">SESSION // 01 · KEYNOTE SPEAKER: DR. ANANYA RAO · RVCE CAMPUS IEM HALL</text>
+      <text x="345" y="391" font-family="monospace" font-size="10" fill="#64748B">SESSION // 01</text>
+      <text x="635" y="391" font-family="monospace" font-size="10" fill="#94A3B8">KEYNOTE SPEAKER: DR. ANANYA RAO · RVCE CAMPUS IEM HALL</text>
     </g>
 
     <!-- Angled Stage Spotlight Cones -->
@@ -1286,16 +1288,7 @@ const scenes = {
       }).join('')}
     </g>
 
-    <!-- Top Left & Right Architectural Telemetry Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.blue}"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 01 // AUDITORIUM KEYNOTE BROADCAST</text>
-    </g>
-    <g transform="translate(1000, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="325" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">IEM AUDITORIUM · RVCE BENGALURU</text>
-    </g>
+
   </svg>`,
 
   // 2. 24-Hour Hackathon Build Table
@@ -1578,16 +1571,7 @@ const scenes = {
       </g>
     </g>
 
-    <!-- Architectural HUD Overlays -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.red}"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 02 // 24-HOUR HACKATHON BUILD TABLE</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CSE SYSTEMS LAB · ACTIVE CODE CRUCIBLE</text>
-    </g>
+
   </svg>`,
 
   // 3. Hybrid Tech Broadcast & Livestream Studio
@@ -1652,9 +1636,9 @@ const scenes = {
       <g transform="translate(580, 140)">
         <circle cx="120" cy="80" r="70" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2" stroke-dasharray="6 4"/>
         <!-- GDG Chevron Emblem -->
-        <path d="M85 55L65 80L85 105" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M85 55L65 80" stroke="${GOOGLE_COLORS.red}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M65 80L85 105" stroke="${GOOGLE_COLORS.blue}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M155 55L175 80L155 105" stroke="${GOOGLE_COLORS.green}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M155 55L175 80" stroke="${GOOGLE_COLORS.green}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M175 80L155 105" stroke="${GOOGLE_COLORS.yellow}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 
         <text x="120" y="180" font-family="sans-serif" font-size="22" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">GDG RVCE LIVE</text>
@@ -1674,7 +1658,7 @@ const scenes = {
 
         <rect x="0" y="116" width="260" height="34" rx="6" fill="#1E293B"/>
         <circle cx="16" cy="133" r="4" fill="${GOOGLE_COLORS.yellow}"/>
-        <text x="28" y="137" font-family="monospace" font-size="10" fill="#FFFFFF">Interactive Q&amp;A Queue: Active</text>
+        <text x="28" y="137" font-family="monospace" font-size="10" fill="#FFFFFF">Live Build Telemetry: Active</text>
       </g>
     </g>
 
@@ -1743,23 +1727,7 @@ const scenes = {
     <path d="M40 730V760H70" stroke="#94A3B8" stroke-width="3" fill="none"/>
     <path d="M1360 730V760H1330" stroke="#94A3B8" stroke-width="3" fill="none"/>
 
-    <!-- REC Indicator (Top Left) -->
-    <g transform="translate(85, 45)">
-      <rect x="0" y="0" width="150" height="30" rx="6" fill="#1C1917" stroke="#44403C" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="5" fill="${GOOGLE_COLORS.red}"/>
-      <text x="28" y="19" font-family="monospace" font-size="11" font-weight="900" fill="#FFFFFF">● REC 01:42:18</text>
-    </g>
 
-    <!-- Lower-Third Broadcast Graphic Banner (Bottom) -->
-    <g transform="translate(140, 690)">
-      <rect x="0" y="0" width="1120" height="55" rx="12" fill="#0A0F1D" stroke="#334155" stroke-width="2"/>
-      <rect x="0" y="0" width="8" height="55" rx="4" fill="${GOOGLE_COLORS.blue}"/>
-      <text x="25" y="24" font-family="sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" letter-spacing="1">HOSTS: AARAV KULKARNI &amp; SNEHA MUKHERJEE</text>
-      <text x="25" y="44" font-family="monospace" font-size="11" fill="${GOOGLE_COLORS.yellow}">GDG ON CAMPUS RVCE // LIVE STREAM DESK · BENGALURU, IN</text>
-      <!-- Lower Third GDG Chevron -->
-      <path d="M1070 20L1080 28L1070 36" stroke="${GOOGLE_COLORS.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M1060 20L1050 28L1060 36" stroke="${GOOGLE_COLORS.red}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
   </svg>`,
 
   // 4. Hands-On Cloud & AI Lab
@@ -1821,7 +1789,7 @@ const scenes = {
 
         <!-- Gemini API Node -->
         <rect x="420" y="16" width="130" height="56" rx="8" fill="#1E293B" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
-        <text x="485" y="40" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">GEMINI 1.5</text>
+        <text x="485" y="40" font-family="monospace" font-size="10" font-weight="bold" fill="${GOOGLE_COLORS.yellow}" text-anchor="middle">GEMINI 2.5</text>
         <text x="485" y="58" font-family="monospace" font-size="8" fill="#94A3B8" text-anchor="middle">FUNCTION MESH</text>
       </g>
 
@@ -1930,16 +1898,7 @@ const scenes = {
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.green}"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 04 // HANDS-ON CLOUD &amp; AI SYSTEMS LAB</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">ROOM 304 · KOTLIN &amp; CLOUD SYSTEMS LAB</text>
-    </g>
+
   </svg>`,
 
   // 5. Prototype Demo Day Stage
@@ -1993,7 +1952,7 @@ const scenes = {
       <g transform="translate(35, 110)">
         <rect x="0" y="0" width="362" height="42" rx="21" fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
         <circle cx="22" cy="21" r="7" fill="${GOOGLE_COLORS.yellow}"/>
-        <text x="40" y="26" font-family="sans-serif" font-size="11" fill="#94A3B8">Ask Gemini 1.5 Pro anything...</text>
+        <text x="40" y="26" font-family="sans-serif" font-size="11" fill="#94A3B8">Ask Gemini 2.5 Pro anything...</text>
       </g>
 
       <!-- App Cards inside Demo Screen -->
@@ -2083,16 +2042,7 @@ const scenes = {
       `).join('')}
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 05 // PROTOTYPE DEMO DAY SHOWCASE</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">EXHIBITION STAGE · PEER JURY REVIEW</text>
-    </g>
+
   </svg>`,
 
   // 6. Evening Open-Source Code Jam
@@ -2271,16 +2221,7 @@ const scenes = {
       <circle cx="95" cy="10" r="7" fill="${GOOGLE_COLORS.blue}"/>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="340" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
-      <text x="30" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 06 // OPEN-SOURCE NIGHT JAM</text>
-    </g>
-    <g transform="translate(980, 45)">
-      <rect x="0" y="0" width="360" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="345" y="19" font-family="monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">TERRACE LOUNGE · 100% OPEN REPOSITORIES</text>
-    </g>
+
   </svg>`,
 
   // 7. UI/UX Design Systems Critique Studio (1400x800)
@@ -2562,16 +2503,7 @@ const scenes = {
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="370" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.blue}"/>
-      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 07 // UI/UX DESIGN SYSTEMS CRITIQUE</text>
-    </g>
-    <g transform="translate(930, 45)">
-      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DESIGN STUDIO LAB · TOKENS, RULERS &amp; BREAKPOINTS</text>
-    </g>
+
   </svg>`,
 
   // 8. Distributed Systems & API Whiteboard Session (1400x800)
@@ -2680,7 +2612,7 @@ const scenes = {
       <g transform="translate(730, 42)">
         <rect x="0" y="0" width="200" height="45" rx="6" fill="#141E33" stroke="${GOOGLE_COLORS.blue}" stroke-width="2"/>
         <circle cx="14" cy="16" r="4" fill="${GOOGLE_COLORS.yellow}"/>
-        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#60A5FA">Gemini 1.5 Pro Agents</text>
+        <text x="24" y="19" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="bold" fill="#60A5FA">Gemini 2.5 Pro Agents</text>
         <text x="12" y="34" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#E2E8F0">Multimodal Function Calling</text>
       </g>
 
@@ -2835,16 +2767,7 @@ const scenes = {
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.red}"/>
-      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 08 // DISTRIBUTED SYSTEMS WAR ROOM</text>
-    </g>
-    <g transform="translate(930, 45)">
-      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">HIGH-THROUGHPUT SYSTEMS LAB · SUB-10MS EDGE LATENCY</text>
-    </g>
+
   </svg>`,
 
   // 9. Android & Jetpack Compose Device Lab (1400x800)
@@ -3073,16 +2996,7 @@ const scenes = {
       </g>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.green}"/>
-      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 09 // ANDROID &amp; JETPACK COMPOSE LAB</text>
-    </g>
-    <g transform="translate(930, 45)">
-      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">DEVICE COMPATIBILITY SUITE · MATERIAL 3 &amp; KOTLIN 2.0</text>
-    </g>
+
   </svg>`,
 
   // 10. Open-Source Release & Maintainer Night (1400x800)
@@ -3275,16 +3189,7 @@ const scenes = {
       <circle cx="-16" cy="32" r="3" fill="${GOOGLE_COLORS.blue}"/>
     </g>
 
-    <!-- Architectural HUD Badges -->
-    <g transform="translate(60, 45)">
-      <rect x="0" y="0" width="375" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <circle cx="16" cy="15" r="4" fill="${GOOGLE_COLORS.yellow}"/>
-      <text x="30" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#E2E8F0">SCENE 10 // OPEN-SOURCE RELEASE PARTY</text>
-    </g>
-    <g transform="translate(930, 45)">
-      <rect x="0" y="0" width="410" height="30" rx="6" fill="#0A0F1D" stroke="#334155" stroke-width="1.5"/>
-      <text x="395" y="19" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#94A3B8" text-anchor="end">CENTRAL AUDITORIUM FOYER · MERGE &amp; RELEASE v1.0.0</text>
-    </g>
+
   </svg>`
 };
 

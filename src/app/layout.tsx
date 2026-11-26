@@ -45,9 +45,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://gdg-rvce-interface-unlocked.vercel.app'),
   title: 'GDG on Campus RV College of Engineering | GDG RVCE',
   description:
-    'Award-winning architectural developer collective frontend for GDG on Campus RVCE — Interface Unlocked UI Design Challenge.',
+    'Architectural developer collective frontend for GDG on Campus RV College of Engineering (GDG RVCE) — AI, Cloud, Web, and Android community platform.',
   keywords: [
     'GDG RVCE',
     'GDG on Campus RV College of Engineering',
@@ -56,6 +57,24 @@ export const metadata: Metadata = {
     'Developer Community',
   ],
   authors: [{ name: 'GDG RVCE Student Builders' }],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'GDG on Campus RV College of Engineering | GDG RVCE',
+    description:
+      'Architectural developer collective frontend for GDG on Campus RV College of Engineering (GDG RVCE) — Interface Unlocked UI Design Challenge.',
+    url: '/',
+    siteName: 'GDG on Campus RV College of Engineering',
+    type: 'website',
+    locale: 'en_IN',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GDG on Campus RV College of Engineering | GDG RVCE',
+    description:
+      'Architectural developer collective frontend for GDG on Campus RV College of Engineering (GDG RVCE).',
+  },
 };
 
 export default function RootLayout({
@@ -90,6 +109,12 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} min-h-screen flex flex-col bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased font-sans`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2.5 focus:rounded-xl focus:bg-[#1D4ED8] focus:text-white focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider>
           {/* Sub-Second Architectural < > Prism Boot Sequence */}
           <ArchitecturalBootLoader />
@@ -110,7 +135,7 @@ export default function RootLayout({
                               <Navbar />
 
                               {/* Main Application Routes Viewport */}
-                              <main className="flex-1 w-full bg-blueprint-grid overflow-x-clip">
+                              <main id="main-content" tabIndex={-1} className="flex-1 w-full bg-blueprint-grid overflow-x-clip focus:outline-none">
                                 {children}
                               </main>
 

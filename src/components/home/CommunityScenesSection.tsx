@@ -24,16 +24,16 @@ function getGoogleAccentHex(accent: GoogleAccent) {
 function getCategoryBadgeClass(accent: GoogleAccent) {
   switch (accent) {
     case 'blue':
-      return 'bg-[#4285F4] text-white border-[#4285F4]';
+      return 'bg-[#1D4ED8] text-white border-[#1D4ED8]';
     case 'red':
-      return 'bg-[#EA4335] text-white border-[#EA4335]';
+      return 'bg-[#C5221F] text-white border-[#C5221F]';
     case 'yellow':
       // WCAG AAA high contrast with dark ink
       return 'bg-[#FBBC04] text-[#111827] font-bold border-[#FBBC04]';
     case 'green':
-      return 'bg-[#34A853] text-white border-[#34A853]';
+      return 'bg-[#15803D] text-white border-[#15803D]';
     default:
-      return 'bg-[#4285F4] text-white border-[#4285F4]';
+      return 'bg-[#1D4ED8] text-white border-[#1D4ED8]';
   }
 }
 
@@ -172,7 +172,7 @@ export function CommunityScenesSection() {
                 type="button"
                 onClick={() => setIsLightboxOpen(true)}
                 aria-label="Expand scene illustration in fullscreen lightbox"
-                className="min-w-[40px] min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#F8FAFC] border border-white/25 backdrop-blur-md transition-all duration-200 text-xs font-mono font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] md:min-w-[40px] md:min-h-[36px] inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#F8FAFC] border border-white/25 backdrop-blur-md transition-all duration-200 text-xs font-mono font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Expand Fullscreen ⤢</span>

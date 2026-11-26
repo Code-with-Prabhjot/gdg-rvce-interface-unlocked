@@ -6,6 +6,33 @@ export const metadata: Metadata = {
   title: 'Events & Sprints | GDG on Campus RVCE',
   description:
     'Hands-on developer laboratories, campus hackathons, and technical deep dives hosted by GDG on Campus RV College of Engineering (GDG RVCE).',
+  alternates: {
+    canonical: '/events',
+  },
+  openGraph: {
+    title: 'Events & Sprints | GDG on Campus RV College of Engineering',
+    description:
+      'Hands-on developer laboratories, campus hackathons, and technical deep dives hosted by GDG on Campus RV College of Engineering (GDG RVCE).',
+    url: '/events',
+    siteName: 'GDG on Campus RV College of Engineering',
+    type: 'website',
+    locale: 'en_IN',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'GDG on Campus RV College of Engineering — Events & Sprints',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Events & Sprints | GDG on Campus RV College of Engineering',
+    description:
+      'Hands-on developer laboratories, campus hackathons, and technical deep dives hosted by GDG RVCE.',
+    images: ['/twitter-image'],
+  },
 };
 
 function EventsDirectorySkeleton() {

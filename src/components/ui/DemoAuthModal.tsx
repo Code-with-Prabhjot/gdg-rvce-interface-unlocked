@@ -223,21 +223,21 @@ export function DemoAuthModal() {
               {isPassportView ? (
                 <Ticket className="w-5 h-5 text-[#4285F4]" />
               ) : (
-                <KeyRound className="w-5 h-5 text-[#4285F4]" />
+                <KeyRound className="w-5 h-5 text-[var(--accent-blue-text)]" />
               )}
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#4285F4] block">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[var(--accent-blue-text)] block">
                 {isPassportView
                   ? 'LIVE BUILDER PASSPORT // SAMPLE PROFILE'
                   : 'SAMPLE PERSONA PREVIEW // LOCAL ONLY'}
               </span>
-              <h1
+              <h2
                 id="demo-auth-modal-title"
                 className="text-lg font-display font-bold text-[var(--text-primary)]"
               >
                 {isPassportView ? 'My Builder Passport' : 'Sample Builder Passport (Local Preview)'}
-              </h1>
+              </h2>
             </div>
           </div>
 
@@ -247,9 +247,9 @@ export function DemoAuthModal() {
                 type="button"
                 onClick={() => setShowPassport(false)}
                 title="Switch or exit sample persona"
-                className="min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
-                <UserCheck className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
+                <UserCheck className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
                 <span className="hidden sm:inline">Switch / Exit Persona</span>
                 <span className="sm:hidden">Switch</span>
               </button>
@@ -258,7 +258,7 @@ export function DemoAuthModal() {
                 onClick={handleSignOut}
                 aria-label="Exit sample persona"
                 title="Exit Sample Persona"
-                className="min-h-[36px] min-w-[36px] p-2 rounded-lg text-[#EA4335] bg-[#EA4335]/10 hover:bg-[#EA4335] hover:text-white border border-[#EA4335]/30 transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] p-2 rounded-lg text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#C5221F] hover:text-white border border-[#EA4335]/30 transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
                 <LogOut className="w-3.5 h-3.5" />
               </button>
@@ -280,7 +280,7 @@ export function DemoAuthModal() {
           {errorMsg && (
             <div
               role="alert"
-              className="p-3 rounded-xl bg-[#EA4335]/10 border border-[#EA4335]/40 text-xs font-mono text-[#EA4335] flex items-start gap-2"
+              className="p-3 rounded-xl bg-[#EA4335]/10 border border-[#EA4335]/40 text-xs font-mono text-[var(--accent-red-text)] flex items-start gap-2"
             >
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
@@ -288,7 +288,7 @@ export function DemoAuthModal() {
           )}
 
           <div className="p-3 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] flex items-center gap-2.5 text-[11px] font-mono text-[var(--text-muted)]">
-            <ShieldCheck className="w-4 h-4 text-[#34A853] shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-[var(--accent-green-text)] shrink-0" />
             <span>Client-side persona preview only · Zero authentication or tracking.</span>
           </div>
 
@@ -309,7 +309,14 @@ export function DemoAuthModal() {
                         </span>
                         <span
                           className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white"
-                          style={{ backgroundColor: session.badgeColor }}
+                          style={{
+                            backgroundColor:
+                              session.badgeColor === '#EA4335'
+                                ? '#C5221F'
+                                : session.badgeColor === '#34A853'
+                                  ? '#15803D'
+                                  : '#1D4ED8',
+                          }}
                         >
                           {session.role}
                         </span>
@@ -319,7 +326,7 @@ export function DemoAuthModal() {
                       </p>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#34A853]/15 text-[#34A853] border border-[#34A853]/30">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/30">
                     <ShieldCheck className="w-3 h-3" />
                     PASSPORT LIVE
                   </span>
@@ -378,18 +385,18 @@ export function DemoAuthModal() {
                       <div className="flex items-start justify-between gap-2 flex-wrap">
                         <div className="flex items-center gap-2 min-w-0">
                           <div className="w-7 h-7 rounded-lg bg-[#4285F4]/12 border border-[#4285F4]/30 flex items-center justify-center shrink-0">
-                            <Ticket className="w-3.5 h-3.5 text-[#4285F4]" />
+                            <Ticket className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                           </div>
                           <div className="min-w-0">
                             <p className="text-xs font-bold text-[var(--text-primary)] truncate">
                               {pass.eventTitle}
                             </p>
-                            <p className="text-[10px] font-mono text-[#4285F4] font-bold truncate">
+                            <p className="text-[10px] font-mono text-[var(--accent-blue-text)] font-bold truncate">
                               PASS ID: {pass.passId}
                             </p>
                           </div>
                         </div>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#34A853]/12 text-[#34A853] border border-[#34A853]/30 shrink-0">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#34A853]/12 text-[var(--accent-green-text)] border border-[#34A853]/30 shrink-0">
                           {pass.category}
                         </span>
                       </div>
@@ -408,7 +415,7 @@ export function DemoAuthModal() {
                           pass.eventSlug
                         )}&passId=${encodeURIComponent(pass.passId)}&verify=1`}
                         onClick={closeModal}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] transition-colors cursor-pointer"
+                        className="min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] transition-colors cursor-pointer"
                       >
                         <QrCode className="w-3.5 h-3.5" />
                         <span>Open QR Pass →</span>
@@ -425,9 +432,9 @@ export function DemoAuthModal() {
               ) : (
                 <div className="space-y-4" role="tabpanel">
                   <div className="space-y-2">
-                    <h2 className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                    <h3 className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
                       ATTENDED GDG RVCE SESSIONS
-                    </h2>
+                    </h3>
                     {session.attendedSessions.map((item) => (
                       <div
                         key={item.sessionId}
@@ -446,7 +453,14 @@ export function DemoAuthModal() {
                           style={{
                             backgroundColor: `${item.badgeColor}18`,
                             borderColor: `${item.badgeColor}55`,
-                            color: item.badgeColor,
+                            color:
+                              item.badgeColor === '#EA4335'
+                                ? 'var(--accent-red-text)'
+                                : item.badgeColor === '#34A853'
+                                  ? 'var(--accent-green-text)'
+                                  : item.badgeColor === '#FBBC04'
+                                    ? 'var(--accent-yellow-text)'
+                                    : 'var(--accent-blue-text)',
                           }}
                         >
                           {item.trackBadge}
@@ -461,9 +475,9 @@ export function DemoAuthModal() {
                   </div>
 
                   <div className="space-y-2">
-                    <h2 className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                    <h3 className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
                       OPEN SOURCE &amp; CHAPTER CONTRIBUTIONS
-                    </h2>
+                    </h3>
                     {session.contributions.map((item) => (
                       <div
                         key={item.contributionId}
@@ -496,7 +510,7 @@ export function DemoAuthModal() {
                     <button
                       type="button"
                       onClick={handleSignOut}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[#EA4335] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 border border-[#EA4335]/30 cursor-pointer"
+                      className="min-h-[44px] md:min-h-0 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 border border-[#EA4335]/30 cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Sign Out</span>
@@ -506,7 +520,7 @@ export function DemoAuthModal() {
               )}
 
               <div className="p-3 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] flex items-center gap-2.5 text-[11px] font-mono text-[var(--text-muted)]">
-                <ShieldCheck className="w-4 h-4 text-[#34A853] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[var(--accent-green-text)] shrink-0" />
                 <span>
                   Fictional sample profile only · Zero personal data collected or stored.
                 </span>
@@ -529,6 +543,12 @@ export function DemoAuthModal() {
                   {DEMO_PRESETS.map((preset, idx) => {
                     const isActive = session?.demoId === preset.demoId;
                     const isBusy = loadingId === preset.demoId;
+                    const accessibleBadgeColor =
+                      preset.badgeColor === '#EA4335'
+                        ? '#C5221F'
+                        : preset.badgeColor === '#34A853'
+                          ? '#15803D'
+                          : '#1D4ED8';
                     return (
                       <button
                         key={preset.demoId}
@@ -545,7 +565,7 @@ export function DemoAuthModal() {
                         <div className="flex items-start gap-3 min-w-0">
                           <div
                             className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-mono font-bold text-xs shrink-0 mt-0.5"
-                            style={{ backgroundColor: preset.badgeColor }}
+                            style={{ backgroundColor: accessibleBadgeColor }}
                           >
                             {preset.displayName
                               .split(' ')
@@ -560,7 +580,7 @@ export function DemoAuthModal() {
                               </span>
                               <span
                                 className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white"
-                                style={{ backgroundColor: preset.badgeColor }}
+                                style={{ backgroundColor: accessibleBadgeColor }}
                               >
                                 {preset.role}
                               </span>
@@ -578,7 +598,7 @@ export function DemoAuthModal() {
                           {isBusy ? (
                             <div className="w-4 h-4 border-2 border-[#4285F4]/30 border-t-[#4285F4] rounded-full animate-spin" />
                           ) : isActive ? (
-                            <UserCheck className="w-4 h-4 text-[#34A853]" />
+                            <UserCheck className="w-4 h-4 text-[var(--accent-green-text)]" />
                           ) : (
                             <ArrowRight className="w-4 h-4 text-[var(--text-muted)]" />
                           )}
@@ -605,12 +625,12 @@ export function DemoAuthModal() {
                     onChange={(e) => setCustomDemoId(e.target.value)}
                     placeholder="e.g. RVCE-2026-TEST"
                     maxLength={24}
-                    className="flex-1 px-3.5 py-2.5 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    className="flex-1 min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   />
                   <button
                     type="submit"
                     disabled={loadingId !== null}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-bold text-white bg-[#4285F4] hover:bg-[#3367D6] disabled:opacity-60 transition-colors cursor-pointer shrink-0"
+                    className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] disabled:opacity-60 transition-colors cursor-pointer shrink-0"
                   >
                     {loadingId === 'custom' ? (
                       <span>Verifying...</span>
@@ -628,7 +648,7 @@ export function DemoAuthModal() {
                 <button
                   type="button"
                   onClick={() => setShowPassport(true)}
-                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[#4285F4] bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border border-[#4285F4]/30 cursor-pointer"
+                  className="w-full min-h-[44px] md:min-h-0 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--accent-blue-text)] bg-[#4285F4]/10 hover:bg-[#4285F4]/20 border border-[#4285F4]/30 cursor-pointer"
                 >
                   <Ticket className="w-3.5 h-3.5" />
                   <span>Back to My Builder Passport</span>
@@ -637,7 +657,7 @@ export function DemoAuthModal() {
 
               {/* Strict Zero-PII Compliance Notice */}
               <div className="p-3 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] flex items-center gap-2.5 text-[11px] font-mono text-[var(--text-muted)]">
-                <ShieldCheck className="w-4 h-4 text-[#34A853] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[var(--accent-green-text)] shrink-0" />
                 <span>
                   Demo Authentication Only · Fictional sample personas · Zero personal data collected.
                 </span>

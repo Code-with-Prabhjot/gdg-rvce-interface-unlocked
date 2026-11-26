@@ -22,11 +22,20 @@ export function GuidedTourOverlay() {
   const isLast = currentStepIndex === steps.length - 1;
   const progressPct = ((currentStepIndex + 1) / steps.length) * 100;
 
-  // Pair solid #FBBC04 yellow with #111827 dark ink for >7:1 WCAG AAA contrast
+  // Pair solid #FBBC04 yellow with #111827 dark ink for >7:1 WCAG AAA contrast,
+  // and ensure accessible >=5.0:1 shades behind #FFFFFF text
   const primaryBtnTextColor =
     currentStep.accentHex === '#FBBC04' ? '#111827' : '#FFFFFF';
   const stepPillTextColor =
     currentStep.accentHex === '#FBBC04' ? '#111827' : '#FFFFFF';
+  const accessibleSolidHex =
+    currentStep.accentHex === '#4285F4'
+      ? '#1D4ED8'
+      : currentStep.accentHex === '#EA4335'
+        ? '#C5221F'
+        : currentStep.accentHex === '#34A853'
+          ? '#15803D'
+          : currentStep.accentHex;
 
   return (
     <AnimatePresence>
@@ -59,7 +68,7 @@ export function GuidedTourOverlay() {
                 <span
                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[11px] font-bold tracking-wider uppercase shadow-2xs shrink-0"
                   style={{
-                    backgroundColor: currentStep.accentHex,
+                    backgroundColor: accessibleSolidHex,
                     color: stepPillTextColor,
                   }}
                 >
@@ -76,7 +85,7 @@ export function GuidedTourOverlay() {
                 type="button"
                 onClick={closeTour}
                 aria-label="Close Interactive Guided Tour"
-                className="min-w-[36px] min-h-[36px] w-9 h-9 inline-flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-colors cursor-pointer shrink-0"
+                className="min-w-[44px] min-h-[44px] md:min-w-[36px] md:min-h-[36px] w-11 h-11 md:w-9 md:h-9 inline-flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-colors cursor-pointer shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -125,7 +134,7 @@ export function GuidedTourOverlay() {
                 type="button"
                 onClick={prevStep}
                 disabled={isFirst}
-                className="min-h-[36px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 <span>Prev</span>
@@ -134,9 +143,9 @@ export function GuidedTourOverlay() {
               <button
                 type="button"
                 onClick={nextStep}
-                className="min-h-[36px] inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold shadow-sm hover:opacity-95 transition-all cursor-pointer"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold shadow-sm hover:opacity-95 transition-all cursor-pointer"
                 style={{
-                  backgroundColor: currentStep.accentHex,
+                  backgroundColor: accessibleSolidHex,
                   color: primaryBtnTextColor,
                 }}
               >

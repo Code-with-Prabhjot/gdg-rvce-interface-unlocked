@@ -36,10 +36,13 @@ export function DevTerminalModal() {
   useEffect(() => {
     if (isOpen) {
       skipFocusRestoreRef.current = false;
+    } else {
+      inputRef.current?.blur();
     }
   }, [isOpen]);
 
   const handleCloseTerminal = () => {
+    inputRef.current?.blur();
     close({ skipFocusRestore: skipFocusRestoreRef.current });
   };
 
@@ -359,7 +362,7 @@ export function DevTerminalModal() {
             id: `res-${Date.now()}`,
             type: 'response',
             output: (
-              <p className="text-[#FBBC04] text-xs font-mono">
+              <p className="text-[#FCD34D] text-xs font-mono">
                 Theme set to Daylight Blueprint (Light Mode).
               </p>
             ),
@@ -420,7 +423,7 @@ export function DevTerminalModal() {
           output: (
             <div className="flex items-center gap-2 text-xs font-mono">
               <Sparkles className="w-4 h-4 text-[#FBBC04]" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853] font-bold">
+              <span className="gdg-4color-text font-bold">
                 Interface Unlocked — Shipped with GDG RVCE!
               </span>
             </div>
@@ -585,6 +588,7 @@ export function DevTerminalModal() {
       }
     } else if (e.key === 'Escape') {
       e.preventDefault();
+      e.stopPropagation();
       handleCloseTerminal();
     }
   };
@@ -611,7 +615,7 @@ export function DevTerminalModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -12 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-2xl rounded-2xl bg-[#0A0D12] border border-[var(--border-strong)] text-[#F8FAFC] shadow-2xl overflow-hidden font-['JetBrains_Mono',monospace] flex flex-col z-10 max-h-[85vh] sm:max-h-[80vh]"
+            className="gdg-dark-surface relative w-full max-w-2xl rounded-2xl bg-[#0A0D12] border border-[var(--border-strong)] text-[#F8FAFC] shadow-2xl overflow-hidden font-['JetBrains_Mono',monospace] flex flex-col z-10 max-h-[85vh] sm:max-h-[80vh]"
             role="dialog"
             aria-modal="true"
             aria-label="GDG RVCE Developer CLI Terminal"

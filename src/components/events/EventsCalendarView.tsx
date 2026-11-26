@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -71,8 +71,8 @@ function getTrackColorTokens(category: EventCategory) {
         accent: '#EA4335',
         bg: 'rgba(234, 67, 53, 0.14)',
         border: 'rgba(234, 67, 53, 0.45)',
-        text: '#EA4335',
-        badgeBg: '#EA4335',
+        text: 'var(--accent-red-text)',
+        badgeBg: '#C5221F',
         badgeText: '#FFFFFF',
       };
     case 'Workshop':
@@ -80,8 +80,8 @@ function getTrackColorTokens(category: EventCategory) {
         accent: '#4285F4',
         bg: 'rgba(66, 133, 244, 0.14)',
         border: 'rgba(66, 133, 244, 0.45)',
-        text: '#4285F4',
-        badgeBg: '#4285F4',
+        text: 'var(--accent-blue-text)',
+        badgeBg: '#1D4ED8',
         badgeText: '#FFFFFF',
       };
     case 'Study Jam':
@@ -89,7 +89,7 @@ function getTrackColorTokens(category: EventCategory) {
         accent: '#FBBC04',
         bg: 'rgba(251, 188, 4, 0.18)',
         border: 'rgba(251, 188, 4, 0.55)',
-        text: '#FBBC04',
+        text: 'var(--accent-yellow-text)',
         badgeBg: '#FBBC04',
         badgeText: '#111827', // Pair #FBBC04 with #111827 dark ink for WCAG AAA contrast
       };
@@ -98,8 +98,8 @@ function getTrackColorTokens(category: EventCategory) {
         accent: '#34A853',
         bg: 'rgba(52, 168, 83, 0.14)',
         border: 'rgba(52, 168, 83, 0.45)',
-        text: '#34A853',
-        badgeBg: '#34A853',
+        text: 'var(--accent-green-text)',
+        badgeBg: '#15803D',
         badgeText: '#FFFFFF',
       };
   }
@@ -130,6 +130,17 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
   }, [events, availableMonths]);
 
   const [activeMonthKey, setActiveMonthKey] = useState<string>(defaultMonth);
+  const activeMonthRef = useRef(activeMonthKey);
+  activeMonthRef.current = activeMonthKey;
+
+  useEffect(() => {
+    const currentHasEvents = events.some(
+      (ev) => parseEventIsoDate(ev.isoStart).yyyyMm === activeMonthRef.current
+    );
+    if (!currentHasEvents && defaultMonth) {
+      setActiveMonthKey(defaultMonth);
+    }
+  }, [events, defaultMonth]);
 
   // Parse active year and month
   const [currentYear, currentMonth] = useMemo(() => {
@@ -251,15 +262,15 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
       <div className="rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-xs">
         {/* Left: Active Month Display & Telemetry Badge */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#4285F4]/10 border border-[#4285F4]/30 flex items-center justify-center text-[#4285F4] shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-[#4285F4]/10 border border-[#4285F4]/30 flex items-center justify-center text-[var(--accent-blue-text)] shrink-0">
             <CalendarDays className="w-5 h-5" />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
+              <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)]">
                 {MONTH_NAMES[currentMonth - 1]} {currentYear}
-              </h3>
+              </h2>
               <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-[var(--bg-subtle)] border border-[var(--border-hairline)] text-[var(--text-secondary)]">
                 {monthEvents.length} {monthEvents.length === 1 ? 'session' : 'sessions'}
               </span>
@@ -284,7 +295,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
                   key={mKey}
                   type="button"
                   onClick={() => setActiveMonthKey(mKey)}
-                  className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                  className={`min-h-[44px] md:min-h-[32px] inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all whitespace-nowrap cursor-pointer ${
                     isActive
                       ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] shadow-xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
@@ -302,7 +313,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
               type="button"
               onClick={handlePrevMonth}
               aria-label="Previous month"
-              className="p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] transition-all cursor-pointer"
+              className="min-w-[44px] min-h-[44px] md:min-w-[36px] md:min-h-[36px] inline-flex items-center justify-center p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] transition-all cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -310,7 +321,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
               type="button"
               onClick={handleNextMonth}
               aria-label="Next month"
-              className="p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] transition-all cursor-pointer"
+              className="min-w-[44px] min-h-[44px] md:min-w-[36px] md:min-h-[36px] inline-flex items-center justify-center p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] transition-all cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -328,7 +339,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
             <div
               key={weekday}
               className={`py-3 px-3 text-center text-xs font-mono font-bold tracking-wider ${
-                i >= 5 ? 'text-[#EA4335]/90' : 'text-[var(--text-muted)]'
+                i >= 5 ? 'text-[var(--accent-red-text)]' : 'text-[var(--text-muted)]'
               }`}
             >
               {weekday}
@@ -487,17 +498,17 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
                         </span>
                       </div>
 
-                      <h4 className="text-sm font-sans font-bold text-[var(--text-primary)] leading-snug">
+                      <h3 className="text-sm font-sans font-bold text-[var(--text-primary)] leading-snug">
                         {ev.title}
-                      </h4>
+                      </h3>
 
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-[var(--text-secondary)]">
                         <span className="inline-flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-[#4285F4]" />
+                          <Clock className="w-3.5 h-3.5 text-[var(--accent-blue-text)]" />
                           {ev.time}
                         </span>
                         <span className="inline-flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5 text-[#EA4335]" />
+                          <MapPin className="w-3.5 h-3.5 text-[var(--accent-red-text)]" />
                           {ev.venue.split(',')[0]}
                         </span>
                       </div>
@@ -505,7 +516,7 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
                       <button
                         type="button"
                         onClick={() => onSelectEvent(ev.slug)}
-                        className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-mono font-bold bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-[var(--text-primary)] transition-all cursor-pointer"
+                        className="w-full min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-mono font-bold bg-[var(--bg-subtle)] hover:bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-[var(--text-primary)] transition-all cursor-pointer"
                       >
                         <span>Inspect Session Details</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -520,9 +531,9 @@ export function EventsCalendarView({ events, onSelectEvent }: EventsCalendarView
           /* Empty Month State */
           <div className="p-8 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-hairline)] text-center space-y-3">
             <CalendarDays className="w-8 h-8 text-[var(--text-muted)] mx-auto" />
-            <h4 className="text-base font-display font-bold text-[var(--text-primary)]">
+            <h3 className="text-base font-display font-bold text-[var(--text-primary)]">
               No sessions scheduled for this month
-            </h4>
+            </h3>
             <p className="text-xs text-[var(--text-secondary)] max-w-sm mx-auto">
               There are no matching sessions in {MONTH_NAMES[currentMonth - 1]} {currentYear}. Use
               the quick month selectors above to navigate to months with active sessions.

@@ -15,7 +15,7 @@ interface Node {
 
 interface ConstellationCanvasProps {
   className?: string;
-  mousePos?: { x: number; y: number } | null;
+  mousePosRef?: React.RefObject<{ x: number; y: number } | null>;
 }
 
 const GOOGLE_COLORS = [
@@ -25,7 +25,7 @@ const GOOGLE_COLORS = [
   '#34A853', // Green
 ];
 
-export function ConstellationCanvas({ className = '', mousePos }: ConstellationCanvasProps) {
+export function ConstellationCanvas({ className = '', mousePosRef }: ConstellationCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { theme } = useTheme();
@@ -156,6 +156,7 @@ export function ConstellationCanvas({ className = '', mousePos }: ConstellationC
 
       const nodes = nodesRef.current;
       const reducedMotion = prefersReducedMotionRef.current;
+      const mousePos = mousePosRef?.current;
 
       // Update positions if not reduced motion
       if (!reducedMotion) {
@@ -285,7 +286,7 @@ export function ConstellationCanvas({ className = '', mousePos }: ConstellationC
         cancelAnimationFrame(animFrameRef.current);
       }
     };
-  }, [isInView, theme, mousePos]);
+  }, [isInView, theme, mousePosRef]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden pointer-events-none ${className}`}>

@@ -33,7 +33,7 @@ export function KineticPrismStage() {
 
   // Mouse coordinate state for live architectural HUD readout
   const [hudCoords, setHudCoords] = useState<{ x: number; y: number }>({ x: 142, y: 88 });
-  const [canvasMouse, setCanvasMouse] = useState<{ x: number; y: number } | null>(null);
+  const canvasMouseRef = useRef<{ x: number; y: number } | null>(null);
 
   // 3D WebGL controls
   const [wireframeMode, setWireframeMode] = useState(false);
@@ -111,13 +111,13 @@ export function KineticPrismStage() {
       y: Math.round(y),
     });
 
-    setCanvasMouse({ x, y });
+    canvasMouseRef.current = { x, y };
   };
 
   const handleMouseLeave = () => {
     mouseX.set(0);
     mouseY.set(0);
-    setCanvasMouse(null);
+    canvasMouseRef.current = null;
   };
 
   const toggleWireframe = useCallback(() => {
@@ -163,7 +163,7 @@ export function KineticPrismStage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 sm:w-72 sm:h-72 rounded-full bg-[#EA4335]/06 blur-3xl pointer-events-none" />
 
           {/* Dual-Theme Constellation Canvas */}
-          <ConstellationCanvas mousePos={canvasMouse} />
+          <ConstellationCanvas mousePosRef={canvasMouseRef} />
         </div>
 
         {/* ========================================================= */}
@@ -195,7 +195,7 @@ export function KineticPrismStage() {
               onClick={toggleWireframe}
               aria-pressed={wireframeMode}
               aria-label={wireframeMode ? 'Disable wireframe mode' : 'Enable wireframe mode'}
-              className={`min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold border transition-all duration-200 cursor-pointer ${
+              className={`min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] inline-flex items-center justify-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold border transition-all duration-200 cursor-pointer ${
                 wireframeMode
                   ? 'bg-[#4285F4]/15 border-[#4285F4]/50 text-[var(--accent-blue-text)]'
                   : 'bg-[var(--bg-subtle)]/90 border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)]'
@@ -213,7 +213,7 @@ export function KineticPrismStage() {
               type="button"
               onClick={resetView}
               aria-label="Reset 3D view to default angle"
-              className="min-h-[32px] inline-flex items-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-all duration-200 cursor-pointer"
+              className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] inline-flex items-center justify-center gap-1 px-2 py-1 rounded-md font-mono text-[11px] font-semibold bg-[var(--bg-subtle)]/90 border border-[var(--border-hairline)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-all duration-200 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Reset</span>
@@ -392,7 +392,7 @@ export function KineticPrismStage() {
 
               <Link
                 href={`/events?event=${FLAGSHIP_COUNTDOWN.slug}`}
-                className="group/link inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent-blue-text)] hover:underline transition-colors whitespace-nowrap shrink-0 min-h-[32px]"
+                className="group/link inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent-blue-text)] hover:underline transition-colors whitespace-nowrap shrink-0 min-h-[44px] md:min-h-[32px]"
               >
                 <span>Inspect Sprint</span>
                 <ArrowUpRight className="w-3.5 h-3.5 shrink-0 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
@@ -400,9 +400,9 @@ export function KineticPrismStage() {
             </div>
 
             {/* Event Title */}
-            <h3 className="text-xs sm:text-sm font-display font-bold text-[var(--text-primary)] truncate mb-2">
+            <h2 className="text-xs sm:text-sm font-display font-bold text-[var(--text-primary)] truncate mb-2">
               {FLAGSHIP_COUNTDOWN.title}
-            </h3>
+            </h2>
 
             {/* 4-Segment Countdown Timer */}
             <div className="grid grid-cols-4 gap-1.5 sm:gap-2">

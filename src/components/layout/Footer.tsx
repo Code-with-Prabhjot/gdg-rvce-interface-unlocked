@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { MapPin, Terminal, Heart, Info, X, HelpCircle, Ticket } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
+import { MapPin, Terminal, Heart, Info, X, HelpCircle, Ticket, Globe, Code2 } from 'lucide-react';
+import { GithubIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
@@ -13,16 +13,42 @@ import { useDemoAuth } from '@/context/DemoAuthContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
+  const attributionsTriggerRef = useRef<HTMLButtonElement>(null);
+  const attributionsCloseRef = useRef<HTMLButtonElement>(null);
+  const wasAttributionsOpenRef = useRef(false);
   const { toggle: toggleTerminal } = useDevTerminal();
   const { open: openApiInspector } = useApiInspector();
   const { isXRayActive, toggleXRay } = useXRay();
   const { open: openShortcuts } = useShortcuts();
   const { openModal: openDemoAuthModal } = useDemoAuth();
 
+  useEffect(() => {
+    if (showAttributions) {
+      wasAttributionsOpenRef.current = true;
+      const timer = setTimeout(() => {
+        attributionsCloseRef.current?.focus();
+      }, 20);
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setShowAttributions(false);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    } else if (wasAttributionsOpenRef.current) {
+      wasAttributionsOpenRef.current = false;
+      attributionsTriggerRef.current?.focus();
+    }
+  }, [showAttributions]);
+
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
       {/* Top Architectural Blueprint Accent Border */}
-      <div className="h-[2px] w-full bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC04] to-[#34A853]" />
+      <div className="h-[2px] w-full gdg-4color-bar" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
@@ -86,9 +112,10 @@ export function Footer() {
               </li>
               <li>
                 <button
+                  ref={attributionsTriggerRef}
                   type="button"
                   onClick={() => setShowAttributions(true)}
-                  className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center gap-1.5 cursor-pointer focus:outline-none"
+                  className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:underline"
                 >
                   <Info className="w-3.5 h-3.5" />
                   <span>Open Source Attributions</span>
@@ -116,19 +143,19 @@ export function Footer() {
                 href="https://gdg.community.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--accent-blue-text)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="GDG Community Directory"
               >
-                <LinkedinIcon className="w-4 h-4 shrink-0" />
+                <Globe className="w-4 h-4 shrink-0" />
               </a>
               <a
                 href="https://developers.google.com/community/gdg"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--accent-red-text)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                 aria-label="Google Developers GDG Portal"
               >
-                <InstagramIcon className="w-4 h-4 shrink-0" />
+                <Code2 className="w-4 h-4 shrink-0" />
               </a>
               <a
                 href="https://www.youtube.com/@GoogleDevelopers"
@@ -214,7 +241,7 @@ export function Footer() {
                 aria-label="Open Keyboard Shortcuts Cheat-Sheet"
                 title="Keyboard Shortcuts Cheat-Sheet (?)"
               >
-                <HelpCircle className="w-3 h-3 text-[#FBBC04]" />
+                <HelpCircle className="w-3 h-3 text-[var(--accent-yellow-text)]" />
                 <kbd className="text-[10px] font-mono font-bold">?</kbd>
               </button>
 
@@ -249,30 +276,37 @@ export function Footer() {
       {/* Attributions Modal */}
       {showAttributions && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="attributions-modal-title"
           onClick={(e) => {
             if (e.target === e.currentTarget) setShowAttributions(false);
           }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overscroll-contain"
         >
-          <div className="relative w-full max-w-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] rounded-2xl p-6 shadow-2xl max-h-[85vh] flex flex-col">
+          <div className="relative w-full max-w-2xl bg-[var(--bg-elevated)] border border-[var(--border-strong)] rounded-2xl p-6 shadow-2xl max-h-[85vh] flex flex-col overscroll-contain">
             <div className="flex items-center justify-between pb-4 border-b border-[var(--border-hairline)]">
               <div className="flex items-center gap-2">
-                <Info className="w-5 h-5 text-[#4285F4] shrink-0" />
-                <h3 className="font-['Space_Grotesk',sans-serif] font-bold text-lg text-[var(--text-primary)]">
+                <Info className="w-5 h-5 text-[var(--accent-blue-text)] shrink-0" />
+                <h2
+                  id="attributions-modal-title"
+                  className="font-['Space_Grotesk',sans-serif] font-bold text-lg text-[var(--text-primary)]"
+                >
                   Open Source Attributions &amp; Licenses
-                </h3>
+                </h2>
               </div>
               <button
+                ref={attributionsCloseRef}
                 type="button"
                 onClick={() => setShowAttributions(false)}
-                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)]"
-                aria-label="Close dialog"
+                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                aria-label="Close Open Source Attributions dialog"
               >
                 <X className="w-5 h-5 shrink-0" />
               </button>
             </div>
 
-            <div className="overflow-y-auto py-4 space-y-4 flex-1">
+            <div className="overflow-y-auto overscroll-contain py-4 space-y-4 flex-1">
               {OPEN_SOURCE_ATTRIBUTIONS.map((item) => (
                 <div
                   key={item.name}
@@ -291,7 +325,7 @@ export function Footer() {
                     href={item.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#4285F4] hover:underline inline-block pt-1 font-mono text-[11px]"
+                    className="text-[var(--accent-blue-text)] hover:underline inline-block pt-1 font-mono text-[11px]"
                   >
                     {item.sourceUrl}
                   </a>
@@ -303,7 +337,7 @@ export function Footer() {
               <button
                 type="button"
                 onClick={() => setShowAttributions(false)}
-                className="px-4 py-2 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] text-xs font-semibold text-[var(--text-primary)]"
+                className="min-h-[40px] px-4 py-2 rounded-lg bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] text-xs font-semibold text-[var(--text-primary)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
                 Close
               </button>

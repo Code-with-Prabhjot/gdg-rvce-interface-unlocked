@@ -17,7 +17,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Read current theme set by inline script or localStorage
-    const savedTheme = localStorage.getItem('gdg-theme') as Theme | null;
+    let savedTheme: Theme | null = null;
+    try {
+      savedTheme = localStorage.getItem('gdg-theme') as Theme | null;
+    } catch {
+      savedTheme = null;
+    }
     const initialTheme: Theme =
       savedTheme === 'light' || savedTheme === 'dark'
         ? savedTheme
@@ -37,7 +42,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('gdg-theme', newTheme);
+    try {
+      localStorage.setItem('gdg-theme', newTheme);
+    } catch {
+      // Ignore storage errors in sandboxed/private browsing contexts
+    }
   };
 
   const setTheme = (newTheme: Theme) => {

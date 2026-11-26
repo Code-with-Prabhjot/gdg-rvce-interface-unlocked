@@ -85,7 +85,7 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     accentHex: '#34A853',
     pillBg: 'bg-[#34A853]/15 border border-[#34A853]/35',
     pillText: 'text-[var(--accent-green-text)]',
-    cadence: '90 Mins · Deep-Dive & Q&A',
+    cadence: '90 Mins · Deep-Dive & Teardown',
     handsOnRatio: '30% Interactive Demos',
     handsOnPercentage: 30,
     prerequisite: 'Open to All Branches',
@@ -145,7 +145,7 @@ export function TrackFormatComparator({
           onClick={() => setIsExpanded((prev) => !prev)}
           aria-expanded={isExpanded}
           aria-controls="track-comparator-content"
-          className="min-h-[40px] min-w-[40px] inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer shrink-0 self-end sm:self-auto"
+          className="min-h-[44px] md:min-h-[40px] min-w-[44px] inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer shrink-0 self-end sm:self-auto"
         >
           <Layers className="w-4 h-4 text-[var(--accent-blue-text)]" />
           <span>{isExpanded ? 'Collapse Matrix' : 'Compare 4 Formats'}</span>
@@ -233,9 +233,9 @@ export function TrackFormatComparator({
 
                       {/* Track Full Title & Description */}
                       <div>
-                        <h4 className="text-base font-display font-bold text-[var(--text-primary)]">
+                        <h2 className="text-base font-display font-bold text-[var(--text-primary)]">
                           {track.name}
-                        </h4>
+                        </h2>
                         <p className="text-xs text-[var(--text-secondary)] mt-1 line-clamp-2 leading-relaxed">
                           {track.description}
                         </p>
@@ -304,7 +304,16 @@ export function TrackFormatComparator({
                           <span className="inline-flex items-center gap-1 text-[var(--text-primary)] font-medium">
                             <CheckCircle2
                               className="w-3 h-3 shrink-0"
-                              style={{ color: track.accentHex }}
+                              style={{
+                                color:
+                                  track.category === 'Study Jam'
+                                    ? 'var(--accent-yellow-text)'
+                                    : track.category === 'Hackathon'
+                                      ? 'var(--accent-red-text)'
+                                      : track.category === 'Tech Talk'
+                                        ? 'var(--accent-green-text)'
+                                        : 'var(--accent-blue-text)',
+                              }}
                             />
                             <span className="truncate">{track.artifact}</span>
                           </span>
@@ -317,7 +326,7 @@ export function TrackFormatComparator({
                       <button
                         type="button"
                         onClick={() => handleTrackFilterClick(track.category)}
-                        className={`w-full min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
+                        className={`w-full min-h-[44px] md:min-h-[40px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer ${
                           isCurrentFilter
                             ? 'bg-[#0F172A] text-[#FFFFFF] dark:bg-[#F8FAFC] dark:text-[#0A0D12] shadow-xs'
                             : 'bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-primary)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)]'

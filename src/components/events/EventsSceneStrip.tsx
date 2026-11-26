@@ -14,17 +14,17 @@ const TARGET_SCENE_IDS = [
 
 const ACCENT_COLORS: Record<string, { hex: string; border: string; bg: string }> = {
   red: {
-    hex: '#EA4335',
+    hex: '#C5221F',
     border: 'rgba(234, 67, 53, 0.4)',
     bg: 'rgba(234, 67, 53, 0.1)',
   },
   blue: {
-    hex: '#4285F4',
+    hex: '#1D4ED8',
     border: 'rgba(66, 133, 244, 0.4)',
     bg: 'rgba(66, 133, 244, 0.1)',
   },
   green: {
-    hex: '#34A853',
+    hex: '#15803D',
     border: 'rgba(52, 168, 83, 0.4)',
     bg: 'rgba(52, 168, 83, 0.1)',
   },
@@ -121,11 +121,11 @@ export function EventsSceneStrip() {
               <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)]">
-                    <MapPin className="w-3.5 h-3.5 text-[#EA4335]" />
+                    <MapPin className="w-3.5 h-3.5 text-[var(--accent-red-text)]" />
                     <span className="truncate">{scene.venue}</span>
                   </div>
 
-                  <h3 className="text-base font-display font-bold text-[var(--text-primary)] group-hover:text-[#4285F4] transition-colors leading-snug">
+                  <h3 className="text-base font-display font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-blue-text)] transition-colors leading-snug">
                     {scene.title}
                   </h3>
 

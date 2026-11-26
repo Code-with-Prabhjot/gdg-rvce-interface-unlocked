@@ -341,9 +341,9 @@ export function TeamDirectoryClient() {
                     />
                   </div>
                   <div className="space-y-1 max-w-md">
-                    <h3 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)]">
+                    <h2 className="text-lg sm:text-xl font-display font-bold text-[var(--text-primary)]">
                       No matching builder profiles
-                    </h3>
+                    </h2>
                     <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                       No fictional builders match the active filter combination. Try clearing your search query, selecting another stack, or resetting filters.
                     </p>
@@ -351,7 +351,7 @@ export function TeamDirectoryClient() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white text-xs sm:text-sm font-mono font-medium transition-all shadow-xs flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-xs sm:text-sm font-mono font-medium transition-all shadow-xs flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Reset All Filters</span>

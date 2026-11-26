@@ -319,7 +319,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     id: 'event-01',
     slug: 'gemini-multimodal-buildathon',
     title: "Gemini Multimodal Buildathon '26",
-    subtitle: '24-Hour Prototype Sprint with Gemini 1.5 Pro & Flash',
+    subtitle: '24-Hour Prototype Sprint with Gemini 2.5 Pro & Flash',
     category: 'Hackathon',
     eventType: 'Hackathon',
     status: 'Upcoming',
@@ -334,7 +334,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     venue: 'IEM Auditorium, RVCE',
     coverImage: '/assets/covers/ai-multimodal.svg',
     sceneImage: '/assets/scenes/hackathon-table-sprint.svg',
-    summary: '24-hour rapid prototyping arena architecting next-gen multimodal apps using Gemini 1.5 Pro and Vertex AI.',
+    summary: '24-hour rapid prototyping arena architecting next-gen multimodal apps using Gemini 2.5 Pro and Vertex AI.',
     description:
       'An intensive 24-hour on-campus development sprint challenging student engineers to architect multimodal applications fusing audio, vision, long-context text, and structured tool-calling with the Gemini API. Compete in multidisciplinary teams with direct API credits and mentor code checkpoints.',
     prerequisites: [
@@ -354,9 +354,9 @@ export const EVENTS_DATA: GDGEvent[] = [
       {
         time: '09:30 AM',
         topic: 'Opening Keynote & Problem Statements',
-        detail: 'Deep dive into Gemini 1.5 long context caching and system instruction crafting.',
+        detail: 'Deep dive into Gemini 2.5 long context caching and system instruction crafting.',
         title: 'Opening Keynote & Problem Statements',
-        description: 'Deep dive into Gemini 1.5 long context caching and system instruction crafting.',
+        description: 'Deep dive into Gemini 2.5 long context caching and system instruction crafting.',
       },
       {
         time: '11:00 AM',
@@ -387,7 +387,7 @@ export const EVENTS_DATA: GDGEvent[] = [
         description: 'Final commit tag submission and 3-minute technical jury demonstrations.',
       },
     ],
-    tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python'],
+    tags: ['Gemini 2.5', 'Multimodal', 'Vertex AI', 'Python'],
     badgeText: 'FLAGSHIP SPRINT',
     registrationStatus: 'open',
     registrationUrl: 'https://gdg.community.dev/',
@@ -591,9 +591,9 @@ export const EVENTS_DATA: GDGEvent[] = [
       },
       {
         time: '05:00 PM',
-        topic: 'Live Q&A & Architecture Review',
+        topic: 'Live Architecture Review & Teardown',
         detail: 'Live teardown of participant web applications and Lighthouse scores.',
-        title: 'Live Q&A & Architecture Review',
+        title: 'Live Architecture Review & Teardown',
         description: 'Live teardown of participant web applications and Lighthouse scores.',
       },
     ],
@@ -985,7 +985,7 @@ export const RECAP_DATA: EventRecap = {
         'Distroless container builds reducing cold starts from 800MB to 24MB on Google Cloud Run',
         'Declarative UI state isolation with unidirectional data flow in Kotlin 2.0 & Jetpack Compose',
       ],
-      badges: ['Gemini 1.5', 'Cloud Run', 'Compose', 'Next.js 15'],
+      badges: ['Gemini 2.5', 'Cloud Run', 'Compose', 'Next.js 15'],
     },
     {
       id: 'labs',
@@ -1367,7 +1367,7 @@ export const TEAM_DATA: GDGTeamMember[] = [
     googleColor: 'green',
     avatar: '/assets/avatars/member-05.svg',
     emoteBadge: '/assets/emotes/gemini-spark.svg',
-    bio: 'Deploying streaming multimodal agents with Gemini 1.5 Pro and low-latency structured output function pipelines.',
+    bio: 'Deploying streaming multimodal agents with Gemini 2.5 Pro and low-latency structured output function pipelines.',
     skills: ['Gemini API', 'PyTorch', 'Vector Search'],
     competencies: [
       { label: 'Multimodal Agent Architecture', level: 96 },
