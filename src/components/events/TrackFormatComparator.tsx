@@ -38,8 +38,8 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     name: 'Hands-On Workshop',
     badgeLabel: 'WORKSHOP',
     accentHex: '#4285F4',
-    pillBg: 'bg-[#4285F4]',
-    pillText: 'text-white',
+    pillBg: 'bg-[#4285F4]/15 border border-[#4285F4]/35',
+    pillText: 'text-[var(--accent-blue-text)]',
     cadence: '2.5–3 Hrs · Guided Code-Along',
     handsOnRatio: '85% Hands-On Code',
     handsOnPercentage: 85,
@@ -53,8 +53,8 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     name: 'Architectural Hackathon',
     badgeLabel: 'HACKATHON',
     accentHex: '#EA4335',
-    pillBg: 'bg-[#EA4335]',
-    pillText: 'text-white',
+    pillBg: 'bg-[#EA4335]/15 border border-[#EA4335]/35',
+    pillText: 'text-[var(--accent-red-text)]',
     cadence: '24 Hrs · Team Build Sprint',
     handsOnRatio: '90% Rapid Prototyping',
     handsOnPercentage: 90,
@@ -68,8 +68,8 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     name: 'Certification Study Jam',
     badgeLabel: 'STUDY JAM',
     accentHex: '#FBBC04',
-    pillBg: 'bg-amber-500/12 border border-amber-600/30 dark:bg-[#FBBC04]/12 dark:border-[#FBBC04]/35',
-    pillText: 'text-[#92400E] dark:text-[#FCD34D] font-semibold',
+    pillBg: 'bg-amber-500/15 border border-amber-500/35',
+    pillText: 'text-[var(--accent-yellow-text)]',
     cadence: 'Multi-Week · Structured Cohort',
     handsOnRatio: '65% Practical Labs',
     handsOnPercentage: 65,
@@ -83,8 +83,8 @@ const TRACK_SPECS: TrackFormatSpec[] = [
     name: 'Technical Keynote & RFC',
     badgeLabel: 'TECH TALK',
     accentHex: '#34A853',
-    pillBg: 'bg-[#34A853]',
-    pillText: 'text-white',
+    pillBg: 'bg-[#34A853]/15 border border-[#34A853]/35',
+    pillText: 'text-[var(--accent-green-text)]',
     cadence: '90 Mins · Deep-Dive & Q&A',
     handsOnRatio: '30% Interactive Demos',
     handsOnPercentage: 30,
@@ -201,7 +201,13 @@ export function TrackFormatComparator({
                         >
                           <span
                             className={`w-1.5 h-1.5 rounded-full ${
-                              track.category === 'Study Jam' ? 'bg-[#92400E] dark:bg-[#FCD34D]' : 'bg-white'
+                              track.category === 'Study Jam'
+                                ? 'bg-[var(--accent-yellow-text)]'
+                                : track.category === 'Hackathon'
+                                ? 'bg-[var(--accent-red-text)]'
+                                : track.category === 'Tech Talk'
+                                ? 'bg-[var(--accent-green-text)]'
+                                : 'bg-[var(--accent-blue-text)]'
                             }`}
                           />
                           {track.badgeLabel}

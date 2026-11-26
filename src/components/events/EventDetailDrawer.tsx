@@ -23,6 +23,7 @@ import {
   Bookmark,
   ShieldAlert,
   QrCode,
+  ExternalLink,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
@@ -953,6 +954,18 @@ export function EventDetailDrawer({
                         )}
                       </button>
                     )}
+
+                    <a
+                      href={event.registrationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Official Event Registration Portal ↗"
+                      title="Opens the official GDG RVCE chapter registration portal in a new tab"
+                      className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#34A853] hover:brightness-95 active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                    >
+                      <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span>Official Event Registration Portal ↗</span>
+                    </a>
 
                   </div>
 

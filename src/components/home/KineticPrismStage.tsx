@@ -266,7 +266,7 @@ export function KineticPrismStage() {
                   {/* Hairline Inner Bevel */}
                   <div className="w-full h-full rounded-xl border border-[var(--border-hairline)] flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent dark:from-white/5">
                     {/* GDG Geometric Chevrons < > */}
-                    <div className="flex items-center gap-3 sm:gap-5">
+                    <div className="flex items-center gap-2 sm:gap-3">
                       {/* Left Chevron < in Google Blue & Red */}
                       <div className="relative flex items-center">
                         <svg width="36" height="44" viewBox="0 0 46 54" fill="none" className="w-7 h-8 sm:w-10 sm:h-11 drop-shadow-sm">
@@ -285,9 +285,6 @@ export function KineticPrismStage() {
                           </defs>
                         </svg>
                       </div>
-
-                      {/* Slash / Center Line in Google Yellow */}
-                      <div className="w-2 sm:w-2.5 h-7 sm:h-10 rounded-full bg-[#FBBC04] shadow-sm transform -rotate-12" />
 
                       {/* Right Chevron > in Google Yellow & Green */}
                       <div className="relative flex items-center">

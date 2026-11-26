@@ -15,47 +15,44 @@ function getCategoryBadgeStyles(eventType: GDGEvent['eventType'] | string) {
   switch (eventType) {
     case 'Hackathon':
       return {
-        pillClass: 'bg-[#EA4335] text-white border-[#EA4335]',
-        dotClass: 'bg-white',
+        pillClass: 'bg-[#EA4335]/15 text-[var(--accent-red-text)] border border-[#EA4335]/35',
+        dotClass: 'bg-[var(--accent-red-text)]',
       };
     case 'Workshop':
       return {
-        pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
-        dotClass: 'bg-white',
+        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        dotClass: 'bg-[var(--accent-blue-text)]',
       };
     case 'Study Jam':
       return {
-        // Pairing #FBBC04 with #111827 dark ink for WCAG AAA compliance (>7:1)
-        pillClass: 'bg-[#FBBC04] text-[#111827] font-bold border-[#FBBC04]',
-        dotClass: 'bg-[#111827]',
+        pillClass: 'bg-amber-500/15 text-[var(--accent-yellow-text)] border border-amber-500/35',
+        dotClass: 'bg-[var(--accent-yellow-text)]',
       };
     case 'Tech Talk':
       return {
-        pillClass: 'bg-[#34A853] text-white border-[#34A853]',
-        dotClass: 'bg-white',
+        pillClass: 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/35',
+        dotClass: 'bg-[var(--accent-green-text)]',
       };
     default:
       return {
-        pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
-        dotClass: 'bg-white',
+        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        dotClass: 'bg-[var(--accent-blue-text)]',
       };
   }
 }
 
-// Format ISO date into strict JetBrains Mono readable timestamp
-function formatEventDate(dateStr: string, timeStr: string) {
-  try {
-    const d = new Date(dateStr);
-    const day = d.getDate().toString().padStart(2, '0');
-    const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-    const year = d.getFullYear();
-    // Extract first time element, e.g. "09:30 AM"
-    const startTimeMatch = timeStr.match(/\d{1,2}:\d{2}\s*(?:AM|PM)?/i);
-    const startTime = startTimeMatch ? startTimeMatch[0] : '09:30 IST';
-    return `${day} ${month} ${year} · ${startTime}`;
-  } catch {
-    return dateStr;
+// Format ISO 8601 date into a WebKit/Safari-safe JetBrains Mono readable timestamp
+function formatEventDate(isoStart: string, timeStr: string) {
+  const d = new Date(isoStart);
+  if (Number.isNaN(d.getTime())) {
+    return 'DATE TBA';
   }
+  const day = d.getDate().toString().padStart(2, '0');
+  const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  const year = d.getFullYear();
+  const startTimeMatch = timeStr.match(/\d{1,2}:\d{2}\s*(?:AM|PM)?/i);
+  const startTime = startTimeMatch ? startTimeMatch[0] : '09:30 IST';
+  return `${day} ${month} ${year} · ${startTime}`;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +67,7 @@ function EventCard({ event, index }: EventCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryStyles = getCategoryBadgeStyles(event.eventType);
-  const formattedDateTime = formatEventDate(event.date, event.time);
+  const formattedDateTime = formatEventDate(event.isoStart, event.time);
   const activeImage =
     viewType === 'scene' && event.sceneImage ? event.sceneImage : event.coverImage;
 

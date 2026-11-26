@@ -15,7 +15,7 @@ export async function GET() {
     shortName: 'GDG RVCE',
     tagline: 'Connect. Learn. Grow. Build with Google Technologies at RVCE.',
     institution: {
-      name: 'R.V. College of Engineering (RVCE)',
+      name: 'RV College of Engineering (RVCE)',
       city: 'Bengaluru',
       state: 'Karnataka',
       country: 'India',

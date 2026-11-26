@@ -504,7 +504,7 @@ export function BuilderDetailDrawer({
                         href={member.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`View sample repository for ${member.name}`}
+                        aria-label={`${member.name} sample GitHub profile (opens chapter repository)`}
                         className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-mono font-semibold bg-[var(--bg-elevated)] hover:border-[#34A853] text-[var(--text-secondary)] hover:text-[#34A853] border border-[var(--border-hairline)] transition-all"
                       >
                         <span>Repo</span>
@@ -608,7 +608,7 @@ export function BuilderDetailDrawer({
                       href={member.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${member.name} sample GitHub`}
+                      aria-label={`${member.name} sample GitHub profile (opens chapter repository)`}
                       className="min-w-[44px] min-h-[44px] px-3 py-2 rounded-xl bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all inline-flex items-center gap-1.5 text-xs font-mono"
                     >
                       <GithubIcon className="w-4 h-4" />
@@ -618,7 +618,7 @@ export function BuilderDetailDrawer({
                       href={member.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${member.name} sample LinkedIn`}
+                      aria-label={`${member.name} sample LinkedIn profile (opens chapter page)`}
                       className="min-w-[44px] min-h-[44px] px-3 py-2 rounded-xl bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all inline-flex items-center gap-1.5 text-xs font-mono"
                     >
                       <LinkedinIcon className="w-4 h-4" />
@@ -629,7 +629,7 @@ export function BuilderDetailDrawer({
                         href={member.links.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${member.name} sample portfolio`}
+                        aria-label={`${member.name} sample portfolio (opens GDG community portal)`}
                         className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all inline-flex items-center justify-center"
                       >
                         <ExternalLink className="w-4 h-4" />

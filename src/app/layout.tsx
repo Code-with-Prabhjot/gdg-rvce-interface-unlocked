@@ -126,7 +126,7 @@ export default function RootLayout({
                               {/* Live Backend & API Inspector Drawer */}
                               <ApiInspectorModal />
 
-                              {/* Chapter Demo Sign-In Modal (Stateless Zero-PII) */}
+                              {/* Sample Builder Passport Modal (Stateless Zero-PII) */}
                               <DemoAuthModal />
 
                               {/* Global Keyboard Shortcuts Cheat-Sheet Modal */}

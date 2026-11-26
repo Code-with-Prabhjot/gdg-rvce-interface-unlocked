@@ -1059,7 +1059,7 @@ export function ChapterTopologyView({
                       href={selectedMember.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${selectedMember.name} sample GitHub`}
+                      aria-label={`${selectedMember.name} sample GitHub profile (opens chapter repository)`}
                       className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
@@ -1068,7 +1068,7 @@ export function ChapterTopologyView({
                       href={selectedMember.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${selectedMember.name} sample LinkedIn`}
+                      aria-label={`${selectedMember.name} sample LinkedIn profile (opens chapter page)`}
                       className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                     >
                       <LinkedinIcon className="w-3.5 h-3.5" />
@@ -1078,7 +1078,7 @@ export function ChapterTopologyView({
                         href={selectedMember.links.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${selectedMember.name} sample portfolio`}
+                        aria-label={`${selectedMember.name} sample portfolio (opens GDG community portal)`}
                         className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />

@@ -97,7 +97,7 @@ export function TeamHeroHeader() {
           {/* Subcopy */}
           <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-xl">
             Student engineers, interface designers, and open-source contributors collaborating across
-            R.V. College of Engineering.
+            RV College of Engineering.
           </p>
 
           {/* Architectural Sample Roster Notice Pill */}

@@ -479,7 +479,7 @@ export function TeamMemberCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            aria-label={`${member.name} sample GitHub profile`}
+            aria-label={`${member.name} sample GitHub profile (opens chapter repository)`}
             className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
             <GithubIcon className="w-3.5 h-3.5" />
@@ -491,7 +491,7 @@ export function TeamMemberCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            aria-label={`${member.name} sample LinkedIn profile`}
+            aria-label={`${member.name} sample LinkedIn profile (opens chapter page)`}
             className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
             <LinkedinIcon className="w-3.5 h-3.5" />
@@ -504,7 +504,7 @@ export function TeamMemberCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              aria-label={`${member.name} sample portfolio website`}
+              aria-label={`${member.name} sample portfolio (opens GDG community portal)`}
               className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
             >
               <Globe className="w-3.5 h-3.5" />

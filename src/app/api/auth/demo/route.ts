@@ -192,7 +192,7 @@ const DEMO_ID_PATTERN = /^[A-Za-z0-9-_]{4,24}$/;
 
 /**
  * POST /api/auth/demo
- * Stateless Chapter Demo Sign-In endpoint (zero PII, zero database writes).
+ * Stateless sample builder passport preview endpoint (zero PII, zero database writes).
  */
 export async function POST(request: Request) {
   const startTime = performance.now();

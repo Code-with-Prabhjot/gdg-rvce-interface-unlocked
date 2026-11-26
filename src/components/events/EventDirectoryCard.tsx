@@ -19,31 +19,30 @@ function getCategoryBadgeData(category: EventCategory) {
   switch (category) {
     case 'Hackathon':
       return {
-        pillClass: 'bg-[#EA4335] text-white border-[#EA4335]',
+        pillClass: 'bg-[#EA4335]/15 text-[var(--accent-red-text)] border border-[#EA4335]/35',
         accentHex: '#EA4335',
-        dotClass: 'bg-white',
+        dotClass: 'bg-[var(--accent-red-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-red-text)]',
       };
     case 'Workshop':
       return {
-        pillClass: 'bg-[#4285F4] text-white border-[#4285F4]',
+        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
         accentHex: '#4285F4',
-        dotClass: 'bg-white',
+        dotClass: 'bg-[var(--accent-blue-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-blue-text)]',
       };
     case 'Study Jam':
       return {
-        // Pair #FBBC04 with #111827 dark ink for WCAG AAA contrast (>7:1)
-        pillClass: 'bg-[#FBBC04] text-[#111827] font-bold border-[#FBBC04]',
+        pillClass: 'bg-amber-500/15 text-[var(--accent-yellow-text)] border border-amber-500/35',
         accentHex: '#FBBC04',
-        dotClass: 'bg-[#111827]',
+        dotClass: 'bg-[var(--accent-yellow-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-yellow-text)]',
       };
     case 'Tech Talk':
       return {
-        pillClass: 'bg-[#34A853] text-white border-[#34A853]',
+        pillClass: 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/35',
         accentHex: '#34A853',
-        dotClass: 'bg-white',
+        dotClass: 'bg-[var(--accent-green-text)]',
         hoverTextClass: 'group-hover:text-[var(--accent-green-text)]',
       };
   }

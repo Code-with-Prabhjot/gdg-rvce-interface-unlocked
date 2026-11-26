@@ -159,7 +159,7 @@ export function DemoAuthModal() {
       setShowPassport(true);
       setActiveTab('passes');
     } else {
-      setErrorMsg(result.error || 'Demo sign-in failed.');
+      setErrorMsg(result.error || 'Sample persona preview failed.');
     }
   };
 
@@ -225,13 +225,13 @@ export function DemoAuthModal() {
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#4285F4] block">
                 {isPassportView
                   ? 'LIVE BUILDER PASSPORT // SAMPLE PROFILE'
-                  : 'STATELESS DEMO AUTH // POST /api/auth/demo'}
+                  : 'SAMPLE PERSONA PREVIEW // LOCAL ONLY'}
               </span>
               <h1
                 id="demo-auth-modal-title"
-                className="text-lg font-display font-bold text-[var(--text-primary)] truncate"
+                className="text-lg font-display font-bold text-[var(--text-primary)]"
               >
-                {isPassportView ? 'My Builder Passport' : 'Chapter Demo Sign-In'}
+                {isPassportView ? 'My Builder Passport' : 'Sample Builder Passport (Local Preview)'}
               </h1>
             </div>
           </div>
@@ -239,7 +239,7 @@ export function DemoAuthModal() {
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
-            aria-label="Close Chapter Demo dialog"
+            aria-label="Close Sample Builder Passport dialog"
             className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-all cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
@@ -257,6 +257,11 @@ export function DemoAuthModal() {
               <span>{errorMsg}</span>
             </div>
           )}
+
+          <div className="p-3 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] flex items-center gap-2.5 text-[11px] font-mono text-[var(--text-muted)]">
+            <ShieldCheck className="w-4 h-4 text-[#34A853] shrink-0" />
+            <span>Client-side persona preview only · Zero authentication or tracking.</span>
+          </div>
 
           {isPassportView && session ? (
             <div className="space-y-5">
@@ -571,7 +576,7 @@ export function DemoAuthModal() {
                     onChange={(e) => setCustomDemoId(e.target.value)}
                     placeholder="e.g. RVCE-2026-TEST"
                     maxLength={24}
-                    className="flex-1 px-3.5 py-2.5 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus:outline-none"
+                    className="flex-1 px-3.5 py-2.5 rounded-xl text-xs font-mono bg-[var(--bg-canvas)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] border border-[var(--border-hairline)] focus:border-[#4285F4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                   />
                   <button
                     type="submit"

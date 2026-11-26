@@ -97,6 +97,7 @@ export interface GDGEvent {
   displayDate?: string;
   badgeText?: string;
   registrationStatus?: 'open' | 'waitlist' | 'concluded';
+  registrationUrl: string;
 }
 
 export type SceneCategory =
@@ -389,6 +390,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python'],
     badgeText: 'FLAGSHIP SPRINT',
     registrationStatus: 'open',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-gemini-multimodal-buildathon/',
   },
   {
     id: 'event-02',
@@ -458,6 +460,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Kubernetes', 'Cloud Run', 'Docker', 'GCP'],
     badgeText: 'ARCHITECTURE LAB',
     registrationStatus: 'open',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-cloud-native-k8s-cloudrun/',
   },
   {
     id: 'event-03',
@@ -527,6 +530,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Jetpack Compose', 'Kotlin 2.0', 'Coroutines', 'Material 3'],
     badgeText: 'HANDS-ON LAB',
     registrationStatus: 'open',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-android-compose-kotlin/',
   },
   {
     id: 'event-04',
@@ -596,6 +600,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Next.js 15', 'React 19', 'Performance', 'Web Vitals'],
     badgeText: 'TECH LAB',
     registrationStatus: 'waitlist',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-high-performance-web-nextjs15/',
   },
 
   // --- PAST EVENTS ---
@@ -673,6 +678,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-neural-hack-sprint-edge-ml/',
   },
   {
     id: 'event-06',
@@ -748,6 +754,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED WORKSHOP',
     registrationStatus: 'concluded',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-open-source-architecture-git/',
   },
   {
     id: 'event-07',
@@ -823,6 +830,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED MASTERCLASS',
     registrationStatus: 'concluded',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-design-systems-tokens-code/',
   },
   {
     id: 'event-08',
@@ -898,6 +906,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ANNUAL KEYNOTE',
     registrationStatus: 'concluded',
+    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-devfest-campus-warmup-26/',
   },
 ];
 
@@ -1262,9 +1271,9 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'rvce-distributed/consensus-mesh (Maintainer)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
-      website: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
+      website: 'https://gdg.community.dev/',
     },
   },
   {
@@ -1290,8 +1299,8 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'cargo-rvce/audit-pipeline (Lead)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
     },
   },
   {
@@ -1317,9 +1326,9 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'rvce-edge/distroless-k8s-action (Contributor)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
-      website: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
+      website: 'https://gdg.community.dev/',
     },
   },
   {
@@ -1345,8 +1354,8 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'cloud-stream/pubsub-bench (Author)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
     },
   },
   {
@@ -1372,9 +1381,9 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'gemini-agent-toolkit/rvce-sensors (Maintainer)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
-      website: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
+      website: 'https://gdg.community.dev/',
     },
   },
   {
@@ -1400,8 +1409,8 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'tflite-micro/rvce-edge-audio (Author)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
     },
   },
   {
@@ -1427,9 +1436,9 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'rvce-tokens/bauhaus-primitives (Lead)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
-      website: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
+      website: 'https://gdg.community.dev/',
     },
   },
   {
@@ -1455,8 +1464,8 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'rvce-motion/accessible-springs (Maintainer)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
     },
   },
   {
@@ -1482,9 +1491,9 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'gdg-rvce/developer-handbook (Lead)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
-      website: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
+      website: 'https://gdg.community.dev/',
     },
   },
   {
@@ -1510,8 +1519,8 @@ export const TEAM_DATA: GDGTeamMember[] = [
       openSourceContrib: 'rvce-hack/matrix-scoring-engine (Contributor)',
     },
     links: {
-      github: '#sample-profile',
-      linkedin: '#sample-profile',
+      github: 'https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked',
+      linkedin: 'https://linkedin.com/company/gdg-rvce',
     },
   },
 ];

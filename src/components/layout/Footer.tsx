@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Terminal, Heart, Info, X, HelpCircle } from 'lucide-react';
+import { MapPin, Terminal, Heart, Info, X, HelpCircle, Ticket } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon, YoutubeIcon } from '@/components/icons/SocialIcons';
 import { OPEN_SOURCE_ATTRIBUTIONS } from '@/data/attributions';
 import { useDevTerminal } from '@/context/DevTerminalContext';
 import { useApiInspector } from '@/context/ApiInspectorContext';
 import { useXRay } from '@/context/XRayContext';
 import { useShortcuts } from '@/context/ShortcutsContext';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 
 export function Footer() {
   const [showAttributions, setShowAttributions] = useState(false);
@@ -16,6 +17,7 @@ export function Footer() {
   const { open: openApiInspector } = useApiInspector();
   const { isXRayActive, toggleXRay } = useXRay();
   const { open: openShortcuts } = useShortcuts();
+  const { openModal: openDemoAuthModal } = useDemoAuth();
 
   return (
     <footer className="w-full border-t border-[var(--border-hairline)] bg-[var(--bg-elevated)] transition-colors duration-200 mt-auto">
@@ -111,7 +113,7 @@ export function Footer() {
                 <GithubIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/company/gdg-rvce"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
@@ -120,7 +122,7 @@ export function Footer() {
                 <LinkedinIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/gdg.rvce"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
@@ -129,7 +131,7 @@ export function Footer() {
                 <InstagramIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://youtube.com/@gdgrvce"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
@@ -214,6 +216,17 @@ export function Footer() {
               >
                 <HelpCircle className="w-3 h-3 text-[#FBBC04]" />
                 <kbd className="text-[10px] font-mono font-bold">?</kbd>
+              </button>
+
+              <button
+                type="button"
+                onClick={openDemoAuthModal}
+                aria-label="Open Sample Builder Passport"
+                title="Open Sample Builder Passport (local preview)"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 min-h-[36px] rounded text-[11px] font-['JetBrains_Mono',monospace] font-semibold bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--accent-yellow-text)] border border-[var(--border-hairline)] hover:border-[#FBBC04]/50 transition-all cursor-pointer shadow-2xs active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <Ticket className="w-3 h-3 text-[var(--accent-yellow-text)]" />
+                <span>Sample Passport</span>
               </button>
             </div>
           </div>

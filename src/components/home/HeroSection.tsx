@@ -140,7 +140,7 @@ export function HeroSection() {
               transition={maskTransition(0.28)}
               className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl"
             >
-              An open student developer community at R.V. College of Engineering building with AI, Cloud, Web, and Android through hands-on sprints and open-source craft.
+              An open student developer community at RV College of Engineering building with AI, Cloud, Web, and Android through hands-on sprints and open-source craft.
             </motion.p>
 
             {/* Dual Tactile Action CTAs */}

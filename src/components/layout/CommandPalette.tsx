@@ -263,10 +263,10 @@ export function CommandPalette() {
     },
     {
       id: 'action-demo-auth',
-      title: 'Open Chapter Demo Sign-In',
+      title: 'Open Sample Builder Passport',
       subtitle: session
-        ? `Signed in as ${session.displayName} (${session.role}) — switch or sign out`
-        : 'Sign in with fictional Demo IDs (RVCE-DEV-2026, RVCE-WEB-2026, RVCE-STU-2026)',
+        ? `Sample Persona: ${session.displayName} (${session.role}) — switch or sign out`
+        : 'Preview fictional sample personas (RVCE-DEV-2026, RVCE-WEB-2026, RVCE-STU-2026)',
       category: 'Community',
       icon: KeyRound,
       accentColor: '#EA4335',

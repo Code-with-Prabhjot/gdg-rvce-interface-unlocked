@@ -140,7 +140,7 @@ export function DevTerminalModal() {
                 </div>
                 <div>
                   <span className="text-[#F87171] font-bold">auth / login</span>
-                  <span className="text-[#CBD5E1]"> - Open Chapter Demo Sign-In modal</span>
+                  <span className="text-[#CBD5E1]"> - Open Sample Builder Passport (local preview)</span>
                 </div>
                 <div>
                   <span className="text-[#F87171] font-bold">events</span>
@@ -226,7 +226,7 @@ export function DevTerminalModal() {
             <div className="space-y-1.5 text-xs font-mono">
               <div className="flex items-center gap-2 text-[#F87171] font-bold">
                 <span className="w-2 h-2 rounded-full bg-[#EA4335] animate-pulse" />
-                <span>Launching Chapter Demo Sign-In Modal...</span>
+                <span>Launching Sample Builder Passport (Local Preview)...</span>
               </div>
               <p className="text-white/70">
                 {session
@@ -258,7 +258,7 @@ export function DevTerminalModal() {
                 </span>
               </div>
               <p className="text-white/80 leading-relaxed">
-                An open student developer collective at R.V. College of Engineering building with AI, Cloud, Web, and Android through hands-on sprints and open-source craft.
+                An open student developer collective at RV College of Engineering building with AI, Cloud, Web, and Android through hands-on sprints and open-source craft.
               </p>
               <div className="text-[11px] text-white/70 space-y-1 pt-1">
                 <div>
@@ -706,7 +706,7 @@ export function DevTerminalModal() {
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type command ('help', 'events', 'stack')..."
-                className="w-full bg-transparent text-xs text-[#F8FAFC] placeholder:text-[#94A3B8] focus:outline-none caret-[#4285F4] font-mono"
+                className="w-full bg-transparent text-xs text-[#F8FAFC] placeholder:text-[#94A3B8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] caret-[#4285F4] font-mono"
                 aria-label="Terminal command input"
               />
             </div>

@@ -462,7 +462,7 @@ export function CommunityScenesSection() {
                       type="button"
                       onClick={() => setActiveSceneId(scene.id)}
                       aria-label={`Jump to scene ${idx + 1}`}
-                      className={`min-w-[32px] min-h-[32px] w-8 h-8 rounded-lg flex items-center justify-center border transition-all text-[11px] font-bold ${
+                      className={`min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all text-[11px] font-bold ${
                         scene.id === activeSceneId
                           ? 'border-white bg-white text-black'
                           : 'border-white/20 bg-white/10 text-white/70 hover:bg-white/20'
