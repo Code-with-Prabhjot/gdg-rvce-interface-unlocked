@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Command, Menu, X, ArrowUpRight, Compass, LogOut } from 'lucide-react';
+import { Sun, Moon, Command, Menu, X, ArrowUpRight, Compass, LogOut, Ticket } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
@@ -20,7 +20,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { open: openCommandPalette } = useCommandPalette();
-  const { session, isHydrated, signOut } = useDemoAuth();
+  const { session, isHydrated, openModal, signOut } = useDemoAuth();
   const { isOpen: isTourOpen, startTour } = useGuidedTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
@@ -133,7 +133,7 @@ export function Navbar() {
             <span className="font-['Space_Grotesk',sans-serif] font-bold text-lg tracking-tight text-[var(--text-primary)] whitespace-nowrap shrink-0">
               GDG RVCE
             </span>
-            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono',monospace] font-semibold uppercase tracking-wider bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] whitespace-nowrap">
+            <span className="hidden sm:inline-flex lg:hidden xl:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono',monospace] font-semibold uppercase tracking-wider bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] whitespace-nowrap">
               ON CAMPUS
             </span>
           </div>
@@ -151,7 +151,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative px-4 py-1.5 text-sm font-medium transition-colors duration-150 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                className={`relative px-3 xl:px-4 py-1.5 text-sm font-medium transition-colors duration-150 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                   isActive
                     ? 'text-[var(--text-primary)] font-semibold'
                     : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -188,6 +188,20 @@ export function Navbar() {
             <span>Guided Tour</span>
           </button>
 
+          {/* Direct Sample Passport Trigger (when no persona is active) */}
+          {isHydrated && !session && (
+            <button
+              type="button"
+              onClick={openModal}
+              aria-label="Open Sample Builder Passport"
+              title="Open Sample Builder Passport (local preview)"
+              className="hidden lg:inline-flex min-h-[38px] items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] bg-[var(--bg-elevated)] hover:bg-[var(--bg-subtle)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all cursor-pointer whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+            >
+              <Ticket className="w-3.5 h-3.5 shrink-0 text-[var(--accent-yellow-text)]" />
+              <span>Sample Passport</span>
+            </button>
+          )}
+
           {/* Command Palette Trigger */}
           <button
             type="button"
@@ -197,7 +211,7 @@ export function Navbar() {
           >
             <Command className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />
             <span className="hidden xl:inline text-[var(--text-muted)]">Search or jump</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
+            <kbd className="hidden sm:inline-flex lg:hidden xl:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
               {isMac ? '⌘K' : 'Ctrl K'}
             </kbd>
           </button>
@@ -340,6 +354,21 @@ export function Navbar() {
                   <Compass className="w-4 h-4 text-[#4285F4]" />
                   <span>Start Guided Tour</span>
                 </button>
+
+                {isHydrated && !session && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openModal();
+                    }}
+                    aria-label="Open Sample Builder Passport"
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-hairline)] min-h-[44px] cursor-pointer"
+                  >
+                    <Ticket className="w-4 h-4 text-[var(--accent-yellow-text)]" />
+                    <span>Sample Passport</span>
+                  </button>
+                )}
 
                 {isHydrated && session && (
                   <div className="flex items-center gap-2 w-full">

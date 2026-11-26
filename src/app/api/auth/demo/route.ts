@@ -1,4 +1,5 @@
 import { createApiResponse } from '@/lib/apiEnvelope';
+import { EVENTS_DATA } from '@/data/gdgData';
 import crypto from 'crypto';
 
 export const dynamic = 'force-dynamic';
@@ -17,6 +18,20 @@ interface DemoContribution {
   kind: string;
 }
 
+interface DemoDefaultPass {
+  passId: string;
+  eventSlug: string;
+  eventTitle: string;
+  category: string;
+  date: string;
+  time: string;
+  venue: string;
+  holderName: string;
+  holderId: string;
+  signature: string;
+  issuedAt: string;
+}
+
 interface DemoPersona {
   demoId: string;
   displayName: string;
@@ -27,6 +42,34 @@ interface DemoPersona {
   attendedSessions: DemoAttendedSession[];
   contributions: DemoContribution[];
   featuredEventSlug: string;
+}
+
+function buildPersonaDefaultPass(
+  eventSlug: string,
+  holderName: string,
+  holderId: string
+): DemoDefaultPass {
+  const matchedEvent =
+    EVENTS_DATA.find((ev) => ev.slug === eventSlug) ?? EVENTS_DATA[0];
+  const hash = crypto
+    .createHash('sha256')
+    .update(`GDG-RVCE-2026-${matchedEvent.slug.trim().toLowerCase()}`)
+    .digest('hex');
+  const passId = `RVCE-GDG-2026-${hash.slice(0, 6).toUpperCase()}`;
+
+  return {
+    passId,
+    eventSlug: matchedEvent.slug,
+    eventTitle: matchedEvent.title,
+    category: matchedEvent.category,
+    date: matchedEvent.date,
+    time: matchedEvent.time,
+    venue: matchedEvent.venue,
+    holderName,
+    holderId,
+    signature: `sha256:${hash}`,
+    issuedAt: '2026-11-25T00:00:00.000Z',
+  };
 }
 
 const BUILTIN_DEMO_PERSONAS: Record<string, DemoPersona> = {
@@ -170,7 +213,7 @@ const BUILTIN_DEMO_PERSONAS: Record<string, DemoPersona> = {
     contributions: [
       {
         contributionId: 'sample-contrib-stu-01',
-        title: 'Contributor · rvce-gdg/gemini-starter-kit',
+        title: 'Contributor · rvce-gdg/compose-a11y-kit',
         kind: 'Open Source',
       },
       {
@@ -253,7 +296,7 @@ export async function POST(request: Request) {
       },
       {
         sessionId: 'sample-attended-custom-02',
-        title: 'Gemini Multimodal study circle',
+        title: 'Gemini Multimodal Study Circle',
         date: '24 OCT 2026',
         trackBadge: 'STUDY JAM',
         badgeColor: '#FBBC04',
@@ -262,17 +305,23 @@ export async function POST(request: Request) {
     contributions: [
       {
         contributionId: 'sample-contrib-custom-01',
-        title: 'Contributor · rvce-gdg/gemini-starter-kit',
+        title: 'Contributor · rvce-gdg/blueprint-cli-templates',
         kind: 'Open Source',
       },
       {
         contributionId: 'sample-contrib-custom-02',
-        title: 'Volunteer · Campus Build Sprint Demo Day',
+        title: "Volunteer · DevFest Campus Warmup '26",
         kind: 'Chapter Ops',
       },
     ],
-    featuredEventSlug: 'gemini-multimodal-buildathon',
+    featuredEventSlug: 'high-performance-web-nextjs15',
   };
+
+  const defaultPass = buildPersonaDefaultPass(
+    persona.featuredEventSlug,
+    persona.displayName,
+    persona.demoId
+  );
 
   const digest = crypto
     .createHash('sha256')
@@ -291,6 +340,7 @@ export async function POST(request: Request) {
       vertical: persona.vertical,
       permissions: persona.permissions,
       badgeColor: persona.badgeColor,
+      defaultPass,
       attendedSessions: persona.attendedSessions,
       contributions: persona.contributions,
       featuredEventSlug: persona.featuredEventSlug,

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import type { IssuedSamplePass } from '@/context/IssuedPassesContext';
 
 export interface DemoAttendedSession {
   sessionId: string;
@@ -24,6 +25,7 @@ export interface DemoSession {
   vertical: string;
   permissions: string[];
   badgeColor: string;
+  defaultPass?: IssuedSamplePass;
   attendedSessions: DemoAttendedSession[];
   contributions: DemoContribution[];
   featuredEventSlug: string;
@@ -138,6 +140,10 @@ export function DemoAuthProvider({ children }: { children: React.ReactNode }) {
         vertical: json.data.vertical,
         permissions: Array.isArray(json.data.permissions) ? json.data.permissions : [],
         badgeColor: json.data.badgeColor || '#4285F4',
+        defaultPass:
+          json.data.defaultPass && typeof json.data.defaultPass.passId === 'string'
+            ? json.data.defaultPass
+            : undefined,
         attendedSessions: Array.isArray(json.data.attendedSessions)
           ? json.data.attendedSessions
           : [],

@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { useDemoAuth } from '@/context/DemoAuthContext';
 
 export interface IssuedSamplePass {
   passId: string;
@@ -30,7 +31,7 @@ interface IssuedPassesContextType {
   revokePassForEvent: (slug: string) => void;
 }
 
-const STORAGE_KEY = 'gdg-rvce-issued-passes';
+const STORAGE_KEY_PREFIX = 'gdg-rvce-issued-passes';
 
 const IssuedPassesContext = createContext<IssuedPassesContextType | undefined>(
   undefined
@@ -47,33 +48,47 @@ function isIssuedSamplePass(value: unknown): value is IssuedSamplePass {
 }
 
 export function IssuedPassesProvider({ children }: { children: React.ReactNode }) {
+  const { session, isHydrated: isAuthHydrated } = useDemoAuth();
+  const activePersonaKey = session?.demoId?.trim() || 'guest';
+  const storageKey = `${STORAGE_KEY_PREFIX}-${activePersonaKey}`;
+
   const [issuedPasses, setIssuedPasses] = useState<IssuedSamplePass[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    if (!isAuthHydrated) return;
+
+    setIsHydrated(false);
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed)) {
           setIssuedPasses(parsed.filter(isIssuedSamplePass));
+        } else {
+          setIssuedPasses([]);
         }
+      } else {
+        setIssuedPasses([]);
       }
     } catch {
-      // Graceful fallback for private browsing or restricted storage
+      setIssuedPasses([]);
     } finally {
       setIsHydrated(true);
     }
-  }, []);
+  }, [isAuthHydrated, storageKey]);
 
-  const persistPasses = useCallback((next: IssuedSamplePass[]) => {
-    setIssuedPasses(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // Storage quota or private mode fallback
-    }
-  }, []);
+  const persistPasses = useCallback(
+    (next: IssuedSamplePass[]) => {
+      setIssuedPasses(next);
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(next));
+      } catch {
+        // Storage quota or private mode fallback
+      }
+    },
+    [storageKey]
+  );
 
   const getPassForEvent = useCallback(
     (slug: string): IssuedSamplePass | null => {

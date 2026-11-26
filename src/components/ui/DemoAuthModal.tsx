@@ -56,13 +56,49 @@ const DEMO_PRESETS: DemoPreset[] = [
 ];
 
 function getDefaultPersonaPass(session: DemoSession): IssuedSamplePass {
+  if (session.defaultPass) {
+    return session.defaultPass;
+  }
+
+  if (session.demoId === 'RVCE-WEB-2026') {
+    return {
+      passId: 'RVCE-GDG-2026-F367B6',
+      eventSlug: 'cloud-native-k8s-cloudrun',
+      eventTitle: 'Cloud-Native Microservices on K8s & Cloud Run',
+      category: 'Workshop',
+      date: '09 JAN 2027',
+      time: '10:00 – 14:00 IST',
+      venue: 'Kotlin & Cloud Lab, RVCE',
+      holderName: session.displayName,
+      holderId: session.demoId,
+      signature: 'sha256:cloud-native-k8s-cloudrun-sample',
+      issuedAt: '2026-11-25T00:00:00.000Z',
+    };
+  }
+
+  if (session.demoId === 'RVCE-STU-2026') {
+    return {
+      passId: 'RVCE-GDG-2026-4B7E2D',
+      eventSlug: 'android-compose-kotlin',
+      eventTitle: 'Modern Android with Jetpack Compose & Kotlin',
+      category: 'Study Jam',
+      date: '19 DEC 2026',
+      time: '14:00 – 17:30 IST',
+      venue: 'CSE Seminar Hall, RVCE',
+      holderName: session.displayName,
+      holderId: session.demoId,
+      signature: 'sha256:android-compose-kotlin-sample',
+      issuedAt: '2026-11-25T00:00:00.000Z',
+    };
+  }
+
   return {
     passId: 'RVCE-GDG-2026-BC5395',
     eventSlug: 'gemini-multimodal-buildathon',
     eventTitle: "Gemini Multimodal Buildathon '26",
     category: 'Hackathon',
     date: '12 DEC 2026',
-    time: '09:30 IST',
+    time: '09:30 – 09:30 IST (+24h)',
     venue: 'IEM Auditorium, RVCE',
     holderName: session.displayName,
     holderId: session.demoId,
@@ -217,8 +253,8 @@ export function DemoAuthModal() {
         </div>
 
         {/* Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/50 flex items-center justify-between gap-3 shrink-0">
-          <div className="flex items-center gap-3 min-w-0">
+        <div className="px-5 sm:px-6 py-4 border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)]/50 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 shrink-0">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="w-10 h-10 rounded-xl bg-[#4285F4]/12 border border-[#4285F4]/30 flex items-center justify-center shrink-0">
               {isPassportView ? (
                 <Ticket className="w-5 h-5 text-[#4285F4]" />
@@ -234,7 +270,7 @@ export function DemoAuthModal() {
               </span>
               <h2
                 id="demo-auth-modal-title"
-                className="text-lg font-display font-bold text-[var(--text-primary)]"
+                className="text-lg font-display font-bold text-[var(--text-primary)] truncate"
               >
                 {isPassportView ? 'My Builder Passport' : 'Sample Builder Passport (Local Preview)'}
               </h2>
@@ -242,25 +278,25 @@ export function DemoAuthModal() {
           </div>
 
           {isPassportView && session && (
-            <div className="flex items-center gap-1.5 shrink-0">
+            <div className="order-3 sm:order-2 w-full sm:w-auto flex items-center justify-end gap-1.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setShowPassport(false)}
-                title="Switch or exit sample persona"
-                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                title="Switch sample persona"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
               >
                 <UserCheck className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
-                <span className="hidden sm:inline">Switch / Exit Persona</span>
-                <span className="sm:hidden">Switch</span>
+                <span>Switch Persona</span>
               </button>
               <button
                 type="button"
                 onClick={handleSignOut}
-                aria-label="Exit sample persona"
-                title="Exit Sample Persona"
-                className="min-h-[44px] min-w-[44px] md:min-h-[36px] md:min-w-[36px] p-2 rounded-lg text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#C5221F] hover:text-white border border-[#EA4335]/30 transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                aria-label="Sign Out"
+                title="Sign Out of Sample Persona"
+                className="min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#C5221F] hover:text-white border border-[#EA4335]/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] whitespace-nowrap"
               >
-                <LogOut className="w-3.5 h-3.5" />
+                <LogOut className="w-3.5 h-3.5 shrink-0" />
+                <span>Sign Out</span>
               </button>
             </div>
           )}
@@ -269,7 +305,7 @@ export function DemoAuthModal() {
             type="button"
             onClick={() => dialogRef.current?.close()}
             aria-label="Close Sample Builder Passport dialog"
-            className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-all cursor-pointer shrink-0"
+            className="order-2 sm:order-3 min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-subtle)] border border-transparent hover:border-[var(--border-hairline)] transition-all cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -496,25 +532,6 @@ export function DemoAuthModal() {
                         No sample contributions logged for this persona.
                       </p>
                     )}
-                  </div>
-
-                  <div className="flex items-center gap-2 pt-2 border-t border-[var(--border-hairline)]">
-                    <button
-                      type="button"
-                      onClick={() => setShowPassport(false)}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] cursor-pointer"
-                    >
-                      <UserCheck className="w-3.5 h-3.5" />
-                      <span>Switch Persona</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleSignOut}
-                      className="min-h-[44px] md:min-h-0 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--accent-red-text)] bg-[#EA4335]/10 hover:bg-[#EA4335]/20 border border-[#EA4335]/30 cursor-pointer"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Sign Out</span>
-                    </button>
                   </div>
                 </div>
               )}

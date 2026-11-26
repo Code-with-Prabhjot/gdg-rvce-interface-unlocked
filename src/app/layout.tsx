@@ -121,8 +121,8 @@ export default function RootLayout({
 
           <ShortcutsProvider>
             <XRayProvider>
-              <IssuedPassesProvider>
-                <DemoAuthProvider>
+              <DemoAuthProvider>
+                <IssuedPassesProvider>
                   <CommandPaletteProvider>
                     <DevTerminalProvider>
                       <ApiInspectorProvider>
@@ -167,8 +167,8 @@ export default function RootLayout({
                       </ApiInspectorProvider>
                     </DevTerminalProvider>
                   </CommandPaletteProvider>
-                </DemoAuthProvider>
-              </IssuedPassesProvider>
+                </IssuedPassesProvider>
+              </DemoAuthProvider>
             </XRayProvider>
           </ShortcutsProvider>
         </ThemeProvider>

@@ -128,7 +128,6 @@ export function EventDetailDrawer({
     revokePassForEvent,
   } = useIssuedPasses();
   const isEventSaved = event ? isSaved(event.slug) : false;
-  const issuedPass = event ? getPassForEvent(event.slug) : null;
 
   // Local interactive state
   const [copiedLink, setCopiedLink] = useState(false);
@@ -172,11 +171,16 @@ export function EventDetailDrawer({
   useEffect(() => {
     if (!isOpen || !isHydrated || !event || event.status !== 'Upcoming') return;
     const existingPass = getPassForEvent(event.slug);
-    if (!existingPass) return;
-    setSavedPass(existingPass);
-    setIsRegistered(true);
-    setServerPassId(existingPass.passId);
-  }, [isOpen, isHydrated, event, getPassForEvent]);
+    if (existingPass) {
+      setSavedPass(existingPass);
+      setIsRegistered(true);
+      setServerPassId(existingPass.passId);
+    } else if (!isIssuingPass) {
+      setSavedPass(null);
+      setIsRegistered(false);
+      setServerPassId(null);
+    }
+  }, [isOpen, isHydrated, event, getPassForEvent, session?.demoId, isIssuingPass]);
 
   // Automatic URL Query Verification when opened via QR scan (?event=...&passId=...&verify=1)
   useEffect(() => {
@@ -493,6 +497,20 @@ export function EventDetailDrawer({
       }
     }
   }, [event, prefersReducedMotion, session, saveIssuedPass]);
+
+  const handleIssueSamplePass = useCallback(async () => {
+    if (!event) return;
+    if (!isRegistered && !isIssuingPass) {
+      await handleRegister();
+    }
+    setTimeout(() => {
+      const target = document.getElementById('session-pass-registration');
+      target?.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'nearest',
+      });
+    }, 60);
+  }, [event, isRegistered, isIssuingPass, handleRegister, prefersReducedMotion]);
 
   const handleReissue = useCallback(() => {
     if (!event) return;
@@ -927,56 +945,33 @@ export function EventDetailDrawer({
               {/* ======================================================= */}
               {isUpcoming ? (
                 <div className="space-y-4">
-                  {/* Action Buttons Row */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    {/* Primary CTA: Register for Session */}
-                    {!isRegistered && (
-                      <button
-                        type="button"
-                        onClick={handleRegister}
-                        disabled={isIssuingPass}
-                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] active:scale-[0.98] disabled:opacity-75 transition-all shadow-md hover:shadow-lg cursor-pointer"
-                      >
-                        {isIssuingPass ? (
-                          <>
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            <span>Issuing Sample Pass...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Ticket className="w-4 h-4" />
-                            <span>Register for Session →</span>
-                          </>
-                        )}
-                      </button>
-                    )}
-
-                    {!issuedPass && (
-                      <a
-                        href="#session-pass-registration"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (!isRegistered && !isIssuingPass) {
-                            void handleRegister();
-                          }
-                          setTimeout(() => {
-                            const target = document.getElementById('session-pass-registration');
-                            target?.scrollIntoView({
-                              behavior: prefersReducedMotion ? 'auto' : 'smooth',
-                              block: 'nearest',
-                            });
-                          }, 60);
-                        }}
-                        aria-label="Direct Registration Link — Register on-site and jump to Sample Pass"
-                        title="Issue your on-site GDG RVCE Sample Pass & 4-Colour QR Code"
-                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#15803D] hover:bg-[#166534] active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
-                      >
-                        <Ticket className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span>Direct Registration Link ↓</span>
-                      </a>
-                    )}
-
-                  </div>
+                  {/* Single Full-Width Registration Anchor Link */}
+                  {!isRegistered && (
+                    <a
+                      href="#session-pass-registration"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        void handleIssueSamplePass();
+                      }}
+                      aria-disabled={isIssuingPass ? 'true' : undefined}
+                      title="Issue your on-site GDG RVCE Sample Pass & 4-Colour QR Code"
+                      className={`w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#1D4ED8] hover:bg-[#1E40AF] active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer ${
+                        isIssuingPass ? 'opacity-75 pointer-events-none' : ''
+                      }`}
+                    >
+                      {isIssuingPass ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin shrink-0" />
+                          <span>Issuing Sample Pass...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Ticket className="w-4 h-4 shrink-0" aria-hidden="true" />
+                          <span>Register &amp; Generate Sample Pass →</span>
+                        </>
+                      )}
+                    </a>
+                  )}
 
                   {/* Inline Sample Developer Pass Confirmation Card */}
                   <div id="session-pass-registration" className="scroll-mt-4">
