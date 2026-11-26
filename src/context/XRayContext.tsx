@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 interface XRayContextType {
   isXRayActive: boolean;
@@ -13,6 +14,7 @@ const XRayContext = createContext<XRayContextType | undefined>(undefined);
 
 export function XRayProvider({ children }: { children: React.ReactNode }) {
   const [isXRayActive, setIsXRayActive] = useState<boolean>(false);
+  const { isOpen: isShortcutsOpen, close: closeShortcuts } = useShortcuts();
 
   const toggleXRay = useCallback(() => {
     setIsXRayActive((prev) => !prev);
@@ -39,8 +41,8 @@ export function XRayProvider({ children }: { children: React.ReactNode }) {
           target.getAttribute?.('contenteditable') === 'true' ||
           Boolean(target.closest('input, textarea, [contenteditable="true"]')));
 
-      // Clean Escape exit when X-Ray is active
-      if (e.key === 'Escape' && isXRayActive) {
+      // Clean Escape exit when X-Ray is active (do not steal Escape from ShortcutsModal)
+      if (e.key === 'Escape' && isXRayActive && !isShortcutsOpen) {
         e.preventDefault();
         disableXRay();
         return;
@@ -56,6 +58,9 @@ export function XRayProvider({ children }: { children: React.ReactNode }) {
       ) {
         if (!isInput) {
           e.preventDefault();
+          if (isShortcutsOpen) {
+            closeShortcuts();
+          }
           toggleXRay();
         }
       }
@@ -63,7 +68,7 @@ export function XRayProvider({ children }: { children: React.ReactNode }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isXRayActive, toggleXRay, disableXRay]);
+  }, [isXRayActive, toggleXRay, disableXRay, isShortcutsOpen, closeShortcuts]);
 
   return (
     <XRayContext.Provider

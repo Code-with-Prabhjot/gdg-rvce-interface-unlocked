@@ -17,6 +17,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { EventCategory, DeliveryMode, EventStatus } from '@/data/gdgData';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 export type StatusFilter = 'All' | EventStatus;
 export type TrackFilter = 'All' | EventCategory;
@@ -106,6 +107,7 @@ export function EventsFilterBar({
   onExportSavedBundle,
 }: EventsFilterBarProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { isOpen: isShortcutsOpen, close: closeShortcuts } = useShortcuts();
 
   // Global '/' keyboard shortcut to focus search input
   useEffect(() => {
@@ -113,13 +115,20 @@ export function EventsFilterBar({
       const activeElementTag = (document.activeElement?.tagName || '').toUpperCase();
       if (e.key === '/' && activeElementTag !== 'INPUT' && activeElementTag !== 'TEXTAREA') {
         e.preventDefault();
-        searchInputRef.current?.focus();
+        if (isShortcutsOpen) {
+          closeShortcuts();
+          setTimeout(() => {
+            searchInputRef.current?.focus();
+          }, 50);
+        } else {
+          searchInputRef.current?.focus();
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isShortcutsOpen, closeShortcuts]);
 
   return (
     <div
@@ -271,6 +280,7 @@ export function EventsFilterBar({
             <Search className="w-4 h-4 text-[var(--text-muted)] absolute left-3.5 pointer-events-none shrink-0" />
             <input
               ref={searchInputRef}
+              data-instant-search="true"
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}

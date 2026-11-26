@@ -23,7 +23,6 @@ import {
   Bookmark,
   ShieldAlert,
   QrCode,
-  ExternalLink,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
@@ -954,21 +953,33 @@ export function EventDetailDrawer({
 
                     {!issuedPass && (
                       <a
-                        href={event.registrationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Official Event Registration Portal ↗"
-                        title="Opens the official GDG RVCE chapter registration portal in a new tab"
+                        href="#session-pass-registration"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (!isRegistered && !isIssuingPass) {
+                            void handleRegister();
+                          }
+                          setTimeout(() => {
+                            const target = document.getElementById('session-pass-registration');
+                            target?.scrollIntoView({
+                              behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                              block: 'nearest',
+                            });
+                          }, 60);
+                        }}
+                        aria-label="Direct Registration Link — Register on-site and jump to Sample Pass"
+                        title="Issue your on-site GDG RVCE Sample Pass & 4-Colour QR Code"
                         className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#15803D] hover:bg-[#166534] active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
                       >
-                        <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span>Official Event Registration Portal ↗</span>
+                        <Ticket className="w-4 h-4 shrink-0" aria-hidden="true" />
+                        <span>Direct Registration Link ↓</span>
                       </a>
                     )}
 
                   </div>
 
                   {/* Inline Sample Developer Pass Confirmation Card */}
+                  <div id="session-pass-registration" className="scroll-mt-4">
                   <AnimatePresence>
                     {isRegistered && (
                       <motion.div
@@ -1062,10 +1073,7 @@ export function EventDetailDrawer({
                               )}
                             </div>
                             <span className="text-[10px] font-mono text-[var(--text-muted)] text-center max-w-[152px] leading-tight">
-                              Scan with phone camera to verify pass URL
-                            </span>
-                            <span className="text-[10px] font-mono text-[var(--text-secondary)] text-center max-w-[168px] leading-tight">
-                              Encodes current host URL · Live-verifiable on Vercel deployment
+                              Scan with phone camera to verify pass
                             </span>
                           </div>
                         </div>
@@ -1167,26 +1175,16 @@ export function EventDetailDrawer({
                           </div>
                         </div>
 
-                        {/* Pass Card Footer: Compliance Disclaimer + Compact Community Hub Link */}
+                        {/* Pass Card Footer: Compliance Disclaimer */}
                         <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-wrap items-center justify-between gap-2">
                           <p className="text-[11px] font-mono text-[var(--text-muted)] italic">
                             * Sample UI confirmation for Interface Unlocked demonstration. No personal data stored.
                           </p>
-                          {issuedPass && (
-                            <a
-                              href={event.registrationUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[var(--accent-blue-text)] hover:underline whitespace-nowrap"
-                            >
-                              <ExternalLink className="w-3 h-3 shrink-0" aria-hidden="true" />
-                              <span>Official GDG Community Hub ↗</span>
-                            </a>
-                          )}
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
+                  </div>
                 </div>
               ) : (
                 /* Past Event Archive Recap Verified Banner */

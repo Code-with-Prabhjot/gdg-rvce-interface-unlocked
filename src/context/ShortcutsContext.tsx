@@ -47,12 +47,19 @@ export function ShortcutsProvider({ children }: { children: React.ReactNode }) {
         }
         e.preventDefault();
         toggle();
+      } else if (e.key === '/' && isOpen && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        // Auto-dismiss ShortcutsModal if '/' is pressed on a route without an instant search bar
+        const searchEl = document.querySelector('[data-instant-search="true"]');
+        if (!searchEl) {
+          e.preventDefault();
+          close();
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, toggle]);
+  }, [isOpen, toggle, close]);
 
   return (
     <ShortcutsContext.Provider value={{ isOpen, open, close, toggle }}>

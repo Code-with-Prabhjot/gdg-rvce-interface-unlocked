@@ -14,6 +14,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { TeamVertical } from '@/data/gdgData';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 export type TeamFilterOption = 'All Builders' | TeamVertical;
 export type TeamViewMode = 'grid' | 'topology';
@@ -92,6 +93,7 @@ export function TeamFilterBar({
 }: TeamFilterBarProps) {
   const prefersReducedMotion = useReducedMotion();
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { isOpen: isShortcutsOpen, close: closeShortcuts } = useShortcuts();
 
   // Global '/' keyboard shortcut to focus search input
   useEffect(() => {
@@ -99,13 +101,20 @@ export function TeamFilterBar({
       const activeElementTag = (document.activeElement?.tagName || '').toUpperCase();
       if (e.key === '/' && activeElementTag !== 'INPUT' && activeElementTag !== 'TEXTAREA') {
         e.preventDefault();
-        searchInputRef.current?.focus();
+        if (isShortcutsOpen) {
+          closeShortcuts();
+          setTimeout(() => {
+            searchInputRef.current?.focus();
+          }, 50);
+        } else {
+          searchInputRef.current?.focus();
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isShortcutsOpen, closeShortcuts]);
 
   // Determine if active skill is one of the predefined chips
   const isPredefinedSkill = QUICK_SKILL_CHIPS.some(
@@ -234,6 +243,7 @@ export function TeamFilterBar({
           </div>
           <input
             ref={searchInputRef}
+            data-instant-search="true"
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}

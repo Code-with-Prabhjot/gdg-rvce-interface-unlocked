@@ -258,7 +258,7 @@ export function BuilderDetailDrawer({
             animate={prefersReducedMotion ? { opacity: 1 } : { x: 0 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-            className="relative w-full max-w-xl bg-[var(--bg-elevated)] border-l border-[var(--border-strong)] shadow-2xl z-10 flex flex-col h-full overflow-hidden"
+            className="relative w-full max-w-xl bg-[var(--bg-elevated)] border-l border-[var(--border-strong)] shadow-2xl z-10 flex flex-col h-full overflow-hidden overflow-x-hidden min-w-0"
           >
             {/* Top Google-Coloured Accent Bar */}
             <div
@@ -347,7 +347,7 @@ export function BuilderDetailDrawer({
             {/* ========================================================= */}
             <div
               ref={bodyScrollRef}
-              className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6"
+              className="flex-1 overflow-y-auto overflow-x-hidden p-5 sm:p-7 space-y-6 min-w-0"
             >
               <motion.div
                 key={member.id}
@@ -357,10 +357,10 @@ export function BuilderDetailDrawer({
                   duration: prefersReducedMotion ? 0 : 0.16,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="space-y-6"
+                className="space-y-6 min-w-0"
               >
                 {/* Hero Identity Block */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] flex flex-col sm:flex-row items-start gap-4 sm:gap-5 min-w-0">
                   <div className="relative shrink-0">
                     <div
                       className="w-24 h-24 rounded-2xl p-1 bg-[var(--bg-elevated)] border ring-2 overflow-hidden transition-all duration-300"
@@ -524,20 +524,20 @@ export function BuilderDetailDrawer({
                 </div>
 
                 {/* Animated Domain Focus Allocation Bars */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] space-y-3.5">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] tracking-wider uppercase font-bold">
-                    <span>Domain Focus Allocation</span>
-                    <span>Craft Index</span>
+                <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-hairline)] space-y-3.5 min-w-0 overflow-hidden">
+                  <div className="flex items-center justify-between gap-3 w-full text-[11px] font-mono text-[var(--text-muted)] tracking-wider uppercase font-bold">
+                    <span className="truncate min-w-0">Domain Focus Allocation</span>
+                    <span className="shrink-0">Craft Index</span>
                   </div>
 
                   {member.competencies.map((comp) => (
-                    <div key={comp.label} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="text-[var(--text-primary)] font-medium truncate">
+                    <div key={comp.label} className="space-y-1.5 min-w-0">
+                      <div className="flex items-center justify-between gap-3 w-full text-xs font-mono">
+                        <span className="text-[var(--text-primary)] font-medium truncate min-w-0">
                           {comp.label}
                         </span>
                         <span
-                          className="font-bold shrink-0 ml-2"
+                          className="font-bold shrink-0"
                           style={{ color: accent.textVar }}
                         >
                           {comp.level}%
@@ -591,16 +591,16 @@ export function BuilderDetailDrawer({
                 </div>
 
                 {/* Sample Profile Channels */}
-                <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
+                <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/70 border border-[var(--border-hairline)] space-y-3 min-w-0 overflow-hidden">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] min-w-0">
                       VERIFIED SAMPLE PROFILE HANDLES
                     </span>
                     <button
                       type="button"
                       onClick={handleCopyHandle}
                       aria-label="Copy sample handle"
-                      className={`min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+                      className={`shrink-0 min-h-[44px] md:min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
                         copiedHandle
                           ? 'bg-[#34A853]/15 text-[var(--accent-green-text)] border-[#34A853]/40'
                           : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]'
@@ -620,8 +620,8 @@ export function BuilderDetailDrawer({
                     </button>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <p className="text-xs font-mono text-[var(--text-primary)]">
+                  <div className="space-y-1.5 min-w-0">
+                    <p className="text-xs font-mono text-[var(--text-primary)] break-all">
                       <span className="text-[var(--text-muted)]">HANDLE // </span>@gdg-rvce/{member.id}
                     </p>
                     <p className="text-xs font-mono text-[var(--text-primary)] break-all">

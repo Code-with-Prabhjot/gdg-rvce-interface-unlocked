@@ -1,9 +1,13 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Keyboard, X, Compass, ShieldCheck } from 'lucide-react';
 import { useShortcuts } from '@/context/ShortcutsContext';
 import { useGuidedTour } from '@/context/GuidedTourContext';
+import { useCommandPalette } from '@/context/CommandPaletteContext';
+import { useDevTerminal } from '@/context/DevTerminalContext';
+import { useXRay } from '@/context/XRayContext';
 
 interface ShortcutEntry {
   id: string;
@@ -66,7 +70,44 @@ const SHORTCUT_ENTRIES: ShortcutEntry[] = [
 export function ShortcutsModal() {
   const { isOpen, close } = useShortcuts();
   const { startTour } = useGuidedTour();
+  const { open: openCommandPalette } = useCommandPalette();
+  const { open: openTerminal } = useDevTerminal();
+  const { toggleXRay } = useXRay();
+  const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const handleTriggerShortcut = (entryId: string) => {
+    dialogRef.current?.close();
+    close();
+
+    switch (entryId) {
+      case 'command-palette':
+        setTimeout(() => openCommandPalette(), 40);
+        break;
+      case 'dev-terminal':
+        setTimeout(() => openTerminal(), 40);
+        break;
+      case 'xray-inspector':
+        toggleXRay();
+        break;
+      case 'instant-search':
+        setTimeout(() => {
+          const searchEl = document.querySelector<HTMLInputElement>('[data-instant-search="true"]');
+          if (searchEl) {
+            searchEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            searchEl.focus();
+          } else {
+            router.push('/events');
+          }
+        }, 40);
+        break;
+      case 'shortcuts-sheet':
+      case 'arrow-stepping':
+      case 'escape-dismiss':
+      default:
+        break;
+    }
+  };
 
   // Sync React state with native top-layer <dialog> showModal() / close()
   useEffect(() => {
@@ -181,9 +222,11 @@ export function ShortcutsModal() {
         <div className="p-5 sm:p-6 overflow-y-auto space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {SHORTCUT_ENTRIES.map((entry) => (
-              <div
+              <button
                 key={entry.id}
-                className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-colors"
+                type="button"
+                onClick={() => handleTriggerShortcut(entry.id)}
+                className="w-full text-left flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)]/70 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
               >
                 <div className="flex items-start gap-2.5 min-w-0">
                   <span
@@ -208,7 +251,7 @@ export function ShortcutsModal() {
                     </React.Fragment>
                   ))}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 

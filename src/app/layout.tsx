@@ -119,6 +119,7 @@ export default function RootLayout({
           {/* Sub-Second Architectural < > Prism Boot Sequence */}
           <ArchitecturalBootLoader />
 
+          <ShortcutsProvider>
             <XRayProvider>
               <IssuedPassesProvider>
                 <DemoAuthProvider>
@@ -127,7 +128,6 @@ export default function RootLayout({
                       <ApiInspectorProvider>
                         <SavedEventsProvider>
                           <GuidedTourProvider>
-                            <ShortcutsProvider>
                               {/* Visual Top Scroll Indicator */}
                               <ScrollProgressBar />
 
@@ -162,7 +162,6 @@ export default function RootLayout({
 
                               {/* Global Blueprint X-Ray Design Token Inspector Overlay */}
                               <BlueprintXRayOverlay />
-                            </ShortcutsProvider>
                           </GuidedTourProvider>
                         </SavedEventsProvider>
                       </ApiInspectorProvider>
@@ -171,6 +170,7 @@ export default function RootLayout({
                 </DemoAuthProvider>
               </IssuedPassesProvider>
             </XRayProvider>
+          </ShortcutsProvider>
         </ThemeProvider>
       </body>
     </html>

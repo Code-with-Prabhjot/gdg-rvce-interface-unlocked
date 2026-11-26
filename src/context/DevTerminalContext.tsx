@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import { useShortcuts } from '@/context/ShortcutsContext';
 
 interface DevTerminalContextType {
   isOpen: boolean;
@@ -14,6 +15,7 @@ const DevTerminalContext = createContext<DevTerminalContextType | undefined>(und
 
 export function DevTerminalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { isOpen: isShortcutsOpen, close: closeShortcuts } = useShortcuts();
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const skipFocusRestoreRef = useRef<boolean>(false);
 
@@ -71,6 +73,9 @@ export function DevTerminalProvider({ children }: { children: React.ReactNode })
       if ((e.key === '`' || e.key === '~') && !e.ctrlKey && !e.metaKey && !e.altKey) {
         if (!isInput) {
           e.preventDefault();
+          if (isShortcutsOpen) {
+            closeShortcuts();
+          }
           toggle();
         }
       } else if (e.key === 'Escape' && isOpen) {
@@ -81,7 +86,7 @@ export function DevTerminalProvider({ children }: { children: React.ReactNode })
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, toggle, close]);
+  }, [isOpen, toggle, close, isShortcutsOpen, closeShortcuts]);
 
   return (
     <DevTerminalContext.Provider value={{ isOpen, open, close, toggle, markSkipFocusRestore }}>

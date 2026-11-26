@@ -46,7 +46,7 @@ export function CommandPalette() {
   const { isXRayActive, toggleXRay } = useXRay();
   const { session, openModal: openDemoAuthModal } = useDemoAuth();
   const { startTour } = useGuidedTour();
-  const { open: openShortcuts } = useShortcuts();
+  const { isOpen: isShortcutsOpen, open: openShortcuts, close: closeShortcuts } = useShortcuts();
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const [query, setQuery] = useState('');
@@ -60,6 +60,9 @@ export function CommandPalette() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        if (isShortcutsOpen) {
+          closeShortcuts();
+        }
         toggle();
       } else if (e.key === 'Escape' && isOpen) {
         e.preventDefault();
@@ -69,7 +72,7 @@ export function CommandPalette() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, toggle, close]);
+  }, [isOpen, toggle, close, isShortcutsOpen, closeShortcuts]);
 
   // Focus input on open
   useEffect(() => {

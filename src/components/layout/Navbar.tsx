@@ -82,15 +82,15 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[var(--border-hairline)] bg-[var(--bg-canvas)]/85 backdrop-blur-md transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] rounded-lg p-1 -ml-1 min-h-[44px] transition-transform"
+          className="flex items-center gap-2.5 sm:gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] rounded-lg p-1 -ml-1 min-h-[44px] transition-transform"
           aria-label="GDG on Campus RV College of Engineering — Home"
         >
           {/* Official GDG < > Mark */}
-          <div className="relative w-8 h-6 flex items-center justify-center">
+          <div className="relative w-8 h-6 flex items-center justify-center shrink-0">
             {/* SVG Mark inline for instant rendering */}
             <svg
               viewBox="0 0 120 64"
@@ -129,11 +129,11 @@ export function Navbar() {
             </svg>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-['Space_Grotesk',sans-serif] font-bold text-lg tracking-tight text-[var(--text-primary)]">
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="font-['Space_Grotesk',sans-serif] font-bold text-lg tracking-tight text-[var(--text-primary)] whitespace-nowrap shrink-0">
               GDG RVCE
             </span>
-            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono',monospace] font-semibold uppercase tracking-wider bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)]">
+            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-['JetBrains_Mono',monospace] font-semibold uppercase tracking-wider bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] whitespace-nowrap">
               ON CAMPUS
             </span>
           </div>
@@ -197,7 +197,7 @@ export function Navbar() {
           >
             <Command className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />
             <span className="hidden xl:inline text-[var(--text-muted)]">Search or jump</span>
-            <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-['JetBrains_Mono',monospace] font-semibold text-[var(--text-muted)] bg-[var(--bg-subtle)] border border-[var(--border-hairline)] rounded">
               {isMac ? '⌘K' : 'Ctrl K'}
             </kbd>
           </button>

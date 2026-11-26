@@ -106,32 +106,27 @@ export function EventDirectoryCard({
             {/* Subtle Vignette Gradient for badge legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-            {/* Top Badges Row */}
-            <div className="absolute top-3 inset-x-3 flex flex-wrap items-center justify-between gap-1.5 z-10">
+            {/* Top Badges Row — strictly single non-wrapping row */}
+            <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 z-10">
               {/* Google-colour category pill */}
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs ${categoryData.pillClass}`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs whitespace-nowrap shrink-0 ${categoryData.pillClass}`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${categoryData.dotClass}`} />
+                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${categoryData.dotClass}`} />
                 {event.category}
               </span>
 
-              <div className="flex flex-wrap items-center gap-1.5">
-                {isSpotlight && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#FBBC04] text-[#111827] border border-[#FBBC04] shadow-xs">
-                    ★ CHAPTER SPOTLIGHT
-                  </span>
-                )}
+              <div className="flex items-center gap-1.5 shrink-0">
                 {/* Diagram / Scene Toggle */}
                 {event.sceneImage && (
-                  <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs">
+                  <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs shrink-0">
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         setViewType('cover');
                       }}
-                      className={`min-h-[44px] md:min-h-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`relative px-2 py-1 rounded-md text-[10px] font-mono font-semibold leading-none whitespace-nowrap transition-all cursor-pointer after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0 ${
                         viewType === 'cover'
                           ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
                           : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -145,7 +140,7 @@ export function EventDirectoryCard({
                         e.stopPropagation();
                         setViewType('scene');
                       }}
-                      className={`min-h-[44px] md:min-h-0 min-w-[44px] md:min-w-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                      className={`relative px-2 py-1 rounded-md text-[10px] font-mono font-semibold leading-none whitespace-nowrap transition-all cursor-pointer after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0 ${
                         viewType === 'scene'
                           ? 'bg-[#1D4ED8] text-white shadow-xs'
                           : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -156,19 +151,7 @@ export function EventDirectoryCard({
                   </div>
                 )}
 
-                {/* Status Badge */}
-                {isUpcoming ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
-                    Upcoming
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#CBD5E1] border border-white/20">
-                    Past Recap
-                  </span>
-                )}
-
-                {/* Bookmark Toggle Button (Client-side private storage) */}
+                {/* Bookmark Toggle Button (Client-side private storage, 36px visual frame + hit-slop) */}
                 <button
                   type="button"
                   onClick={(e) => {
@@ -178,14 +161,14 @@ export function EventDirectoryCard({
                   aria-label={saved ? 'Remove from saved sprints' : 'Save sprint locally'}
                   aria-pressed={saved}
                   title={saved ? 'Saved in personal schedule' : 'Save sprint locally'}
-                  className={`min-w-[44px] min-h-[44px] md:min-w-[32px] md:min-h-[32px] p-1.5 rounded-md backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center ${
+                  className={`relative w-9 h-9 rounded-lg backdrop-blur-md border transition-all cursor-pointer flex items-center justify-center shrink-0 after:content-[''] after:absolute after:-inset-1 ${
                     saved
                       ? 'bg-[#FBBC04] text-[#111827] border-[#FBBC04] shadow-xs'
                       : 'bg-[#0B0F17]/90 hover:bg-[#0B0F17] text-[#CBD5E1] hover:text-[#F8FAFC] border-white/20'
                   }`}
                 >
                   <Bookmark
-                    className={`w-3 h-3 ${saved ? 'fill-[#111827]' : ''}`}
+                    className={`w-3.5 h-3.5 ${saved ? 'fill-[#111827]' : ''}`}
                   />
                 </button>
               </div>
@@ -212,13 +195,37 @@ export function EventDirectoryCard({
 
           {/* Card Body */}
           <div className="p-4 sm:p-5 space-y-3">
-            {/* JetBrains Mono Date/Time + Venue */}
-            <div className="space-y-1 text-xs font-mono text-[var(--text-muted)]">
-              <div className="flex items-center gap-2 text-[var(--text-secondary)] font-semibold">
-                <Calendar className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
-                <span>
-                  {event.date} · {event.time}
+            {/* Dedicated Chapter Spotlight Banner Strip (above date & title, zero SVG overlap) */}
+            {isSpotlight && (
+              <div className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg bg-[#FBBC04] text-[#111827] border border-[#F59E0B] shadow-2xs">
+                <span className="text-[11px] font-mono font-bold tracking-wider uppercase whitespace-nowrap">
+                  ★ CHAPTER SPOTLIGHT
                 </span>
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider opacity-85 whitespace-nowrap">
+                  FEATURED SPRINT
+                </span>
+              </div>
+            )}
+
+            {/* JetBrains Mono Date/Time + Status + Venue */}
+            <div className="space-y-1.5 text-xs font-mono text-[var(--text-muted)]">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2 text-[var(--text-secondary)] font-semibold min-w-0">
+                  <Calendar className="w-3.5 h-3.5 text-[var(--accent-blue-text)] shrink-0" />
+                  <span className="truncate">
+                    {event.date} · {event.time}
+                  </span>
+                </div>
+                {isUpcoming ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/30 shrink-0 whitespace-nowrap">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#34A853] animate-pulse" />
+                    Upcoming
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] shrink-0 whitespace-nowrap">
+                    Past Recap
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[var(--accent-red-text)] shrink-0" />

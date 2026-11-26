@@ -103,22 +103,22 @@ function EventCard({ event, index }: EventCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-[#090C10]/70 via-transparent to-[#090C10]/40 pointer-events-none" />
 
           {/* ============================================================= */}
-          {/* 2. TOP OVERLAY PILLS                                          */}
+          {/* 2. TOP OVERLAY PILLS (Single Non-Wrapping Row)                */}
           {/* Category Badge + Diagram / Scene Toggle + Mode Badge          */}
           {/* ============================================================= */}
-          <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10">
+          <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 z-10">
             {/* Category Badge */}
             <span
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs ${categoryStyles.pillClass}`}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border backdrop-blur-md shadow-xs whitespace-nowrap shrink-0 ${categoryStyles.pillClass}`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full ${categoryStyles.dotClass}`} />
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${categoryStyles.dotClass}`} />
               {event.eventType}
             </span>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 shrink-0">
               {/* Diagram / Scene Toggle Pill */}
               {event.sceneImage && (
-                <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs">
+                <div className="inline-flex items-center p-0.5 rounded-lg bg-[#0B0F17]/90 backdrop-blur-md border border-white/20 shadow-xs shrink-0">
                   <button
                     type="button"
                     onClick={(e) => {
@@ -126,7 +126,7 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('cover');
                     }}
-                    className={`min-h-[44px] md:min-h-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                    className={`relative px-2 py-1 rounded-md text-[10px] font-mono font-semibold leading-none whitespace-nowrap transition-all cursor-pointer after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0 ${
                       viewType === 'cover'
                         ? 'bg-white/25 text-[#F8FAFC] shadow-xs'
                         : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -141,7 +141,7 @@ function EventCard({ event, index }: EventCardProps) {
                       e.stopPropagation();
                       setViewType('scene');
                     }}
-                    className={`min-h-[44px] md:min-h-0 min-w-[44px] md:min-w-0 px-2.5 md:px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold transition-all cursor-pointer ${
+                    className={`relative px-2 py-1 rounded-md text-[10px] font-mono font-semibold leading-none whitespace-nowrap transition-all cursor-pointer after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0 ${
                       viewType === 'scene'
                         ? 'bg-[#1D4ED8] text-white shadow-xs'
                         : 'text-[#CBD5E1] hover:text-[#F8FAFC]'
@@ -153,7 +153,7 @@ function EventCard({ event, index }: EventCardProps) {
               )}
 
               {/* Mode Badge */}
-              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20">
+              <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-mono font-semibold bg-[#0B0F17]/90 backdrop-blur-md text-[#F8FAFC] border border-white/20 whitespace-nowrap shrink-0">
                 {event.mode}
               </span>
             </div>

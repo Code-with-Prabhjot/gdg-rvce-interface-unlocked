@@ -11,8 +11,7 @@
 ---
 
 ### 🌐 Live Deployment & Repository Links
-* **Live Deployed Website:** [https://gdg-rvce-interface-unlocked.vercel.app](https://gdg-rvce-interface-unlocked.vercel.app)  
-  *(Note: Update URL if deployed to a custom Vercel preview or custom production host).*
+* **Live Deployed Website:** [https://gdg-rvce-interface-unlocked.vercel.app](https://gdg-rvce-interface-unlocked.vercel.app)
 * **Public GitHub Repository:** [https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked](https://github.com/Code-with-Prabhjot/gdg-rvce-interface-unlocked)
 
 ---
