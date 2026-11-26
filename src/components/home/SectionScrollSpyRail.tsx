@@ -84,7 +84,7 @@ export function SectionScrollSpyRail() {
   return (
     <aside
       aria-label="Section Navigation Rail"
-      className="hidden 2xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col items-end pointer-events-auto select-none"
+      className="hidden min-[1680px]:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col items-end pointer-events-auto select-none"
     >
       {/* Architectural Telemetry Header */}
       <div className="mb-3 pr-1 text-[9px] font-mono text-[var(--text-muted)] tracking-widest uppercase opacity-75">

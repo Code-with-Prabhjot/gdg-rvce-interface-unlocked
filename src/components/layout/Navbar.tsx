@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Command, Menu, X, ArrowUpRight, Compass } from 'lucide-react';
+import { Sun, Moon, Command, Menu, X, ArrowUpRight, Compass, LogOut } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '@/context/CommandPaletteContext';
 import { useDemoAuth } from '@/context/DemoAuthContext';
@@ -20,7 +20,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { open: openCommandPalette } = useCommandPalette();
-  const { session, isHydrated } = useDemoAuth();
+  const { session, isHydrated, signOut } = useDemoAuth();
   const { isOpen: isTourOpen, startTour } = useGuidedTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
@@ -226,20 +226,31 @@ export function Navbar() {
           </button>
 
           {isHydrated && session && (
-            <span
-              className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[36px] rounded-lg text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-2xs whitespace-nowrap"
-              title={`Sample Persona: ${session.displayName} (${session.demoId})`}
-            >
+            <div className="hidden lg:flex items-center gap-1.5">
               <span
-                className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: session.badgeColor }}
-              />
-              <span>Sample Persona</span>
-              <span className="text-[var(--text-muted)]">·</span>
-              <span className="text-[11px]" style={{ color: session.badgeColor }}>
-                {shortDisplayName}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[36px] rounded-lg text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-elevated)] border border-[var(--border-strong)] shadow-2xs whitespace-nowrap"
+                title={`Sample Persona: ${session.displayName} (${session.demoId})`}
+              >
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{ backgroundColor: session.badgeColor }}
+                />
+                <span>Sample Persona</span>
+                <span className="text-[var(--text-muted)]">·</span>
+                <span className="text-[11px]" style={{ color: session.badgeColor }}>
+                  {shortDisplayName}
+                </span>
               </span>
-            </span>
+              <button
+                type="button"
+                onClick={signOut}
+                aria-label="Exit sample persona"
+                title="Exit Sample Persona"
+                className="min-h-[36px] min-w-[36px] p-2 rounded-lg text-[#EA4335] hover:text-white bg-[#EA4335]/10 hover:bg-[#EA4335] border border-[#EA4335]/30 transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5 shrink-0" />
+              </button>
+            </div>
           )}
 
           {/* Primary CTA Button */}
@@ -309,15 +320,26 @@ export function Navbar() {
                 </button>
 
                 {isHydrated && session && (
-                  <div
-                    className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-strong)] min-h-[44px]"
-                    title={`Sample Persona: ${session.displayName} (${session.demoId})`}
-                  >
-                    <span
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ backgroundColor: session.badgeColor }}
-                    />
-                    <span>Sample Persona · {shortDisplayName}</span>
+                  <div className="flex items-center gap-2 w-full">
+                    <div
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] border border-[var(--border-strong)] min-h-[44px]"
+                      title={`Sample Persona: ${session.displayName} (${session.demoId})`}
+                    >
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: session.badgeColor }}
+                      />
+                      <span>Sample Persona · {shortDisplayName}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={signOut}
+                      aria-label="Exit sample persona"
+                      title="Exit Sample Persona"
+                      className="min-w-[44px] min-h-[44px] p-2 rounded-xl text-[#EA4335] bg-[#EA4335]/10 border border-[#EA4335]/30 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </button>
                   </div>
                 )}
 

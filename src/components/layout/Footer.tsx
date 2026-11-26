@@ -113,29 +113,29 @@ export function Footer() {
                 <GithubIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://linkedin.com/company/gdg-rvce"
+                href="https://gdg.community.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#4285F4] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-                aria-label="GDG RVCE LinkedIn Community"
+                aria-label="GDG Community Directory"
               >
                 <LinkedinIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://instagram.com/gdg.rvce"
+                href="https://developers.google.com/community/gdg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-                aria-label="GDG RVCE Instagram"
+                aria-label="Google Developers GDG Portal"
               >
                 <InstagramIcon className="w-4 h-4 shrink-0" />
               </a>
               <a
-                href="https://youtube.com/@gdgrvce"
+                href="https://www.youtube.com/@GoogleDevelopers"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[#EA4335] border border-[var(--border-hairline)] hover:border-[var(--border-strong)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
-                aria-label="GDG RVCE YouTube Channel"
+                aria-label="Google Developers YouTube Channel"
               >
                 <YoutubeIcon className="w-4 h-4 shrink-0" />
               </a>

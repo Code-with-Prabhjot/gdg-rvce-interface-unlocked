@@ -773,7 +773,7 @@ const createCoverSvg = ({
     <path d="M0 8L8 0L0 -8" stroke="${GOOGLE_COLORS.red}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M0 -8L-8 0L0 8" stroke="${GOOGLE_COLORS.blue}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <text x="24" y="4" font-family="sans-serif" font-size="14" font-weight="700" fill="#E2E8F0">GDG RVCE</text>
-    <text x="110" y="4" font-family="sans-serif" font-size="14" fill="#64748B">— Bengaluru Developer Community</text>
+    <text x="142" y="4" font-family="sans-serif" font-size="14" fill="#64748B">— Bengaluru Developer Community</text>
   </g>
 </svg>
 `;

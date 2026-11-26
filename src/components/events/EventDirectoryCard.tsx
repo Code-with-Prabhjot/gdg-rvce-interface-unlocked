@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, MapPin, Video, ArrowRight, Bookmark } from 'lucide-react';
 import { GDGEvent, EventCategory } from '@/data/gdgData';
 import { useSavedEvents } from '@/context/SavedEventsContext';
+import { useIssuedPasses } from '@/context/IssuedPassesContext';
 
 interface EventDirectoryCardProps {
   event: GDGEvent;
@@ -57,6 +58,8 @@ export function EventDirectoryCard({
 }: EventDirectoryCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const { isSaved, toggleSave } = useSavedEvents();
+  const { getPassForEvent } = useIssuedPasses();
+  const issuedPass = getPassForEvent(event.slug);
   const saved = isSaved(event.slug);
   const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryData = getCategoryBadgeData(event.category);
@@ -278,9 +281,15 @@ export function EventDirectoryCard({
               e.stopPropagation();
               onSelectEvent(event.slug);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-blue-text)] hover:underline transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap cursor-pointer"
+            className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold hover:underline transition-all group/btn shrink-0 min-h-[36px] whitespace-nowrap cursor-pointer ${
+              issuedPass
+                ? 'text-[var(--accent-green-text)]'
+                : 'text-[var(--accent-blue-text)]'
+            }`}
           >
-            <span>Inspect Event</span>
+            <span>
+              {issuedPass ? 'Pass Issued ✓ · View Ticket' : 'Inspect Event'}
+            </span>
             <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover/btn:translate-x-1" />
           </button>
         </div>
@@ -431,9 +440,15 @@ export function EventDirectoryCard({
             e.stopPropagation();
             onSelectEvent(event.slug);
           }}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#4285F4] transition-all duration-200 shadow-2xs hover:shadow-md group/btn min-h-[40px] whitespace-nowrap"
+          className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-semibold border transition-all duration-200 shadow-2xs hover:shadow-md group/btn min-h-[40px] whitespace-nowrap ${
+            issuedPass
+              ? 'bg-[var(--bg-subtle)] text-[var(--accent-green-text)] border-[var(--border-hairline)] font-semibold'
+              : 'bg-[var(--bg-subtle)] hover:bg-[#4285F4] text-[var(--text-primary)] hover:text-white border border-[var(--border-hairline)] hover:border-[#4285F4]'
+          }`}
         >
-          <span>Inspect Event</span>
+          <span>
+            {issuedPass ? 'Pass Issued ✓ · View Ticket' : 'Inspect Event'}
+          </span>
           <ArrowRight className="w-3.5 h-3.5 shrink-0 transition-transform group-hover/btn:translate-x-1" />
         </button>
       </div>

@@ -48,7 +48,7 @@ export function CommandPalette() {
   const { startTour } = useGuidedTour();
   const { open: openShortcuts } = useShortcuts();
   const router = useRouter();
-  const { theme, toggleTheme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -151,30 +151,6 @@ export function CommandPalette() {
       accentColor: '#FBBC04',
       run: () => {
         toggleTheme();
-        close();
-      },
-    },
-    {
-      id: 'theme-light',
-      title: 'Light Theme (Daylight Blueprint)',
-      subtitle: 'Optimal high-contrast mode for daytime reading',
-      category: 'Appearance',
-      icon: Sun,
-      accentColor: '#EA4335',
-      run: () => {
-        setTheme('light');
-        close();
-      },
-    },
-    {
-      id: 'theme-dark',
-      title: 'Dark Theme (Obsidian IDE)',
-      subtitle: 'Deep slate aesthetic tailored for late-night hacking',
-      category: 'Appearance',
-      icon: Moon,
-      accentColor: '#4285F4',
-      run: () => {
-        setTheme('dark');
         close();
       },
     },

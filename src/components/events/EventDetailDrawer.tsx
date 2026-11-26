@@ -80,27 +80,26 @@ function getCategoryBadge(category: EventCategory) {
   switch (category) {
     case 'Hackathon':
       return {
-        bg: '#EA4335',
-        text: '#FFFFFF',
+        pillClass: 'bg-[#EA4335]/15 text-[var(--accent-red-text)] border border-[#EA4335]/35',
+        dotClass: 'bg-[var(--accent-red-text)]',
         label: 'Hackathon',
       };
     case 'Workshop':
       return {
-        bg: '#4285F4',
-        text: '#FFFFFF',
+        pillClass: 'bg-[#4285F4]/15 text-[var(--accent-blue-text)] border border-[#4285F4]/35',
+        dotClass: 'bg-[var(--accent-blue-text)]',
         label: 'Workshop',
       };
     case 'Study Jam':
-      // Pair #FBBC04 with #111827 dark ink for WCAG AAA contrast
       return {
-        bg: '#FBBC04',
-        text: '#111827',
+        pillClass: 'bg-amber-500/15 text-[var(--accent-yellow-text)] border border-amber-500/35',
+        dotClass: 'bg-[var(--accent-yellow-text)]',
         label: 'Study Jam',
       };
     case 'Tech Talk':
       return {
-        bg: '#34A853',
-        text: '#FFFFFF',
+        pillClass: 'bg-[#34A853]/15 text-[var(--accent-green-text)] border border-[#34A853]/35',
+        dotClass: 'bg-[var(--accent-green-text)]',
         label: 'Tech Talk',
       };
   }
@@ -130,6 +129,7 @@ export function EventDetailDrawer({
     revokePassForEvent,
   } = useIssuedPasses();
   const isEventSaved = event ? isSaved(event.slug) : false;
+  const issuedPass = event ? getPassForEvent(event.slug) : null;
 
   // Local interactive state
   const [copiedLink, setCopiedLink] = useState(false);
@@ -687,12 +687,9 @@ export function EventDetailDrawer({
                 {/* Category Pill & Mode Badges */}
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-2 z-20">
                   <span
-                    className="px-2.5 py-1 rounded-md text-xs font-mono font-bold shadow-xs tracking-wide"
-                    style={{
-                      backgroundColor: categoryBadge.bg,
-                      color: categoryBadge.text,
-                    }}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-bold shadow-xs tracking-wide border backdrop-blur-md ${categoryBadge.pillClass}`}
                   >
+                    <span className={`w-1.5 h-1.5 rounded-full ${categoryBadge.dotClass}`} />
                     {categoryBadge.label}
                   </span>
 
@@ -955,17 +952,19 @@ export function EventDetailDrawer({
                       </button>
                     )}
 
-                    <a
-                      href={event.registrationUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Official Event Registration Portal ↗"
-                      title="Opens the official GDG RVCE chapter registration portal in a new tab"
-                      className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#34A853] hover:brightness-95 active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
-                    >
-                      <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      <span>Official Event Registration Portal ↗</span>
-                    </a>
+                    {!issuedPass && (
+                      <a
+                        href={event.registrationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Official Event Registration Portal ↗"
+                        title="Opens the official GDG RVCE chapter registration portal in a new tab"
+                        className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-sm font-bold text-white bg-[#34A853] hover:brightness-95 active:scale-[0.98] transition-all shadow-md hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] cursor-pointer"
+                      >
+                        <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
+                        <span>Official Event Registration Portal ↗</span>
+                      </a>
+                    )}
 
                   </div>
 
@@ -997,7 +996,7 @@ export function EventDetailDrawer({
 
                           <div className="flex items-center gap-2">
                             {serverLatencyMs !== null && (
-                              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#4285F4]/10 text-[#4285F4] border border-[#4285F4]/30">
+                              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#4285F4]/10 text-[var(--accent-blue-text)] border border-[#4285F4]/30">
                                 <span>API 200</span>
                                 <span>·</span>
                                 <span>{serverLatencyMs}ms</span>
@@ -1074,7 +1073,7 @@ export function EventDetailDrawer({
                                 AUTHENTICATION TOKEN
                               </span>
                               {serverLatencyMs !== null && (
-                                <span className="inline-flex sm:hidden items-center px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#4285F4]/10 text-[#4285F4] border border-[#4285F4]/30">
+                                <span className="inline-flex sm:hidden items-center px-1.5 py-0.2 rounded text-[9px] font-mono bg-[#4285F4]/10 text-[var(--accent-blue-text)] border border-[#4285F4]/30">
                                   {serverLatencyMs}ms
                                 </span>
                               )}
@@ -1163,10 +1162,23 @@ export function EventDetailDrawer({
                           </div>
                         </div>
 
-                        {/* Strict Compliance Disclaimer */}
-                        <p className="text-[11px] font-mono text-[var(--text-muted)] italic text-center">
-                          * Sample UI confirmation for Interface Unlocked demonstration. No personal data stored.
-                        </p>
+                        {/* Pass Card Footer: Compliance Disclaimer + Compact Community Hub Link */}
+                        <div className="pt-3 border-t border-[var(--border-hairline)] flex flex-wrap items-center justify-between gap-2">
+                          <p className="text-[11px] font-mono text-[var(--text-muted)] italic">
+                            * Sample UI confirmation for Interface Unlocked demonstration. No personal data stored.
+                          </p>
+                          {issuedPass && (
+                            <a
+                              href={event.registrationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[var(--accent-blue-text)] hover:underline whitespace-nowrap"
+                            >
+                              <ExternalLink className="w-3 h-3 shrink-0" aria-hidden="true" />
+                              <span>Official GDG Community Hub ↗</span>
+                            </a>
+                          )}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

@@ -106,10 +106,9 @@ export function HeroSection() {
                     transition={maskTransition(0.24)}
                     className="text-4xl sm:text-5xl xl:text-[3.5rem] font-display font-bold tracking-tight leading-[1.06]"
                   >
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4285F4] via-[#EA4335] to-[#34A853]">
-                      GDG{' '}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-[#DC2626] via-[#D97706] to-[#15803D] dark:from-[#4285F4] dark:via-[#EA4335] dark:via-[#FBBC04] dark:to-[#34A853]">
+                      GDG RVCE.
                     </span>
-                    <span className="text-[#B45309] dark:text-[#FBBC04]">RVCE.</span>
                   </motion.h2>
 
                   {/* 4px Segmented 4-Colour Spectrum Bar */}

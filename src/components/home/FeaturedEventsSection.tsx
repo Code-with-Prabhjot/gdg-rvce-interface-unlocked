@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 import { EVENTS_DATA, GDGEvent } from '@/data/gdgData';
+import { useIssuedPasses } from '@/context/IssuedPassesContext';
 
 // -----------------------------------------------------------------------------
 // HELPER: Category Badge Colour-Coding
@@ -65,6 +66,8 @@ interface EventCardProps {
 
 function EventCard({ event, index }: EventCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const { getPassForEvent } = useIssuedPasses();
+  const issuedPass = getPassForEvent(event.slug);
   const [viewType, setViewType] = useState<'cover' | 'scene'>('cover');
   const categoryStyles = getCategoryBadgeStyles(event.eventType);
   const formattedDateTime = formatEventDate(event.isoStart, event.time);
@@ -233,10 +236,20 @@ function EventCard({ event, index }: EventCardProps) {
         {/* Direct Action Link */}
         <Link
           href={`/events?event=${event.slug}`}
-          className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[var(--accent-blue-text)] hover:underline transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0"
+          className={`inline-flex items-center gap-1 text-xs sm:text-sm font-semibold hover:underline transition-all group/btn whitespace-nowrap min-h-[36px] shrink-0 ${
+            issuedPass
+              ? 'text-[var(--accent-green-text)]'
+              : 'text-[var(--accent-blue-text)]'
+          }`}
         >
-          <span className="hidden sm:inline">Inspect Agenda &amp; Register</span>
-          <span className="sm:hidden">Inspect</span>
+          {issuedPass ? (
+            <span>Pass Issued ✓ · View Ticket</span>
+          ) : (
+            <>
+              <span className="hidden sm:inline">Inspect Agenda &amp; Register</span>
+              <span className="sm:hidden">Inspect</span>
+            </>
+          )}
           <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 transition-transform group-hover/btn:translate-x-1" />
         </Link>
       </div>

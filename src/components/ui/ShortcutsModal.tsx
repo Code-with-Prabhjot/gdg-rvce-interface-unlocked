@@ -8,7 +8,7 @@ import { useGuidedTour } from '@/context/GuidedTourContext';
 interface ShortcutEntry {
   id: string;
   keys: string[];
-  description: string;
+  description: React.ReactNode;
   accentHex: '#4285F4' | '#EA4335' | '#FBBC04' | '#34A853';
 }
 
@@ -40,7 +40,13 @@ const SHORTCUT_ENTRIES: ShortcutEntry[] = [
   {
     id: 'instant-search',
     keys: ['/'],
-    description: 'Focus Instant Search (on /events & /team)',
+    description: (
+      <>
+        Focus Instant Search (
+        <span className="whitespace-nowrap">/events</span> &amp;{' '}
+        <span className="whitespace-nowrap">/team</span>)
+      </>
+    ),
     accentHex: '#EA4335',
   },
   {

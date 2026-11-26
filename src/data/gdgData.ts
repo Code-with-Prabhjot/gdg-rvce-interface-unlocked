@@ -390,7 +390,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Gemini 1.5', 'Multimodal', 'Vertex AI', 'Python'],
     badgeText: 'FLAGSHIP SPRINT',
     registrationStatus: 'open',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-gemini-multimodal-buildathon/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-02',
@@ -460,7 +460,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Kubernetes', 'Cloud Run', 'Docker', 'GCP'],
     badgeText: 'ARCHITECTURE LAB',
     registrationStatus: 'open',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-cloud-native-k8s-cloudrun/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-03',
@@ -530,7 +530,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Jetpack Compose', 'Kotlin 2.0', 'Coroutines', 'Material 3'],
     badgeText: 'HANDS-ON LAB',
     registrationStatus: 'open',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-android-compose-kotlin/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-04',
@@ -600,7 +600,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     tags: ['Next.js 15', 'React 19', 'Performance', 'Web Vitals'],
     badgeText: 'TECH LAB',
     registrationStatus: 'waitlist',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-high-performance-web-nextjs15/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
 
   // --- PAST EVENTS ---
@@ -678,7 +678,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED SPRINT',
     registrationStatus: 'concluded',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-neural-hack-sprint-edge-ml/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-06',
@@ -754,7 +754,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED WORKSHOP',
     registrationStatus: 'concluded',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-open-source-architecture-git/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-07',
@@ -830,7 +830,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ARCHIVED MASTERCLASS',
     registrationStatus: 'concluded',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-design-systems-tokens-code/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
   {
     id: 'event-08',
@@ -906,7 +906,7 @@ export const EVENTS_DATA: GDGEvent[] = [
     ],
     badgeText: 'ANNUAL KEYNOTE',
     registrationStatus: 'concluded',
-    registrationUrl: 'https://gdg.community.dev/events/details/gdg-rvce-devfest-campus-warmup-26/',
+    registrationUrl: 'https://gdg.community.dev/',
   },
 ];
 

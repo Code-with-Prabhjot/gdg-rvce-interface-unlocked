@@ -364,7 +364,7 @@ export function KineticPrismStage() {
             className="relative flex justify-center py-1 z-10 pointer-events-none"
             style={{ transform: 'translateZ(50px)' }}
           >
-            <span className="font-mono text-[10px] text-[var(--text-muted)]/75 tracking-widest uppercase">
+            <span className="font-mono text-[10px] text-[var(--text-secondary)] font-semibold tracking-widest uppercase">
               DRAG TO ORBIT 3D · &lt; &gt;
             </span>
           </div>

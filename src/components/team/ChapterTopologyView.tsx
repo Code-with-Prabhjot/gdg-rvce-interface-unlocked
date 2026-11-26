@@ -61,8 +61,7 @@ function getAccentVisual(color: GoogleAccent): AccentVisualConfig {
     case 'yellow':
       return {
         hex: '#FBBC04',
-        // WCAG AAA: Pair #FBBC04 with #111827 dark ink on yellow fills
-        badgeClass: 'bg-[#FBBC04] text-[#111827] font-semibold border-[#FBBC04]',
+        badgeClass: 'bg-amber-500/12 border-amber-500/35 text-[var(--accent-yellow-text)]',
         ringClass: 'ring-[#FBBC04]',
         glowClass: 'shadow-[0_0_16px_rgba(251,188,4,0.35)]',
         textClass: 'text-[var(--accent-yellow-text)]',
@@ -1055,34 +1054,43 @@ export function ChapterTopologyView({
                     VERIFIED SAMPLE PROFILE
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <a
-                      href={selectedMember.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${selectedMember.name} sample GitHub profile (opens chapter repository)`}
-                      className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onInspectMember?.(selectedMember);
+                      }}
+                      aria-label={`Inspect ${selectedMember.name} sample GitHub handle`}
+                      title="Open builder detail drawer"
+                      className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href={selectedMember.links.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${selectedMember.name} sample LinkedIn profile (opens chapter page)`}
-                      className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onInspectMember?.(selectedMember);
+                      }}
+                      aria-label={`Inspect ${selectedMember.name} sample LinkedIn handle`}
+                      title="Open builder detail drawer"
+                      className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                     >
                       <LinkedinIcon className="w-3.5 h-3.5" />
-                    </a>
+                    </button>
                     {selectedMember.links.website && (
-                      <a
-                        href={selectedMember.links.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${selectedMember.name} sample portfolio (opens GDG community portal)`}
-                        className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onInspectMember?.(selectedMember);
+                        }}
+                        aria-label={`Inspect ${selectedMember.name} sample portfolio handle`}
+                        title="Open builder detail drawer"
+                        className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] hover:text-[#4285F4] hover:border-[#4285F4] transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      </button>
                     )}
                   </div>
                 </div>

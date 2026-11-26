@@ -55,8 +55,7 @@ function getAccentConfig(color: GoogleAccent): AccentStyleConfig {
     case 'yellow':
       return {
         hex: '#FBBC04',
-        // WCAG AAA: Pair #FBBC04 with #111827 dark ink on yellow fills for >7:1 contrast
-        badgeClass: 'bg-[#FBBC04] text-[#111827] font-semibold border-[#FBBC04]',
+        badgeClass: 'bg-amber-500/12 border-amber-500/35 text-[var(--accent-yellow-text)]',
         ringClass: 'ring-[#FBBC04]/40 group-hover:ring-[#FBBC04]',
         glowClass: 'shadow-[0_0_12px_rgba(251,188,4,0.15)]',
         hoverBorderClass: 'hover:border-[#FBBC04]/50',
@@ -153,14 +152,14 @@ export function TeamMemberCard({
 
       {/* Top Architectural Header Bar */}
       <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--border-hairline)]">
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center gap-1.5 min-w-0">
           {/* Quick-Copy Builder ID Badge */}
           <button
             type="button"
             onClick={handleCopyId}
             title={`Click to copy sample builder handle (@gdg-rvce/${member.id})`}
             aria-label={`Copy handle for ${member.name}`}
-            className={`font-mono text-[11px] font-semibold tracking-wider px-2 py-0.5 rounded transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
+            className={`font-mono text-[11px] font-semibold tracking-wider px-2 py-0.5 rounded whitespace-nowrap shrink-0 transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] ${
               copiedId
                 ? 'bg-[#34A853]/15 text-[#34A853] border-[#34A853]/40'
                 : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--bg-subtle)] border-[var(--border-hairline)] hover:border-[var(--border-strong)]'
@@ -176,7 +175,7 @@ export function TeamMemberCard({
             )}
           </button>
           <span className="text-[var(--text-muted)] text-[10px]">·</span>
-          <span className="font-mono text-[10px] text-[var(--text-secondary)] px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] truncate">
+          <span className="font-mono text-[10px] text-[var(--text-secondary)] px-2 py-0.5 rounded bg-[var(--bg-subtle)] border border-[var(--border-hairline)] truncate max-w-[96px]">
             {member.yearAndBranch}
           </span>
         </div>
@@ -197,7 +196,7 @@ export function TeamMemberCard({
             className="min-h-[44px] min-w-[44px] -my-1 -mr-1 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4] rounded-lg"
           >
             <span
-              className={`min-h-[34px] px-2.5 rounded-lg text-[11px] font-mono font-medium flex items-center gap-1.5 transition-all border ${
+              className={`min-h-[34px] px-2.5 rounded-lg text-[11px] font-mono font-medium flex items-center gap-1.5 whitespace-nowrap shrink-0 transition-all border ${
                 isFlipped
                   ? 'bg-[var(--bg-subtle)] text-[var(--text-primary)] border-[var(--border-strong)]'
                   : 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] border-[var(--border-hairline)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]'
@@ -473,42 +472,45 @@ export function TeamMemberCard({
         </span>
 
         <div className="flex items-center gap-1.5">
-          {/* GitHub Link */}
-          <a
-            href={member.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            aria-label={`${member.name} sample GitHub profile (opens chapter repository)`}
-            className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onInspectMember?.(member);
+            }}
+            aria-label={`Inspect ${member.name} sample profile channels`}
+            title={`Inspect ${member.name} sample profile in the builder drawer`}
+            className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
             <GithubIcon className="w-3.5 h-3.5" />
-          </a>
+          </button>
 
-          {/* LinkedIn Link */}
-          <a
-            href={member.links.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            aria-label={`${member.name} sample LinkedIn profile (opens chapter page)`}
-            className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onInspectMember?.(member);
+            }}
+            aria-label={`Inspect ${member.name} sample LinkedIn handle`}
+            title={`Inspect ${member.name} sample profile in the builder drawer`}
+            className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
           >
             <LinkedinIcon className="w-3.5 h-3.5" />
-          </a>
+          </button>
 
-          {/* Optional Website / Portfolio Link */}
           {member.links.website && (
-            <a
-              href={member.links.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              aria-label={`${member.name} sample portfolio (opens GDG community portal)`}
-              className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onInspectMember?.(member);
+              }}
+              aria-label={`Inspect ${member.name} sample portfolio handle`}
+              title={`Inspect ${member.name} sample profile in the builder drawer`}
+              className={`min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-hairline)] ${accent.socialHoverClass} transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]`}
             >
               <Globe className="w-3.5 h-3.5" />
-            </a>
+            </button>
           )}
         </div>
       </div>

@@ -192,7 +192,12 @@ export function DemoAuthModal() {
 
   const isPassportView = Boolean(session && showPassport);
   const passportPasses: IssuedSamplePass[] = session
-    ? [...issuedPasses, getDefaultPersonaPass(session)]
+    ? Array.from(
+        [getDefaultPersonaPass(session), ...issuedPasses].reduce(
+          (byEventSlug, pass) => byEventSlug.set(pass.eventSlug, pass),
+          new Map<string, IssuedSamplePass>()
+        ).values()
+      )
     : [];
 
   return (
@@ -235,6 +240,30 @@ export function DemoAuthModal() {
               </h1>
             </div>
           </div>
+
+          {isPassportView && session && (
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowPassport(false)}
+                title="Switch or exit sample persona"
+                className="min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold text-[var(--text-primary)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-canvas)] border border-[var(--border-strong)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <UserCheck className="w-3.5 h-3.5 text-[#4285F4] shrink-0" />
+                <span className="hidden sm:inline">Switch / Exit Persona</span>
+                <span className="sm:hidden">Switch</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                aria-label="Exit sample persona"
+                title="Exit Sample Persona"
+                className="min-h-[36px] min-w-[36px] p-2 rounded-lg text-[#EA4335] bg-[#EA4335]/10 hover:bg-[#EA4335] hover:text-white border border-[#EA4335]/30 transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4285F4]"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
 
           <button
             type="button"
@@ -341,9 +370,9 @@ export function DemoAuthModal() {
 
               {activeTab === 'passes' ? (
                 <div className="space-y-2.5" role="tabpanel">
-                  {passportPasses.map((pass, idx) => (
+                  {passportPasses.map((pass) => (
                     <div
-                      key={`${pass.passId}-${idx}`}
+                      key={pass.passId}
                       className="p-3.5 rounded-xl bg-[var(--bg-canvas)] border border-[var(--border-hairline)] space-y-2"
                     >
                       <div className="flex items-start justify-between gap-2 flex-wrap">
